@@ -1,0 +1,38 @@
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<title>
+    <%= title || 'B4US srl | Simplify IT' %>
+</title>
+<link href="https://fonts.googleapis.com" rel="preconnect" />
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700&amp;display=swap"
+    rel="stylesheet" />
+<link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<script>
+    tailwind.config = {
+        darkMode: "false",
+        theme: {
+            extend: {
+                colors: {
+                    primary: "#28a745",
+                    secondary: "#4a4a4a",
+                    "background-light": "#f8fafc",
+                    "background-dark": "#0f172a",
+                },
+                fontFamily: {
+                    sans: ["Inter", "sans-serif"],
+                    display: ["Outfit", "sans-serif"],
+                },
+                borderRadius: {
+                    DEFAULT: "0.5rem",
+                    'xl': '1rem',
+                },
+            },
+        },
+    };
+</script>
+<link href="/style.css" rel="stylesheet" />
