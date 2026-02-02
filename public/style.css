@@ -16,7 +16,7 @@
     --nav-height: 100px;
     
     /* Variabili per il testo della navbar */
-    --nav-text-size: 1.2rem;
+    --nav-text-size: 1rem;
     --nav-text-weight: 600;
     --nav-text-color: var(--secondary-color);
     --nav-text-hover: var(--primary-color);
@@ -25,9 +25,23 @@
 
 /* Navbar Customizations */
 .glass-nav {
-    height: var(--nav-height);
+    height: var(--nav-height) !important;
     transition: all 0.3s ease;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* Centra il container max-width */
+}
+
+/* Container interno della navbar per garantire costanza */
+.nav-container {
+    width: 100%;
+    max-width: 1280px; /* Corrisponde a 7xl */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -36,7 +50,12 @@
     font-size: var(--nav-text-size) !important;
     font-weight: var(--nav-text-weight) !important;
     color: var(--nav-text-color) !important;
+    text-decoration: none;
     transition: color 0.2s ease;
+}
+
+.dark .glass-nav a {
+    color: #cbd5e1 !important; /* slate-300 */
 }
 
 .glass-nav a:hover {
@@ -44,7 +63,7 @@
 }
 
 .nav-logo {
-    height: 70px !important; /* Logo ben visibile */
+    height: 65px !important; 
     width: auto;
     display: block;
     transition: transform 0.3s ease;
