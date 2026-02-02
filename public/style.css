@@ -121,6 +121,12 @@ body {
     justify-content: center;
 }
 
+/* Stile per le foto del team - Adatta e centra le immagini */
+.aspect-\[4\/5\] img {
+    object-fit: cover !important;
+    object-position: center top !important;
+}
+
 /* Icone più grandi per meglio visibilità */
 .material-symbols-outlined.text-3xl {
     font-size: 2rem !important;
