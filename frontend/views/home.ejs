@@ -23,11 +23,13 @@
                             Innovazione &amp; Consulenza IT
                         </span>
                         <h1 class="text-5xl lg:text-7xl font-display font-bold text-gray-900 leading-tight mb-6">
-                            Simplify IT <br /><span class="text-primary italic">with B4US.</span>
+                            <%= home.heroTitle || 'Simplify IT' %> <br /><span class="text-primary italic">with
+                                    B4US.</span>
                         </h1>
                         <p class="text-lg lg:text-xl text-gray-600 mb-10 max-w-lg leading-relaxed">
-                            Siamo una giovane e dinamica società di consulenza, soluzioni e servizi IT nata per guidare
-                            la tua azienda nel futuro digitale.
+                            <%= home.heroSubtitle
+                                || 'Siamo una giovane e dinamica società di consulenza, soluzioni e servizi IT nata per guidare la tua azienda nel futuro digitale.'
+                                %>
                         </p>
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                             <a class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-primary rounded-xl hover:bg-green-600 transition-all shadow-xl shadow-primary/30 group"
@@ -59,14 +61,21 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid lg:grid-cols-12 gap-16 items-center">
                     <div class="lg:col-span-5">
-                        <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">Chi è B4US srl?</h2>
+                        <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">
+                            <%= home.introTitle || 'Chi è B4US srl?' %>
+                        </h2>
                         <div class="space-y-4 text-gray-600 leading-relaxed">
-                            <p>B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi IT nata
-                                dalla passione di esperti del settore.</p>
-                            <p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica, offrendo soluzioni
-                                su misura che permettano ai nostri clienti di concentrarsi sul loro core business.</p>
-                            <p>La nostra missione è essere il partner tecnologico di fiducia, guidando l'innovazione
-                                attraverso competenza, etica e visione.</p>
+                            <% if (home.introDescription) { %>
+                                <%- home.introDescription %>
+                                    <% } else { %>
+                                        <p>B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi
+                                            IT nata dalla passione di esperti del settore.</p>
+                                        <p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica,
+                                            offrendo soluzioni su misura che permettano ai nostri clienti di
+                                            concentrarsi sul loro core business.</p>
+                                        <p>La nostra missione è essere il partner tecnologico di fiducia, guidando
+                                            l'innovazione attraverso competenza, etica e visione.</p>
+                                        <% } %>
                         </div>
                         <div class="mt-10 flex items-center space-x-4">
                             <div class="flex -space-x-3 overflow-hidden">
@@ -89,9 +98,9 @@
                             </div>
                             <blockquote class="relative">
                                 <p class="text-lg lg:text-xl italic font-medium text-gray-800 text-right leading-loose">
-                                    "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi
-                                    può essere una grande benedizione per le persone e le nazioni, perché la crisi porta
-                                    progressi..."
+                                    <%= home.einsteinQuote
+                                        || '"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta progressi..."'
+                                        %>
                                 </p>
                                 <footer class="mt-8 text-right">
                                     <cite class="text-primary font-bold text-lg not-italic">— Albert Einstein</cite>
@@ -107,43 +116,45 @@
         <section class="py-24 bg-gray-50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl font-display font-bold text-gray-900">Le nostre soluzioni</h2>
+                    <h2 class="text-3xl font-display font-bold text-gray-900">
+                        <%= home.servicesTitle || 'Le nostre soluzioni' %>
+                    </h2>
                     <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div
-                        class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
-                        <div
-                            class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-                            <span
-                                class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">cloud_done</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Cloud Transformation</h3>
-                        <p class="text-gray-600">Migrazione sicura e ottimizzazione delle infrastrutture per agilità di
-                            business senza precedenti.</p>
-                    </div>
-                    <div
-                        class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
-                        <div
-                            class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-                            <span
-                                class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">security</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Cyber Security</h3>
-                        <p class="text-gray-600">Protezione end-to-end dei dati aziendali e difesa proattiva contro le
-                            minacce cyber.</p>
-                    </div>
-                    <div
-                        class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
-                        <div
-                            class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-                            <span
-                                class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">developer_mode</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-3">Software Development</h3>
-                        <p class="text-gray-600">Sviluppo di soluzioni software personalizzate per scalare i tuoi
-                            processi operativi.</p>
-                    </div>
+                    <% if (servizi && servizi.length> 0) { %>
+                        <% servizi.forEach(function(servizio) { %>
+                            <div
+                                class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
+                                <div
+                                    class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                                    <span
+                                        class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">
+                                        <%= servizio.icona || 'star' %>
+                                    </span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3">
+                                    <%= servizio.titolo %>
+                                </h3>
+                                <p class="text-gray-600">
+                                    <%= servizio.descrizione %>
+                                </p>
+                            </div>
+                            <% }); %>
+                                <% } else { %>
+                                    <!-- Fallback servizi hardcoded -->
+                                    <div
+                                        class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
+                                        <div
+                                            class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                                            <span
+                                                class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">cloud_done</span>
+                                        </div>
+                                        <h3 class="text-xl font-bold mb-3">Cloud Transformation</h3>
+                                        <p class="text-gray-600">Migrazione sicura e ottimizzazione delle
+                                            infrastrutture.</p>
+                                    </div>
+                                    <% } %>
                 </div>
             </div>
         </section>

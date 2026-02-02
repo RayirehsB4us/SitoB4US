@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "job_positions",
+  "info": {
+    "singularName": "job-position",
+    "pluralName": "job-positions",
+    "displayName": "Job Position",
+    "description": "Posizioni lavorative aperte"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titolo": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "titolo"
+    },
+    "descrizione": {
+      "type": "richtext",
+      "required": true
+    },
+    "location": {
+      "type": "string"
+    },
+    "tipologia": {
+      "type": "enumeration",
+      "enum": ["Full-time", "Part-time", "Remote", "Hybrid"]
+    },
+    "reparto": {
+      "type": "string"
+    },
+    "icona": {
+      "type": "string"
+    },
+    "requisiti": {
+      "type": "richtext"
+    },
+    "attiva": {
+      "type": "boolean",
+      "default": true
+    },
+    "ordine": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

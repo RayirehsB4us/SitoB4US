@@ -136,123 +136,59 @@
                     </div>
                 </div>
                 <div class="space-y-4">
-                    <details
-                        class="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300">
-                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-                            <div class="flex items-center gap-6">
-                                <div
-                                    class="hidden sm:flex w-12 h-12 bg-primary/5 rounded-full items-center justify-center text-primary">
-                                    <span class="material-symbols-outlined">code</span>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Senior Full
-                                        Stack Developer</h4>
-                                    <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">location_on</span> Milano /
-                                            Remote</span>
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">schedule</span> Full-time</span>
+                    <% if (jobPositions && jobPositions.length> 0) { %>
+                        <% jobPositions.forEach(function(job) { %>
+                            <details
+                                class="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300">
+                                <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
+                                    <div class="flex items-center gap-6">
+                                        <div
+                                            class="hidden sm:flex w-12 h-12 bg-primary/5 rounded-full items-center justify-center text-primary">
+                                            <span class="material-symbols-outlined">
+                                                <%= job.icona || 'work' %>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-lg font-bold group-hover:text-primary transition-colors">
+                                                <%= job.titolo %>
+                                            </h4>
+                                            <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                                                <% if (job.location) { %>
+                                                    <span class="flex items-center gap-1"><span
+                                                            class="material-symbols-outlined text-sm">location_on</span>
+                                                        <%= job.location %>
+                                                    </span>
+                                                    <% } %>
+                                                        <% if (job.tipologia) { %>
+                                                            <span class="flex items-center gap-1"><span
+                                                                    class="material-symbols-outlined text-sm">schedule</span>
+                                                                <%= job.tipologia %>
+                                                            </span>
+                                                            <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span
+                                        class="material-symbols-outlined group-open:rotate-180 transition-transform text-slate-400">expand_more</span>
+                                </summary>
+                                <div class="px-6 pb-6 pt-2 border-t border-slate-50 dark:border-slate-700/50">
+                                    <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed">
+                                        <%- job.descrizione %>
+                                    </div>
+                                    <div class="mt-8 flex justify-end">
+                                        <button
+                                            class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
+                                            Candidati Ora
+                                        </button>
                                     </div>
                                 </div>
-                            </div>
-                            <span
-                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-slate-400">expand_more</span>
-                        </summary>
-                        <div class="px-6 pb-6 pt-2 border-t border-slate-50 dark:border-slate-700/50">
-                            <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed">
-                                <p>Siamo alla ricerca di un Senior Full Stack Developer con esperienza in Node.js e
-                                    React per potenziare il nostro team di sviluppo prodotto.</p>
-                                <ul class="list-disc pl-5 mt-4">
-                                    <li>Esperienza minima 5 anni</li>
-                                    <li>Ottima conoscenza di TypeScript</li>
-                                    <li>Esperienza con Architetture Cloud (AWS/Azure)</li>
-                                </ul>
-                            </div>
-                            <div class="mt-8 flex justify-end">
-                                <button
-                                    class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
-                                    Candidati Ora
-                                </button>
-                            </div>
-                        </div>
-                    </details>
-                    <details
-                        class="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300">
-                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-                            <div class="flex items-center gap-6">
-                                <div
-                                    class="hidden sm:flex w-12 h-12 bg-primary/5 rounded-full items-center justify-center text-primary">
-                                    <span class="material-symbols-outlined">security</span>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Cyber
-                                        Security Analyst</h4>
-                                    <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">location_on</span> Roma /
-                                            Remote</span>
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">schedule</span> Full-time</span>
+                            </details>
+                            <% }); %>
+                                <% } else { %>
+                                    <div class="text-center py-12 text-slate-500">
+                                        Nessuna posizione aperta al momento. Controlla più tardi!
                                     </div>
-                                </div>
-                            </div>
-                            <span
-                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-slate-400">expand_more</span>
-                        </summary>
-                        <div class="px-6 pb-6 pt-2 border-t border-slate-50 dark:border-slate-700/50">
-                            <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed">
-                                <p>Cerchiamo un profilo specializzato in analisi delle vulnerabilità e monitoraggio
-                                    delle infrastrutture IT.</p>
-                                <ul class="list-disc pl-5 mt-4">
-                                    <li>Competenze in penetration testing</li>
-                                    <li>Gestione SIEM</li>
-                                    <li>Certificazioni (es. OSCP) gradite</li>
-                                </ul>
-                            </div>
-                            <div class="mt-8 flex justify-end">
-                                <button
-                                    class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
-                                    Candidati Ora
-                                </button>
-                            </div>
-                        </div>
-                    </details>
-                    <details
-                        class="group bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden transition-all duration-300">
-                        <summary class="flex items-center justify-between p-6 cursor-pointer list-none">
-                            <div class="flex items-center gap-6">
-                                <div
-                                    class="hidden sm:flex w-12 h-12 bg-primary/5 rounded-full items-center justify-center text-primary">
-                                    <span class="material-symbols-outlined">cloud</span>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold group-hover:text-primary transition-colors">Cloud
-                                        Architect</h4>
-                                    <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">location_on</span> Remote</span>
-                                        <span class="flex items-center gap-1"><span
-                                                class="material-symbols-outlined text-sm">schedule</span> Full-time</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <span
-                                class="material-symbols-outlined group-open:rotate-180 transition-transform text-slate-400">expand_more</span>
-                        </summary>
-                        <div class="px-6 pb-6 pt-2 border-t border-slate-50 dark:border-slate-700/50">
-                            <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed">
-                                <p>Progetta e implementa infrastrutture cloud scalabili per i nostri clienti di fascia
-                                    Enterprise.</p>
-                            </div>
-                            <div class="mt-8 flex justify-end">
-                                <button
-                                    class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
-                                    Candidati Ora
-                                </button>
-                            </div>
-                        </div>
-                    </details>
+                                    <% } %>
                 </div>
                 <div class="mt-12 p-8 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20 text-center">
                     <p class="text-lg font-medium mb-4">Non trovi la posizione giusta per te?</p>

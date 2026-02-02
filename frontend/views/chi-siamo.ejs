@@ -94,46 +94,38 @@
                     <p class="text-slate-600 dark:text-slate-400 mt-2">I volti dietro l'eccellenza di B4US.</p>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                    <div class="group">
-                        <div
-                            class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                            <img alt="Riccardo Germinario - CEO & Founder"
-                                class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                src="/images/Rick.jpeg" />
-                        </div>
-                        <h4 class="text-xl font-bold">Riccardo Germinario</h4>
-                        <p class="text-primary font-medium text-sm">CEO &amp; Founder</p>
-                    </div>
-                    <div class="group">
-                        <div
-                            class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                            <img alt="Nicolò Guerra - CTO"
-                                class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                src="/images/nicolo.jpeg" />
-                        </div>
-                        <h4 class="text-xl font-bold">Nicolò Guerra</h4>
-                        <p class="text-primary font-medium text-sm">Cloud - Collaboration</p>
-                    </div>
-                    <div class="group">
-                        <div
-                            class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                            <img alt="Pedro Nova - IT Strategy Manager"
-                                class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                src="/images/pedro.jpeg" />
-                        </div>
-                        <h4 class="text-xl font-bold">Pedro Nova</h4>
-                        <p class="text-primary font-medium text-sm">Systems</p>
-                    </div>
-                    <div class="group">
-                        <div
-                            class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                            <img alt="Pasquale Schiavone - Head of Innovation"
-                                class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                src="/images/lino.jpeg" />
-                        </div>
-                        <h4 class="text-xl font-bold">Pasquale Schiavone</h4>
-                        <p class="text-primary font-medium text-sm">Cloud - Infrastructure</p>
-                    </div>
+                    <% if (teamMembers && teamMembers.length> 0) { %>
+                        <% teamMembers.forEach(function(member) { %>
+                            <div class="group">
+                                <div
+                                    class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
+                                    <% if (member.foto && member.foto.data) { %>
+                                        <img alt="<%= member.nome %> - <%= member.ruolo %>"
+                                            class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                                            src="http://localhost:1337<%= member.foto.data.attributes.url %>" />
+                                        <% } else { %>
+                                            <div
+                                                class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-green-600">
+                                                <span class="text-white text-6xl font-bold">
+                                                    <%= member.nome.charAt(0) %>
+                                                </span>
+                                            </div>
+                                            <% } %>
+                                </div>
+                                <h4 class="text-xl font-bold">
+                                    <%= member.nome %>
+                                </h4>
+                                <p class="text-primary font-medium text-sm">
+                                    <%= member.ruolo %>
+                                </p>
+                            </div>
+                            <% }); %>
+                                <% } else { %>
+                                    <!-- Fallback: Nessun team member -->
+                                    <div class="col-span-4 text-center py-12">
+                                        <p class="text-slate-500">Nessun membro del team disponibile.</p>
+                                    </div>
+                                    <% } %>
                 </div>
             </div>
         </section>

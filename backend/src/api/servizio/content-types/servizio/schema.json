@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "servizi",
+  "info": {
+    "singularName": "servizio",
+    "pluralName": "servizi",
+    "displayName": "Servizio",
+    "description": "Servizi IT offerti dall'azienda"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "titolo": {
+      "type": "string",
+      "required": true
+    },
+    "descrizione": {
+      "type": "text",
+      "required": true
+    },
+    "icona": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "titolo"
+    },
+    "ordine": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}
