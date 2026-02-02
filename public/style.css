@@ -127,6 +127,16 @@ body {
     object-position: center top !important;
 }
 
+/* Icone nella pagina login - Migliora visibilità e allineamento */
+input[type="text"] + .material-symbols-outlined,
+input[type="password"] + .material-symbols-outlined {
+    font-size: 1.25rem !important;
+}
+
+button .material-symbols-outlined {
+    vertical-align: middle;
+}
+
 /* Icone più grandi per meglio visibilità */
 .material-symbols-outlined.text-3xl {
     font-size: 2rem !important;
