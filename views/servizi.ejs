@@ -1,196 +1,180 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="it">
+
 <head>
     <%- include('partials/head') %>
 </head>
+
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
     <%- include('partials/navbar') %>
-    
-    <section
-        class="py-20 lg:py-28 bg-gradient-to-b from-white to-slate-50 dark:from-background-dark dark:to-slate-900 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div class="max-w-3xl">
-                <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight mb-6">
-                    Soluzioni IT <span class="text-primary">su misura</span> per il tuo business.
-                </h1>
-                <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10">
-                    B4US srl è una società dinamica nata per semplificare la complessità tecnologica. Offriamo
-                    consulenza e servizi IT d'avanguardia per guidare la tua trasformazione digitale.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-                        href="#servizi-grid">
-                        Esplora i Servizi
-                    </a>
-                    <a class="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300"
-                        href="#">
-                        Contattaci ora
-                    </a>
+
+        <section
+            class="py-20 lg:py-28 bg-gradient-to-b from-white to-slate-50 dark:from-background-dark dark:to-slate-900 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+                <div class="max-w-3xl">
+                    <h1 class="font-display text-4xl md:text-6xl font-bold tracking-tight mb-6">
+                        Soluzioni IT <span class="text-primary">su misura</span> per il tuo business.
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10">
+                        B4US srl è una società dinamica nata per semplificare la complessità tecnologica. Offriamo
+                        consulenza e servizi IT d'avanguardia per guidare la tua trasformazione digitale.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+                            href="#servizi-grid">
+                            Esplora i Servizi
+                        </a>
+                        <a class="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300"
+                            href="#">
+                            Contattaci ora
+                        </a>
+                    </div>
+                </div>
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10"></div>
+                <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+            </div>
+        </section>
+        <section class="py-24 bg-white dark:bg-background-dark" id="servizi-grid">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <span class="text-primary font-bold tracking-widest uppercase text-sm">Le nostre competenze</span>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mt-3">Cosa facciamo per te</h2>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">cloud_queue</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">Cloud Transformation</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Supportiamo la migrazione dei tuoi sistemi verso il cloud, ottimizzando costi e migliorando
+                            la
+                            scalabilità della tua infrastruttura.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">security</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">Cyber Security</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Proteggiamo i tuoi dati aziendali con protocolli avanzati di sicurezza e monitoraggio
+                            costante
+                            contro ogni tipo di minaccia.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">code</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">Software Development</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Sviluppiamo soluzioni software personalizzate, web app e mobile app basate sulle ultime
+                            tecnologie di mercato.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">analytics</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">Data Analytics &amp; AI</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Trasformiamo i tuoi dati in valore decisionale attraverso algoritmi di AI e dashboard di
+                            analisi
+                            predittiva in tempo reale.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">settings_input_component</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">System Integration</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Colleghiamo i tuoi sistemi frammentati in un ecosistema coeso per massimizzare l'efficienza
+                            dei
+                            flussi di lavoro aziendali.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
+                    <div
+                        class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
+                        <div
+                            class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                            <span class="material-icons-round text-primary text-3xl">support_agent</span>
+                        </div>
+                        <h3 class="font-display text-xl font-bold mb-4">IT Managed Services</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
+                            Gestione completa della tua infrastruttura IT, garantendo continuità operativa 24/7 con
+                            tempi di
+                            intervento garantiti.
+                        </p>
+                        <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
+                            Learn More
+                            <span
+                                class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                    </div>
                 </div>
             </div>
-            <div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10"></div>
-            <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
-        </div>
-    </section>
-    <section class="py-24 bg-white dark:bg-background-dark" id="servizi-grid">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="text-primary font-bold tracking-widest uppercase text-sm">Le nostre competenze</span>
-                <h2 class="font-display text-3xl md:text-4xl font-bold mt-3">Cosa facciamo per te</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">cloud_queue</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">Cloud Transformation</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Supportiamo la migrazione dei tuoi sistemi verso il cloud, ottimizzando costi e migliorando la
-                        scalabilità della tua infrastruttura.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">security</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">Cyber Security</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Proteggiamo i tuoi dati aziendali con protocolli avanzati di sicurezza e monitoraggio costante
-                        contro ogni tipo di minaccia.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">code</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">Software Development</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Sviluppiamo soluzioni software personalizzate, web app e mobile app basate sulle ultime
-                        tecnologie di mercato.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">analytics</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">Data Analytics &amp; AI</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Trasformiamo i tuoi dati in valore decisionale attraverso algoritmi di AI e dashboard di analisi
-                        predittiva in tempo reale.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">settings_input_component</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">System Integration</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Colleghiamo i tuoi sistemi frammentati in un ecosistema coeso per massimizzare l'efficienza dei
-                        flussi di lavoro aziendali.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
-                </div>
-                <div
-                    class="group p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-800 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <span class="material-icons-round text-primary text-3xl">support_agent</span>
-                    </div>
-                    <h3 class="font-display text-xl font-bold mb-4">IT Managed Services</h3>
-                    <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
-                        Gestione completa della tua infrastruttura IT, garantendo continuità operativa 24/7 con tempi di
-                        intervento garantiti.
-                    </p>
-                    <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                        Learn More
-                        <span
-                            class="material-icons-round ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                    </a>
+        </section>
+        <section class="py-24 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="relative pl-12 border-l-4 border-primary">
+                    <blockquote
+                        class="italic text-slate-800 dark:text-slate-200 leading-relaxed text-right md:text-xl font-light">
+                        "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere
+                        una
+                        grande benedizione per le persone e le nazioni, perché la crisi porta progressi. La creatività
+                        nasce
+                        dall'angoscia come il giorno nasce dalla notte oscura. E' nella crisi che sorge l'inventiva, le
+                        scoperte e le grandi strategie... Senza crisi non ci sono sfide, senza sfide la vita è una
+                        routine,
+                        una lenta agonia. E' nella crisi che emerge il meglio di ognuno, perché senza crisi tutti i
+                        venti
+                        sono solo lievi brezze... L'unico pericolo della crisi è la tragedia che può conseguire al non
+                        voler
+                        lottare per superarla."
+                    </blockquote>
+                    <div class="mt-6 text-right font-bold text-slate-600 dark:text-slate-400">— Albert Einstein</div>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="py-24 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="relative pl-12 border-l-4 border-primary">
-                <blockquote
-                    class="italic text-slate-800 dark:text-slate-200 leading-relaxed text-right md:text-xl font-light">
-                    "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere una
-                    grande benedizione per le persone e le nazioni, perché la crisi porta progressi. La creatività nasce
-                    dall'angoscia come il giorno nasce dalla notte oscura. E' nella crisi che sorge l'inventiva, le
-                    scoperte e le grandi strategie... Senza crisi non ci sono sfide, senza sfide la vita è una routine,
-                    una lenta agonia. E' nella crisi che emerge il meglio di ognuno, perché senza crisi tutti i venti
-                    sono solo lievi brezze... L'unico pericolo della crisi è la tragedia che può conseguire al non voler
-                    lottare per superarla."
-                </blockquote>
-                <div class="mt-6 text-right font-bold text-slate-600 dark:text-slate-400">— Albert Einstein</div>
-            </div>
-        </div>
-    </section>
-    <footer class="bg-white dark:bg-background-dark py-12 border-t border-slate-200 dark:border-slate-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center space-y-8 md:space-y-0">
-                <div class="flex flex-col items-center md:items-start">
-                    <img alt="B4US Logo" class="h-10 w-auto mb-4"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOsu_07IZTcTbaOFOFYG-kdidvXOYI6Jsb9YzGRsdf72WRH096uUKh8SbAxCkVESP2xCPr5_xTlEg3zR9bDxaMQ62mPmJaEz35Feiiv4Mv8foWnmLr06N6cGbTzYLIe8OON8F-vNiSBqqp6BPuG0nobr32tarOib84wtf3N60mcWvTlwgj28ce07p1MupQqmiWSCjtL5Cr50ebyKcWAZy1GJ9nn2YN4RNMEXnrk0bAP0GZ9J1bFrkUorr3AiJWZ_5nPM6TB7XPaDjO" />
-                    <p class="text-sm text-slate-500 dark:text-slate-500">© 2026 - B4US.srl - Tutti i diritti riservati.
-                    </p>
-                </div>
-                <div class="flex flex-wrap justify-center gap-6">
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Home</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Chi Siamo</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Servizi</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Organizzazione</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Lavora Con Noi</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Contatti</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Privacy Policy</a>
-                    <a class="text-slate-500 dark:text-slate-400 hover:text-primary transition-colors text-sm font-medium"
-                        href="#">Accedi</a>
-                </div>
-            </div>
-        </div>
-    
-    <%- include('partials/footer') %>
+        </section>
+
+        <%- include('partials/footer') %>
 </body>
+
 </html>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="it">
+
 <head>
     <%- include('partials/head') %>
 </head>
+
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
     <%- include('partials/navbar') %>
-    
-    <section class="relative py-20 overflow-hidden">
+
+        <section class="relative py-20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
                     <div>
@@ -288,35 +290,8 @@
                 </div>
             </div>
         </section>
-    
-    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="flex flex-col items-center md:items-start">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="material-icons-outlined text-primary text-3xl">back_hand</span>
-                        <div class="flex flex-col">
-                            <span
-                                class="text-xl font-black font-display tracking-tight text-slate-900 dark:text-white leading-none">B4US</span>
-                            <span class="text-[8px] font-bold text-primary tracking-widest uppercase">Simplify IT</span>
-                        </div>
-                    </div>
-                    <p class="text-xs text-slate-500">© 2026 - B4US.srl - Tutti i diritti riservati.</p>
-                </div>
-                <nav
-                    class="flex flex-wrap justify-center gap-x-6 gap-y-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest italic">
-                    <a class="hover:text-primary transition-colors" href="#">Home</a>
-                    <a class="hover:text-primary transition-colors" href="#">Chi Siamo</a>
-                    <a class="hover:text-primary transition-colors" href="#">Servizi</a>
-                    <a class="hover:text-primary transition-colors" href="#">Organizzazione</a>
-                    <a class="hover:text-primary transition-colors" href="#">Lavora Con Noi</a>
-                    <a class="hover:text-primary transition-colors" href="#">Contatti</a>
-                    <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a>
-                    <a class="hover:text-primary transition-colors" href="#">Accedi</a>
-                </nav>
-            </div>
-        </div>
-    
-    <%- include('partials/footer') %>
+
+        <%- include('partials/footer') %>
 </body>
+
 </html>
