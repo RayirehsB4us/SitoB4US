@@ -60,11 +60,12 @@ app.get('/chi-siamo', async (req, res) => {
     const teamMembers = await fetchFromStrapi('/team-members');
     res.render('chi-siamo', { 
       title: 'Chi Siamo - B4US Simplify IT',
-      teamMembers: teamMembers?.data?.map(t => t.attributes) || []
+      teamMembers: teamMembers?.data?.map(t => t.attributes) || [],
+      strapiUrl: STRAPI_URL
     });
   } catch (error) {
     console.error('Error rendering chi-siamo:', error);
-    res.render('chi-siamo', { title: 'Chi Siamo - B4US Simplify IT', teamMembers: [] });
+    res.render('chi-siamo', { title: 'Chi Siamo - B4US Simplify IT', teamMembers: [], strapiUrl: STRAPI_URL });
   }
 });
 
@@ -107,11 +108,12 @@ app.get('/blog', async (req, res) => {
     const blogPosts = await fetchFromStrapi('/blog-posts');
     res.render('blog', { 
       title: 'B4US Tech Blog | IT News & Insights',
-      blogPosts: blogPosts?.data?.map(b => b.attributes) || []
+      blogPosts: blogPosts?.data?.map(b => b.attributes) || [],
+      strapiUrl: STRAPI_URL
     });
   } catch (error) {
     console.error('Error rendering blog:', error);
-    res.render('blog', { title: 'B4US Tech Blog | IT News & Insights', blogPosts: [] });
+    res.render('blog', { title: 'B4US Tech Blog | IT News & Insights', blogPosts: [], strapiUrl: STRAPI_URL });
   }
 });
 

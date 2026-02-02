@@ -102,7 +102,7 @@
                                     <% if (member.foto && member.foto.data) { %>
                                         <img alt="<%= member.nome %> - <%= member.ruolo %>"
                                             class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                            src="http://localhost:1337<%= member.foto.data.attributes.url %>" />
+                                            src="<%= strapiUrl %><%= member.foto.data.attributes.url %>" />
                                         <% } else { %>
                                             <div
                                                 class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-green-600">
