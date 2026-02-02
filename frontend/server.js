@@ -4,6 +4,7 @@ const path = require('path');
 const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
 
 // Set EJS as the template engine

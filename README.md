@@ -54,11 +54,11 @@ Questo popolerà Strapi con:
 Nel pannello Strapi:
 1. Vai su **Settings** → **Roles** → **Public**
 2. Abilita le seguenti permissions:
-   - ✅ Home: `find`
-   - ✅ Servizio: `find`, `findOne`
-   - ✅ Team-member: `find`, `findOne`
-   - ✅ Blog-post: `find`, `findOne`
-   - ✅ Job-position: `find`, `findOne`
+   - ✅ Home: `find`, `update`, `create`
+   - ✅ Servizio: `find`, `findOne`, `update`, `create`
+   - ✅ Team-member: `find`, `findOne`, `update`, `create`
+   - ✅ Blog-post: `find`, `findOne`, `update`, `create`
+   - ✅ Job-position: `find`, `findOne`, `update`, `create`
 3. Salva
 
 ### 4. Avviare il Frontend
