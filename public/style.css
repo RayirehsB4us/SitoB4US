@@ -1,0 +1,86 @@
+/* 
+   B4US - Simplify IT
+   Global Stylesheet for POC
+   
+   Questo file definisce l'identità visiva del brand B4US:
+   - Colori: Verde Corporate (#28a745) e Grigio Scuro (#4a4a4a)
+   - Tipografia: Moderna e pulita (Inter / Outfit)
+   - Stile: Professionale, dinamico, orientato all'innovazione
+*/
+
+:root {
+    --primary-color: #28a745;
+    --secondary-color: #4a4a4a;
+    --bg-light: #f8fafc;
+    --bg-dark: #0f172a;
+    --nav-height: 100px;
+    
+    /* Variabili per il testo della navbar */
+    --nav-text-size: 1.2rem;
+    --nav-text-weight: 600;
+    --nav-text-color: var(--secondary-color);
+    --nav-text-hover: var(--primary-color);
+    --nav-font-family: 'Inter', sans-serif;
+}
+
+/* Navbar Customizations */
+.glass-nav {
+    height: var(--nav-height);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.glass-nav a {
+    font-family: var(--nav-font-family) !important;
+    font-size: var(--nav-text-size) !important;
+    font-weight: var(--nav-text-weight) !important;
+    color: var(--nav-text-color) !important;
+    transition: color 0.2s ease;
+}
+
+.glass-nav a:hover {
+    color: var(--nav-text-hover) !important;
+}
+
+.nav-logo {
+    height: 70px !important; /* Logo ben visibile */
+    width: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+    transform: scale(1.05);
+}
+
+/* Typography & General */
+body {
+    padding-top: var(--nav-height); /* Spazio per la navbar fissa */
+}
+
+.text-primary {
+    color: var(--primary-color) !important;
+}
+
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+
+/* Descrizione del sito nel CSS (Metadata/Comments) */
+/* 
+   B4US è una società di consulenza IT all'avanguardia. 
+   Il nostro obiettivo è semplificare la tecnologia per le aziende, 
+   trasformando la complessità in opportunità di crescita.
+   Specializzati in: Cloud Transformation, Cybersecurity, Software Development.
+*/
+
+/* Animazioni per un tocco moderno */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+main, section {
+    animation: fadeIn 0.6s ease-out forwards;
+}

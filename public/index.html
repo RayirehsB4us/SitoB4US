@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>B4US srl | Simplify IT</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#28a745", // The corporate green from the logo
+                        secondary: "#4a4a4a", // The dark grey from the logo
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        sans: ["Inter", "sans-serif"],
+                        display: ["Outfit", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': '1rem',
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+        }
+
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .hero-pattern {
+            background-image: radial-gradient(circle at 2px 2px, rgba(40, 167, 69, 0.1) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+    </style>
+    <link href="style.css" rel="stylesheet" />
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-secondary dark:text-gray-300 font-sans transition-colors duration-300">
+    <nav
+        class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div class="flex justify-between items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="home">
+                        <img alt="B4US Logo" class="nav-logo" src="images/logo.png" />
+                    </a>
+                </div>
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="home">Home</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="chi-siamo">Chi
+                        Siamo</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="servizi">Servizi</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors"
+                        href="struttura">Organizzazione</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="carriere">Lavora
+                        Con Noi</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="contatti">Contatti</a>
+                    <a class="text-sm font-semibold hover:text-primary transition-colors" href="blog">Blog</a>
+                    <a class="inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20"
+                        href="login">Accedi</a>
+                    <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                        onclick="document.documentElement.classList.toggle('dark')">
+                        <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">dark_mode</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden hero-pattern">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="relative z-10">
+                    <span
+                        class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-primary uppercase bg-green-100 dark:bg-green-900/30 rounded-full">
+                        Innovazione &amp; Consulenza IT
+                    </span>
+                    <h1
+                        class="text-5xl lg:text-7xl font-display font-bold text-gray-900 dark:text-white leading-tight mb-6">
+                        Simplify IT <br /><span class="text-primary italic">with B4US.</span>
+                    </h1>
+                    <p class="text-lg lg:text-xl text-gray-600 dark:text-gray-400 mb-10 max-w-lg leading-relaxed">
+                        Siamo una giovane e dinamica società di consulenza, soluzioni e servizi IT nata per guidare la
+                        tua azienda
+                        nel futuro digitale.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-primary rounded-xl hover:bg-green-600 transition-all shadow-xl shadow-primary/30 group"
+                            href="#intro">
+                            Scopri di più
+                            <span
+                                class="material-symbols-outlined ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                        </a>
+                        <a class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-secondary dark:text-white bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-all"
+                            href="#">
+                            I nostri servizi
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-10 -right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl"></div>
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-green-400/10 rounded-full blur-3xl"></div>
+                    <div class="relative overflow-hidden rounded-2xl shadow-2xl">
+                        <img alt="Team collaborating on IT solutions"
+                            class="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA64mFLqFZDn4sR-pfC0IcHOkOi3dpOvsOVcqMo-Y1HwULS7yyr76uWvY6Iye9bV52jw1-s7sut1hODC7LmW76b2LaU88N_VJiUDhHNK5lj_gxKVx6SMi64uKZQrd3-Vhy8uUh-xRDfjA-RiW_P-Bn8FihAw-1tOa5Y7I7Nk4HcDfyqC96TUNnvBz08zM71MQWCW1YJgOZGhhgogkD4JvltXb3HJEBPID9ExJhkdwqU7cxPfJf4eDwg3q1PTI4ovFYucSNmto0y-GY4" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-white dark:bg-slate-900" id="intro">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-16 items-center">
+                <div class="lg:col-span-5">
+                    <h2 class="text-3xl font-display font-bold text-gray-900 dark:text-white mb-6">
+                        Chi è B4US srl?
+                    </h2>
+                    <div class="space-y-4 text-gray-600 dark:text-gray-400 leading-relaxed">
+                        <p>
+                            B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi IT nata dalla
+                            passione di
+                            esperti del settore.
+                        </p>
+                        <p>
+                            Ci impegniamo ogni giorno per semplificare la complessità tecnologica, offrendo soluzioni su
+                            misura che
+                            permettano ai nostri clienti di concentrarsi sul loro core business.
+                        </p>
+                        <p>
+                            La nostra missione è essere il partner tecnologico di fiducia, guidando l'innovazione
+                            attraverso
+                            competenza, etica e visione.
+                        </p>
+                    </div>
+                    <div class="mt-10 flex items-center space-x-4">
+                        <div class="flex -space-x-3 overflow-hidden">
+                            <img alt=""
+                                class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGotdt6yhX_DFlCq4UcPIZIKJsgqx23yPhnwGsE6jaO39OgIbs09RofSkT1jvsOkLwY8aIe2LZrciAnVH0_D0RJWbezSCItEc5y5_ai6gChtK9AzLRZtVQoGkUYMTp7IJMpMSkOTNVC39ayaAUyLD2HtShbGu4l5n8ATYxSuycGZYYmXCPBe3XNH5dA19BeUTjnfH9sYLpSPpPtbeEDJUxBZu0k3Pz2iangcGA78JpIXreerrzeD01XGXeoCuum6oi22WwSiiyDQ6Q" />
+                            <img alt=""
+                                class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJMQx1zL-apfvRxXS4o0Jc4fzFYQmaKzglz8SAgQmTUIYXd_6gj0jyvqKkp9oSU-sKdymUDnpZ4QD7ADdR2Z3rhK6faFJHcXao8JOIxbxRMDMPyJZG_YidTDBPq_3Beyvq18R7SdbmjgYYuSI5mHKiPPhePufcJaWxuBTKejWTTpl37Tk524SUDiijpC1mw6J_DfIN32SwFyTYgfxJDiiUBCtF4tK8UTIcgCMB1XpRaCZRxuD_gLld8dqx3lQrR8g073U2NrM85vWb" />
+                            <img alt=""
+                                class="inline-block h-10 w-10 rounded-full ring-2 ring-white dark:ring-slate-900"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmY6M6OpRVWL5sxYnurQ1iGOfgsMYJEMte2y8n5_LM2BZetUJG8KzIuUIt2Z6ofnUd7xCLkh4JWn2pc_UOmymkAOGViZL9EFn7c8I3xaHx3-l5Fa4yHE3va38UOOJhIhvTkBz-Orqz14AZdh7hd-adGIYnpg8m5cYWCOixteqByKYvQpowRbOfVIyAQxJZV7FtYtTfz95VRP5iTddpzlwGRJEWjbcvaHARb9DTSReEBpDwb7zhSaM5GUGzq1T4IanZOyTDlQyl2jpU" />
+                        </div>
+                        <div class="text-sm font-medium">
+                            <span class="text-primary font-bold">50+</span> Esperti al tuo servizio
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7">
+                    <div
+                        class="relative p-8 lg:p-12 bg-gray-50 dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm">
+                        <div class="absolute top-0 right-0 p-8">
+                            <span class="material-symbols-outlined text-6xl text-primary/10">format_quote</span>
+                        </div>
+                        <blockquote class="relative">
+                            <p
+                                class="text-lg lg:text-xl italic font-medium text-gray-800 dark:text-gray-200 text-right leading-loose">
+                                "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. <br />
+                                La crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi
+                                porta progressi.
+                                <br />
+                                La creatività nasce dall'angoscia come il giorno nasce dalla notte oscura. <br />
+                                E' nella crisi che sorge l'inventiva, le scoperte e le grandi strategie... <br />
+                                La vera crisi è l'incompetenza... <br />
+                                Senza crisi non ci sono sfide, senza sfide la vita è una routine, una lenta agonia.
+                                <br />
+                                E' nella crisi che emerge il meglio di ognuno, perché senza crisi tutti i venti sono
+                                solo lievi
+                                brezze... <br />
+                                L'unico pericolo della crisi è la tragedia che può conseguire al non voler lottare per
+                                superarla."
+                            </p>
+                            <footer class="mt-8 text-right">
+                                <cite class="text-primary font-bold text-lg not-italic">— Albert Einstein</cite>
+                                <div class="w-16 h-1 bg-primary ml-auto mt-2 rounded-full"></div>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-24 bg-gray-50 dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-display font-bold text-gray-900 dark:text-white">Le nostre soluzioni</h2>
+                <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div
+                    class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow group">
+                    <div
+                        class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <span
+                            class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">cloud_done</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Cloud Transformation</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Migrazione sicura e ottimizzazione delle infrastrutture
+                        per
+                        agilità di business senza precedenti.</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow group">
+                    <div
+                        class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <span
+                            class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">security</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Cyber Security</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Protezione end-to-end dei dati aziendali e difesa
+                        proattiva contro
+                        le minacce cyber.</p>
+                </div>
+                <div
+                    class="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow group">
+                    <div
+                        class="w-14 h-14 bg-green-50 dark:bg-green-900/20 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                        <span
+                            class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">developer_mode</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 dark:text-white">Software Development</h3>
+                    <p class="text-gray-600 dark:text-gray-400">Sviluppo di soluzioni software personalizzate per
+                        scalare i tuoi
+                        processi operativi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-12 mb-12">
+                <div class="lg:col-span-1">
+                    <img alt="B4US Logo" class="h-10 w-auto mb-6"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoDOY_bul-HFCeNtRGC1IfBtADDBu235p3ypObmJORTzKF3Z95ODUe7PbRlZaN5ecSg7ltHDZF4kdjLXJvIP2AFpY97-ALj4NG2hmy3AjxLLCRa7huqyoQCJHqwjgi0ZfGKFkf8-XjrIF2lVqDbBPQJQ4P-XlRED3Izp45eBhhBVV4FQ1_bwnvXyHs14lrnkAXvEdCWtYzrGk75c9aGi7l46Vzump8Db7eBjiWU7HODADb7Q_3Im8rgag_QUlnjOGPCBKB_Xq2tkVc" />
+                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                        Semplifichiamo la tecnologia per dare valore al tuo futuro. Eccellenza e innovazione in ogni
+                        linea di
+                        codice.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6">Link Rapidi</h4>
+                    <ul class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="chi-siamo">Chi Siamo</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="servizi">Servizi</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="struttura">Organizzazione</a>
+                        </li>
+                        <li><a class="hover:text-primary transition-colors" href="carriere">Lavora Con Noi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6">Supporto</h4>
+                    <ul class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="contatti">Contatti</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-900 dark:text-white mb-6">Contatti</h4>
+                    <ul class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-start space-x-3">
+                            <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                            <span>Via dell'Innovazione, 123<br />Milano, MI 20100</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="material-symbols-outlined text-primary text-xl">call</span>
+                            <span>+39 02 1234 5678</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <span class="material-symbols-outlined text-primary text-xl">mail</span>
+                            <span>info@b4us.it</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="pt-8 border-t border-gray-100 dark:border-gray-800 flex flex-col md:row items-center justify-between">
+                <p class="text-xs text-gray-400 dark:text-gray-500">
+                    © 2026 - B4US srl. Tutti i diritti riservati. P.IVA 01234567890
+                </p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#">
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a class="text-gray-400 hover:text-primary transition-colors" href="#">
+                        <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                            <path
+                                d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>

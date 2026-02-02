@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="it">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Organizzazione - B4US srl | Simplify IT</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect" />
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Outfit:wght@400;600;700&amp;family=Material+Icons&amp;display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#28a745", // Taken from the green in the logo
+            "background-light": "#ffffff",
+            "background-dark": "#0f172a",
+            "surface-light": "#f8fafc",
+            "surface-dark": "#1e293b",
+          },
+          fontFamily: {
+            display: ["Outfit", "sans-serif"],
+            sans: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "0.75rem",
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    .org-line::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 2px;
+      height: 24px;
+      background-color: #e2e8f0;
+    }
+
+    .dark .org-line::after {
+      background-color: #334155;
+    }
+
+    .bg-grid-pattern {
+      background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+  <link href="style.css" rel="stylesheet" />
+</head>
+
+<body
+  class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 font-sans transition-colors duration-300">
+  <nav
+    class="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="flex justify-between items-center">
+        <div class="flex-shrink-0 flex items-center">
+          <a href="home">
+            <img alt="B4US Logo" class="nav-logo" src="images/logo.png" />
+          </a>
+        </div>
+        <div class="hidden lg:flex items-center space-x-8">
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="home">Home</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="chi-siamo.html">Chi Siamo</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="servizi">Servizi</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="struttura.html">Organizzazione</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="carriere">Lavora Con Noi</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="contatti.html">Contatti</a>
+          <a class="text-sm font-semibold hover:text-primary transition-colors" href="blog">Blog</a>
+          <a class="inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20"
+            href="login">Accedi</a>
+          <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            onclick="document.documentElement.classList.toggle('dark')">
+            <span class="material-symbols-outlined text-gray-500 dark:text-gray-400">dark_mode</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main>
+    <section class="relative py-20 overflow-hidden">
+      <div class="absolute inset-0 text-slate-100 dark:text-slate-900 bg-grid-pattern opacity-50 -z-10"></div>
+      <div class="container mx-auto px-6">
+        <div class="max-w-3xl">
+          <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
+            Struttura e <span class="text-primary">Organizzazione</span>
+          </h1>
+          <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
+            Un modello flessibile e dinamico progettato per semplificare l'IT. La nostra struttura organizzativa è il
+            motore che ci permette di offrire consulenza d'eccellenza e soluzioni innovative.
+          </p>
+        </div>
+      </div>
+    </section>
+    <section class="py-16 bg-surface-light dark:bg-surface-dark">
+      <div class="container mx-auto px-6">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+          <div class="w-full md:w-1/2">
+            <img alt="Team Collaboration" class="rounded-2xl shadow-2xl"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuADUKaNcSgYsCZwC-S6CZv0XuvExeXJyoSI_LxeeeV3jXH5bu3kUyJUqDUn3tiP3f7n-iDzn3JakcJ_JcqSIXsgtqbsVq3oiGAzBsgytEnwLPnw4ha-hbM-UNjyVF6A-KsHL3-azVlqHoS7JJfOeOxq7_wAK_bcj3aprDiY-a3_nQ6XS17jI5EWKKUnCp86F9N06JTGFj3wF2R5sT8H3J6Zaj_IDcPsQKUCJIi3mH27d3b4TEdcvPDGqAkR3urxxCfavkssKapyqL2n" />
+          </div>
+          <div class="w-full md:w-1/2 relative">
+            <div class="border-l-4 border-primary pl-8 italic">
+              <p class="text-lg md:text-xl text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+                "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere una
+                grande benedizione per le persone e le nazioni, perché la crisi porta progressi. La creatività nasce
+                dall'angoscia come il giorno nasce dalla notte oscura. E' nella crisi che sorge l'inventiva, le scoperte
+                e le grandi strategie... Senza crisi non ci sono sfide, senza sfide la vita è una routine, una lenta
+                agonia. E' nella crisi che emerge il meglio di ognuno, perché senza crisi tutti i venti sono solo lievi
+                brezze... L'unico pericolo della crisi è la tragedia che può conseguire al non voler lottare per
+                superarla."
+              </p>
+              <cite class="block text-right font-bold text-primary not-italic">— Albert Einstein</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-24">
+      <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="font-display text-3xl font-bold mb-4">La Nostra Squadra</h2>
+          <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Semplifichiamo processi complessi attraverso
+            una gerarchia piatta e collaborativa.</p>
+        </div>
+        <div class="max-w-5xl mx-auto flex flex-col items-center gap-12">
+          <div class="relative org-line">
+            <div class="bg-primary text-white p-6 rounded-xl shadow-lg w-72 text-center">
+              <span class="material-icons mb-2 text-4xl">corporate_fare</span>
+              <h3 class="font-bold text-lg">Direzione Generale</h3>
+              <p class="text-sm opacity-90">Strategia e Visione</p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+            <div
+              class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
+              <div
+                class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                <span class="material-icons text-primary group-hover:text-white">psychology</span>
+              </div>
+              <h4 class="font-bold text-xl mb-3">Consulenza IT</h4>
+              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                Analisi infrastrutturale, cloud transformation e roadmap tecnologiche personalizzate.
+              </p>
+              <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-500">
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> IT Audit</li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Cloud Strategy
+                </li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Digital
+                  Transformation</li>
+              </ul>
+            </div>
+            <div
+              class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
+              <div
+                class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                <span class="material-icons text-primary group-hover:text-white">integration_instructions</span>
+              </div>
+              <h4 class="font-bold text-xl mb-3">Servizi &amp; Soluzioni</h4>
+              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                Implementazione di architetture software e gestione di infrastrutture mission-critical.
+              </p>
+              <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-500">
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Managed Services
+                </li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Software
+                  Development</li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Security
+                  Operations</li>
+              </ul>
+            </div>
+            <div
+              class="bg-surface-light dark:bg-surface-dark p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-primary transition-all group">
+              <div
+                class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
+                <span class="material-icons text-primary group-hover:text-white">admin_panel_settings</span>
+              </div>
+              <h4 class="font-bold text-xl mb-3">Operations</h4>
+              <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4">
+                Amministrazione, Risorse Umane e Customer Success per garantire continuità.
+              </p>
+              <ul class="space-y-2 text-sm text-slate-500 dark:text-slate-500">
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> HR &amp;
+                  Recruiting</li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Quality Control
+                </li>
+                <li class="flex items-center gap-2"><span class="material-icons text-xs">check</span> Compliance</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-24 bg-primary text-white">
+      <div class="container mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 text-center">
+          <div>
+            <div class="text-4xl font-display font-bold mb-2">15+</div>
+            <div class="text-primary-100 opacity-80 uppercase tracking-widest text-xs font-bold">Anni di Esperienza
+            </div>
+          </div>
+          <div>
+            <div class="text-4xl font-display font-bold mb-2">200+</div>
+            <div class="text-primary-100 opacity-80 uppercase tracking-widest text-xs font-bold">Progetti Completati
+            </div>
+          </div>
+          <div>
+            <div class="text-4xl font-display font-bold mb-2">50+</div>
+            <div class="text-primary-100 opacity-80 uppercase tracking-widest text-xs font-bold">Esperti IT</div>
+          </div>
+          <div>
+            <div class="text-4xl font-display font-bold mb-2">24/7</div>
+            <div class="text-primary-100 opacity-80 uppercase tracking-widest text-xs font-bold">Supporto Dedicato</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-slate-50 dark:bg-slate-900 pt-20 pb-10 border-t border-slate-200 dark:border-slate-800">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-start gap-12 mb-16">
+        <div class="max-w-xs">
+          <img alt="B4US Logo" class="h-10 mb-6 grayscale hover:grayscale-0 transition-all"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqjHz2bXLcAk708vdXvfxdk-rKX4ktMAXJ34aoHClqIizHq7icLqS8bPdfqzaXZCps9jjCsKzRM0NT_nXzU_-9iNL9uedrYPN0JilwdI5RQ84zM7D_FkBDjocw8Q4FoMcWkInMHUcOUqrGAwIrdw6n2U8Gwuo98ELzXGLv-YnnKvcvw5QmxeWMHNZJedfixxAts2Pqrrksy9RlvpukLVfTX1U2bedi7Grjl0RWLTPuTy9jPfUNyI3JoGIgrGqXf93N2xP4MPuoeqtj" />
+          <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+            B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi IT nata per semplificare la
+            complessità tecnologica delle aziende moderne.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-12">
+          <div>
+            <h5 class="font-bold mb-6 text-slate-900 dark:text-white">Azienda</h5>
+            <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+              <li><a class="hover:text-primary transition-colors" href="#">Chi Siamo</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Servizi</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Organizzazione</a></li>
+            </ul>
+          </div>
+          <div>
+            <h5 class="font-bold mb-6 text-slate-900 dark:text-white">Opportunità</h5>
+            <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+              <li><a class="hover:text-primary transition-colors" href="#">Lavora Con Noi</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Posizioni Aperte</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Academy</a></li>
+            </ul>
+          </div>
+          <div class="col-span-2 md:col-span-1">
+            <h5 class="font-bold mb-6 text-slate-900 dark:text-white">Legale</h5>
+            <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+              <li><a class="hover:text-primary transition-colors" href="#">Privacy Policy</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Cookie Policy</a></li>
+              <li><a class="hover:text-primary transition-colors" href="#">Termini di Servizio</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div
+        class="pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-400">
+        <p>© 2024 - B4US srl. Tutti i diritti riservati. P.IVA 12345678901</p>
+        <div class="flex gap-6">
+          <a class="hover:text-primary transition-colors" href="#">LinkedIn</a>
+          <a class="hover:text-primary transition-colors" href="#">Twitter</a>
+          <a class="hover:text-primary transition-colors" href="#">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <div class="fixed bottom-6 right-6 z-50">
+    <button
+      class="bg-white dark:bg-slate-800 text-slate-800 dark:text-white p-3 rounded-full shadow-lg border border-slate-200 dark:border-slate-700"
+      onclick="document.documentElement.classList.toggle('dark')">
+      <span class="material-icons block dark:hidden">dark_mode</span>
+      <span class="material-icons hidden dark:block">light_mode</span>
+    </button>
+  </div>
+
+</body>
+
+</html>
