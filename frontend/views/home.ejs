@@ -58,103 +58,65 @@
         </section>
 
         <section class="py-24 bg-white" id="intro">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid lg:grid-cols-12 gap-16 items-center">
-                    <div class="lg:col-span-5">
-                        <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">
-                            <%= home.introTitle || 'Chi è B4US srl?' %>
-                        </h2>
-                        <div class="space-y-4 text-gray-600 leading-relaxed">
-                            <% if (home.introDescription) { %>
-                                <%- home.introDescription %>
-                                    <% } else { %>
-                                        <p>B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi
-                                            IT nata dalla passione di esperti del settore.</p>
-                                        <p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica,
-                                            offrendo soluzioni su misura che permettano ai nostri clienti di
-                                            concentrarsi sul loro core business.</p>
-                                        <p>La nostra missione è essere il partner tecnologico di fiducia, guidando
-                                            l'innovazione attraverso competenza, etica e visione.</p>
-                                        <% } %>
-                        </div>
-                        <div class="mt-10 flex items-center space-x-4">
-                            <div class="flex -space-x-3 overflow-hidden">
-                                <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGotdt6yhX_DFlCq4UcPIZIKJsgqx23yPhnwGsE6jaO39OgIbs09RofSkT1jvsOkLwY8aIe2LZrciAnVH0_D0RJWbezSCItEc5y5_ai6gChtK9AzLRZtVQoGkUYMTp7IJMpMSkOTNVC39ayaAUyLD2HtShbGu4l5n8ATYxSuycGZYYmXCPBe3XNH5dA19BeUTjnfH9sYLpSPpPtbeEDJUxBZu0k3Pz2iangcGA78JpIXreerrzeD01XGXeoCuum6oi22WwSiiyDQ6Q" />
-                                <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJMQx1zL-apfvRxXS4o0Jc4fzFYQmaKzglz8SAgQmTUIYXd_6gj0jyvqKkp9oSU-sKdymUDnpZ4QD7ADdR2Z3rhK6faFJHcXao8JOIxbxRMDMPyJZG_YidTDBPq_3Beyvq18R7SdbmjgYYuSI5mHKiPPhePufcJaWxuBTKejWTTpl37Tk524SUDiijpC1mw6J_DfIN32SwFyTYgfxJDiiUBCtF4tK8UTIcgCMB1XpRaCZRxuD_gLld8dqx3lQrR8g073U2NrM85vWb" />
-                                <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmY6M6OpRVWL5sxYnurQ1iGOfgsMYJEMte2y8n5_LM2BZetUJG8KzIuUIt2Z6ofnUd7xCLkh4JWn2pc_UOmymkAOGViZL9EFn7c8I3xaHx3-l5Fa4yHE3va38UOOJhIhvTkBz-Orqz14AZdh7hd-adGIYnpg8m5cYWCOixteqByKYvQpowRbOfVIyAQxJZV7FtYtTfz95VRP5iTddpzlwGRJEWjbcvaHARb9DTSReEBpDwb7zhSaM5GUGzq1T4IanZOyTDlQyl2jpU" />
-                            </div>
-                            <div class="text-sm font-medium">
-                                <span class="text-primary font-bold">50+</span> Esperti al tuo servizio
-                            </div>
-                        </div>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">
+                    <%= home.introTitle || 'Chi è B4US srl?' %>
+                </h2>
+                <div class="space-y-4 text-gray-600 leading-relaxed">
+                    <% if (home.introDescription) { %>
+                        <%- home.introDescription %>
+                    <% } else { %>
+                        <p>B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi
+                            IT nata dalla passione di esperti del settore.</p>
+                        <p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica,
+                            offrendo soluzioni su misura che permettano ai nostri clienti di
+                            concentrarsi sul loro core business.</p>
+                        <p>La nostra missione è essere il partner tecnologico di fiducia, guidando
+                            l'innovazione attraverso competenza, etica e visione.</p>
+                    <% } %>
+                </div>
+                <div class="mt-10 flex items-center justify-center space-x-4">
+                    <div class="flex -space-x-3 overflow-hidden">
+                        <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGotdt6yhX_DFlCq4UcPIZIKJsgqx23yPhnwGsE6jaO39OgIbs09RofSkT1jvsOkLwY8aIe2LZrciAnVH0_D0RJWbezSCItEc5y5_ai6gChtK9AzLRZtVQoGkUYMTp7IJMpMSkOTNVC39ayaAUyLD2HtShbGu4l5n8ATYxSuycGZYYmXCPBe3XNH5dA19BeUTjnfH9sYLpSPpPtbeEDJUxBZu0k3Pz2iangcGA78JpIXreerrzeD01XGXeoCuum6oi22WwSiiyDQ6Q" />
+                        <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJMQx1zL-apfvRxXS4o0Jc4fzFYQmaKzglz8SAgQmTUIYXd_6gj0jyvqKkp9oSU-sKdymUDnpZ4QD7ADdR2Z3rhK6faFJHcXao8JOIxbxRMDMPyJZG_YidTDBPq_3Beyvq18R7SdbmjgYYuSI5mHKiPPhePufcJaWxuBTKejWTTpl37Tk524SUDiijpC1mw6J_DfIN32SwFyTYgfxJDiiUBCtF4tK8UTIcgCMB1XpRaCZRxuD_gLld8dqx3lQrR8g073U2NrM85vWb" />
+                        <img alt="" class="inline-block h-10 w-10 rounded-full ring-2 ring-white"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmY6M6OpRVWL5sxYnurQ1iGOfgsMYJEMte2y8n5_LM2BZetUJG8KzIuUIt2Z6ofnUd7xCLkh4JWn2pc_UOmymkAOGViZL9EFn7c8I3xaHx3-l5Fa4yHE3va38UOOJhIhvTkBz-Orqz14AZdh7hd-adGIYnpg8m5cYWCOixteqByKYvQpowRbOfVIyAQxJZV7FtYtTfz95VRP5iTddpzlwGRJEWjbcvaHARb9DTSReEBpDwb7zhSaM5GUGzq1T4IanZOyTDlQyl2jpU" />
                     </div>
-                    <div class="lg:col-span-7">
-                        <div class="relative p-8 lg:p-12 bg-gray-50 rounded-3xl border border-gray-100 shadow-sm">
-                            <div class="absolute top-0 right-0 p-8">
-                                <span class="material-symbols-outlined text-6xl text-primary/10">format_quote</span>
-                            </div>
-                            <blockquote class="relative">
-                                <p class="text-lg lg:text-xl italic font-medium text-gray-800 text-right leading-loose">
-                                    <%= home.einsteinQuote
-                                        || '"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta progressi..."'
-                                        %>
-                                </p>
-                                <footer class="mt-8 text-right">
-                                    <cite class="text-primary font-bold text-lg not-italic">— Albert Einstein</cite>
-                                    <div class="w-16 h-1 bg-primary ml-auto mt-2 rounded-full"></div>
-                                </footer>
-                            </blockquote>
-                        </div>
+                    <div class="text-sm font-medium">
+                        <span class="text-primary font-bold">50+</span> Esperti al tuo servizio
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="py-24 bg-gray-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl font-display font-bold text-gray-900">
-                        <%= home.servicesTitle || 'Le nostre soluzioni' %>
-                    </h2>
-                    <div class="w-20 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+        <section class="py-24 bg-primary relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div
+                    class="absolute top-0 left-0 w-96 h-96 border-8 border-white rounded-full -translate-x-1/2 -translate-y-1/2">
                 </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <% if (servizi && servizi.length> 0) { %>
-                        <% servizi.forEach(function(servizio) { %>
-                            <div
-                                class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
-                                <div
-                                    class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-                                    <span
-                                        class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">
-                                        <%= servizio.icona || 'star' %>
-                                    </span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3">
-                                    <%= servizio.titolo %>
-                                </h3>
-                                <p class="text-gray-600">
-                                    <%= servizio.descrizione %>
-                                </p>
-                            </div>
-                            <% }); %>
-                                <% } else { %>
-                                    <!-- Fallback servizi hardcoded -->
-                                    <div
-                                        class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-shadow group">
-                                        <div
-                                            class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-primary transition-colors">
-                                            <span
-                                                class="material-symbols-outlined text-primary group-hover:text-white transition-colors text-3xl">cloud_done</span>
-                                        </div>
-                                        <h3 class="text-xl font-bold mb-3">Cloud Transformation</h3>
-                                        <p class="text-gray-600">Migrazione sicura e ottimizzazione delle
-                                            infrastrutture.</p>
-                                    </div>
-                                    <% } %>
+                <div class="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full translate-x-1/3 translate-y-1/3">
+                </div>
+            </div>
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-10 md:p-16 border border-white/20 shadow-2xl">
+                    <span class="material-symbols-outlined text-6xl text-white/40 mb-8 block">format_quote</span>
+                    <blockquote
+                        class="font-serif italic text-2xl md:text-3xl lg:text-4xl text-white leading-snug space-y-4">
+                        <p class="mb-4">"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La
+                            crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta
+                            progressi."</p>
+                        <p class="mb-4">"La creatività nasce dall'angoscia come il giorno nasce dalla notte oscura. E'
+                            nella crisi che sorge l'inventiva, le scoperte e le grandi strategie..."</p>
+                        <p class="mb-4">"La vera crisi è l'incompetenza... Senza crisi non ci sono sfide, senza sfide la
+                            vita è una routine, una lenta agonia. E' nella crisi che emerge il meglio di ognuno..."</p>
+                    </blockquote>
+                    <div class="mt-10 flex items-center gap-4">
+                        <div class="h-1 w-20 bg-white"></div>
+                        <cite class="not-italic text-xl font-bold text-white uppercase tracking-widest">Albert
+                            Einstein</cite>
+                    </div>
                 </div>
             </div>
         </section>
