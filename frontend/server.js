@@ -91,6 +91,22 @@ app.get('/struttura', (req, res) => {
   res.render('struttura', { title: 'Organizzazione - B4US srl | Simplify IT' });
 });
 
+app.get('/storia', async (req, res) => {
+  try {
+    const storia = await fetchFromStrapi('/storia-b4-uses');
+    // Ordina per anno decrescente (più recente prima)
+    const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((a, b) => b.Anno - a.Anno) || [];
+    res.render('storia', { 
+      title: 'La Nostra Storia - B4US srl | Simplify IT',
+      storia: storiaOrdinata,
+      strapiUrl: STRAPI_URL
+    });
+  } catch (error) {
+    console.error('Error rendering storia:', error);
+    res.render('storia', { title: 'La Nostra Storia - B4US srl | Simplify IT', storia: [], strapiUrl: STRAPI_URL });
+  }
+});
+
 app.get('/carriere', async (req, res) => {
   try {
     const jobPositions = await fetchFromStrapi('/job-positions');
