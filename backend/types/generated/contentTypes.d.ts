@@ -507,6 +507,39 @@ export interface ApiServizioServizio extends Schema.CollectionType {
   };
 }
 
+export interface ApiStoriaB4UsStoriaB4Us extends Schema.CollectionType {
+  collectionName: 'storia_b4_uses';
+  info: {
+    description: '';
+    displayName: 'storiaB4US';
+    pluralName: 'storia-b4-uses';
+    singularName: 'storia-b4-us';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Anno: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::storia-b4-us.storia-b4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Descrizione: Attribute.Text;
+    Foto: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::storia-b4-us.storia-b4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTeamMemberTeamMember extends Schema.CollectionType {
   collectionName: 'team_members';
   info: {
@@ -982,6 +1015,7 @@ declare module '@strapi/types' {
       'api::home.home': ApiHomeHome;
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::servizio.servizio': ApiServizioServizio;
+      'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
