@@ -1,0 +1,5 @@
+/* Nasconde il selettore del tema */
+[data-testid="theme-toggle"],
+[aria-label="Theme"] {
+    display: none !important;
+}
