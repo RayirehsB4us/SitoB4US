@@ -112,7 +112,7 @@ app.get('/storia', async (req, res) => {
   try {
     const storia = await fetchFromStrapi('/storia-b4-uses');
     // Ordina per anno decrescente (più recente prima)
-    const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((a, b) => b.Anno - a.Anno) || [];
+    const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((a, b) => a.Anno - b.Anno) || [];
     res.render('storia', { 
       title: 'La Nostra Storia - B4US srl | Simplify IT',
       storia: storiaOrdinata,
