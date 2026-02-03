@@ -132,8 +132,8 @@ const jobPositions = [
 const homePageData = {
   heroTitle: 'Simplify IT with B4US.',
   heroSubtitle: 'Siamo una giovane e dinamica società di consulenza, soluzioni e servizi IT nata per guidare la tua azienda nel futuro digitale.',
-  introTitle: 'Chi è B4US srl?',
-  introDescription: '<p>B4US srl è una giovane e dinamica società di consulenza, soluzioni e servizi IT nata dalla passione di esperti del settore.</p><p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica, offrendo soluzioni su misura che permettano ai nostri clienti di concentrarsi sul loro core business.</p><p>La nostra missione è essere il partner tecnologico di fiducia, guidando l\'innovazione attraverso competenza, etica e visione.</p>',
+  introTitle: 'Chi è B4US?',
+  introDescription: '<p>B4US è una giovane e dinamica società di consulenza, soluzioni e servizi IT nata dalla passione di esperti del settore.</p><p>Ci impegniamo ogni giorno per semplificare la complessità tecnologica, offrendo soluzioni su misura che permettano ai nostri clienti di concentrarsi sul loro core business.</p><p>La nostra missione è essere il partner tecnologico di fiducia, guidando l\'innovazione attraverso competenza, etica e visione.</p>',
   einsteinQuote: '"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta progressi..."',
   servicesTitle: 'Le nostre soluzioni',
   servicesSubtitle: ''

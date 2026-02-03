@@ -52,13 +52,13 @@ app.get('/', async (req, res) => {
     const homeData = await fetchFromStrapi('/home');
     const servizi = await fetchFromStrapi('/servizi');
     res.render('home', { 
-      title: 'B4US srl | Simplify IT',
+      title: 'B4US | Simplify IT',
       home: homeData?.data?.attributes || {},
       servizi: servizi?.data?.map(s => s.attributes) || []
     });
   } catch (error) {
     console.error('Error rendering home:', error);
-    res.render('home', { title: 'B4US srl | Simplify IT', home: {}, servizi: [] });
+    res.render('home', { title: 'B4US | Simplify IT', home: {}, servizi: [] });
   }
 });
 
@@ -67,13 +67,13 @@ app.get('/home', async (req, res) => {
     const homeData = await fetchFromStrapi('/home');
     const servizi = await fetchFromStrapi('/servizi');
     res.render('home', { 
-      title: 'B4US srl | Simplify IT',
+      title: 'B4US | Simplify IT',
       home: homeData?.data?.attributes || {},
       servizi: servizi?.data?.map(s => s.attributes) || []
     });
   } catch (error) {
     console.error('Error rendering home:', error);
-    res.render('home', { title: 'B4US srl | Simplify IT', home: {}, servizi: [] });
+    res.render('home', { title: 'B4US | Simplify IT', home: {}, servizi: [] });
   }
 });
 
@@ -105,7 +105,7 @@ app.get('/servizi', async (req, res) => {
 });
 
 app.get('/struttura', (req, res) => {
-  res.render('struttura', { title: 'Organizzazione - B4US srl | Simplify IT' });
+  res.render('struttura', { title: 'Organizzazione - B4US | Simplify IT' });
 });
 
 app.get('/storia', async (req, res) => {
@@ -114,13 +114,13 @@ app.get('/storia', async (req, res) => {
     // Ordina per anno decrescente (più recente prima)
     const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((b, a) => b.Anno - a.Anno) || [];
     res.render('storia', { 
-      title: 'La Nostra Storia - B4US srl | Simplify IT',
+      title: 'La Nostra Storia - B4US | Simplify IT',
       storia: storiaOrdinata,
       strapiUrl: STRAPI_URL
     });
   } catch (error) {
     console.error('Error rendering storia:', error);
-    res.render('storia', { title: 'La Nostra Storia - B4US srl | Simplify IT', storia: [], strapiUrl: STRAPI_URL });
+    res.render('storia', { title: 'La Nostra Storia - B4US | Simplify IT', storia: [], strapiUrl: STRAPI_URL });
   }
 });
 
