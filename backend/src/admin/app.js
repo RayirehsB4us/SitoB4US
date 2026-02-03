@@ -21,13 +21,13 @@ export default {
         'app.components.LeftMenu.navbrand.title': 'OpenPortal',
         'app.components.LeftMenu.navbrand.workplace': 'B4US',
         'Auth.form.welcome.title': 'Benvenuto!', // Cambia il titolo (opzionale)
-        'Auth.form.welcome.subtitle': 'Accedi al tuo account', // Cambia il sottotitolo
+        'Auth.form.welcome.subtitle': 'Accedi ad OpenPortal', // Cambia il sottotitolo
       },
       en: {
         'app.components.LeftMenu.navbrand.title': 'OpenPortal',
         'app.components.LeftMenu.navbrand.workplace': 'B4US',
         'Auth.form.welcome.title': 'Welcome!',
-        'Auth.form.welcome.subtitle': 'Log in to your account',
+        'Auth.form.welcome.subtitle': 'Log in to OpenPortal',
       },
     },
     theme: {
