@@ -155,6 +155,36 @@ app.get('/blog', async (req, res) => {
   }
 });
 
+app.get('/blog/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    // Fetch articolo per slug
+    const response = await axios.get(`${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`);
+    const post = response.data?.data?.[0]?.attributes || null;
+    
+    // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
+    const allPosts = await fetchFromStrapi('/blog-posts');
+    const relatedPosts = allPosts?.data
+      ?.map(b => b.attributes)
+      .filter(p => p.slug !== slug) || [];
+    
+    res.render('blog-post', { 
+      title: post ? `${post.titolo} | B4US Blog` : 'Articolo non trovato | B4US Blog',
+      post: post,
+      relatedPosts: relatedPosts,
+      strapiUrl: STRAPI_URL
+    });
+  } catch (error) {
+    console.error('Error rendering blog post:', error);
+    res.render('blog-post', { 
+      title: 'Articolo non trovato | B4US Blog', 
+      post: null, 
+      relatedPosts: [],
+      strapiUrl: STRAPI_URL 
+    });
+  }
+});
+
 app.get('/login', (req, res) => {
   res.render('login', { title: 'B4US Portal - Accedi' });
 });
