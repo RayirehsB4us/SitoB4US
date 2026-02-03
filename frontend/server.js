@@ -11,6 +11,10 @@ const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api'
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -120,6 +124,66 @@ app.get('/blog', async (req, res) => {
 
 app.get('/login', (req, res) => {
   res.render('login', { title: 'B4US Portal - Accedi' });
+});
+
+// Login API endpoint
+app.post('/api/login', async (req, res) => {
+  try {
+    const { identifier, password } = req.body;
+
+    if (!identifier || !password) {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Email e password sono richiesti' 
+      });
+    }
+
+    console.log('Attempting login to:', `${STRAPI_URL}/admin/login`);
+    console.log('With email:', identifier);
+
+    // Authenticate with Strapi admin API
+    const response = await axios.post(`${STRAPI_URL}/admin/login`, {
+      email: identifier,
+      password: password
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('Login response status:', response.status);
+
+    if (response.data && response.data.data) {
+      // Login successful
+      console.log('Login successful for:', identifier);
+      return res.json({
+        success: true,
+        message: 'Login effettuato con successo',
+        adminUrl: `${STRAPI_URL}/admin`,
+        token: response.data.data.token
+      });
+    } else {
+      return res.status(401).json({
+        success: false,
+        message: 'Credenziali non valide'
+      });
+    }
+  } catch (error) {
+    console.error('Login error details:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+    
+    const errorMessage = error.response?.data?.error?.message || 
+                        error.response?.data?.message || 
+                        'Email o password non corretti. Assicurati di usare l\'email dell\'admin.';
+    
+    return res.status(error.response?.status || 401).json({
+      success: false,
+      message: errorMessage
+    });
+  }
 });
 
 app.listen(PORT, () => {

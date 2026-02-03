@@ -18,11 +18,18 @@
                             continuare
                         </p>
                     </div>
-                    <form action="#" class="space-y-6">
+                    <form id="loginForm" class="space-y-6">
+                        <div id="errorMessage"
+                            class="hidden p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm">
+                        </div>
+                        <div id="successMessage"
+                            class="hidden p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-green-600 dark:text-green-400 text-sm">
+                        </div>
+
                         <div>
                             <label
                                 class="block text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-2"
-                                for="username">Nome Utente</label>
+                                for="username">Email / Nome Utente</label>
                             <div class="relative group">
                                 <span
                                     class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
@@ -30,7 +37,8 @@
                                 </span>
                                 <input
                                     class="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
-                                    id="username" name="username" placeholder="nome.cognome" required="" type="text" />
+                                    id="username" name="username" placeholder="admin@example.com" required=""
+                                    type="text" />
                             </div>
                         </div>
                         <div>
@@ -64,11 +72,11 @@
                                 Rimani collegato
                             </label>
                         </div>
-                        <button
+                        <button id="submitBtn"
                             class="w-full flex justify-center items-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-semibold text-white bg-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary transition-all transform active:scale-[0.98]"
                             type="submit">
                             <span class="material-symbols-outlined mr-2 text-lg">login</span>
-                            Accedi
+                            <span id="btnText">Accedi</span>
                         </button>
                     </form>
                     <div class="mt-10 pt-6 border-t border-slate-100 dark:border-slate-800">
@@ -84,6 +92,89 @@
         </div>
 
         <%- include('partials/footer') %>
+
+            <script>
+                // Toggle password visibility
+                document.querySelector('button[type="button"]').addEventListener('click', function () {
+                    const passwordInput = document.getElementById('password');
+                    const icon = this.querySelector('.material-symbols-outlined');
+
+                    if (passwordInput.type === 'password') {
+                        passwordInput.type = 'text';
+                        icon.textContent = 'visibility_off';
+                    } else {
+                        passwordInput.type = 'password';
+                        icon.textContent = 'visibility';
+                    }
+                });
+
+                // Handle form submission
+                document.getElementById('loginForm').addEventListener('submit', async function (e) {
+                    e.preventDefault();
+
+                    const submitBtn = document.getElementById('submitBtn');
+                    const btnText = document.getElementById('btnText');
+                    const errorMessage = document.getElementById('errorMessage');
+                    const successMessage = document.getElementById('successMessage');
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+
+                    // Hide previous messages
+                    errorMessage.classList.add('hidden');
+                    successMessage.classList.add('hidden');
+
+                    // Disable button and show loading state
+                    submitBtn.disabled = true;
+                    btnText.textContent = 'Autenticazione...';
+
+                    try {
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                identifier: username,
+                                password: password
+                            })
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            // Show success message
+                            successMessage.textContent = data.message + '. Apertura pannello admin...';
+                            successMessage.classList.remove('hidden');
+
+                            // Wait a moment before opening admin panel
+                            setTimeout(() => {
+                                // Open Strapi admin in new tab
+                                window.open(data.adminUrl, '_blank');
+
+                                // Reset form after 2 seconds
+                                setTimeout(() => {
+                                    document.getElementById('loginForm').reset();
+                                    successMessage.classList.add('hidden');
+                                    btnText.textContent = 'Accedi';
+                                    submitBtn.disabled = false;
+                                }, 2000);
+                            }, 500);
+                        } else {
+                            // Show error message
+                            errorMessage.textContent = data.message || 'Errore durante il login';
+                            errorMessage.classList.remove('hidden');
+                            btnText.textContent = 'Accedi';
+                            submitBtn.disabled = false;
+                        }
+                    } catch (error) {
+                        console.error('Login error:', error);
+                        errorMessage.textContent = 'Errore di connessione. Riprova.';
+                        errorMessage.classList.remove('hidden');
+                        btnText.textContent = 'Accedi';
+                        submitBtn.disabled = false;
+                    }
+                });
+            </script>
 </body>
 
 </html>
