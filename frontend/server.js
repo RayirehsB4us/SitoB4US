@@ -2,10 +2,27 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const axios = require('axios');
+const multer = require('multer');
+const FormData = require('form-data');
+const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
+
+// Configurazione Multer per l'upload dei file
+const upload = multer({ 
+  dest: 'uploads/',
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Formato file non supportato. Usa PDF, DOC o DOCX.'));
+    }
+  }
+});
 
 // Set EJS as the template engine
 app.set('view engine', 'ejs');
@@ -95,7 +112,7 @@ app.get('/storia', async (req, res) => {
   try {
     const storia = await fetchFromStrapi('/storia-b4-uses');
     // Ordina per anno decrescente (più recente prima)
-    const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((a, b) => a.Anno - b.Anno) || [];
+    const storiaOrdinata = storia?.data?.map(s => s.attributes).sort((a, b) => b.Anno - a.Anno) || [];
     res.render('storia', { 
       title: 'La Nostra Storia - B4US srl | Simplify IT',
       storia: storiaOrdinata,
@@ -112,7 +129,7 @@ app.get('/carriere', async (req, res) => {
     const jobPositions = await fetchFromStrapi('/job-positions');
     res.render('carriere', { 
       title: 'Lavora Con Noi - B4US Team',
-      jobPositions: jobPositions?.data?.map(j => j.attributes) || []
+      jobPositions: jobPositions?.data?.map(j => ({ id: j.id, ...j.attributes })) || []
     });
   } catch (error) {
     console.error('Error rendering carriere:', error);
@@ -231,6 +248,115 @@ app.post('/api/login', async (req, res) => {
                         'Email o password non corretti. Assicurati di usare l\'email dell\'admin.';
     
     return res.status(error.response?.status || 401).json({
+      success: false,
+      message: errorMessage
+    });
+  }
+});
+
+// Job application endpoint
+app.post('/api/job-application', upload.single('cv'), async (req, res) => {
+  let uploadedFilePath = null;
+  
+  try {
+    const { nome, cognome, dataNascita, email, telefono, jobPosition } = req.body;
+    const cvFile = req.file;
+
+    // Validazione
+    if (!nome || !cognome || !dataNascita || !email || !telefono || !jobPosition) {
+      return res.status(400).json({
+        success: false,
+        message: 'Tutti i campi sono obbligatori'
+      });
+    }
+
+    if (!cvFile) {
+      return res.status(400).json({
+        success: false,
+        message: 'Il CV è obbligatorio'
+      });
+    }
+
+    uploadedFilePath = cvFile.path;
+
+    // Step 1: Upload del CV a Strapi
+    const formData = new FormData();
+    formData.append('files', fs.createReadStream(cvFile.path), cvFile.originalname);
+
+    console.log('Uploading CV to Strapi...');
+    const uploadResponse = await axios.post(`${STRAPI_API_URL}/upload`, formData, {
+      headers: {
+        ...formData.getHeaders()
+      }
+    });
+
+    const uploadedCV = uploadResponse.data[0];
+    console.log('CV uploaded successfully:', uploadedCV.id);
+
+    // Step 2: Determina il job_position ID
+    let jobPositionId = null;
+    if (jobPosition !== 'autocandidatura') {
+      jobPositionId = parseInt(jobPosition);
+    }
+
+    // Step 3: Crea la job-request
+    const jobRequestData = {
+      data: {
+        Nome: nome,
+        Cognome: cognome,
+        AnnoNascita: dataNascita,
+        email: email,
+        Telefono: telefono,
+        cv: [uploadedCV.id],
+        publishedAt: new Date().toISOString()
+      }
+    };
+
+    // Aggiungi job_position solo se non è autocandidatura
+    if (jobPositionId) {
+      jobRequestData.data.job_position = jobPositionId;
+    }
+
+    console.log('Creating job request with data:', JSON.stringify(jobRequestData, null, 2));
+
+    const jobRequestResponse = await axios.post(
+      `${STRAPI_API_URL}/job-requests`,
+      jobRequestData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    console.log('Job request created successfully:', jobRequestResponse.data.data.id);
+
+    // Pulisci il file temporaneo
+    fs.unlinkSync(uploadedFilePath);
+
+    res.json({
+      success: true,
+      message: 'Candidatura inviata con successo! Ti contatteremo presto.',
+      data: jobRequestResponse.data
+    });
+
+  } catch (error) {
+    console.error('Job application error:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+
+    // Pulisci il file temporaneo in caso di errore
+    if (uploadedFilePath && fs.existsSync(uploadedFilePath)) {
+      fs.unlinkSync(uploadedFilePath);
+    }
+
+    const errorMessage = error.response?.data?.error?.message || 
+                        error.message || 
+                        'Errore durante l\'invio della candidatura';
+
+    res.status(error.response?.status || 500).json({
       success: false,
       message: errorMessage
     });

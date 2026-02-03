@@ -472,6 +472,47 @@ export interface ApiJobPositionJobPosition extends Schema.CollectionType {
   };
 }
 
+export interface ApiJobRequestJobRequest extends Schema.CollectionType {
+  collectionName: 'job_requests';
+  info: {
+    description: '';
+    displayName: 'jobRequest';
+    pluralName: 'job-requests';
+    singularName: 'job-request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AnnoNascita: Attribute.Date;
+    Cognome: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::job-request.job-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    cv: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    email: Attribute.Email;
+    job_position: Attribute.Relation<
+      'api::job-request.job-request',
+      'oneToOne',
+      'api::job-position.job-position'
+    >;
+    Nome: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    Telefono: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::job-request.job-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiServizioServizio extends Schema.CollectionType {
   collectionName: 'servizi';
   info: {
@@ -1014,6 +1055,7 @@ declare module '@strapi/types' {
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::home.home': ApiHomeHome;
       'api::job-position.job-position': ApiJobPositionJobPosition;
+      'api::job-request.job-request': ApiJobRequestJobRequest;
       'api::servizio.servizio': ApiServizioServizio;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
