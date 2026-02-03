@@ -25,7 +25,7 @@
                             Esplora i Servizi
                         </a>
                         <a class="px-8 py-4 bg-white dark:bg-slate-800 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-700 font-bold rounded-xl hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300"
-                            href="#">
+                            href="/contatti">
                             Contattaci ora
                         </a>
                     </div>
@@ -57,11 +57,6 @@
                                 <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
                                     <%= servizio.descrizione %>
                                 </p>
-                                <a class="inline-flex items-center text-primary font-bold group/btn" href="#">
-                                    Learn More
-                                    <span
-                                        class="material-symbols-outlined ml-1 text-sm group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
-                                </a>
                             </div>
                             <% }); %>
                                 <% } else { %>
@@ -82,29 +77,6 @@
                 </div>
             </div>
         </section>
-        <section class="py-24 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="relative pl-12 border-l-4 border-primary">
-                    <blockquote
-                        class="italic text-slate-800 dark:text-slate-200 leading-relaxed text-right md:text-xl font-light">
-                        "Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La crisi può essere
-                        una
-                        grande benedizione per le persone e le nazioni, perché la crisi porta progressi. La creatività
-                        nasce
-                        dall'angoscia come il giorno nasce dalla notte oscura. E' nella crisi che sorge l'inventiva, le
-                        scoperte e le grandi strategie... Senza crisi non ci sono sfide, senza sfide la vita è una
-                        routine,
-                        una lenta agonia. E' nella crisi che emerge il meglio di ognuno, perché senza crisi tutti i
-                        venti
-                        sono solo lievi brezze... L'unico pericolo della crisi è la tragedia che può conseguire al non
-                        voler
-                        lottare per superarla."
-                    </blockquote>
-                    <div class="mt-6 text-right font-bold text-slate-600 dark:text-slate-400">— Albert Einstein</div>
-                </div>
-            </div>
-        </section>
-
         <%- include('partials/footer') %>
 </body>
 
