@@ -148,8 +148,11 @@
 
                             // Wait a moment before opening admin panel
                             setTimeout(() => {
-                                // Open Strapi admin in new tab
-                                window.open(data.adminUrl, '_blank');
+                                // Open Strapi auto-login page with credentials in new tab
+                                // This page is on the same domain as Strapi (localhost:1337)
+                                // so it can make the login request and set cookies properly
+                                const autoLoginUrl = `${data.adminUrl}/auto-login.html?email=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+                                window.open(autoLoginUrl, '_blank');
 
                                 // Reset form after 2 seconds
                                 setTimeout(() => {

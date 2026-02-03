@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reindirizzamento Admin...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+
+<body class="bg-slate-50 flex items-center justify-center min-h-screen">
+    <div class="text-center">
+        <div class="mb-4">
+            <span class="material-symbols-outlined text-6xl text-primary animate-spin">refresh</span>
+        </div>
+        <h1 class="text-2xl font-bold text-slate-800 mb-2">Accesso in corso...</h1>
+        <p class="text-slate-600">Verrai reindirizzato all'admin panel</p>
+    </div>
+
+    <!-- Hidden form for auto-login -->
+    <form id="autoLoginForm" method="POST" action="" style="display: none;">
+        <input type="hidden" name="email" id="emailField">
+        <input type="hidden" name="password" id="passwordField">
+    </form>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+        const password = urlParams.get('password');
+        const adminUrl = urlParams.get('adminUrl') || 'http://localhost:1337';
+
+        if (email && password) {
+            // Set form action to Strapi admin login endpoint
+            const form = document.getElementById('autoLoginForm');
+            form.action = adminUrl + '/admin/login';
+
+            // Set credentials
+            document.getElementById('emailField').value = email;
+            document.getElementById('passwordField').value = password;
+
+            // Auto-submit after a brief delay
+            setTimeout(() => {
+                form.submit();
+            }, 500);
+        } else {
+            document.body.innerHTML = `
+                <div class="text-center">
+                    <span class="material-symbols-outlined text-6xl text-red-500">error</span>
+                    <h1 class="text-2xl font-bold text-slate-800 mb-2 mt-4">Errore</h1>
+                    <p class="text-slate-600">Credenziali mancanti</p>
+                    <a href="/login" class="mt-4 inline-block px-6 py-2 bg-primary text-white rounded-lg hover:bg-opacity-90 transition-all">Torna al Login</a>
+                </div>
+            `;
+        }
+    </script>
+</body>
+
+</html>

@@ -126,6 +126,11 @@ app.get('/login', (req, res) => {
   res.render('login', { title: 'B4US Portal - Accedi' });
 });
 
+// Strapi redirect page
+app.get('/strapi-redirect', (req, res) => {
+  res.render('strapi-redirect', { title: 'Reindirizzamento...' });
+});
+
 // Login API endpoint
 app.post('/api/login', async (req, res) => {
   try {
@@ -159,7 +164,7 @@ app.post('/api/login', async (req, res) => {
       return res.json({
         success: true,
         message: 'Login effettuato con successo',
-        adminUrl: `${STRAPI_URL}/admin`,
+        adminUrl: STRAPI_URL,
         token: response.data.data.token
       });
     } else {
