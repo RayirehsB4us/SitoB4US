@@ -3,3 +3,57 @@
 [aria-label="Theme"] {
     display: none !important;
 }
+
+/* Personalizzazione pagina di login */
+
+/* Sfondo personalizzato per la pagina di login */
+[class*="AuthPage"],
+[class*="UnauthenticatedLayout"] {
+    background-image: url('./sfondo.png') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
+/* Rende il form di login più visibile sullo sfondo */
+[class*="Login_wrapper"],
+[class*="AuthPage"] main > div {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    padding: 3rem !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
+    backdrop-filter: blur(10px) !important;
+}
+
+/* Nasconde completamente il testo "Welcome to Strapi! Log in to your Strapi account" */
+[class*="Login_title"],
+[class*="Login_subtitle"] {
+    display: none !important;
+}
+
+/* OPPURE: Cambia il testo (se vuoi mantenerlo visibile ma modificato) */
+/* Rimuovi il commento sotto se preferisci questa opzione */
+/*
+[class*="Login_title"],
+[class*="Login_subtitle"] {
+    font-size: 1.2rem !important;
+    color: #28a745 !important;
+}
+*/
+
+/* Ingrandisce il logo nella pagina di login */
+[class*="AuthPage"] img,
+[class*="Login"] img,
+img[alt*="logo"] {
+    max-width: 300px !important; /* Aumenta la dimensione (default è circa 150px) */
+    height: auto !important;
+    margin-bottom: 2rem !important;
+}
+
+/* Centra meglio il logo */
+[class*="Login_wrapper"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}

@@ -2,15 +2,31 @@ import './extensions/theme.css';
 
 export default {
   config: {
+    // Logo personalizzato per la pagina di login
+    auth: {
+      logo: '/logo.png',
+    },
+    // Logo per il menu laterale (admin panel)
+    menu: {
+      logo: '/logo.png',
+    },
+    // Titolo nell'header
+    head: {
+      favicon: '/logo.png',
+    },
     locales: ['it'],
     translations: {
       it: {
         'app.components.LeftMenu.navbrand.title': 'OpenPortal',
         'app.components.LeftMenu.navbrand.workplace': 'B4US',
+        'Auth.form.welcome.title': 'Benvenuto!', // Cambia il titolo (opzionale)
+        'Auth.form.welcome.subtitle': 'Accedi al tuo account', // Cambia il sottotitolo
       },
       en: {
         'app.components.LeftMenu.navbrand.title': 'OpenPortal',
         'app.components.LeftMenu.navbrand.workplace': 'B4US',
+        'Auth.form.welcome.title': 'Welcome!',
+        'Auth.form.welcome.subtitle': 'Log in to your account',
       },
     },
     theme: {
