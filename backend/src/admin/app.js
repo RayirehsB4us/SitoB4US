@@ -5,6 +5,7 @@ export default {
     // Logo personalizzato per la pagina di login
     auth: {
       logo: '/logo.png',
+      backgroundImage: '/sfondo.png',
     },
     // Logo per il menu laterale (admin panel)
     menu: {

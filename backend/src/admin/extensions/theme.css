@@ -7,8 +7,7 @@
 /* Personalizzazione pagina di login */
 
 /* Sfondo personalizzato per la pagina di login */
-[class*="AuthPage"],
-[class*="UnauthenticatedLayout"] {
+body {
     background-image: url('./sfondo.png') !important;
     background-size: cover !important;
     background-position: center !important;
@@ -16,14 +15,23 @@
     background-attachment: fixed !important;
 }
 
+/* Sfondo anche per il contenitore principale */
+#app,
+main {
+    background: transparent !important;
+}
+
 /* Rende il form di login più visibile sullo sfondo */
 [class*="Login_wrapper"],
-[class*="AuthPage"] main > div {
+form[class*="Login"],
+div[class*="LayoutContent"] > div:first-child {
     background-color: rgba(255, 255, 255, 0.95) !important;
     padding: 3rem !important;
     border-radius: 12px !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1) !important;
     backdrop-filter: blur(10px) !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
 }
 
 /* Nasconde completamente il testo "Welcome to Strapi! Log in to your Strapi account" */
