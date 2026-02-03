@@ -2,6 +2,17 @@ import './extensions/theme.css';
 
 export default {
   config: {
+    locales: ['it'],
+    translations: {
+      it: {
+        'app.components.LeftMenu.navbrand.title': 'OpenPortal',
+        'app.components.LeftMenu.navbrand.workplace': 'B4US',
+      },
+      en: {
+        'app.components.LeftMenu.navbrand.title': 'OpenPortal',
+        'app.components.LeftMenu.navbrand.workplace': 'B4US',
+      },
+    },
     theme: {
       colors: {
         primary100: "#d4edda",
