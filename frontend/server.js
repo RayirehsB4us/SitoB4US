@@ -1,5 +1,7 @@
 require('dotenv').config();
 const express = require('express');
+const https = require('https');
+const http = require('http');
 const path = require('path');
 const axios = require('axios');
 const multer = require('multer');
@@ -7,6 +9,7 @@ const FormData = require('form-data');
 const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
 const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
 
@@ -494,6 +497,50 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
-});
+// Funzione per avviare il server
+function startServer() {
+  // Controlla se esistono i certificati SSL
+  const keyPath = path.join(__dirname, 'localhost-key.pem');
+  const certPath = path.join(__dirname, 'localhost.pem');
+  
+  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    // Se i certificati esistono, avvia server HTTPS
+    try {
+      const httpsOptions = {
+        key: fs.readFileSync(keyPath),
+        cert: fs.readFileSync(certPath)
+      };
+
+      // Server HTTPS
+      https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
+        console.log(`✅ HTTPS Server running at https://localhost:${HTTPS_PORT}`);
+      });
+
+      // Server HTTP che reindirizza a HTTPS (opzionale)
+      http.createServer((req, res) => {
+        res.writeHead(301, { Location: `https://${req.headers.host.split(':')[0]}:${HTTPS_PORT}${req.url}` });
+        res.end();
+      }).listen(PORT, () => {
+        console.log(`🔄 HTTP Server (port ${PORT}) redirecting to HTTPS`);
+      });
+    } catch (error) {
+      console.error('❌ Error loading SSL certificates:', error.message);
+      console.log('⚠️  Falling back to HTTP...');
+      startHTTPServer();
+    }
+  } else {
+    // Se non ci sono certificati, usa HTTP normale
+    console.log('ℹ️  SSL certificates not found. Starting HTTP server...');
+    console.log('ℹ️  To enable HTTPS, generate certificates with: mkcert localhost');
+    startHTTPServer();
+  }
+}
+
+function startHTTPServer() {
+  app.listen(PORT, () => {
+    console.log(`✅ HTTP Server running at http://localhost:${PORT}`);
+  });
+}
+
+// Avvia il server
+startServer();

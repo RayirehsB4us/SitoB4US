@@ -30,3 +30,9 @@ build/
 
 # Upload temporary files
 uploads/
+
+# SSL Certificates (local development)
+*.pem
+*.key
+*.cert
+*.crt
