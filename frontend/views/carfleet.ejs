@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="it">
+
+<head>
+    <%- include('partials/head') %>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <style>
+            @keyframes float {
+
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+
+                50% {
+                    transform: translateY(-20px);
+                }
+            }
+
+            .float-animation {
+                animation: float 6s ease-in-out infinite;
+            }
+
+            .card-hover {
+                transition: all 0.3s ease;
+            }
+
+            .card-hover:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            }
+        </style>
+</head>
+
+<body class="bg-background-light text-secondary font-sans transition-colors duration-300">
+    <%- include('partials/navbar') %>
+
+        <main class="pt-16">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center px-4 sm:px-6 lg:px-8">
+                        <!-- Left Content -->
+                        <div>
+                            <div
+                                class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-primary text-xs font-semibold tracking-wide uppercase mb-6">
+                                <span class="material-icons text-sm mr-1">directions_car</span>
+                                Gestione Flotta Aziendale
+                            </div>
+                            <h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">
+                                Gestisci la tua flotta
+                                <span class="text-primary">aziendale con intelligenza</span>
+                            </h1>
+                            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                                Gestisci prenotazioni in modo efficiente, traccia i veicoli in tempo reale e automatizza
+                                gli accessi con la nostra soluzione personalizzata su PowerApps. Semplifica le
+                                operazioni
+                                della tua flotta oggi stesso.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="/contatti"
+                                    class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-green-600 md:text-lg shadow-lg shadow-green-500/40 transition-transform transform hover:-translate-y-1">
+                                    Prenota una Demo
+                                    <span class="material-icons ml-2">arrow_forward</span>
+                                </a>
+                                <a href="#funzionalita"
+                                    class="flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 md:text-lg transition-colors">
+                                    Scopri le Funzionalità
+                                </a>
+                            </div>
+                            <div class="mt-8 flex flex-wrap items-center gap-6 text-gray-400 text-sm font-medium">
+                                <div class="flex items-center gap-1">
+                                    <span class="material-icons text-primary text-base">check_circle</span> Tracciamento
+                                    GPS
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <span class="material-icons text-primary text-base">check_circle</span> PowerApps
+                                    Integration
+                                </div>
+                                <div class="flex items-center gap-1">
+                                    <span class="material-icons text-primary text-base">check_circle</span> Accesso
+                                    Automatico
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Content - Dashboard Preview -->
+                        <div class="relative">
+                            <div
+                                class="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-primary opacity-20 blur-3xl rounded-full">
+                            </div>
+                            <div class="relative z-10">
+                                <div
+                                    class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 card-hover">
+                                    <img src="/images/carfleet-dashboard.png"
+                                        alt="Dashboard CarFleet - Gestione Flotta Aziendale"
+                                        class="w-full h-auto object-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Overview Section -->
+            <section class="py-16 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-12">
+                        <p class="text-base text-primary font-semibold tracking-wide uppercase">Panoramica Dashboard</p>
+                        <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                            Informazioni in tempo reale a colpo d'occhio
+                        </h2>
+                        <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
+                            Monitora ogni aspetto della tua flotta con metriche chiare e actionable
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <!-- Card 1 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-red-100 rounded-md p-3">
+                                        <span class="material-icons text-red-600">priority_high</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Validazioni
+                                                Prenotazioni</dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">3</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Elementi ad alta priorità che richiedono
+                                        attenzione.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-green-100 rounded-md p-3">
+                                        <span class="material-icons text-green-600">calendar_today</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Prenotazioni Correnti
+                                            </dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">5</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Approvate con successo e pianificate.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 3 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-primary">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-yellow-100 rounded-md p-3">
+                                        <span class="material-icons text-yellow-600">schedule</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Rientri Ritardati
+                                            </dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">1</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Veicoli non riconsegnati in tempo.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 4 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-blue-500">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-blue-100 rounded-md p-3">
+                                        <span class="material-icons text-blue-600">check_circle</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Viaggi Attivi</dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">23</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Veicoli attualmente in circolazione.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 5 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-orange-500">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-orange-100 rounded-md p-3">
+                                        <span class="material-icons text-orange-600">warning</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Avvisi di Sistema
+                                            </dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">1</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Segnalazioni che necessitano revisione immediata.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 6 -->
+                        <div
+                            class="bg-white overflow-hidden shadow rounded-lg hover:shadow-lg transition-shadow duration-300 border-t-4 border-gray-500">
+                            <div class="px-4 py-5 sm:p-6">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 bg-gray-100 rounded-md p-3">
+                                        <span class="material-icons text-gray-600">build</span>
+                                    </div>
+                                    <div class="ml-5 w-0 flex-1">
+                                        <dl>
+                                            <dt class="text-sm font-medium text-gray-500 truncate">Manutenzione</dt>
+                                            <dd>
+                                                <div class="text-3xl font-bold text-gray-900">10</div>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <p class="text-sm text-gray-500">Veicoli in assistenza o riparazione.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="funzionalita" class="py-16 lg:py-24">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                            Gestione Flotta Intelligente
+                        </h2>
+                        <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-500">
+                            CarFleet integra hardware e software avanzati per fornire un'esperienza senza interruzioni
+                            sia
+                            ai gestori che ai conducenti.
+                        </p>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
+                        <!-- Text Content -->
+                        <div>
+                            <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mb-4">
+                                Integrazione PowerApps
+                            </h3>
+                            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                                Costruita sulla robusta piattaforma PowerApps, la nostra soluzione offre flessibilità e
+                                sicurezza. Personalizza i flussi di lavoro, gestisci i permessi e integra perfettamente
+                                con
+                                il tuo ecosistema aziendale esistente.
+                            </p>
+
+                            <div class="space-y-6">
+                                <!-- Feature 1 -->
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 h-12 w-12 rounded-md bg-primary text-white flex items-center justify-center">
+                                        <span class="material-icons">verified_user</span>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg leading-6 font-medium text-gray-900">Validazioni Sicure</h4>
+                                        <p class="mt-2 text-base text-gray-500">
+                                            I processi di approvazione multi-livello garantiscono il rigoroso rispetto
+                                            delle
+                                            politiche di utilizzo dei veicoli.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Feature 2 -->
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 h-12 w-12 rounded-md bg-primary text-white flex items-center justify-center">
+                                        <span class="material-icons">gps_fixed</span>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h4 class="text-lg leading-6 font-medium text-gray-900">Tracciamento GPS in
+                                            Tempo
+                                            Reale</h4>
+                                        <p class="mt-2 text-base text-gray-500">
+                                            Monitora la posizione dell'intera flotta in tempo reale sulla mappa.
+                                            Ottimizza i
+                                            percorsi e garantisci la sicurezza dei conducenti.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map Preview -->
+                        <div class="relative">
+                            <div
+                                class="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md bg-white border border-gray-200 overflow-hidden card-hover">
+                                <div
+                                    class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+                                    <span class="text-sm font-semibold text-gray-700">Mappa Flotta</span>
+                                    <span
+                                        class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Live</span>
+                                </div>
+                                <div class="relative h-64 bg-gray-200">
+                                    <img alt="Vista dettagliata mappa città"
+                                        class="w-full h-full object-cover opacity-70"
+                                        src="/images/fleet-tracking.png" />
+                                    <div class="absolute top-1/4 left-1/4 transform -translate-x-1/2 -translate-y-1/2">
+                                        <div class="relative">
+                                            <div
+                                                class="w-4 h-4 bg-primary rounded-full animate-ping absolute opacity-75">
+                                            </div>
+                                            <span
+                                                class="material-icons text-primary text-3xl relative z-10 drop-shadow-md">place</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="absolute bottom-1/3 right-1/3 transform -translate-x-1/2 -translate-y-1/2">
+                                        <span class="material-icons text-blue-500 text-3xl drop-shadow-md">place</span>
+                                    </div>
+                                    <div class="absolute top-1/2 right-1/4 transform -translate-x-1/2 -translate-y-1/2">
+                                        <span
+                                            class="material-icons text-yellow-500 text-3xl drop-shadow-md">place</span>
+                                    </div>
+                                </div>
+                                <div class="p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center">
+                                            <div
+                                                class="h-8 w-8 rounded-full bg-gray-300 overflow-hidden mr-3 flex items-center justify-center">
+                                                <span class="material-icons text-gray-600">person</span>
+                                            </div>
+                                            <div>
+                                                <p class="text-sm font-medium text-gray-900">Luigi Di Mauro</p>
+                                                <p class="text-xs text-gray-500">Fiat Panda - EZ 998 KL</p>
+                                            </div>
+                                        </div>
+                                        <span class="text-xs font-bold text-primary">In Movimento • 45 km/h</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Smart Access Section -->
+                    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                        <!-- Image First on Desktop -->
+                        <div class="lg:order-1 order-2">
+                            <div class="relative w-full max-w-sm mx-auto">
+                                <div
+                                    class="rounded-2xl bg-white shadow-xl overflow-hidden flex items-center justify-center p-8 border border-gray-100 card-hover">
+                                    <img alt="Meccanismo di serratura intelligente ad alta tecnologia"
+                                        class="object-contain w-full h-full transform hover:scale-105 transition-transform duration-500"
+                                        src="/images/smart-lock.png" />
+                                </div>
+                                <div
+                                    class="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full flex items-center justify-center animate-pulse">
+                                    <span class="material-icons text-primary text-4xl">wifi_tethering</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Text Content -->
+                        <div class="lg:order-2 order-1">
+                            <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mb-4">
+                                Controllo Accesso Intelligente
+                            </h3>
+                            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                                Dimentica le chiavi fisiche. La nostra tecnologia di geofencing consente capacità
+                                automatiche
+                                di blocco e sblocco quando il conducente è vicino al veicolo.
+                            </p>
+
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <span class="material-icons text-primary mr-3 mt-1">check_circle</span>
+                                    <div>
+                                        <p class="text-base text-gray-600">
+                                            <strong class="font-medium text-gray-900">Chiave Mobile:</strong> Sblocca le
+                                            auto
+                                            direttamente dall'app.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="material-icons text-primary mr-3 mt-1">check_circle</span>
+                                    <div>
+                                        <p class="text-base text-gray-600">
+                                            <strong class="font-medium text-gray-900">Geofencing:</strong> Rilevamento
+                                            automatico di prossimità per accesso senza interruzioni.
+                                        </p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="material-icons text-primary mr-3 mt-1">check_circle</span>
+                                    <div>
+                                        <p class="text-base text-gray-600">
+                                            <strong class="font-medium text-gray-900">Accesso Remoto:</strong> Gli
+                                            amministratori possono sbloccare i veicoli da remoto in caso di emergenza.
+                                        </p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="bg-primary py-16">
+                <div class="max-w-2xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                        <span class="block">Pronto a potenziare la tua flotta?</span>
+                        <span class="block mt-2">Inizia a usare CarFleet oggi.</span>
+                    </h2>
+                    <p class="mt-4 text-lg leading-6 text-green-100">
+                        Unisciti a centinaia di aziende che stanno ottimizzando la loro logistica e riducendo i costi
+                        con la
+                        nostra soluzione intelligente di gestione flotta.
+                    </p>
+                    <a href="/contatti"
+                        class="mt-8 inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-primary bg-white hover:bg-gray-50 transition-colors shadow-lg">
+                        Inizia Gratuitamente
+                        <span class="material-icons ml-2">arrow_forward</span>
+                    </a>
+                </div>
+            </section>
+        </main>
+
+        <%- include('partials/footer') %>
+</body>
+
+</html>

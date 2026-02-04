@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "demo_requests",
+  "info": {
+    "singularName": "demo-request",
+    "pluralName": "demo-requests",
+    "displayName": "demoRequest"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "cognome": {
+      "type": "string"
+    },
+    "azienda": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "software_product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::software-product.software-product"
+    }
+  }
+}

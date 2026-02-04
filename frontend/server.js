@@ -99,6 +99,10 @@ app.get('/open4us', (req, res) => {
   res.render('open4us', { title: 'Open4US - Accesso Smart | B4US' });
 });
 
+app.get('/carfleet', (req, res) => {
+  res.render('carfleet', { title: 'CarFleet - Gestione Flotta Intelligente | B4US' });
+});
+
 app.get('/servizi', async (req, res) => {
   try {
     const servizi = await fetchFromStrapi('/servizi');

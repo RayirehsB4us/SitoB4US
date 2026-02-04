@@ -400,6 +400,44 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiDemoRequestDemoRequest extends Schema.CollectionType {
+  collectionName: 'demo_requests';
+  info: {
+    displayName: 'demoRequest';
+    pluralName: 'demo-requests';
+    singularName: 'demo-request';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    azienda: Attribute.String;
+    cognome: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::demo-request.demo-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    email: Attribute.Email;
+    nome: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    software_product: Attribute.Relation<
+      'api::demo-request.demo-request',
+      'oneToOne',
+      'api::software-product.software-product'
+    >;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::demo-request.demo-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiHomeHome extends Schema.SingleType {
   collectionName: 'homes';
   info: {
@@ -541,6 +579,37 @@ export interface ApiServizioServizio extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::servizio.servizio',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSoftwareProductSoftwareProduct
+  extends Schema.CollectionType {
+  collectionName: 'software_products';
+  info: {
+    displayName: 'softwareProduct';
+    pluralName: 'software-products';
+    singularName: 'software-product';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::software-product.software-product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    name: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::software-product.software-product',
       'oneToOne',
       'admin::user'
     > &
@@ -1053,10 +1122,12 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::home.home': ApiHomeHome;
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::job-request.job-request': ApiJobRequestJobRequest;
       'api::servizio.servizio': ApiServizioServizio;
+      'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
