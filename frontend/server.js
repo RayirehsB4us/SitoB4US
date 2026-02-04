@@ -91,6 +91,10 @@ app.get('/chi-siamo', async (req, res) => {
   }
 });
 
+app.get('/prodotti', (req, res) => {
+  res.render('prodotti', { title: 'Prodotti | B4US - Simplify IT' });
+});
+
 app.get('/servizi', async (req, res) => {
   try {
     const servizi = await fetchFromStrapi('/servizi');
