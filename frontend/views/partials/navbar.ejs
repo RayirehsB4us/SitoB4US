@@ -5,11 +5,14 @@
                 <img alt="B4US Logo" class="nav-logo" src="/images/logo.png" />
             </a>
         </div>
+        
+        <!-- Desktop Menu -->
         <div class="hidden lg:flex items-center space-x-8">
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/home">Home</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/chi-siamo">Chi siamo</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/storia">Storia</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/servizi">Servizi</a>
+            <a class="text-sm font-semibold hover:text-primary transition-colors" href="/prodotti">Prodotti</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/struttura">Organizzazione</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/carriere">Lavora con noi</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/contatti">Contatti</a>
@@ -17,5 +20,69 @@
             <a class="inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20"
                 href="/login">Accedi</a>
         </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-button" class="lg:hidden flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary transition-colors" 
+                aria-label="Menu" 
+                aria-expanded="false"
+                style="min-width: 40px; min-height: 40px;">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-200 shadow-lg absolute left-0 right-0" style="top: var(--nav-height);">
+        <div class="px-4 py-3 space-y-1 max-h-[calc(100vh-var(--nav-height))] overflow-y-auto">
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/home">Home</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/chi-siamo">Chi siamo</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/storia">Storia</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/servizi">Servizi</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/prodotti">Prodotti</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/struttura">Organizzazione</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/carriere">Lavora con noi</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/contatti">Contatti</a>
+            <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/blog">Blog</a>
+            <a class="block mx-3 my-2 px-5 py-2 text-center text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20" href="/login">Accedi</a>
+        </div>
     </div>
 </nav>
+
+<script>
+    // Mobile menu toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                menuButton.setAttribute('aria-expanded', !isOpen);
+                console.log('Menu toggled, open:', !isOpen);
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                const isClickInside = menuButton.contains(event.target) || mobileMenu.contains(event.target);
+                if (!isClickInside && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+            
+            // Close menu when clicking on a link
+            const menuLinks = mobileMenu.querySelectorAll('a');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.add('hidden');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+        } else {
+            console.error('Menu button or mobile menu not found');
+        }
+    });
+</script>
