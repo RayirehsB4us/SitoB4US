@@ -266,6 +266,120 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
+// Demo request endpoint
+app.post('/api/demo-request', async (req, res) => {
+  try {
+    const { nome, cognome, azienda, email, softwareProduct } = req.body;
+
+    // Validazione
+    if (!nome || !cognome || !azienda || !email || !softwareProduct) {
+      return res.status(400).json({
+        success: false,
+        message: 'Tutti i campi sono obbligatori'
+      });
+    }
+
+    // Validazione email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Email non valida'
+      });
+    }
+
+    console.log('Creating demo request for:', { nome, cognome, azienda, email, softwareProduct });
+
+    // Step 1: Trova o crea il software product
+    let softwareProductId = null;
+    try {
+      // Cerca il prodotto per nome
+      const productResponse = await axios.get(
+        `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`
+      );
+
+      if (productResponse.data?.data?.length > 0) {
+        softwareProductId = productResponse.data.data[0].id;
+        console.log('Found existing software product:', softwareProductId);
+      } else {
+        // Se non esiste, crealo
+        console.log('Creating new software product:', softwareProduct);
+        const createProductResponse = await axios.post(
+          `${STRAPI_API_URL}/software-products`,
+          {
+            data: {
+              name: softwareProduct,
+              publishedAt: new Date().toISOString()
+            }
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }
+        );
+        softwareProductId = createProductResponse.data.data.id;
+        console.log('Created software product:', softwareProductId);
+      }
+    } catch (error) {
+      console.error('Error handling software product:', error.message);
+      // Continua senza il product se c'è un errore
+    }
+
+    // Step 2: Crea la demo request
+    const demoRequestData = {
+      data: {
+        nome: nome,
+        cognome: cognome,
+        azienda: azienda,
+        email: email,
+        publishedAt: new Date().toISOString()
+      }
+    };
+
+    // Aggiungi software_product solo se trovato/creato
+    if (softwareProductId) {
+      demoRequestData.data.software_product = softwareProductId;
+    }
+
+    console.log('Creating demo request with data:', JSON.stringify(demoRequestData, null, 2));
+
+    const demoRequestResponse = await axios.post(
+      `${STRAPI_API_URL}/demo-requests`,
+      demoRequestData,
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    console.log('Demo request created successfully:', demoRequestResponse.data.data.id);
+
+    res.json({
+      success: true,
+      message: 'Richiesta demo inviata con successo! Ti contatteremo presto.',
+      data: demoRequestResponse.data
+    });
+
+  } catch (error) {
+    console.error('Demo request error:', {
+      message: error.message,
+      response: error.response?.data,
+      status: error.response?.status
+    });
+
+    const errorMessage = error.response?.data?.error?.message || 
+                        error.message || 
+                        'Errore durante l\'invio della richiesta demo';
+
+    res.status(error.response?.status || 500).json({
+      success: false,
+      message: errorMessage
+    });
+  }
+});
+
 // Job application endpoint
 app.post('/api/job-application', upload.single('cv'), async (req, res) => {
   let uploadedFilePath = null;
