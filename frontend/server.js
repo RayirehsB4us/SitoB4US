@@ -95,6 +95,10 @@ app.get('/prodotti', (req, res) => {
   res.render('prodotti', { title: 'Prodotti | B4US - Simplify IT' });
 });
 
+app.get('/open4us', (req, res) => {
+  res.render('open4us', { title: 'Open4US - Accesso Smart | B4US' });
+});
+
 app.get('/servizi', async (req, res) => {
   try {
     const servizi = await fetchFromStrapi('/servizi');
