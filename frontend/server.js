@@ -269,7 +269,7 @@ app.post('/api/login', async (req, res) => {
 // Demo request endpoint
 app.post('/api/demo-request', async (req, res) => {
   try {
-    const { nome, cognome, azienda, email, softwareProduct } = req.body;
+    const { nome, cognome, azienda, email, softwareProduct, messaggio } = req.body;
 
     // Validazione
     if (!nome || !cognome || !azienda || !email || !softwareProduct) {
@@ -336,6 +336,11 @@ app.post('/api/demo-request', async (req, res) => {
         publishedAt: new Date().toISOString()
       }
     };
+
+    // Aggiungi messaggio se fornito
+    if (messaggio) {
+      demoRequestData.data.messaggio = messaggio;
+    }
 
     // Aggiungi software_product solo se trovato/creato
     if (softwareProductId) {

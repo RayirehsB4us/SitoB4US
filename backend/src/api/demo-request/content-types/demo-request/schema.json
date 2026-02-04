@@ -4,7 +4,8 @@
   "info": {
     "singularName": "demo-request",
     "pluralName": "demo-requests",
-    "displayName": "demoRequest"
+    "displayName": "demoRequest",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,6 +28,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::software-product.software-product"
+    },
+    "messaggio": {
+      "type": "text"
     }
   }
 }

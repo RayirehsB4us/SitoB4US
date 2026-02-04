@@ -403,6 +403,7 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
 export interface ApiDemoRequestDemoRequest extends Schema.CollectionType {
   collectionName: 'demo_requests';
   info: {
+    description: '';
     displayName: 'demoRequest';
     pluralName: 'demo-requests';
     singularName: 'demo-request';
@@ -421,6 +422,7 @@ export interface ApiDemoRequestDemoRequest extends Schema.CollectionType {
     > &
       Attribute.Private;
     email: Attribute.Email;
+    messaggio: Attribute.Text;
     nome: Attribute.String;
     publishedAt: Attribute.DateTime;
     software_product: Attribute.Relation<
