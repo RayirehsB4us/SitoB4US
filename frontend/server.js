@@ -139,6 +139,10 @@ app.get('/storia', async (req, res) => {
   }
 });
 
+app.get('/privacy-policy', (req, res) => {
+  res.render('privacy-policy', { title: 'Privacy Policy - B4US srl | Simplify IT' });
+});
+
 app.get('/carriere', async (req, res) => {
   try {
     const jobPositions = await fetchFromStrapi('/job-positions');
