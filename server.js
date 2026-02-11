@@ -45,6 +45,7 @@ function waitForStrapi() {
 
 function startStrapi() {
   const backendDir = path.join(__dirname, 'backend');
+  const strapiBin = path.join(backendDir, 'node_modules', '@strapi', 'strapi', 'bin', 'strapi.js');
   const env = {
     ...process.env,
     PORT: String(STRAPI_PORT),
@@ -52,7 +53,7 @@ function startStrapi() {
     HOST: '0.0.0.0',
   };
 
-  const child = spawn('npm', ['run', 'start'], {
+  const child = spawn(process.execPath, [strapiBin, 'start'], {
     cwd: backendDir,
     env,
     stdio: ['ignore', 'pipe', 'pipe'],
