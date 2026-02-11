@@ -1,0 +1,13 @@
+{
+  "name": "SitoB4US",
+  "version": "1.0.0",
+  "description": "B4US - Single process for Azure App Service (Strapi + Frontend)",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "postinstall": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix backend"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=22.x.x"
+  }
+}
