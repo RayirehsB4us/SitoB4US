@@ -160,18 +160,8 @@ app.get('/contatti', (req, res) => {
   res.render('contatti', { title: 'Contatti - B4US Simplify IT' });
 });
 
-app.get('/blog', async (req, res) => {
-  try {
-    const blogPosts = await fetchFromStrapi('/blog-posts');
-    res.render('blog', { 
-      title: 'B4US Tech Blog | IT News & Insights',
-      blogPosts: blogPosts?.data?.map(b => b.attributes) || [],
-      strapiUrl: STRAPI_URL
-    });
-  } catch (error) {
-    console.error('Error rendering blog:', error);
-    res.render('blog', { title: 'B4US Tech Blog | IT News & Insights', blogPosts: [], strapiUrl: STRAPI_URL });
-  }
+app.get('/blog', (req, res) => {
+  res.render('blog', { title: 'Diario di Bordo - B4US Simplify IT' });
 });
 
 app.get('/blog/:slug', async (req, res) => {
