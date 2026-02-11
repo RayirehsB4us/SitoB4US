@@ -491,6 +491,26 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
   }
 });
 
+// Proxy generico per le chiamate client-side a Strapi (evita CORS e mixed content)
+app.get('/api/strapi/:endpoint', async (req, res) => {
+  try {
+    const endpoint = req.params.endpoint;
+    // Ricostruisci la query string originale
+    const queryString = Object.keys(req.query).length > 0
+      ? '?' + new URLSearchParams(req.query).toString()
+      : '';
+    const url = `${STRAPI_API_URL}/${endpoint}${queryString}`;
+    console.log('Proxy Strapi request:', url);
+    const response = await axios.get(url);
+    res.json(response.data);
+  } catch (error) {
+    console.error('Proxy Strapi error:', error.message);
+    res.status(error.response?.status || 500).json({
+      error: error.response?.data || { message: 'Errore nel proxy Strapi' }
+    });
+  }
+});
+
 // Funzione per avviare il server
 function startServer() {
   // Controlla se esistono i certificati SSL
