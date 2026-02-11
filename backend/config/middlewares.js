@@ -23,4 +23,6 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
+  // Middleware personalizzato per proteggere le API con token
+  'global::api-token-auth',
 ];

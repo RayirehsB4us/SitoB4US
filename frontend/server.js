@@ -12,6 +12,12 @@ const PORT = process.env.PORT || 3000;
 const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
 const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
+const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || '';
+
+// Header di autenticazione per tutte le richieste a Strapi
+const strapiAuthHeaders = STRAPI_API_TOKEN
+  ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
+  : {};
 
 // Configurazione Multer per l'upload dei file
 const upload = multer({ 
@@ -41,7 +47,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null) {
   try {
-    const response = await axios.get(`${STRAPI_API_URL}${endpoint}?populate=*`);
+    const response = await axios.get(`${STRAPI_API_URL}${endpoint}?populate=*`, {
+      headers: { ...strapiAuthHeaders }
+    });
     return response.data;
   } catch (error) {
     console.warn(`Strapi fetch error for ${endpoint}:`, error.message);
@@ -168,7 +176,9 @@ app.get('/blog/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
     // Fetch articolo per slug
-    const response = await axios.get(`${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`);
+    const response = await axios.get(`${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`, {
+      headers: { ...strapiAuthHeaders }
+    });
     const post = response.data?.data?.[0]?.attributes || null;
     
     // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
@@ -292,7 +302,8 @@ app.post('/api/demo-request', async (req, res) => {
     try {
       // Cerca il prodotto per nome
       const productResponse = await axios.get(
-        `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`
+        `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`,
+        { headers: { ...strapiAuthHeaders } }
       );
 
       if (productResponse.data?.data?.length > 0) {
@@ -311,7 +322,8 @@ app.post('/api/demo-request', async (req, res) => {
           },
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              ...strapiAuthHeaders
             }
           }
         );
@@ -351,7 +363,8 @@ app.post('/api/demo-request', async (req, res) => {
       demoRequestData,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...strapiAuthHeaders
         }
       }
     );
@@ -414,7 +427,8 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
     console.log('Uploading CV to Strapi...');
     const uploadResponse = await axios.post(`${STRAPI_API_URL}/upload`, formData, {
       headers: {
-        ...formData.getHeaders()
+        ...formData.getHeaders(),
+        ...strapiAuthHeaders
       }
     });
 
@@ -452,7 +466,8 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
       jobRequestData,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...strapiAuthHeaders
         }
       }
     );
@@ -501,7 +516,9 @@ app.get('/api/strapi/:endpoint', async (req, res) => {
       : '';
     const url = `${STRAPI_API_URL}/${endpoint}${queryString}`;
     console.log('Proxy Strapi request:', url);
-    const response = await axios.get(url);
+    const response = await axios.get(url, {
+      headers: { ...strapiAuthHeaders }
+    });
     res.json(response.data);
   } catch (error) {
     console.error('Proxy Strapi error:', error.message);
