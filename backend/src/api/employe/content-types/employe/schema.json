@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "employes",
+  "info": {
+    "singularName": "employe",
+    "pluralName": "employes",
+    "displayName": "employe",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "cognome": {
+      "type": "string"
+    },
+    "jobTitle": {
+      "type": "text"
+    },
+    "pic": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "AnnoAssunzione": {
+      "type": "biginteger"
+    },
+    "certificate": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::certificate.certificate",
+      "inversedBy": "employes"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::project.project",
+      "inversedBy": "employes"
+    },
+    "annoLIC": {
+      "type": "biginteger"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "certificates",
+  "info": {
+    "singularName": "certificate",
+    "pluralName": "certificates",
+    "displayName": "certificate",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "nome": {
+      "type": "string"
+    },
+    "Descrizione": {
+      "type": "text"
+    },
+    "icona": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "employes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::employe.employe",
+      "mappedBy": "certificate"
+    },
+    "anno": {
+      "type": "biginteger"
+    }
+  }
+}
