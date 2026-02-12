@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "projects",
+  "info": {
+    "singularName": "project",
+    "pluralName": "projects",
+    "displayName": "Project"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "descrizione": {
+      "type": "text"
+    },
+    "employes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::employe.employe",
+      "mappedBy": "project"
+    },
+    "anno": {
+      "type": "date"
+    }
+  }
+}
