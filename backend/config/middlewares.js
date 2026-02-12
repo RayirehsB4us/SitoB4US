@@ -9,10 +9,10 @@ module.exports = [
       origin: [
         'http://localhost:3000',
         'http://localhost:3443',
-        'https://localhost:3443',
         'http://192.168.1.32:3000',
-        'https://192.168.1.32:4242',
         'http://192.168.1.32:4242',
+        'https://b4us-prod-backend-d5g9ecdjgkc2ake8.swedencentral-01.azurewebsites.net',
+        'https://www.b4us.it'
       ],
       credentials: true,
     },
