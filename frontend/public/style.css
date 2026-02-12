@@ -99,6 +99,20 @@
     }
 }
 
+/* Desktop Nav Dropdown */
+.nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.nav-dropdown:hover .nav-dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown-menu .bg-white {
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
 /* Mobile Menu Dropdown */
 #mobile-menu {
     width: 100%;

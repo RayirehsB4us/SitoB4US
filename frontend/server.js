@@ -1,7 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const https = require('https');
-const http = require('http');
 const path = require('path');
 const axios = require('axios');
 const multer = require('multer');
@@ -9,9 +7,14 @@ const FormData = require('form-data');
 const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
 const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
+const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || '';
+
+// Header di autenticazione per tutte le richieste a Strapi
+const strapiAuthHeaders = STRAPI_API_TOKEN
+  ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
+  : {};
 
 // Configurazione Multer per l'upload dei file
 const upload = multer({ 
@@ -41,7 +44,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null) {
   try {
-    const response = await axios.get(`${STRAPI_API_URL}${endpoint}?populate=*`);
+    const response = await axios.get(`${STRAPI_API_URL}${endpoint}?populate=*`, {
+      headers: { ...strapiAuthHeaders }
+    });
     return response.data;
   } catch (error) {
     console.warn(`Strapi fetch error for ${endpoint}:`, error.message);
@@ -160,25 +165,17 @@ app.get('/contatti', (req, res) => {
   res.render('contatti', { title: 'Contatti - B4US Simplify IT' });
 });
 
-app.get('/blog', async (req, res) => {
-  try {
-    const blogPosts = await fetchFromStrapi('/blog-posts');
-    res.render('blog', { 
-      title: 'B4US Tech Blog | IT News & Insights',
-      blogPosts: blogPosts?.data?.map(b => b.attributes) || [],
-      strapiUrl: STRAPI_URL
-    });
-  } catch (error) {
-    console.error('Error rendering blog:', error);
-    res.render('blog', { title: 'B4US Tech Blog | IT News & Insights', blogPosts: [], strapiUrl: STRAPI_URL });
-  }
+app.get('/blog', (req, res) => {
+  res.render('blog', { title: 'Diario di Bordo - B4US Simplify IT' });
 });
 
 app.get('/blog/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
     // Fetch articolo per slug
-    const response = await axios.get(`${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`);
+    const response = await axios.get(`${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`, {
+      headers: { ...strapiAuthHeaders }
+    });
     const post = response.data?.data?.[0]?.attributes || null;
     
     // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
@@ -302,7 +299,8 @@ app.post('/api/demo-request', async (req, res) => {
     try {
       // Cerca il prodotto per nome
       const productResponse = await axios.get(
-        `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`
+        `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`,
+        { headers: { ...strapiAuthHeaders } }
       );
 
       if (productResponse.data?.data?.length > 0) {
@@ -321,7 +319,8 @@ app.post('/api/demo-request', async (req, res) => {
           },
           {
             headers: {
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              ...strapiAuthHeaders
             }
           }
         );
@@ -361,7 +360,8 @@ app.post('/api/demo-request', async (req, res) => {
       demoRequestData,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...strapiAuthHeaders
         }
       }
     );
@@ -424,7 +424,8 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
     console.log('Uploading CV to Strapi...');
     const uploadResponse = await axios.post(`${STRAPI_API_URL}/upload`, formData, {
       headers: {
-        ...formData.getHeaders()
+        ...formData.getHeaders(),
+        ...strapiAuthHeaders
       }
     });
 
@@ -462,7 +463,8 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
       jobRequestData,
       {
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          ...strapiAuthHeaders
         }
       }
     );
@@ -501,50 +503,29 @@ app.post('/api/job-application', upload.single('cv'), async (req, res) => {
   }
 });
 
-// Funzione per avviare il server
-function startServer() {
-  // Controlla se esistono i certificati SSL
-  const keyPath = path.join(__dirname, 'localhost-key.pem');
-  const certPath = path.join(__dirname, 'localhost.pem');
-  
-  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-    // Se i certificati esistono, avvia server HTTPS
-    try {
-      const httpsOptions = {
-        key: fs.readFileSync(keyPath),
-        cert: fs.readFileSync(certPath)
-      };
-
-      // Server HTTPS
-      https.createServer(httpsOptions, app).listen(HTTPS_PORT, () => {
-        console.log(`✅ HTTPS Server running at https://localhost:${HTTPS_PORT}`);
-      });
-
-      // Server HTTP che reindirizza a HTTPS (opzionale)
-      http.createServer((req, res) => {
-        res.writeHead(301, { Location: `https://${req.headers.host.split(':')[0]}:${HTTPS_PORT}${req.url}` });
-        res.end();
-      }).listen(PORT, () => {
-        console.log(`🔄 HTTP Server (port ${PORT}) redirecting to HTTPS`);
-      });
-    } catch (error) {
-      console.error('❌ Error loading SSL certificates:', error.message);
-      console.log('⚠️  Falling back to HTTP...');
-      startHTTPServer();
-    }
-  } else {
-    // Se non ci sono certificati, usa HTTP normale
-    console.log('ℹ️  SSL certificates not found. Starting HTTP server...');
-    console.log('ℹ️  To enable HTTPS, generate certificates with: mkcert localhost');
-    startHTTPServer();
+// Proxy generico per le chiamate client-side a Strapi (evita CORS e mixed content)
+app.get('/api/strapi/:endpoint', async (req, res) => {
+  try {
+    const endpoint = req.params.endpoint;
+    // Ricostruisci la query string originale
+    const queryString = Object.keys(req.query).length > 0
+      ? '?' + new URLSearchParams(req.query).toString()
+      : '';
+    const url = `${STRAPI_API_URL}/${endpoint}${queryString}`;
+    console.log('Proxy Strapi request:', url);
+    const response = await axios.get(url, {
+      headers: { ...strapiAuthHeaders }
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Proxy Strapi error:', error.message);
+    res.status(error.response?.status || 500).json({
+      error: error.response?.data || { message: 'Errore nel proxy Strapi' }
+    });
   }
-}
+});
 
-function startHTTPServer() {
-  app.listen(PORT, () => {
-    console.log(`✅ HTTP Server running at http://localhost:${PORT}`);
-  });
-}
-
-// Avvia il server
-startServer();
+// Avvia il server HTTP (HTTPS/redirect gestito da Azure App Service)
+app.listen(PORT, () => {
+  console.log(`✅ HTTP Server running on port ${PORT}`);
+});
