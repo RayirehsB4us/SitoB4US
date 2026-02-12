@@ -400,6 +400,45 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiCertificateCertificate extends Schema.CollectionType {
+  collectionName: 'certificates';
+  info: {
+    description: '';
+    displayName: 'certificate';
+    pluralName: 'certificates';
+    singularName: 'certificate';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    anno: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::certificate.certificate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Descrizione: Attribute.Text;
+    employes: Attribute.Relation<
+      'api::certificate.certificate',
+      'oneToMany',
+      'api::employe.employe'
+    >;
+    icona: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    nome: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::certificate.certificate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDemoRequestDemoRequest extends Schema.CollectionType {
   collectionName: 'demo_requests';
   info: {
@@ -436,6 +475,85 @@ export interface ApiDemoRequestDemoRequest extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEmployeEmploye extends Schema.CollectionType {
+  collectionName: 'employes';
+  info: {
+    description: '';
+    displayName: 'employe';
+    pluralName: 'employes';
+    singularName: 'employe';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AnnoAssunzione: Attribute.BigInteger;
+    annoLIC: Attribute.BigInteger;
+    certificate: Attribute.Relation<
+      'api::employe.employe',
+      'manyToOne',
+      'api::certificate.certificate'
+    >;
+    cognome: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::employe.employe',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    jobTitle: Attribute.Text;
+    nome: Attribute.String;
+    pic: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    project: Attribute.Relation<
+      'api::employe.employe',
+      'manyToOne',
+      'api::project.project'
+    >;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::employe.employe',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiGoalGoal extends Schema.CollectionType {
+  collectionName: 'goals';
+  info: {
+    description: '';
+    displayName: 'goal';
+    pluralName: 'goals';
+    singularName: 'goal';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    anno: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::goal.goal', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    CurrentGoal: Attribute.Boolean;
+    description: Attribute.Text;
+    done: Attribute.Boolean;
+    futureGoal: Attribute.Boolean;
+    logbook: Attribute.Relation<
+      'api::goal.goal',
+      'oneToOne',
+      'api::logbook.logbook'
+    >;
+    name: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<'api::goal.goal', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -546,6 +664,87 @@ export interface ApiJobRequestJobRequest extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::job-request.job-request',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiLogbookLogbook extends Schema.CollectionType {
+  collectionName: 'logbooks';
+  info: {
+    description: '';
+    displayName: 'logbook';
+    pluralName: 'logbooks';
+    singularName: 'logbook';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    anno: Attribute.BigInteger;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::logbook.logbook',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descrizione: Attribute.Text;
+    ObiettiviCorrenti: Attribute.Text;
+    progetto_Corso: Attribute.Relation<
+      'api::logbook.logbook',
+      'oneToOne',
+      'api::project.project'
+    >;
+    progetto_evidenza: Attribute.Relation<
+      'api::logbook.logbook',
+      'oneToOne',
+      'api::project.project'
+    >;
+    ProssimiTraguardi: Attribute.Text;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::logbook.logbook',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProjectProject extends Schema.CollectionType {
+  collectionName: 'projects';
+  info: {
+    displayName: 'Project';
+    pluralName: 'projects';
+    singularName: 'project';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    anno: Attribute.Date;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descrizione: Attribute.Text;
+    employes: Attribute.Relation<
+      'api::project.project',
+      'oneToMany',
+      'api::employe.employe'
+    >;
+    name: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::project.project',
       'oneToOne',
       'admin::user'
     > &
@@ -1124,10 +1323,15 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::certificate.certificate': ApiCertificateCertificate;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
+      'api::employe.employe': ApiEmployeEmploye;
+      'api::goal.goal': ApiGoalGoal;
       'api::home.home': ApiHomeHome;
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::job-request.job-request': ApiJobRequestJobRequest;
+      'api::logbook.logbook': ApiLogbookLogbook;
+      'api::project.project': ApiProjectProject;
       'api::servizio.servizio': ApiServizioServizio;
       'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
