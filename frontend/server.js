@@ -38,6 +38,46 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Base URL del sito (per sitemap e canonical)
+const SITE_URL = process.env.SITE_URL || 'https://www.b4us.it';
+
+// robots.txt e sitemap.xml (route prima di static per essere sempre raggiungibili)
+app.get('/robots.txt', (req, res) => {
+  const base = SITE_URL.replace(/\/$/, '');
+  const body = `# ${base}
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: ${base}/sitemap.xml
+`;
+  res.type('text/plain').send(body);
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  const base = SITE_URL.replace(/\/$/, '');
+  const staticPages = [
+    { path: '', changefreq: 'weekly', priority: '1.0' },
+    { path: 'home', changefreq: 'weekly', priority: '0.9' },
+    { path: 'chi-siamo', changefreq: 'monthly', priority: '0.8' },
+    { path: 'prodotti', changefreq: 'monthly', priority: '0.8' },
+    { path: 'open4us', changefreq: 'monthly', priority: '0.8' },
+    { path: 'carfleet', changefreq: 'monthly', priority: '0.8' },
+    { path: 'servizi', changefreq: 'monthly', priority: '0.8' },
+    { path: 'struttura', changefreq: 'monthly', priority: '0.7' },
+    { path: 'storia', changefreq: 'monthly', priority: '0.7' },
+    { path: 'carriere', changefreq: 'weekly', priority: '0.8' },
+    { path: 'contatti', changefreq: 'monthly', priority: '0.8' },
+    { path: 'privacy-policy', changefreq: 'yearly', priority: '0.3' },
+  ];
+  const urls = staticPages.map(({ path, changefreq, priority }) => {
+    const loc = path ? `${base}/${path}` : base;
+    return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+  });
+  const xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls.join('\n') + '\n</urlset>';
+  res.type('application/xml').send(xml);
+});
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
