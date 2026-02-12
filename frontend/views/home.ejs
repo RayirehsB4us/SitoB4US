@@ -104,13 +104,14 @@
                     <span class="material-symbols-outlined text-6xl text-white/40 mb-8 block">format_quote</span>
                     <blockquote
                         class="font-serif italic text-2xl md:text-3xl lg:text-4xl text-white leading-snug space-y-4">
-                        <p class="mb-4">"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La
-                            crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta
-                            progressi."</p>
-                        <p class="mb-4">"La creatività nasce dall'angoscia come il giorno nasce dalla notte oscura. E'
-                            nella crisi che sorge l'inventiva, le scoperte e le grandi strategie..."</p>
-                        <p class="mb-4">"La vera crisi è l'incompetenza... Senza crisi non ci sono sfide, senza sfide la
-                            vita è una routine, una lenta agonia. E' nella crisi che emerge il meglio di ognuno..."</p>
+                        <% if (home.einsteinQuote) { %>
+                            <%- home.einsteinQuote %>
+                        <% } else { %>
+                            <p class="mb-4">"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La
+                                crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta
+                                progressi."</p>
+                        <% } %>
+                        
                     </blockquote>
                     <div class="mt-10 flex items-center gap-4">
                         <div class="h-1 w-20 bg-white"></div>
