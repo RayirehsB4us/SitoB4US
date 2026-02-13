@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3000;
 const STRAPI_URL = process.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_API_URL = process.env.STRAPI_API_URL || 'http://localhost:1337/api';
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || '';
+const ALLOWED_LOGIN_IP = process.env.ALLOWED_LOGIN_IP || '4.232.71.155';
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 // Header di autenticazione per tutte le richieste a Strapi
 const strapiAuthHeaders = STRAPI_API_TOKEN
@@ -34,9 +36,34 @@ const upload = multer({
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Trust proxy headers (required on Azure / reverse proxies to get real client IP)
+app.set('trust proxy', true);
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Middleware to compute client IP and decide if login button should be shown
+app.use((req, res, next) => {
+  const xForwardedFor = req.headers['x-forwarded-for'];
+  let clientIp = Array.isArray(xForwardedFor)
+    ? xForwardedFor[0]
+    : (xForwardedFor ? xForwardedFor.split(',')[0].trim() : req.ip);
+
+  // Normalize IPv4-mapped IPv6 addresses (e.g. ::ffff:4.232.71.155)
+  if (clientIp && clientIp.startsWith('::ffff:')) {
+    clientIp = clientIp.substring(7);
+  }
+
+  if (IS_PRODUCTION) {
+    res.locals.showLoginButton = clientIp === ALLOWED_LOGIN_IP;
+  } else {
+    // In non-production environments, always show the login button to simplify testing
+    res.locals.showLoginButton = true;
+  }
+
+  next();
+});
 
 // Base URL del sito (per sitemap e canonical)
 const SITE_URL = process.env.SITE_URL || 'https://www.b4us.it';
@@ -242,6 +269,10 @@ app.get('/blog/:slug', async (req, res) => {
 });
 
 app.get('/login', (req, res) => {
+  if (!res.locals.showLoginButton) {
+    return res.status(403).send('Accesso non autorizzato');
+  }
+
   res.render('login', { title: 'B4US Portal - Accedi' });
 });
 
