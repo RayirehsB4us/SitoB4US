@@ -78,3 +78,14 @@ jobs:
           slot-name: "Production"
           package: .
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
+
+      - name: Health check production
+        run: |
+          sleep 30
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://b4us-prod-website-fkegfmavgndxe5a8.swedencentral-01.azurewebsites.net/health)
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "✅ Production is healthy"
+          else
+            echo "❌ Production health check failed (status: $HTTP_STATUS)"
+            exit 1
+          fi
