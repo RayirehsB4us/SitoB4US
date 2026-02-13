@@ -11,7 +11,11 @@ const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
 const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
-// Lista IP consentiti per login: in .env usa virgola, es. ALLOWED_LOGIN_IP=4.232.71.155,5.11.39.103
+// Lista IP/prefissi consentiti per login:
+// - IP singoli: 4.232.71.155
+// - Intere reti (prefisso): 192.168.178.*  (tutti i 192.168.178.x)
+// In .env usa la virgola, es.:
+// ALLOWED_LOGIN_IP=4.232.71.155,192.168.178.*
 const ALLOWED_LOGIN_IPS = (process.env.ALLOWED_LOGIN_IP || "4.232.71.155")
   .split(",")
   .map((ip) => ip.trim())
@@ -74,7 +78,15 @@ app.use((req, res, next) => {
     clientIp = clientIp.substring(7);
   }
 
-  const isAllowedIp = ALLOWED_LOGIN_IPS.includes(clientIp);
+  const isAllowedIp = ALLOWED_LOGIN_IPS.some((rule) => {
+    // Prefisso di rete, es. 192.168.178.* → match su 192.168.178.x
+    if (rule.endsWith(".*")) {
+      const prefix = rule.slice(0, -1); // togli l'asterisco finale
+      return clientIp.startsWith(prefix);
+    }
+    // IP singolo
+    return clientIp === rule;
+  });
 
   // Rendi disponibili IP e flag anche alle route successive
   req.clientIp = clientIp;
