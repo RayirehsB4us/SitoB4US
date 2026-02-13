@@ -13,7 +13,15 @@ const STRAPI_API_URL =
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
 const ALLOWED_LOGIN_IP = process.env.ALLOWED_LOGIN_IP || "4.232.71.155";
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
-
+console.log(
+  "[BOOT-ENV]",
+  "NODE_ENV raw =",
+  JSON.stringify(process.env.NODE_ENV),
+  "| IS_PRODUCTION =",
+  IS_PRODUCTION,
+  "| ALLOWED_LOGIN_IP =",
+  process.env.ALLOWED_LOGIN_IP,
+);
 // Header di autenticazione per tutte le richieste a Strapi
 const strapiAuthHeaders = STRAPI_API_TOKEN
   ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
