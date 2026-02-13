@@ -11,7 +11,11 @@ const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
 const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
-const ALLOWED_LOGIN_IP = process.env.ALLOWED_LOGIN_IP || "4.232.71.155";
+// Lista IP consentiti per login: in .env usa virgola, es. ALLOWED_LOGIN_IP=4.232.71.155,5.11.39.103
+const ALLOWED_LOGIN_IPS = (process.env.ALLOWED_LOGIN_IP || "4.232.71.155")
+  .split(",")
+  .map((ip) => ip.trim())
+  .filter(Boolean);
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
 console.log(
   "[BOOT-ENV]",
@@ -19,8 +23,8 @@ console.log(
   JSON.stringify(process.env.NODE_ENV),
   "| IS_PRODUCTION =",
   IS_PRODUCTION,
-  "| ALLOWED_LOGIN_IP =",
-  process.env.ALLOWED_LOGIN_IP,
+  "| ALLOWED_LOGIN_IPS =",
+  ALLOWED_LOGIN_IPS,
 );
 // Header di autenticazione per tutte le richieste a Strapi
 const strapiAuthHeaders = STRAPI_API_TOKEN
@@ -70,7 +74,7 @@ app.use((req, res, next) => {
     clientIp = clientIp.substring(7);
   }
 
-  const isAllowedIp = clientIp === ALLOWED_LOGIN_IP;
+  const isAllowedIp = ALLOWED_LOGIN_IPS.includes(clientIp);
 
   // Rendi disponibili IP e flag anche alle route successive
   req.clientIp = clientIp;
