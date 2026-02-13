@@ -29,8 +29,10 @@
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/carriere">Lavora con noi</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/contatti">Contatti</a>
             <a class="text-sm font-semibold hover:text-primary transition-colors" href="/blog">Diario di Bordo</a>
+            <% if (showLoginButton) { %>
             <a class="inline-flex items-center justify-center px-5 py-2 text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20"
                 href="/login">Accedi</a>
+            <% } %>
         </div>
         
         <!-- Mobile Menu Button -->
@@ -66,7 +68,9 @@
             <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/carriere">Lavora con noi</a>
             <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/contatti">Contatti</a>
             <a class="block px-3 py-2 text-base font-semibold text-gray-700 hover:text-primary hover:bg-gray-50 rounded-lg transition-colors" href="/blog">Diario di Bordo</a>
+            <% if (showLoginButton) { %>
             <a class="block mx-3 my-2 px-5 py-2 text-center text-sm font-bold text-white bg-primary rounded-full hover:bg-green-600 transition-all shadow-lg shadow-primary/20" href="/login">Accedi</a>
+            <% } %>
         </div>
     </div>
 </nav>
