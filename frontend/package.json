@@ -4,7 +4,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "validate": "node -c server.js && echo '✅ Server syntax OK'",
+    "validate:views": "node scripts/validate-views.js",
+    "test": "node scripts/test-server.js",
+    "pretest": "npm run validate"
   },
   "keywords": [],
   "author": "",

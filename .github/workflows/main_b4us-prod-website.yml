@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'frontend/**'
+      - "frontend/**"
   workflow_dispatch:
 
 jobs:
@@ -21,8 +21,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-          cache: 'npm'
+          node-version: "20.x"
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
@@ -32,6 +32,26 @@ jobs:
       - name: Build (if presente)
         working-directory: ./frontend
         run: npm run build --if-present
+
+      - name: Test server starts
+        working-directory: ./frontend
+        run: |
+          PORT=3099 node server.js &
+          SERVER_PID=$!
+          echo "⏳ Waiting for server..."
+          sleep 5
+
+          # Health check
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3099/ || echo "000")
+
+          kill $SERVER_PID 2>/dev/null || true
+
+          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 500 ]; then
+            echo "✅ Server responded with status $HTTP_STATUS"
+          else
+            echo "❌ Server health check failed (status: $HTTP_STATUS)"
+            exit 1
+          fi
 
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
@@ -54,7 +74,7 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'b4us-prod-website'
-          slot-name: 'Production'
+          app-name: "b4us-prod-website"
+          slot-name: "Production"
           package: .
           publish-profile: ${{ secrets.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
