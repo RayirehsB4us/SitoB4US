@@ -62,12 +62,36 @@ app.use((req, res, next) => {
     clientIp = clientIp.substring(7);
   }
 
+  const isAllowedIp = clientIp === ALLOWED_LOGIN_IP;
+
+  // Rendi disponibili IP e flag anche alle route successive
+  req.clientIp = clientIp;
+  req.isAllowedLoginIp = isAllowedIp;
+
   if (IS_PRODUCTION) {
-    res.locals.showLoginButton = clientIp === ALLOWED_LOGIN_IP;
+    res.locals.showLoginButton = isAllowedIp;
   } else {
     // In non-production environments, always show the login button to simplify testing
     res.locals.showLoginButton = true;
   }
+
+  console.log(
+    "[IP-LOG]",
+    new Date().toISOString(),
+    `${req.method} ${req.originalUrl}`,
+    "| x-forwarded-for=",
+    xForwardedFor || "N/A",
+    "| req.ip=",
+    req.ip,
+    "| clientIp=",
+    clientIp,
+    "| allowedIp=",
+    isAllowedIp,
+    "| showLoginButton=",
+    res.locals.showLoginButton,
+    "| isProduction=",
+    IS_PRODUCTION,
+  );
 
   next();
 });
@@ -309,8 +333,27 @@ app.get("/blog/:slug", async (req, res) => {
 
 app.get("/login", (req, res) => {
   if (!res.locals.showLoginButton) {
+    console.warn(
+      "[LOGIN-BLOCKED]",
+      new Date().toISOString(),
+      `${req.method} ${req.originalUrl}`,
+      "| clientIp=",
+      req.clientIp || req.ip,
+      "| allowedIp=",
+      req.isAllowedLoginIp,
+    );
     return res.status(403).send("Accesso non autorizzato");
   }
+
+  console.log(
+    "[LOGIN-ALLOWED]",
+    new Date().toISOString(),
+    `${req.method} ${req.originalUrl}`,
+    "| clientIp=",
+    req.clientIp || req.ip,
+    "| allowedIp=",
+    req.isAllowedLoginIp,
+  );
 
   res.render("login", { title: "B4US Portal - Accedi" });
 });
