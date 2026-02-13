@@ -742,7 +742,13 @@ app.get("/api/strapi/:endpoint", async (req, res) => {
     });
   }
 });
-
+app.get("/health", function (req, res) {
+  res.json({
+    status: "OK",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
 // Avvia il server HTTP (HTTPS/redirect gestito da Azure App Service)
 app.listen(PORT, () => {
   console.log(`✅ HTTP Server running on port ${PORT}`);
