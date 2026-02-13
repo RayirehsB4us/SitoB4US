@@ -5,6 +5,13 @@ const axios = require("axios");
 const multer = require("multer");
 const FormData = require("form-data");
 const fs = require("fs");
+require("dotenv").config();
+const express = require("express");
+const path = require("path");
+const axios = require("axios");
+const multer = require("multer");
+const FormData = require("form-data");
+const fs = require("fs");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
@@ -38,8 +45,15 @@ const strapiAuthHeaders = STRAPI_API_TOKEN
 // Configurazione Multer per l'upload dei file
 const upload = multer({
   dest: "uploads/",
+const upload = multer({
+  dest: "uploads/",
   limits: { fileSize: 10 * 1024 * 1024 }, // 10MB limit
   fileFilter: (req, file, cb) => {
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    ];
     const allowedTypes = [
       "application/pdf",
       "application/msword",
@@ -49,11 +63,18 @@ const upload = multer({
       cb(null, true);
     } else {
       cb(new Error("Formato file non supportato. Usa PDF, DOC o DOCX."));
+      cb(new Error("Formato file non supportato. Usa PDF, DOC o DOCX."));
     }
+  },
   },
 });
 
 // Set EJS as the template engine
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// Trust proxy headers (required on Azure / reverse proxies to get real client IP)
+app.set("trust proxy", true);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
@@ -122,8 +143,11 @@ app.use((req, res, next) => {
 
 // Base URL del sito (per sitemap e canonical)
 const SITE_URL = process.env.SITE_URL || "https://www.b4us.it";
+const SITE_URL = process.env.SITE_URL || "https://www.b4us.it";
 
 // robots.txt e sitemap.xml (route prima di static per essere sempre raggiungibili)
+app.get("/robots.txt", (req, res) => {
+  const base = SITE_URL.replace(/\/$/, "");
 app.get("/robots.txt", (req, res) => {
   const base = SITE_URL.replace(/\/$/, "");
   const body = `# ${base}
@@ -134,11 +158,26 @@ Allow: /
 Sitemap: ${base}/sitemap.xml
 `;
   res.type("text/plain").send(body);
+  res.type("text/plain").send(body);
 });
 
 app.get("/sitemap.xml", (req, res) => {
   const base = SITE_URL.replace(/\/$/, "");
+app.get("/sitemap.xml", (req, res) => {
+  const base = SITE_URL.replace(/\/$/, "");
   const staticPages = [
+    { path: "", changefreq: "weekly", priority: "1.0" },
+    { path: "home", changefreq: "weekly", priority: "0.9" },
+    { path: "chi-siamo", changefreq: "monthly", priority: "0.8" },
+    { path: "prodotti", changefreq: "monthly", priority: "0.8" },
+    { path: "open4us", changefreq: "monthly", priority: "0.8" },
+    { path: "carfleet", changefreq: "monthly", priority: "0.8" },
+    { path: "servizi", changefreq: "monthly", priority: "0.8" },
+    { path: "struttura", changefreq: "monthly", priority: "0.7" },
+    { path: "storia", changefreq: "monthly", priority: "0.7" },
+    { path: "carriere", changefreq: "weekly", priority: "0.8" },
+    { path: "contatti", changefreq: "monthly", priority: "0.8" },
+    { path: "privacy-policy", changefreq: "yearly", priority: "0.3" },
     { path: "", changefreq: "weekly", priority: "1.0" },
     { path: "home", changefreq: "weekly", priority: "0.9" },
     { path: "chi-siamo", changefreq: "monthly", priority: "0.8" },
@@ -161,14 +200,26 @@ app.get("/sitemap.xml", (req, res) => {
     urls.join("\n") +
     "\n</urlset>";
   res.type("application/xml").send(xml);
+  const xml =
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    urls.join("\n") +
+    "\n</urlset>";
+  res.type("application/xml").send(xml);
 });
 
 // Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null) {
   try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}${endpoint}?populate=*`,
+      {
+        headers: { ...strapiAuthHeaders },
+      },
+    );
     const response = await axios.get(
       `${STRAPI_API_URL}${endpoint}?populate=*`,
       {
@@ -184,37 +235,59 @@ async function fetchFromStrapi(endpoint, fallbackData = null) {
 
 // Routes with clean URLs
 app.get("/", async (req, res) => {
+app.get("/", async (req, res) => {
   try {
+    const homeData = await fetchFromStrapi("/home");
+    const servizi = await fetchFromStrapi("/servizi");
+    res.render("home", {
+      title: "B4US | Simplify IT",
     const homeData = await fetchFromStrapi("/home");
     const servizi = await fetchFromStrapi("/servizi");
     res.render("home", {
       title: "B4US | Simplify IT",
       home: homeData?.data?.attributes || {},
       servizi: servizi?.data?.map((s) => s.attributes) || [],
+      servizi: servizi?.data?.map((s) => s.attributes) || [],
     });
   } catch (error) {
+    console.error("Error rendering home:", error);
+    res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
     console.error("Error rendering home:", error);
     res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
   }
 });
 
 app.get("/home", async (req, res) => {
+app.get("/home", async (req, res) => {
   try {
+    const homeData = await fetchFromStrapi("/home");
+    const servizi = await fetchFromStrapi("/servizi");
+    res.render("home", {
+      title: "B4US | Simplify IT",
     const homeData = await fetchFromStrapi("/home");
     const servizi = await fetchFromStrapi("/servizi");
     res.render("home", {
       title: "B4US | Simplify IT",
       home: homeData?.data?.attributes || {},
       servizi: servizi?.data?.map((s) => s.attributes) || [],
+      servizi: servizi?.data?.map((s) => s.attributes) || [],
     });
   } catch (error) {
+    console.error("Error rendering home:", error);
+    res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
     console.error("Error rendering home:", error);
     res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
   }
 });
 
 app.get("/chi-siamo", async (req, res) => {
+app.get("/chi-siamo", async (req, res) => {
   try {
+    const teamMembers = await fetchFromStrapi("/team-members");
+    res.render("chi-siamo", {
+      title: "Chi Siamo - B4US Simplify IT",
+      teamMembers: teamMembers?.data?.map((t) => t.attributes) || [],
+      strapiUrl: STRAPI_URL,
     const teamMembers = await fetchFromStrapi("/team-members");
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
@@ -228,13 +301,23 @@ app.get("/chi-siamo", async (req, res) => {
       teamMembers: [],
       strapiUrl: STRAPI_URL,
     });
+    console.error("Error rendering chi-siamo:", error);
+    res.render("chi-siamo", {
+      title: "Chi Siamo - B4US Simplify IT",
+      teamMembers: [],
+      strapiUrl: STRAPI_URL,
+    });
   }
 });
 
 app.get("/prodotti", (req, res) => {
   res.render("prodotti", { title: "Prodotti | B4US - Simplify IT" });
+app.get("/prodotti", (req, res) => {
+  res.render("prodotti", { title: "Prodotti | B4US - Simplify IT" });
 });
 
+app.get("/open4us", (req, res) => {
+  res.render("open4us", { title: "Open4US - Accesso Smart | B4US" });
 app.get("/open4us", (req, res) => {
   res.render("open4us", { title: "Open4US - Accesso Smart | B4US" });
 });
@@ -243,10 +326,19 @@ app.get("/carfleet", (req, res) => {
   res.render("carfleet", {
     title: "CarFleet - Gestione Flotta Intelligente | B4US",
   });
+app.get("/carfleet", (req, res) => {
+  res.render("carfleet", {
+    title: "CarFleet - Gestione Flotta Intelligente | B4US",
+  });
 });
 
 app.get("/servizi", async (req, res) => {
+app.get("/servizi", async (req, res) => {
   try {
+    const servizi = await fetchFromStrapi("/servizi");
+    res.render("servizi", {
+      title: "Servizi | B4US - Simplify IT",
+      servizi: servizi?.data?.map((s) => s.attributes) || [],
     const servizi = await fetchFromStrapi("/servizi");
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
@@ -258,15 +350,24 @@ app.get("/servizi", async (req, res) => {
       title: "Servizi | B4US - Simplify IT",
       servizi: [],
     });
+    console.error("Error rendering servizi:", error);
+    res.render("servizi", {
+      title: "Servizi | B4US - Simplify IT",
+      servizi: [],
+    });
   }
 });
 
 app.get("/struttura", (req, res) => {
   res.render("struttura", { title: "Organizzazione - B4US | Simplify IT" });
+app.get("/struttura", (req, res) => {
+  res.render("struttura", { title: "Organizzazione - B4US | Simplify IT" });
 });
 
 app.get("/storia", async (req, res) => {
+app.get("/storia", async (req, res) => {
   try {
+    const storia = await fetchFromStrapi("/storia-b4-uses");
     const storia = await fetchFromStrapi("/storia-b4-uses");
     // Ordina per anno decrescente (più recente prima)
     const storiaOrdinata =
@@ -274,10 +375,22 @@ app.get("/storia", async (req, res) => {
       [];
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
+    const storiaOrdinata =
+      storia?.data?.map((s) => s.attributes).sort((b, a) => b.Anno - a.Anno) ||
+      [];
+    res.render("storia", {
+      title: "La Nostra Storia - B4US | Simplify IT",
       storia: storiaOrdinata,
+      strapiUrl: STRAPI_URL,
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
+    console.error("Error rendering storia:", error);
+    res.render("storia", {
+      title: "La Nostra Storia - B4US | Simplify IT",
+      storia: [],
+      strapiUrl: STRAPI_URL,
+    });
     console.error("Error rendering storia:", error);
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
@@ -291,10 +404,20 @@ app.get("/privacy-policy", (req, res) => {
   res.render("privacy-policy", {
     title: "Privacy Policy - B4US srl | Simplify IT",
   });
+app.get("/privacy-policy", (req, res) => {
+  res.render("privacy-policy", {
+    title: "Privacy Policy - B4US srl | Simplify IT",
+  });
 });
 
 app.get("/carriere", async (req, res) => {
+app.get("/carriere", async (req, res) => {
   try {
+    const jobPositions = await fetchFromStrapi("/job-positions");
+    res.render("carriere", {
+      title: "Lavora Con Noi - B4US Team",
+      jobPositions:
+        jobPositions?.data?.map((j) => ({ id: j.id, ...j.attributes })) || [],
     const jobPositions = await fetchFromStrapi("/job-positions");
     res.render("carriere", {
       title: "Lavora Con Noi - B4US Team",
@@ -307,17 +430,27 @@ app.get("/carriere", async (req, res) => {
       title: "Lavora Con Noi - B4US Team",
       jobPositions: [],
     });
+    console.error("Error rendering carriere:", error);
+    res.render("carriere", {
+      title: "Lavora Con Noi - B4US Team",
+      jobPositions: [],
+    });
   }
 });
 
+app.get("/contatti", (req, res) => {
+  res.render("contatti", { title: "Contatti - B4US Simplify IT" });
 app.get("/contatti", (req, res) => {
   res.render("contatti", { title: "Contatti - B4US Simplify IT" });
 });
 
 app.get("/blog", (req, res) => {
   res.render("blog", { title: "Diario di Bordo - B4US Simplify IT" });
+app.get("/blog", (req, res) => {
+  res.render("blog", { title: "Diario di Bordo - B4US Simplify IT" });
 });
 
+app.get("/blog/:slug", async (req, res) => {
 app.get("/blog/:slug", async (req, res) => {
   try {
     const { slug } = req.params;
@@ -328,9 +461,25 @@ app.get("/blog/:slug", async (req, res) => {
         headers: { ...strapiAuthHeaders },
       },
     );
+    const response = await axios.get(
+      `${STRAPI_API_URL}/blog-posts?filters[slug][$eq]=${slug}&populate=*`,
+      {
+        headers: { ...strapiAuthHeaders },
+      },
+    );
     const post = response.data?.data?.[0]?.attributes || null;
 
+
     // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
+    const allPosts = await fetchFromStrapi("/blog-posts");
+    const relatedPosts =
+      allPosts?.data?.map((b) => b.attributes).filter((p) => p.slug !== slug) ||
+      [];
+
+    res.render("blog-post", {
+      title: post
+        ? `${post.titolo} | B4US Blog`
+        : "Articolo non trovato | B4US Blog",
     const allPosts = await fetchFromStrapi("/blog-posts");
     const relatedPosts =
       allPosts?.data?.map((b) => b.attributes).filter((p) => p.slug !== slug) ||
@@ -343,13 +492,19 @@ app.get("/blog/:slug", async (req, res) => {
       post: post,
       relatedPosts: relatedPosts,
       strapiUrl: STRAPI_URL,
+      strapiUrl: STRAPI_URL,
     });
   } catch (error) {
     console.error("Error rendering blog post:", error);
     res.render("blog-post", {
       title: "Articolo non trovato | B4US Blog",
       post: null,
+    console.error("Error rendering blog post:", error);
+    res.render("blog-post", {
+      title: "Articolo non trovato | B4US Blog",
+      post: null,
       relatedPosts: [],
+      strapiUrl: STRAPI_URL,
       strapiUrl: STRAPI_URL,
     });
   }
@@ -385,9 +540,12 @@ app.get("/login", (req, res) => {
 // Strapi redirect page
 app.get("/strapi-redirect", (req, res) => {
   res.render("strapi-redirect", { title: "Reindirizzamento..." });
+app.get("/strapi-redirect", (req, res) => {
+  res.render("strapi-redirect", { title: "Reindirizzamento..." });
 });
 
 // Login API endpoint
+app.post("/api/login", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   try {
     const { identifier, password } = req.body;
@@ -396,9 +554,14 @@ app.post("/api/login", async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Email e password sono richiesti",
+      return res.status(400).json({
+        success: false,
+        message: "Email e password sono richiesti",
       });
     }
 
+    console.log("Attempting login to:", `${STRAPI_URL}/admin/login`);
+    console.log("With email:", identifier);
     console.log("Attempting login to:", `${STRAPI_URL}/admin/login`);
     console.log("With email:", identifier);
 
@@ -415,30 +578,55 @@ app.post("/api/login", async (req, res) => {
         },
       },
     );
+    const response = await axios.post(
+      `${STRAPI_URL}/admin/login`,
+      {
+        email: identifier,
+        password: password,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
 
+    console.log("Login response status:", response.status);
     console.log("Login response status:", response.status);
 
     if (response.data && response.data.data) {
       // Login successful
       console.log("Login successful for:", identifier);
+      console.log("Login successful for:", identifier);
       return res.json({
         success: true,
         message: "Login effettuato con successo",
+        message: "Login effettuato con successo",
         adminUrl: STRAPI_URL,
+        token: response.data.data.token,
         token: response.data.data.token,
       });
     } else {
       return res.status(401).json({
         success: false,
         message: "Credenziali non valide",
+        message: "Credenziali non valide",
       });
     }
   } catch (error) {
     console.error("Login error details:", {
+    console.error("Login error details:", {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
+      status: error.response?.status,
     });
+
+    const errorMessage =
+      error.response?.data?.error?.message ||
+      error.response?.data?.message ||
+      "Email o password non corretti. Assicurati di usare l'email dell'admin.";
+
 
     const errorMessage =
       error.response?.data?.error?.message ||
@@ -448,13 +636,17 @@ app.post("/api/login", async (req, res) => {
     return res.status(error.response?.status || 401).json({
       success: false,
       message: errorMessage,
+      message: errorMessage,
     });
   }
 });
 
 // Demo request endpoint
 app.post("/api/demo-request", async (req, res) => {
+app.post("/api/demo-request", async (req, res) => {
   try {
+    const { nome, cognome, azienda, email, softwareProduct, messaggio } =
+      req.body;
     const { nome, cognome, azienda, email, softwareProduct, messaggio } =
       req.body;
 
@@ -462,6 +654,7 @@ app.post("/api/demo-request", async (req, res) => {
     if (!nome || !cognome || !azienda || !email || !softwareProduct) {
       return res.status(400).json({
         success: false,
+        message: "Tutti i campi sono obbligatori",
         message: "Tutti i campi sono obbligatori",
       });
     }
@@ -472,9 +665,17 @@ app.post("/api/demo-request", async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Email non valida",
+        message: "Email non valida",
       });
     }
 
+    console.log("Creating demo request for:", {
+      nome,
+      cognome,
+      azienda,
+      email,
+      softwareProduct,
+    });
     console.log("Creating demo request for:", {
       nome,
       cognome,
@@ -490,19 +691,24 @@ app.post("/api/demo-request", async (req, res) => {
       const productResponse = await axios.get(
         `${STRAPI_API_URL}/software-products?filters[name][$eq]=${softwareProduct}`,
         { headers: { ...strapiAuthHeaders } },
+        { headers: { ...strapiAuthHeaders } },
       );
 
       if (productResponse.data?.data?.length > 0) {
         softwareProductId = productResponse.data.data[0].id;
         console.log("Found existing software product:", softwareProductId);
+        console.log("Found existing software product:", softwareProductId);
       } else {
         // Se non esiste, crealo
+        console.log("Creating new software product:", softwareProduct);
         console.log("Creating new software product:", softwareProduct);
         const createProductResponse = await axios.post(
           `${STRAPI_API_URL}/software-products`,
           {
             data: {
               name: softwareProduct,
+              publishedAt: new Date().toISOString(),
+            },
               publishedAt: new Date().toISOString(),
             },
           },
@@ -512,11 +718,17 @@ app.post("/api/demo-request", async (req, res) => {
               ...strapiAuthHeaders,
             },
           },
+              "Content-Type": "application/json",
+              ...strapiAuthHeaders,
+            },
+          },
         );
         softwareProductId = createProductResponse.data.data.id;
         console.log("Created software product:", softwareProductId);
+        console.log("Created software product:", softwareProductId);
       }
     } catch (error) {
+      console.error("Error handling software product:", error.message);
       console.error("Error handling software product:", error.message);
       // Continua senza il product se c'è un errore
     }
@@ -528,6 +740,8 @@ app.post("/api/demo-request", async (req, res) => {
         cognome: cognome,
         azienda: azienda,
         email: email,
+        publishedAt: new Date().toISOString(),
+      },
         publishedAt: new Date().toISOString(),
       },
     };
@@ -546,6 +760,10 @@ app.post("/api/demo-request", async (req, res) => {
       "Creating demo request with data:",
       JSON.stringify(demoRequestData, null, 2),
     );
+    console.log(
+      "Creating demo request with data:",
+      JSON.stringify(demoRequestData, null, 2),
+    );
 
     const demoRequestResponse = await axios.post(
       `${STRAPI_API_URL}/demo-requests`,
@@ -556,8 +774,16 @@ app.post("/api/demo-request", async (req, res) => {
           ...strapiAuthHeaders,
         },
       },
+          "Content-Type": "application/json",
+          ...strapiAuthHeaders,
+        },
+      },
     );
 
+    console.log(
+      "Demo request created successfully:",
+      demoRequestResponse.data.data.id,
+    );
     console.log(
       "Demo request created successfully:",
       demoRequestResponse.data.data.id,
@@ -567,14 +793,22 @@ app.post("/api/demo-request", async (req, res) => {
       success: true,
       message: "Richiesta demo inviata con successo! Ti contatteremo presto.",
       data: demoRequestResponse.data,
+      message: "Richiesta demo inviata con successo! Ti contatteremo presto.",
+      data: demoRequestResponse.data,
     });
   } catch (error) {
+    console.error("Demo request error:", {
     console.error("Demo request error:", {
       message: error.message,
       response: error.response?.data,
       status: error.response?.status,
+      status: error.response?.status,
     });
 
+    const errorMessage =
+      error.response?.data?.error?.message ||
+      error.message ||
+      "Errore durante l'invio della richiesta demo";
     const errorMessage =
       error.response?.data?.error?.message ||
       error.message ||
@@ -583,15 +817,20 @@ app.post("/api/demo-request", async (req, res) => {
     res.status(error.response?.status || 500).json({
       success: false,
       message: errorMessage,
+      message: errorMessage,
     });
   }
 });
 
 // Job application endpoint
 app.post("/api/job-application", upload.single("cv"), async (req, res) => {
+app.post("/api/job-application", upload.single("cv"), async (req, res) => {
   let uploadedFilePath = null;
 
+
   try {
+    const { nome, cognome, dataNascita, email, telefono, jobPosition } =
+      req.body;
     const { nome, cognome, dataNascita, email, telefono, jobPosition } =
       req.body;
     const cvFile = req.file;
@@ -605,8 +844,17 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       !telefono ||
       !jobPosition
     ) {
+    if (
+      !nome ||
+      !cognome ||
+      !dataNascita ||
+      !email ||
+      !telefono ||
+      !jobPosition
+    ) {
       return res.status(400).json({
         success: false,
+        message: "Tutti i campi sono obbligatori",
         message: "Tutti i campi sono obbligatori",
       });
     }
@@ -615,6 +863,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       return res.status(400).json({
         success: false,
         message: "Il CV è obbligatorio",
+        message: "Il CV è obbligatorio",
       });
     }
 
@@ -622,6 +871,11 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
 
     // Step 1: Upload del CV a Strapi
     const formData = new FormData();
+    formData.append(
+      "files",
+      fs.createReadStream(cvFile.path),
+      cvFile.originalname,
+    );
     formData.append(
       "files",
       fs.createReadStream(cvFile.path),
@@ -639,12 +893,25 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
         },
       },
     );
+    console.log("Uploading CV to Strapi...");
+    const uploadResponse = await axios.post(
+      `${STRAPI_API_URL}/upload`,
+      formData,
+      {
+        headers: {
+          ...formData.getHeaders(),
+          ...strapiAuthHeaders,
+        },
+      },
+    );
 
     const uploadedCV = uploadResponse.data[0];
+    console.log("CV uploaded successfully:", uploadedCV.id);
     console.log("CV uploaded successfully:", uploadedCV.id);
 
     // Step 2: Determina il job_position ID
     let jobPositionId = null;
+    if (jobPosition !== "autocandidatura") {
     if (jobPosition !== "autocandidatura") {
       jobPositionId = parseInt(jobPosition);
     }
@@ -660,6 +927,8 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
         cv: [uploadedCV.id],
         publishedAt: new Date().toISOString(),
       },
+        publishedAt: new Date().toISOString(),
+      },
     };
 
     // Aggiungi job_position solo se non è autocandidatura
@@ -667,6 +936,10 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       jobRequestData.data.job_position = jobPositionId;
     }
 
+    console.log(
+      "Creating job request with data:",
+      JSON.stringify(jobRequestData, null, 2),
+    );
     console.log(
       "Creating job request with data:",
       JSON.stringify(jobRequestData, null, 2),
@@ -681,8 +954,16 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
           ...strapiAuthHeaders,
         },
       },
+          "Content-Type": "application/json",
+          ...strapiAuthHeaders,
+        },
+      },
     );
 
+    console.log(
+      "Job request created successfully:",
+      jobRequestResponse.data.data.id,
+    );
     console.log(
       "Job request created successfully:",
       jobRequestResponse.data.data.id,
@@ -695,11 +976,15 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       success: true,
       message: "Candidatura inviata con successo! Ti contatteremo presto.",
       data: jobRequestResponse.data,
+      message: "Candidatura inviata con successo! Ti contatteremo presto.",
+      data: jobRequestResponse.data,
     });
   } catch (error) {
     console.error("Job application error:", {
+    console.error("Job application error:", {
       message: error.message,
       response: error.response?.data,
+      status: error.response?.status,
       status: error.response?.status,
     });
 
@@ -712,15 +997,21 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       error.response?.data?.error?.message ||
       error.message ||
       "Errore durante l'invio della candidatura";
+    const errorMessage =
+      error.response?.data?.error?.message ||
+      error.message ||
+      "Errore durante l'invio della candidatura";
 
     res.status(error.response?.status || 500).json({
       success: false,
+      message: errorMessage,
       message: errorMessage,
     });
   }
 });
 
 // Proxy generico per le chiamate client-side a Strapi (evita CORS e mixed content)
+app.get("/api/strapi/:endpoint", async (req, res) => {
 app.get("/api/strapi/:endpoint", async (req, res) => {
   try {
     const endpoint = req.params.endpoint;
@@ -729,15 +1020,23 @@ app.get("/api/strapi/:endpoint", async (req, res) => {
       Object.keys(req.query).length > 0
         ? "?" + new URLSearchParams(req.query).toString()
         : "";
+    const queryString =
+      Object.keys(req.query).length > 0
+        ? "?" + new URLSearchParams(req.query).toString()
+        : "";
     const url = `${STRAPI_API_URL}/${endpoint}${queryString}`;
     console.log("Proxy Strapi request:", url);
+    console.log("Proxy Strapi request:", url);
     const response = await axios.get(url, {
+      headers: { ...strapiAuthHeaders },
       headers: { ...strapiAuthHeaders },
     });
     res.json(response.data);
   } catch (error) {
     console.error("Proxy Strapi error:", error.message);
+    console.error("Proxy Strapi error:", error.message);
     res.status(error.response?.status || 500).json({
+      error: error.response?.data || { message: "Errore nel proxy Strapi" },
       error: error.response?.data || { message: "Errore nel proxy Strapi" },
     });
   }
