@@ -1,0 +1,53 @@
+# Abilita o disabilita la pagina di manutenzione sul frontend (Azure Web App).
+# Utile prima/dopo un deploy per evitare errori agli utenti.
+#
+# Configurazione richiesta in GitHub:
+# - Secrets: AZURE_CREDENTIALS (JSON del service principal con clientId, clientSecret, subscriptionId, tenantId)
+# - Secrets: RESOURCE_GROUP_NAME (nome del resource group della Web App, es. rg-b4us-prod)
+#
+# Uso: Actions → Manutenzione frontend → Run workflow → Scegli Abilita o Disabilita
+
+name: Manutenzione frontend
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Modalità manutenzione"
+        required: true
+        default: "enable"
+        type: choice
+        options:
+          - enable
+          - disable
+
+jobs:
+  set-maintenance:
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Abilita pagina di manutenzione
+        if: inputs.mode == 'enable'
+        run: |
+          az webapp config appsettings set \
+            --name b4us-prod-website \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --settings MAINTENANCE_MODE=1 \
+            --output none
+          echo "✅ Manutenzione ABILITATA: il sito mostrerà la pagina di manutenzione."
+
+      - name: Disabilita pagina di manutenzione
+        if: inputs.mode == 'disable'
+        run: |
+          az webapp config appsettings set \
+            --name b4us-prod-website \
+            --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+            --settings MAINTENANCE_MODE=0 \
+            --output none
+          echo "✅ Manutenzione DISABILITATA: il sito è di nuovo regolare."

@@ -21,12 +21,17 @@ const ALLOWED_LOGIN_IPS = (process.env.ALLOWED_LOGIN_IP || "4.232.71.155")
   .map((ip) => ip.trim())
   .filter(Boolean);
 const IS_PRODUCTION = process.env.NODE_ENV === "production";
+const MAINTENANCE_MODE =
+  process.env.MAINTENANCE_MODE === "1" ||
+  process.env.MAINTENANCE_MODE === "true";
 console.log(
   "[BOOT-ENV]",
   "NODE_ENV raw =",
   JSON.stringify(process.env.NODE_ENV),
   "| IS_PRODUCTION =",
   IS_PRODUCTION,
+  "| MAINTENANCE_MODE =",
+  MAINTENANCE_MODE,
   "| ALLOWED_LOGIN_IPS =",
   ALLOWED_LOGIN_IPS,
 );
@@ -165,6 +170,15 @@ app.get("/sitemap.xml", (req, res) => {
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
+
+// Pagina di manutenzione: se MAINTENANCE_MODE=1, tutte le richieste (tranne /health e API) vedono la pagina manutenzione
+app.use((req, res, next) => {
+  if (!MAINTENANCE_MODE) return next();
+  if (req.path === "/health" || req.path.startsWith("/api/")) return next();
+  res.status(503).render("manutenzione", {
+    title: "Manutenzione in corso | B4US",
+  });
+});
 
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null) {
