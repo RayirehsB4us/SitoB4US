@@ -69,6 +69,16 @@ app.set("trust proxy", true);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Normalizza IP: toglie porta se IPv4:porta (gestisce sia header con che senza porta)
+function normalizeIpForCompare(ip) {
+  if (!ip || typeof ip !== "string") return ip || "";
+  let s = ip.trim();
+  if (s.startsWith("::ffff:")) s = s.substring(7);
+  if (s.includes("%")) s = s.split("%")[0];
+  if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/.test(s)) s = s.replace(/:(\d+)$/, "");
+  return s;
+}
+
 // Middleware to compute client IP and decide if login button should be shown
 app.use((req, res, next) => {
   const xForwardedFor = req.headers["x-forwarded-for"];
@@ -78,7 +88,7 @@ app.use((req, res, next) => {
 
   // Senza reverse proxy: usare l'IP della connessione diretta (req.socket.remoteAddress)
   // Con reverse proxy: di solito x-forwarded-for o x-real-ip. Prima voce = client reale.
-  let clientIp =
+  let rawClientIp =
     (Array.isArray(xForwardedFor)
       ? xForwardedFor[0]
       : typeof xForwardedFor === "string"
@@ -89,23 +99,17 @@ app.use((req, res, next) => {
     req.ip ||
     socketIp ||
     "";
-
-  // Normalize IPv4-mapped IPv6 (e.g. ::ffff:4.232.71.155 -> 4.232.71.155)
-  if (clientIp && clientIp.startsWith("::ffff:")) {
-    clientIp = clientIp.substring(7);
-  }
-  if (clientIp && clientIp.includes("%")) {
-    clientIp = clientIp.split("%")[0];
-  }
+  const clientIp = normalizeIpForCompare(rawClientIp);
 
   const isAllowedIp = ALLOWED_LOGIN_IPS.some((rule) => {
+    const normRule = normalizeIpForCompare(rule);
     // Prefisso di rete, es. 192.168.178.* → match su 192.168.178.x
     if (rule.endsWith(".*")) {
-      const prefix = rule.slice(0, -1); // togli l'asterisco finale
+      const prefix = normRule.slice(0, -1); // togli l'asterisco finale
       return clientIp.startsWith(prefix);
     }
-    // IP singolo
-    return clientIp === rule;
+    // IP singolo (confronto dopo normalizzazione: funziona con e senza porta)
+    return clientIp === normRule;
   });
 
   // Rendi disponibili IP e flag anche alle route successive
