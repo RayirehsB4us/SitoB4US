@@ -72,15 +72,30 @@ app.use(express.urlencoded({ extended: true }));
 // Middleware to compute client IP and decide if login button should be shown
 app.use((req, res, next) => {
   const xForwardedFor = req.headers["x-forwarded-for"];
-  let clientIp = Array.isArray(xForwardedFor)
-    ? xForwardedFor[0]
-    : xForwardedFor
-      ? xForwardedFor.split(",")[0].trim()
-      : req.ip;
+  const xRealIp = req.headers["x-real-ip"];
+  const cfConnectingIp = req.headers["cf-connecting-ip"]; // Cloudflare
+  const socketIp = req.socket?.remoteAddress;
 
-  // Normalize IPv4-mapped IPv6 addresses (e.g. ::ffff:4.232.71.155)
+  // Senza reverse proxy: usare l'IP della connessione diretta (req.socket.remoteAddress)
+  // Con reverse proxy: di solito x-forwarded-for o x-real-ip. Prima voce = client reale.
+  let clientIp =
+    (Array.isArray(xForwardedFor)
+      ? xForwardedFor[0]
+      : typeof xForwardedFor === "string"
+        ? xForwardedFor.split(",")[0].trim()
+        : null) ||
+    (typeof xRealIp === "string" ? xRealIp.trim() : null) ||
+    (typeof cfConnectingIp === "string" ? cfConnectingIp.trim() : null) ||
+    req.ip ||
+    socketIp ||
+    "";
+
+  // Normalize IPv4-mapped IPv6 (e.g. ::ffff:4.232.71.155 -> 4.232.71.155)
   if (clientIp && clientIp.startsWith("::ffff:")) {
     clientIp = clientIp.substring(7);
+  }
+  if (clientIp && clientIp.includes("%")) {
+    clientIp = clientIp.split("%")[0];
   }
 
   const isAllowedIp = ALLOWED_LOGIN_IPS.some((rule) => {
@@ -104,22 +119,31 @@ app.use((req, res, next) => {
     res.locals.showLoginButton = true;
   }
 
+  const ipSource = xForwardedFor
+    ? "x-forwarded-for"
+    : xRealIp
+      ? "x-real-ip"
+      : cfConnectingIp
+        ? "cf-connecting-ip"
+        : req.ip
+          ? "req.ip"
+          : socketIp
+            ? "socket.remoteAddress"
+            : "none";
   console.log(
     "[IP-LOG]",
     new Date().toISOString(),
     `${req.method} ${req.originalUrl}`,
-    "| x-forwarded-for=",
-    xForwardedFor || "N/A",
-    "| req.ip=",
-    req.ip,
     "| clientIp=",
-    clientIp,
+    clientIp || "N/A",
+    "| source=",
+    ipSource,
     "| allowedIp=",
     isAllowedIp,
     "| showLoginButton=",
     res.locals.showLoginButton,
-    "| isProduction=",
-    IS_PRODUCTION,
+    "| NODE_ENV=",
+    process.env.NODE_ENV || "undefined",
   );
 
   next();
@@ -403,6 +427,23 @@ app.get("/strapi-redirect", (req, res) => {
 
 // Login API endpoint
 app.post("/api/login", async (req, res) => {
+  // Controllo IP: solo IP consentiti possono chiamare l'API di login
+  if (IS_PRODUCTION && !req.isAllowedLoginIp) {
+    console.warn(
+      "[API-LOGIN-BLOCKED]",
+      new Date().toISOString(),
+      `${req.method} ${req.originalUrl}`,
+      "| clientIp=",
+      req.clientIp || req.ip,
+      "| allowedIp=",
+      req.isAllowedLoginIp,
+    );
+    return res.status(403).json({
+      success: false,
+      message: "Accesso non autorizzato",
+    });
+  }
+
   try {
     const { identifier, password } = req.body;
 
