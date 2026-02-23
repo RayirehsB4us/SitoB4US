@@ -209,10 +209,16 @@ app.use((req, res, next) => {
 });
 
 // Helper function to fetch from Strapi with error handling
-async function fetchFromStrapi(endpoint, fallbackData = null) {
+async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = null) {
   try {
+    var query = '?populate=*';
+    if (deepPopulate && deepPopulate.length > 0) {
+      query = '?' + deepPopulate.map(function(c) {
+        return 'populate[' + c + '][populate]=*';
+      }).join('&');
+    }
     const response = await axios.get(
-      `${STRAPI_API_URL}${endpoint}?populate=*`,
+      `${STRAPI_API_URL}${endpoint}${query}`,
       {
         headers: { ...strapiAuthHeaders },
       },
@@ -303,8 +309,24 @@ app.get("/servizi", async (req, res) => {
   }
 });
 
-app.get("/struttura", (req, res) => {
-  res.render("struttura", { title: "Organizzazione - B4US | Simplify IT" });
+app.get("/struttura", async (req, res) => {
+  try {
+    const strutturaData = await fetchFromStrapi(
+      "/organizzazione", null, ['HeroSection', 'techArea', 'knowledgeArea', 'CoverImage']
+    );
+    res.render("struttura", {
+      title: "Organizzazione - B4US | Simplify IT",
+      strutturaData: strutturaData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering struttura:", error);
+    res.render("struttura", {
+      title: "Organizzazione - B4US | Simplify IT",
+      strutturaData: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/storia", async (req, res) => {

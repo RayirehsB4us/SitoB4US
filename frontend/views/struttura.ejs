@@ -14,70 +14,89 @@
       <div class="container mx-auto px-6">
         <div class="max-w-3xl">
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
-            <span class="text-primary">Organizzazione</span>
+            <span class="text-primary">
+              <%= strutturaData.MainTitle || 'Organizzazione' %>
+            </span>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Crediamo che l'efficienza non nasca da strutture complesse, ma da una comunicazione aperta e continua.
-            Per noi è fondamentale che le informazioni circolino liberamente, in modo trasversale, senza barriere
-            legate a ruoli, competenze o aree operative.
+            <%= strutturaData.descriptionTitle
+              || "Crediamo che l\'efficienza non nasca da strutture complesse, ma da una comunicazione aperta e continua. Per noi è fondamentale che le informazioni circolino liberamente, in modo trasversale, senza barriere legate a ruoli, competenze o aree operative."
+              %>
           </p>
         </div>
       </div>
     </section>
 
     <!-- Nessun Compartimento Stagno -->
+    <% var hero1 = strutturaData.HeroSection && strutturaData.HeroSection[0]; %>
     <section class="py-20 bg-white dark:bg-slate-900/50">
       <div class="container mx-auto px-6">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
           <div>
             <span
               class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-              Il nostro approccio
+              <%= (hero1 && hero1.tag) || 'Il nostro approccio' %>
             </span>
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-              Nessun compartimento stagno
+              <%= (hero1 && hero1.Title) || 'Nessun compartimento stagno' %>
             </h2>
             <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-              Nel nostro modo di lavorare non esistono barriere: ognuno porta competenze solide nel proprio ambito,
-              ma con una <strong class="text-slate-800 dark:text-white">visione d'insieme condivisa</strong>.
+              <%= (hero1 && hero1.SubTitle) || "Nel nostro modo di lavorare non esistono barriere: ognuno porta competenze solide nel proprio ambito, ma con una visione d\'insieme condivisa." %>
             </p>
             <div class="space-y-4">
-              <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-primary">code</span>
+              <% var defaultIcons1 = ['code', 'dns', 'handshake']; %>
+              <% if (hero1 && hero1.card && hero1.card.length > 0) { %>
+                <% hero1.card.forEach(function(c, i) { %>
+                  <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                    <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span class="material-symbols-outlined text-primary"><%= defaultIcons1[i] || 'check_circle' %></span>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-slate-900 dark:text-white"><%= c.title %></h4>
+                      <p class="text-sm text-slate-600 dark:text-slate-400"><%= c.subTitle %></p>
+                    </div>
+                  </div>
+                <% }); %>
+              <% } else { %>
+                <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-primary">code</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white">Chi sviluppa</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Conosce i sistemi e l'infrastruttura</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 class="font-bold text-slate-900 dark:text-white">Chi sviluppa</h4>
-                  <p class="text-sm text-slate-600 dark:text-slate-400">Conosce i sistemi e l'infrastruttura</p>
+                <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-primary">dns</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white">Chi lavora sull'infrastruttura</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Comprende il prodotto e il business</p>
+                  </div>
                 </div>
-              </div>
-              <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-primary">dns</span>
+                <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+                  <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-primary">handshake</span>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white">Chi segue la parte commerciale</h4>
+                    <p class="text-sm text-slate-600 dark:text-slate-400">Ha familiarità con gli aspetti tecnici</p>
+                  </div>
                 </div>
-                <div>
-                  <h4 class="font-bold text-slate-900 dark:text-white">Chi lavora sull'infrastruttura</h4>
-                  <p class="text-sm text-slate-600 dark:text-slate-400">Comprende il prodotto e il business</p>
-                </div>
-              </div>
-              <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span class="material-symbols-outlined text-primary">handshake</span>
-                </div>
-                <div>
-                  <h4 class="font-bold text-slate-900 dark:text-white">Chi segue la parte commerciale</h4>
-                  <p class="text-sm text-slate-600 dark:text-slate-400">Ha familiarità con gli aspetti tecnici</p>
-                </div>
-              </div>
+              <% } %>
             </div>
           </div>
           <div class="relative">
             <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl">
-              <img alt="Team che collabora in modo trasversale" class="w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80&fm=jpg&fit=crop" />
+              <% if (strutturaData.CoverImage && strutturaData.CoverImage.data) { %>
+                <img alt="Team che collabora in modo trasversale" class="w-full h-full object-cover"
+                  src="<%= strapiUrl %><%= strutturaData.CoverImage.data.attributes.url %>" />
+              <% } else { %>
+                <img alt="Team che collabora in modo trasversale" class="w-full h-full object-cover"
+                  src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80&fm=jpg&fit=crop" />
+              <% } %>
             </div>
             <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
           </div>
@@ -86,164 +105,239 @@
     </section>
 
     <!-- Crescita e Formazione -->
+    <% var hero2 = strutturaData.HeroSection && strutturaData.HeroSection[1]; %>
     <section class="py-24 bg-slate-50 dark:bg-slate-900/30">
       <div class="container mx-auto px-6">
         <div class="text-center mb-16">
           <span
             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-            Investiamo nelle persone
+            <%= (hero2 && hero2.tag) || 'Investiamo nelle persone' %>
           </span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-            Crescita e Formazione
+            <%= (hero2 && hero2.Title) || 'Crescita e Formazione' %>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Ogni collaboratore ha un percorso di sviluppo definito e monitorato, supportato da formazione continua.
+            <%= (hero2 && hero2.SubTitle) || 'Ogni collaboratore ha un percorso di sviluppo definito e monitorato, supportato da formazione continua.' %>
           </p>
         </div>
 
         <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <!-- Junior -->
-          <div
-            class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-3xl">school</span>
+          <% var defaultIcons2 = ['school', 'workspace_premium']; %>
+          <% if (hero2 && hero2.card && hero2.card.length > 0) { %>
+            <% hero2.card.forEach(function(c, i) { %>
+              <div
+                class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
+                <div class="flex items-center gap-4 mb-6">
+                  <div class="w-14 h-14 <%= (i === 0) ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-primary/10' %> rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined <%= (i === 0) ? 'text-blue-600 dark:text-blue-400' : 'text-primary' %> text-3xl"><%= defaultIcons2[i] || 'star' %></span>
+                  </div>
+                  <div>
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%= c.title %></h3>
+                    <p class="text-sm text-slate-500"><%= c.subTitle %></p>
+                  </div>
+                </div>
+                <ul class="space-y-3">
+                  <% if (c.content) { %>
+                    <% c.content.split('\n').filter(function(line) { return line.trim().length > 0; }).forEach(function(line) { %>
+                      <li class="flex items-start gap-3">
+                        <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                        <span class="text-slate-600 dark:text-slate-400"><%= line.replace(/^-\s*/, '') %></span>
+                      </li>
+                    <% }); %>
+                  <% } %>
+                </ul>
               </div>
-              <div>
-                <h3 class="font-bold text-xl text-slate-900 dark:text-white">Figure Junior</h3>
-                <p class="text-sm text-slate-500">Percorso di crescita strutturato</p>
+            <% }); %>
+          <% } else { %>
+            <!-- Junior -->
+            <div
+              class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center">
+                  <span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-3xl">school</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xl text-slate-900 dark:text-white">Figure Junior</h3>
+                  <p class="text-sm text-slate-500">Percorso di crescita strutturato</p>
+                </div>
               </div>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Affiancamento a professionisti esperti</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Mentorship personalizzata</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Velocità di crescita basata su impegno e
+                    capacità</span>
+                </li>
+              </ul>
             </div>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Affiancamento a professionisti esperti</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Mentorship personalizzata</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Velocità di crescita basata su impegno e capacità</span>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Senior -->
-          <div
-            class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
-            <div class="flex items-center gap-4 mb-6">
-              <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
-                <span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+            <!-- Senior -->
+            <div
+              class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
+              <div class="flex items-center gap-4 mb-6">
+                <div class="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+                </div>
+                <div>
+                  <h3 class="font-bold text-xl text-slate-900 dark:text-white">Figure Senior</h3>
+                  <p class="text-sm text-slate-500">Formazione continua avanzata</p>
+                </div>
               </div>
-              <div>
-                <h3 class="font-bold text-xl text-slate-900 dark:text-white">Figure Senior</h3>
-                <p class="text-sm text-slate-500">Formazione continua avanzata</p>
-              </div>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Formazione dedicata ogni anno</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Corsi, seminari e conferenze di settore</span>
+                </li>
+                <li class="flex items-start gap-3">
+                  <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
+                  <span class="text-slate-600 dark:text-slate-400">Ampliamento e rafforzamento competenze</span>
+                </li>
+              </ul>
             </div>
-            <ul class="space-y-3">
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Formazione dedicata ogni anno</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Corsi, seminari e conferenze di settore</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Ampliamento e rafforzamento competenze</span>
-              </li>
-            </ul>
-          </div>
+          <% } %>
         </div>
 
         <!-- Aree di formazione -->
         <div class="mt-16 max-w-5xl mx-auto">
-          <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">Le nostre aree di formazione</h3>
+          <% var techTags = strutturaData.techArea && strutturaData.techArea[0]; %>
+          <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">
+            <%= (techTags && techTags.title) || 'Le nostre aree di formazione' %>
+          </h3>
           <div class="flex flex-wrap justify-center gap-4">
-            <!-- Metodologiche -->
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">sync_alt</span> Agile
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">task_alt</span> Project Management
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">verified</span> Certificazioni
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">groups</span> Gestione Team
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">cloud_queue</span> Cloud &amp; Infrastruttura
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">code</span> Sviluppo Software
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">security</span> Cyber Security
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">analytics</span> Data &amp; AI
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">integration_instructions</span> System Integration
-            </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">terminal</span> DevOps &amp; Sysadmin
-            </span>
+            <% if (techTags && techTags.tags && techTags.tags.data && techTags.tags.data.length > 0) { %>
+              <% techTags.tags.data.forEach(function(tag) { %>
+                <span
+                  class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                  <span class="material-symbols-outlined text-primary text-sm align-middle mr-1"><%= tag.attributes.icon ? tag.attributes.icon.trim() : 'check_circle' %></span>
+                  <%= tag.attributes.title %>
+                </span>
+              <% }); %>
+            <% } else { %>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">sync_alt</span> Agile
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">task_alt</span> Project
+                Management
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">verified</span>
+                Certificazioni
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">groups</span> Gestione Team
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">cloud_queue</span> Cloud
+                &amp; Infrastruttura
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">code</span> Sviluppo
+                Software
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">security</span> Cyber
+                Security
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">analytics</span> Data &amp;
+                AI
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span
+                  class="material-symbols-outlined text-primary text-sm align-middle mr-1">integration_instructions</span>
+                System Integration
+              </span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+                <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">terminal</span> DevOps
+                &amp; Sysadmin
+              </span>
+            <% } %>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Knowledge Days -->
+    <% var ka = strutturaData.knowledgeArea; %>
     <section class="py-24 bg-primary text-white relative overflow-hidden">
       <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-96 h-96 border-8 border-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div
+          class="absolute top-0 left-0 w-96 h-96 border-8 border-white rounded-full -translate-x-1/2 -translate-y-1/2">
+        </div>
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
       </div>
       <div class="container mx-auto px-6 relative z-10">
         <div class="max-w-4xl mx-auto">
           <div class="flex flex-col md:flex-row items-center gap-8 mb-12">
             <div class="w-20 h-20 bg-white/10 backdrop-blur rounded-2xl flex items-center justify-center flex-shrink-0">
-              <span class="material-symbols-outlined text-5xl">calendar_month</span>
+              <span class="material-symbols-outlined text-5xl"><%= (ka && ka.MainCard && ka.MainCard.icon) ? ka.MainCard.icon.trim() : 'calendar_month' %></span>
             </div>
             <div>
-              <h2 class="font-display text-3xl md:text-4xl font-bold mb-3">Knowledge Days</h2>
+              <h2 class="font-display text-3xl md:text-4xl font-bold mb-3"><%= (ka && ka.MainCard && ka.MainCard.title) || 'Knowledge Days' %></h2>
               <p class="text-white/80 text-lg">
-                Due giornate all’anno dedicate alla crescita delle nostre persone.
+                <%= (ka && ka.MainCard && ka.MainCard.subTitle) || "Due giornate all'anno dedicate alla crescita delle nostre persone." %>
               </p>
             </div>
           </div>
 
           <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20">
             <p class="text-lg leading-relaxed mb-8">
-              Crediamo che la vera efficienza nasca dalla condivisione, non dalla complessità. Per questo abbiamo istituito i Knowledge Days: due appuntamenti annuali, riconosciuti a livello aziendale, interamente dedicati alla formazione e allo scambio di competenze tra colleghi e con professionisti esterni.
-Sono momenti pensati per fermarsi, uscire dalla routine operativa e investire tempo nella conoscenza: si approfondiscono temi specifici, si condividono esperienze concrete e si discutono approcci, strumenti e pratiche di lavoro.
-Un’occasione per valorizzare ciò che funziona, imparare dagli errori e costruire insieme una cultura aziendale basata su apprendimento continuo, confronto e crescita condivisa.
+              <%= (ka && ka.content) || "Crediamo che la vera efficienza nasca dalla condivisione, non dalla complessità. Per questo abbiamo istituito i Knowledge Days: due appuntamenti annuali, riconosciuti a livello aziendale, interamente dedicati alla formazione e allo scambio di competenze tra colleghi e con professionisti esterni. Sono momenti pensati per fermarsi, uscire dalla routine operativa e investire tempo nella conoscenza: si approfondiscono temi specifici, si condividono esperienze concrete e si discutono approcci, strumenti e pratiche di lavoro. Un'occasione per valorizzare ciò che funziona, imparare dagli errori e costruire insieme una cultura aziendale basata su apprendimento continuo, confronto e crescita condivisa." %>
             </p>
             <div class="grid sm:grid-cols-2 gap-6">
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                  <span class="material-symbols-outlined">thumb_up</span>
+              <% if (ka && ka.subCard && ka.subCard.length > 0) { %>
+                <% ka.subCard.forEach(function(sc) { %>
+                  <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                      <span class="material-symbols-outlined"><%= sc.icon ? sc.icon.trim() : 'star' %></span>
+                    </div>
+                    <div>
+                      <p class="font-bold"><%= sc.title %></p>
+                      <p class="text-sm text-white/70"><%= sc.subTitle %></p>
+                    </div>
+                  </div>
+                <% }); %>
+              <% } else { %>
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined">thumb_up</span>
+                  </div>
+                  <div>
+                    <p class="font-bold">Best Practices</p>
+                    <p class="text-sm text-white/70">Le esperienze che hanno generato valore.</p>
+                  </div>
                 </div>
-                <div>
-                  <p class="font-bold">Best Practices</p>
-                  <p class="text-sm text-white/70">Le esperienze che hanno generato valore.</p>
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <span class="material-symbols-outlined">lightbulb</span>
+                  </div>
+                  <div>
+                    <p class="font-bold">Lessons Learned</p>
+                    <p class="text-sm text-white/70">Gli insegnamenti che ci aiutano a migliorare.</p>
+                  </div>
                 </div>
-              </div>
-              <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                  <span class="material-symbols-outlined">lightbulb</span>
-                </div>
-                <div>
-                  <p class="font-bold">Lessons Learned</p>
-                  <p class="text-sm text-white/70">Gli insegnamenti che ci aiutano a migliorare.</p>
-                </div>
-              </div>
+              <% } %>
             </div>
           </div>
         </div>
