@@ -303,8 +303,12 @@ app.get("/servizi", async (req, res) => {
   }
 });
 
-app.get("/struttura", (req, res) => {
-  res.render("struttura", { title: "Organizzazione - B4US | Simplify IT" });
+app.get("/struttura", async (req, res) => {
+  const strutturaData = await fetchFromStrapi("/organizzazione");
+  res.render("struttura", {
+    title: "Organizzazione - B4US | Simplify IT",
+    strutturaData: strutturaData?.data?.attributes || {}
+  });
 });
 
 app.get("/storia", async (req, res) => {

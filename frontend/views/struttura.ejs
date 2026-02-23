@@ -14,12 +14,14 @@
       <div class="container mx-auto px-6">
         <div class="max-w-3xl">
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
-            <span class="text-primary">Organizzazione</span>
+            <span class="text-primary">
+              <%= strutturaData.MainTitle || 'Organizzazione' %>
+            </span>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Crediamo che l'efficienza non nasca da strutture complesse, ma da una comunicazione aperta e continua.
-            Per noi è fondamentale che le informazioni circolino liberamente, in modo trasversale, senza barriere
-            legate a ruoli, competenze o aree operative.
+            <%= strutturaData.descriptionTitle
+              || "Crediamo che l\'efficienza non nasca da strutture complesse, ma da una comunicazione aperta e continua. Per noi è fondamentale che le informazioni circolino liberamente, in modo trasversale, senza barriere legate a ruoli, competenze o aree operative."
+              %>
           </p>
         </div>
       </div>
@@ -43,8 +45,7 @@
             </p>
             <div class="space-y-4">
               <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-outlined text-primary">code</span>
                 </div>
                 <div>
@@ -53,8 +54,7 @@
                 </div>
               </div>
               <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-outlined text-primary">dns</span>
                 </div>
                 <div>
@@ -63,8 +63,7 @@
                 </div>
               </div>
               <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
-                <div
-                  class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
                   <span class="material-symbols-outlined text-primary">handshake</span>
                 </div>
                 <div>
@@ -125,7 +124,8 @@
               </li>
               <li class="flex items-start gap-3">
                 <span class="material-symbols-outlined text-primary text-lg mt-0.5">check_circle</span>
-                <span class="text-slate-600 dark:text-slate-400">Velocità di crescita basata su impegno e capacità</span>
+                <span class="text-slate-600 dark:text-slate-400">Velocità di crescita basata su impegno e
+                  capacità</span>
               </li>
             </ul>
           </div>
@@ -161,38 +161,58 @@
 
         <!-- Aree di formazione -->
         <div class="mt-16 max-w-5xl mx-auto">
-          <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">Le nostre aree di formazione</h3>
+          <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">Le nostre aree di formazione
+          </h3>
           <div class="flex flex-wrap justify-center gap-4">
             <!-- Metodologiche -->
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
               <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">sync_alt</span> Agile
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">task_alt</span> Project Management
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">task_alt</span> Project
+              Management
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">verified</span> Certificazioni
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">verified</span>
+              Certificazioni
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
               <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">groups</span> Gestione Team
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">cloud_queue</span> Cloud &amp; Infrastruttura
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">cloud_queue</span> Cloud
+              &amp; Infrastruttura
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">code</span> Sviluppo Software
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">code</span> Sviluppo
+              Software
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">security</span> Cyber Security
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">security</span> Cyber
+              Security
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">analytics</span> Data &amp; AI
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">analytics</span> Data &amp;
+              AI
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">integration_instructions</span> System Integration
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span
+                class="material-symbols-outlined text-primary text-sm align-middle mr-1">integration_instructions</span>
+              System Integration
             </span>
-            <span class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">terminal</span> DevOps &amp; Sysadmin
+            <span
+              class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
+              <span class="material-symbols-outlined text-primary text-sm align-middle mr-1">terminal</span> DevOps
+              &amp; Sysadmin
             </span>
           </div>
         </div>
@@ -202,7 +222,9 @@
     <!-- Knowledge Days -->
     <section class="py-24 bg-primary text-white relative overflow-hidden">
       <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-96 h-96 border-8 border-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div
+          class="absolute top-0 left-0 w-96 h-96 border-8 border-white rounded-full -translate-x-1/2 -translate-y-1/2">
+        </div>
         <div class="absolute bottom-0 right-0 w-64 h-64 bg-white rounded-full translate-x-1/3 translate-y-1/3"></div>
       </div>
       <div class="container mx-auto px-6 relative z-10">
@@ -221,9 +243,14 @@
 
           <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20">
             <p class="text-lg leading-relaxed mb-8">
-              Crediamo che la vera efficienza nasca dalla condivisione, non dalla complessità. Per questo abbiamo istituito i Knowledge Days: due appuntamenti annuali, riconosciuti a livello aziendale, interamente dedicati alla formazione e allo scambio di competenze tra colleghi e con professionisti esterni.
-Sono momenti pensati per fermarsi, uscire dalla routine operativa e investire tempo nella conoscenza: si approfondiscono temi specifici, si condividono esperienze concrete e si discutono approcci, strumenti e pratiche di lavoro.
-Un’occasione per valorizzare ciò che funziona, imparare dagli errori e costruire insieme una cultura aziendale basata su apprendimento continuo, confronto e crescita condivisa.
+              Crediamo che la vera efficienza nasca dalla condivisione, non dalla complessità. Per questo abbiamo
+              istituito i Knowledge Days: due appuntamenti annuali, riconosciuti a livello aziendale, interamente
+              dedicati alla formazione e allo scambio di competenze tra colleghi e con professionisti esterni.
+              Sono momenti pensati per fermarsi, uscire dalla routine operativa e investire tempo nella conoscenza: si
+              approfondiscono temi specifici, si condividono esperienze concrete e si discutono approcci, strumenti e
+              pratiche di lavoro.
+              Un’occasione per valorizzare ciò che funziona, imparare dagli errori e costruire insieme una cultura
+              aziendale basata su apprendimento continuo, confronto e crescita condivisa.
             </p>
             <div class="grid sm:grid-cols-2 gap-6">
               <div class="flex items-center gap-4">
