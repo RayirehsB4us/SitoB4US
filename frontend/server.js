@@ -303,10 +303,22 @@ app.get("/open4us", (req, res) => {
   res.render("open4us", { title: "Open4US - Accesso Smart | B4US" });
 });
 
-app.get("/carfleet", (req, res) => {
-  res.render("carfleet", {
-    title: "CarFleet - Gestione Flotta Intelligente | B4US",
-  });
+app.get("/carfleet", async (req, res) => {
+  try {
+    var carfleetData = await fetchFromStrapi("/car-fleet");
+    res.render("carfleet", {
+      title: "CarFleet - Gestione Flotta Intelligente | B4US",
+      cf: carfleetData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering carfleet:", error);
+    res.render("carfleet", {
+      title: "CarFleet - Gestione Flotta Intelligente | B4US",
+      cf: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/servizi", async (req, res) => {
