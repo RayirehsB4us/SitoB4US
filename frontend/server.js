@@ -279,8 +279,24 @@ app.get("/chi-siamo", async (req, res) => {
   }
 });
 
-app.get("/prodotti", (req, res) => {
-  res.render("prodotti", { title: "Prodotti | B4US - Simplify IT" });
+app.get("/prodotti", async (req, res) => {
+  try {
+    var prodottiData = await fetchFromStrapi(
+      "/prodotti", null, ['Carfleet', 'Open4us', 'DashboardPrenotazioni']
+    );
+    res.render("prodotti", {
+      title: "Prodotti | B4US - Simplify IT",
+      prodottiData: prodottiData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering prodotti:", error);
+    res.render("prodotti", {
+      title: "Prodotti | B4US - Simplify IT",
+      prodottiData: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/open4us", (req, res) => {
@@ -296,15 +312,18 @@ app.get("/carfleet", (req, res) => {
 app.get("/servizi", async (req, res) => {
   try {
     const servizi = await fetchFromStrapi("/servizi");
+    const serviceData = await fetchFromStrapi("/service");
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
       servizi: servizi?.data?.map((s) => s.attributes) || [],
+      serviziPage: serviceData?.data?.attributes || {},
     });
   } catch (error) {
     console.error("Error rendering servizi:", error);
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
       servizi: [],
+      serviziPage: {},
     });
   }
 });
