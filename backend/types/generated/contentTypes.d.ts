@@ -400,6 +400,66 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiCarFleetCarFleet extends Schema.SingleType {
+  collectionName: 'car_fleets';
+  info: {
+    description: 'Contenuti della pagina CarFleet';
+    displayName: 'Car Fleet Page';
+    pluralName: 'car-fleets';
+    singularName: 'car-fleet';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AccesBlock: Attribute.Component<'car-fleet.acces-block', true>;
+    AccesImage: Attribute.Media<'images'>;
+    Button1: Attribute.String;
+    Button2: Attribute.String;
+    Button3: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::car-fleet.car-fleet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    DashboardPanoramica: Attribute.Component<
+      'car-fleet.dashboard-panoramica',
+      true
+    >;
+    Icon: Attribute.String;
+    Icon2: Attribute.String;
+    IconText: Attribute.Component<'car-fleet.icon-text', true>;
+    Image: Attribute.Media<'images'>;
+    MappaFlotta: Attribute.Component<'car-fleet.mappa-flotta'>;
+    PowerappsBlocks: Attribute.Component<'car-fleet.powerapps-block', true>;
+    publishedAt: Attribute.DateTime;
+    SubTitle: Attribute.Text;
+    SubTitle2: Attribute.Text;
+    SubTitle3: Attribute.Text;
+    Subtitle4: Attribute.Text;
+    SubTitle5: Attribute.Text;
+    Subtitle6: Attribute.Text;
+    Title: Attribute.String & Attribute.Required;
+    Title2: Attribute.String;
+    Title3: Attribute.String;
+    Title4: Attribute.String;
+    Title5: Attribute.String;
+    Title6: Attribute.String;
+    Title7: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::car-fleet.car-fleet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+    UpperTitle2: Attribute.String;
+  };
+}
+
 export interface ApiCertificateCertificate extends Schema.CollectionType {
   collectionName: 'certificates';
   info: {
@@ -715,6 +775,143 @@ export interface ApiLogbookLogbook extends Schema.CollectionType {
   };
 }
 
+export interface ApiOpen4UsOpen4Us extends Schema.SingleType {
+  collectionName: 'open4_uses';
+  info: {
+    description: 'Contenuti della pagina Open4US - Accesso Smart';
+    displayName: 'Open4US Page';
+    pluralName: 'open4-uses';
+    singularName: 'open4-us';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AccesSmart: Attribute.Component<'open4us.acces-smart', true>;
+    AppBlocks: Attribute.Component<'open4us.app-block', true>;
+    AppIcon: Attribute.Component<'open4us.app-icon'>;
+    AppSubTitle: Attribute.Text;
+    AppTitle: Attribute.String;
+    CalendarBlock: Attribute.Component<'open4us.calendar-block'>;
+    CalendarDate: Attribute.String;
+    CalendarIcon: Attribute.String;
+    CalendarIcon2: Attribute.String;
+    CalendarIcon3: Attribute.String;
+    CalendarOggi: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::open4-us.open4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    DashboardOptions: Attribute.Component<'open4us.dashboard-option', true>;
+    DashIcon: Attribute.String;
+    DashLink: Attribute.String;
+    DashName: Attribute.String;
+    DashRole: Attribute.String;
+    DashSubTitle: Attribute.Text;
+    DashTitle: Attribute.String;
+    DashUpperTitle: Attribute.String;
+    ImageCard: Attribute.Component<'open4us.image-card'>;
+    MainButton1: Attribute.String;
+    MainButton2: Attribute.String;
+    MainIcon: Attribute.String;
+    MainSubTitle: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    MainTitle2: Attribute.String;
+    ModernButton: Attribute.String;
+    ModernSubTitle: Attribute.Text;
+    ModernTitle: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    SmartBlock: Attribute.Component<'open4us.smart-block'>;
+    SpaceBlock: Attribute.Component<'open4us.space-block', true>;
+    SpaceTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::open4-us.open4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperMainTitle: Attribute.String;
+  };
+}
+
+export interface ApiOrganizzazioneOrganizzazione extends Schema.SingleType {
+  collectionName: 'organizzazione';
+  info: {
+    description: 'Contenuti della pagina Organizzazione';
+    displayName: 'Organizzazione';
+    pluralName: 'organizzazioni';
+    singularName: 'organizzazione';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    CoverImage: Attribute.Media<'images'>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::organizzazione.organizzazione',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descriptionTitle: Attribute.Text;
+    HeroSection: Attribute.Component<'organizzazione.hero-section', true>;
+    knowledgeArea: Attribute.Component<'organizzazione.knowledge-area'>;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    techArea: Attribute.Component<'organizzazione.tech-area', true>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::organizzazione.organizzazione',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProdottiProdotti extends Schema.SingleType {
+  collectionName: 'prodottis';
+  info: {
+    description: 'Contenuti della pagina Prodotti (CarFleet, Open4US, Dashboard)';
+    displayName: 'Prodotti Page';
+    pluralName: 'prodottis';
+    singularName: 'prodotti';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Carfleet: Attribute.Component<'prodotti.carfleet-product'>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prodotti.prodotti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    DashboardPrenotazioni: Attribute.Component<'prodotti.dashboard-prenotazioni'>;
+    Icon: Attribute.String;
+    Link: Attribute.String;
+    Open4us: Attribute.Component<'prodotti.open4us-product'>;
+    publishedAt: Attribute.DateTime;
+    subtitle: Attribute.Text;
+    Title: Attribute.String & Attribute.Required;
+    Title2: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::prodotti.prodotti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiProjectProject extends Schema.CollectionType {
   collectionName: 'projects';
   info: {
@@ -745,6 +942,41 @@ export interface ApiProjectProject extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Schema.SingleType {
+  collectionName: 'services';
+  info: {
+    description: 'Contenuti della pagina Servizi (hero e sezione competenze)';
+    displayName: 'Service Page';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ButtonContatti: Attribute.String;
+    ButtonServizi: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::service.service',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descriptiontitle: Attribute.Text;
+    Maintitle: Attribute.RichText & Attribute.Required;
+    OurSkills: Attribute.Component<'service.our-skills', true>;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::service.service',
       'oneToOne',
       'admin::user'
     > &
@@ -847,6 +1079,30 @@ export interface ApiStoriaB4UsStoriaB4Us extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiTagTag extends Schema.CollectionType {
+  collectionName: 'tags';
+  info: {
+    description: 'Tag tecnici usati per le aree di formazione e competenze';
+    displayName: 'Tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    icon: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    title: Attribute.String & Attribute.Required;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1323,6 +1579,7 @@ declare module '@strapi/types' {
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::car-fleet.car-fleet': ApiCarFleetCarFleet;
       'api::certificate.certificate': ApiCertificateCertificate;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::employe.employe': ApiEmployeEmploye;
@@ -1331,10 +1588,15 @@ declare module '@strapi/types' {
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::job-request.job-request': ApiJobRequestJobRequest;
       'api::logbook.logbook': ApiLogbookLogbook;
+      'api::open4-us.open4-us': ApiOpen4UsOpen4Us;
+      'api::organizzazione.organizzazione': ApiOrganizzazioneOrganizzazione;
+      'api::prodotti.prodotti': ApiProdottiProdotti;
       'api::project.project': ApiProjectProject;
+      'api::service.service': ApiServiceService;
       'api::servizio.servizio': ApiServizioServizio;
       'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
+      'api::tag.tag': ApiTagTag;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

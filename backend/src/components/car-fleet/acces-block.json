@@ -1,0 +1,19 @@
+{
+    "collectionName": "components_car_fleet_acces_blocks",
+    "info": {
+        "displayName": "Acces Block",
+        "description": "Punto elenco accesso intelligente (testo con bold prima dei due punti, icona)"
+    },
+    "options": {},
+    "attributes": {
+        "Text": {
+            "type": "string",
+            "required": true,
+            "description": "Testo con formato 'Titolo: descrizione' (es: Chiave Mobile: Sblocca le auto...)"
+        },
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: check_circle)"
+        }
+    }
+}

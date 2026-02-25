@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_car_fleet_icon_texts",
+    "info": {
+        "displayName": "Icon Text",
+        "description": "Chip icona + testo (es: Tracciamento GPS)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: check_circle)"
+        },
+        "Text": {
+            "type": "string",
+            "required": true
+        }
+    }
+}

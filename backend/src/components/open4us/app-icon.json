@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_open4us_app_icons",
+    "info": {
+        "displayName": "App Icon",
+        "description": "Icona grande app con testo (sezione Luckey App)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons grande (es: smartphone)"
+        },
+        "Text": {
+            "type": "string",
+            "description": "Testo sotto icona (es: App Open4US - Sblocco Smartphone)"
+        }
+    }
+}

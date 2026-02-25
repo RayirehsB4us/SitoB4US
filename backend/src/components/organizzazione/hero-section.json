@@ -1,0 +1,25 @@
+{
+    "collectionName": "components_organizzazione_hero_sections",
+    "info": {
+        "displayName": "Hero Section",
+        "description": "Sezione hero ripetibile con tag, titolo, sottotitolo e cards"
+    },
+    "options": {},
+    "attributes": {
+        "tag": {
+            "type": "string"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "SubTitle": {
+            "type": "text"
+        },
+        "card": {
+            "type": "component",
+            "repeatable": true,
+            "component": "organizzazione.hero-card"
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_service_our_skills",
+    "info": {
+        "displayName": "Our Skills",
+        "description": "Sezione competenze con tag e titolo"
+    },
+    "options": {},
+    "attributes": {
+        "Tag": {
+            "type": "string",
+            "description": "Etichetta sopra il titolo (es: Le nostre competenze)"
+        },
+        "Title": {
+            "type": "string",
+            "description": "Titolo sezione competenze (es: Cosa facciamo per te)"
+        }
+    }
+}

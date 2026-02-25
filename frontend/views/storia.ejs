@@ -15,14 +15,15 @@
         <div class="max-w-3xl">
           <span
             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-            Il nostro percorso
+            <%= storiaData.UpperTitle || 'Il nostro percorso' %>
           </span>
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
-            La nostra <span class="text-primary">Storia</span>
+            <%= storiaData.MainTitle || 'La nostra Storia' %>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Un viaggio fatto di passione, innovazione e crescita. Scopri le tappe che hanno segnato
-            l'evoluzione di B4US e la nostra missione di semplificare l'IT per le aziende.
+            <%= storiaData.Description
+              || 'Un viaggio fatto di passione, innovazione e crescita. Scopri le tappe che hanno segnato l\' evoluzione
+              di B4US e la nostra missione di semplificare l\'IT per le aziende.' %>
           </p>
         </div>
       </div>
@@ -32,55 +33,63 @@
     <section class="py-24 bg-white dark:bg-slate-900/50">
       <div class="container mx-auto px-6">
         <div class="max-w-4xl mx-auto">
-          <% if (storia && storia.length > 0) { %>
+          <% if (storiaData.Timeline && storiaData.Timeline.length> 0) { %>
             <div class="relative">
               <!-- Linea verticale centrale -->
-              <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2"></div>
-              
-              <% storia.forEach(function(evento, index) { %>
-                <div class="relative flex items-start mb-16 last:mb-0 <%= index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse' %>">
+              <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2">
+              </div>
+
+              <% storiaData.Timeline.forEach(function(evento, index) { %>
+                <div
+                  class="relative flex items-start mb-16 last:mb-0 <%= index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse' %>">
                   <!-- Dot sulla timeline -->
-                  <div class="absolute left-8 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 mt-8 ring-4 ring-white dark:ring-slate-900 z-10"></div>
-                  
+                  <div
+                    class="absolute left-8 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 mt-8 ring-4 ring-white dark:ring-slate-900 z-10">
+                  </div>
+
                   <!-- Card contenuto -->
                   <div class="ml-20 md:ml-0 md:w-1/2 <%= index % 2 === 0 ? 'md:pr-16' : 'md:pl-16' %>">
-                    <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-shadow">
+                    <div
+                      class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-shadow">
                       <!-- Anno badge -->
-                      <div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-bold mb-4">
+                      <div
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-bold mb-4">
                         <span class="material-symbols-outlined text-lg">calendar_month</span>
                         <%= evento.Anno %>
                       </div>
-                      
+
                       <% if (evento.Foto && evento.Foto.data) { %>
                         <div class="mb-6 rounded-xl overflow-hidden">
-                          <img 
-                            alt="B4US - Anno <%= evento.Anno %>" 
+                          <img alt="B4US - Anno <%= evento.Anno %>"
                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
-                            src="<%= strapiUrl %><%= evento.Foto.data.attributes.url %>" 
-                          />
+                            src="<%= strapiUrl %><%= evento.Foto.data.attributes.url %>" />
                         </div>
-                      <% } %>
-                      
-                      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <%= evento.Descrizione %>
-                      </p>
+                        <% } %>
+
+                          <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <%= evento.Descrizione %>
+                          </p>
                     </div>
                   </div>
                 </div>
-              <% }); %>
+                <% }); %>
             </div>
-          <% } else { %>
-            <!-- Fallback quando non ci sono dati -->
-            <div class="text-center py-20">
-              <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span class="material-symbols-outlined text-primary text-4xl">history</span>
+            <% } else { %>
+              <!-- Fallback quando non ci sono dati -->
+              <div class="text-center py-20">
+                <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <span class="material-symbols-outlined text-primary text-4xl">history</span>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">
+                  <%= storiaData.EmptyTitle || 'La nostra storia sta per essere raccontata' %>
+                </h3>
+                <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
+                  <%= storiaData.EmptyDescription
+                    || 'Stiamo preparando i contenuti per questa sezione. Torna presto per scoprire il nostro percorso!'
+                    %>
+                </p>
               </div>
-              <h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-4">La nostra storia sta per essere raccontata</h3>
-              <p class="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                Stiamo preparando i contenuti per questa sezione. Torna presto per scoprire il nostro percorso!
-              </p>
-            </div>
-          <% } %>
+              <% } %>
         </div>
       </div>
     </section>

@@ -1,0 +1,26 @@
+{
+    "collectionName": "components_contatti_contact_details",
+    "info": {
+        "displayName": "Contact Detail",
+        "description": "Dettaglio di contatto (telefono, email, social)"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subTitle": {
+            "type": "string"
+        },
+        "linkText": {
+            "type": "string"
+        },
+        "linkUrl": {
+            "type": "string"
+        }
+    }
+}

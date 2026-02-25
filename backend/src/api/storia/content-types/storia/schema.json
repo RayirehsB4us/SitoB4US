@@ -1,0 +1,41 @@
+{
+    "kind": "singleType",
+    "collectionName": "storie",
+    "info": {
+        "singularName": "storia",
+        "pluralName": "storia",
+        "displayName": "Storia"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "UpperTitle": {
+            "type": "string"
+        },
+        "MainTitle": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        },
+        "Timeline": {
+            "type": "component",
+            "repeatable": true,
+            "component": "storia.timeline-event"
+        },
+        "CtaTitle": {
+            "type": "string"
+        },
+        "CtaDescription": {
+            "type": "text"
+        },
+        "CtaButtonApply": {
+            "type": "string"
+        },
+        "CtaButtonContact": {
+            "type": "string"
+        }
+    }
+}
