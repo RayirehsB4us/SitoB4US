@@ -299,8 +299,22 @@ app.get("/prodotti", async (req, res) => {
   }
 });
 
-app.get("/open4us", (req, res) => {
-  res.render("open4us", { title: "Open4US - Accesso Smart | B4US" });
+app.get("/open4us", async (req, res) => {
+  try {
+    var open4usData = await fetchFromStrapi("/open4-us");
+    res.render("open4us", {
+      title: "Open4US - Accesso Smart | B4US",
+      o4u: open4usData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering open4us:", error);
+    res.render("open4us", {
+      title: "Open4US - Accesso Smart | B4US",
+      o4u: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/carfleet", async (req, res) => {
