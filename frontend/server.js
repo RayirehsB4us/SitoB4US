@@ -213,7 +213,7 @@ async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = nul
   try {
     var query = '?populate=*';
     if (deepPopulate && deepPopulate.length > 0) {
-      query = '?' + deepPopulate.map(function (c) {
+      query = '?' + deepPopulate.map(function(c) {
         return 'populate[' + c + '][populate]=*';
       }).join('&');
     }
