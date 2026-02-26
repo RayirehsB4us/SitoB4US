@@ -1,6 +1,16 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const axios = require('axios');
 
 const STRAPI_URL = 'http://localhost:1337/api';
+const API_TOKEN = process.env.FRONTEND_API_TOKEN || '';
+
+// Imposta il token Bearer per tutte le richieste axios
+if (API_TOKEN) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${API_TOKEN}`;
+  console.log('🔑 Token API configurato');
+} else {
+  console.log('⚠️  Nessun FRONTEND_API_TOKEN trovato in .env — le chiamate potrebbero fallire con 403');
+}
 
 // Dati iniziali da popolare
 const servizi = [
@@ -338,18 +348,19 @@ const storiaPageData = {
   UpperTitle: 'Il nostro percorso',
   MainTitle: 'La nostra Storia',
   Description: 'Un viaggio fatto di passione, innovazione e crescita. Scopri le tappe che hanno segnato l\'evoluzione di B4US e la nostra missione di semplificare l\'IT per le aziende.',
-  Timeline: [
-    { Anno: '2020', Descrizione: 'Nasce B4US con la missione di semplificare l\'IT per le aziende italiane.' },
-    { Anno: '2021', Descrizione: 'Primi clienti Enterprise e consolidamento del team di consulenza.' },
-    { Anno: '2022', Descrizione: 'Lancio di CarFleet, la soluzione di gestione flotta aziendale su PowerApps.' },
-    { Anno: '2023', Descrizione: 'Partnership con ISEO e lancio di Open4US per il controllo accessi smart.' },
-    { Anno: '2024', Descrizione: 'Espansione del team a oltre 20 professionisti e istituzione dei Knowledge Days.' }
-  ],
   CtaTitle: 'Vuoi far parte della nostra storia?',
   CtaDescription: 'Siamo sempre alla ricerca di talenti pronti a crescere con noi e a contribuire al nostro futuro.',
   CtaButtonApply: 'Lavora con noi',
   CtaButtonContact: 'Contattaci'
 };
+
+const storiaEvents = [
+  { Anno: 2020, Descrizione: 'Nasce B4US con la missione di semplificare l\'IT per le aziende italiane.' },
+  { Anno: 2021, Descrizione: 'Primi clienti Enterprise e consolidamento del team di consulenza.' },
+  { Anno: 2022, Descrizione: 'Lancio di CarFleet, la soluzione di gestione flotta aziendale su PowerApps.' },
+  { Anno: 2023, Descrizione: 'Partnership con ISEO e lancio di Open4US per il controllo accessi smart.' },
+  { Anno: 2024, Descrizione: 'Espansione del team a oltre 20 professionisti e istituzione dei Knowledge Days.' }
+];
 
 const carrierePageData = {
   UpperTitle: 'Carriere in B4US',
@@ -591,7 +602,7 @@ async function seedData() {
       console.log(`  ⚠️  Errore aggiornando open4-us: ${error.message}`);
     }
 
-    // Popola Storia Page (Single Type)
+    // Popola Storia Page (Single Type — hero + CTA)
     console.log('\n📜 Popolamento Storia Page...');
     try {
       await axios.put(`${STRAPI_URL}/storia`, {
@@ -600,6 +611,19 @@ async function seedData() {
       console.log('  ✅ Storia page aggiornata');
     } catch (error) {
       console.log(`  ⚠️  Errore aggiornando storia: ${error.message}`);
+    }
+
+    // Popola Storia B4US Events (Collection Type — timeline)
+    console.log('\n📜 Popolamento Storia B4US Events...');
+    for (const evento of storiaEvents) {
+      try {
+        await axios.post(`${STRAPI_URL}/storia-b4-uses`, {
+          data: evento
+        });
+        console.log(`  ✅ Creato evento: ${evento.Anno}`);
+      } catch (error) {
+        console.log(`  ⚠️  Errore creando evento ${evento.Anno}: ${error.message}`);
+      }
     }
 
     // Popola Carriere Page (Single Type)
