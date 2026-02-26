@@ -376,12 +376,12 @@ app.get("/struttura", async (req, res) => {
 
 app.get("/storia", async (req, res) => {
   try {
-    const storiaData = await fetchFromStrapi(
-      "/storia", null, ['Timeline']
-    );
+    const storiaData = await fetchFromStrapi("/storia");
+    const storiaEvents = await fetchFromStrapi("/storia-b4-uses");
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
       storiaData: storiaData?.data?.attributes || {},
+      storia: storiaEvents?.data?.map(function(s) { return s.attributes; }) || [],
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -389,6 +389,7 @@ app.get("/storia", async (req, res) => {
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
       storiaData: {},
+      storia: [],
       strapiUrl: STRAPI_URL,
     });
   }
