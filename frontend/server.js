@@ -377,7 +377,7 @@ app.get("/struttura", async (req, res) => {
 app.get("/storia", async (req, res) => {
   try {
     const storiaData = await fetchFromStrapi(
-      "/storia", null, ['Timeline', 'Timeline.Foto']
+      "/storia", null, ['Timeline']
     );
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",

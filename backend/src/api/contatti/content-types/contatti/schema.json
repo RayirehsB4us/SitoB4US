@@ -3,7 +3,7 @@
     "collectionName": "contatti",
     "info": {
         "singularName": "contatti",
-        "pluralName": "contatti",
+        "pluralName": "contatti-list",
         "displayName": "Contatti"
     },
     "options": {
