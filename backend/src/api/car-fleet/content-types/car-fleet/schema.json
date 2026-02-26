@@ -1,0 +1,141 @@
+{
+    "kind": "singleType",
+    "collectionName": "car_fleets",
+    "info": {
+        "singularName": "car-fleet",
+        "pluralName": "car-fleets",
+        "displayName": "Car Fleet Page",
+        "description": "Contenuti della pagina CarFleet"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "pluginOptions": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Icona badge hero (es: directions_car)"
+        },
+        "UpperTitle": {
+            "type": "string",
+            "description": "Badge superiore hero (es: Gestione Flotta Aziendale)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true,
+            "description": "Prima riga titolo hero (es: Gestisci la tua flotta)"
+        },
+        "Title2": {
+            "type": "string",
+            "description": "Seconda riga titolo hero verde (es: aziendale con intelligenza)"
+        },
+        "SubTitle": {
+            "type": "text",
+            "description": "Sottotitolo hero"
+        },
+        "Button1": {
+            "type": "string",
+            "description": "Testo pulsante demo (es: Prenota una Demo)"
+        },
+        "Button2": {
+            "type": "string",
+            "description": "Testo pulsante funzionalita (es: Scopri le Funzionalita)"
+        },
+        "IconText": {
+            "type": "component",
+            "repeatable": true,
+            "component": "car-fleet.icon-text",
+            "description": "Chip feature hero (es: Tracciamento GPS)"
+        },
+        "Image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"],
+            "description": "Screenshot dashboard hero"
+        },
+        "UpperTitle2": {
+            "type": "string",
+            "description": "Badge sezione panoramica (es: Panoramica Dashboard)"
+        },
+        "Title3": {
+            "type": "string",
+            "description": "Titolo sezione panoramica"
+        },
+        "SubTitle2": {
+            "type": "text",
+            "description": "Sottotitolo sezione panoramica"
+        },
+        "DashboardPanoramica": {
+            "type": "component",
+            "repeatable": true,
+            "component": "car-fleet.dashboard-panoramica",
+            "description": "Card metriche dashboard panoramica"
+        },
+        "Title4": {
+            "type": "string",
+            "description": "Titolo sezione funzionalita (es: Gestione Flotta Intelligente)"
+        },
+        "SubTitle3": {
+            "type": "text",
+            "description": "Sottotitolo sezione funzionalita"
+        },
+        "Title5": {
+            "type": "string",
+            "description": "Titolo PowerApps (es: Integrazione PowerApps)"
+        },
+        "Subtitle4": {
+            "type": "text",
+            "description": "Descrizione PowerApps"
+        },
+        "PowerappsBlocks": {
+            "type": "component",
+            "repeatable": true,
+            "component": "car-fleet.powerapps-block",
+            "description": "Blocchi funzionalita PowerApps"
+        },
+        "MappaFlotta": {
+            "type": "component",
+            "repeatable": false,
+            "component": "car-fleet.mappa-flotta",
+            "description": "Sezione mappa flotta con conducente"
+        },
+        "Title6": {
+            "type": "string",
+            "description": "Titolo sezione accesso (es: Controllo Accesso Intelligente)"
+        },
+        "SubTitle5": {
+            "type": "text",
+            "description": "Descrizione sezione accesso"
+        },
+        "Icon2": {
+            "type": "string",
+            "description": "Icona animata accesso (es: wifi_tethering)"
+        },
+        "AccesImage": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"],
+            "description": "Immagine serratura smart sezione accesso"
+        },
+        "AccesBlock": {
+            "type": "component",
+            "repeatable": true,
+            "component": "car-fleet.acces-block",
+            "description": "Punti elenco accesso intelligente"
+        },
+        "Title7": {
+            "type": "string",
+            "description": "Titolo CTA (es: Pronto a ottimizzare...)"
+        },
+        "Subtitle6": {
+            "type": "text",
+            "description": "Sottotitolo CTA"
+        },
+        "Button3": {
+            "type": "string",
+            "description": "Testo pulsante CTA (es: Contatta le Vendite)"
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "collectionName": "components_car_fleet_dashboard_panoramicas",
+    "info": {
+        "displayName": "Dashboard Panoramica",
+        "description": "Card panoramica dashboard (icona, titolo, valore, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: priority_high)"
+        },
+        "title": {
+            "type": "string",
+            "required": true,
+            "description": "Label metrica (es: Validazioni Prenotazioni)"
+        },
+        "subTitle": {
+            "type": "string",
+            "description": "Valore numerico (es: 3)"
+        },
+        "content": {
+            "type": "text",
+            "description": "Descrizione breve (es: Elementi ad alta priorita...)"
+        }
+    }
+}

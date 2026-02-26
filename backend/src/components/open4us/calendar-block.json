@@ -1,0 +1,43 @@
+{
+    "collectionName": "components_open4us_calendar_blocks",
+    "info": {
+        "displayName": "Calendar Block",
+        "description": "Card dettaglio prenotazione calendario"
+    },
+    "options": {},
+    "attributes": {
+        "Title": {
+            "type": "string",
+            "required": true,
+            "description": "Titolo prenotazione (es: Ufficio Admin - Gorgonzola)"
+        },
+        "Status": {
+            "type": "string",
+            "description": "Badge stato (es: Confermato)"
+        },
+        "Icon1": {
+            "type": "string",
+            "description": "Icona data (es: calendar_today)"
+        },
+        "Date": {
+            "type": "string",
+            "description": "Data e ora (es: 26/02/2025 17:00)"
+        },
+        "Icon2": {
+            "type": "string",
+            "description": "Icona persona (es: person)"
+        },
+        "Name": {
+            "type": "string",
+            "description": "Nome e ospiti (es: Luigi Di Mauro (3 ospiti))"
+        },
+        "Icon3": {
+            "type": "string",
+            "description": "Icona accesso (es: vpn_key)"
+        },
+        "Access": {
+            "type": "string",
+            "description": "Testo accesso (es: Accesso autorizzato: ARIES TEST1)"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_organizzazione_hero_cards",
+    "info": {
+        "displayName": "Hero Card",
+        "description": "Card singola dentro una HeroSection (titolo, sottotitolo, contenuto lista)"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subTitle": {
+            "type": "text"
+        },
+        "content": {
+            "type": "text",
+            "description": "Righe di testo separate da \\n, usate come lista puntata"
+        }
+    }
+}
