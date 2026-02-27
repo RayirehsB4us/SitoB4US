@@ -145,7 +145,133 @@ function collectDiskComponents() {
 }
 
 module.exports = {
-  register({ strapi }) {},
+  // Register inbound sync endpoints as raw Koa middleware.
+  // Admin routes (type:"admin") go through CSRF/origin protection that blocks
+  // server-to-server POST requests. These paths (/environment-sync-inbound/...)
+  // are NOT admin routes so the admin router calls next(), letting our
+  // middleware handle them cleanly.
+  register({ strapi }) {
+    strapi.server.use(async (ctx, next) => {
+      const BASE = "/environment-sync-inbound";
+      if (!ctx.path.startsWith(BASE + "/")) return next();
+
+      const store = strapi.store({ type: "plugin", name: "environment-sync" });
+      const token = ctx.request.headers["x-sync-token"];
+
+      // ── POST /environment-sync-inbound/receive-request ───────────────────
+      if (
+        ctx.path === `${BASE}/receive-request` &&
+        ctx.method === "POST"
+      ) {
+        try {
+          const config = (await store.get({ key: "sync_config" })) || {};
+          if (!config.transferToken || token !== config.transferToken) {
+            ctx.status = 401;
+            ctx.body = { error: "Invalid transfer token" };
+            return;
+          }
+          const { requestId, slaveUrl, syncType } =
+            ctx.request.body || {};
+          const requests =
+            (await store.get({ key: "sync_requests" })) || [];
+          requests.unshift({
+            id: requestId || `req_${Date.now()}`,
+            slaveUrl: slaveUrl || "unknown",
+            syncType: syncType || "both",
+            requestedAt: new Date().toISOString(),
+            status: "pending",
+          });
+          await store.set({
+            key: "sync_requests",
+            value: requests.slice(0, 50),
+          });
+          ctx.status = 200;
+          ctx.body = { success: true };
+        } catch (err) {
+          ctx.status = 500;
+          ctx.body = { error: err.message };
+        }
+        return;
+      }
+
+      // ── GET /environment-sync-inbound/status/:requestId ──────────────────
+      const statusMatch = ctx.path.match(
+        /^\/environment-sync-inbound\/status\/(.+)$/
+      );
+      if (statusMatch && ctx.method === "GET") {
+        try {
+          const config = (await store.get({ key: "sync_config" })) || {};
+          if (!config.transferToken || token !== config.transferToken) {
+            ctx.status = 401;
+            ctx.body = { error: "Invalid transfer token" };
+            return;
+          }
+          const requestId = decodeURIComponent(statusMatch[1]);
+          const requests =
+            (await store.get({ key: "sync_requests" })) || [];
+          const request = requests.find((r) => r.id === requestId);
+          if (!request) {
+            ctx.status = 404;
+            ctx.body = { error: "Request not found" };
+            return;
+          }
+          ctx.status = 200;
+          ctx.body = { status: request.status, request };
+        } catch (err) {
+          ctx.status = 500;
+          ctx.body = { error: err.message };
+        }
+        return;
+      }
+
+      // ── GET /environment-sync-inbound/transfer/:id ───────────────────────
+      const transferMatch = ctx.path.match(
+        /^\/environment-sync-inbound\/transfer\/(.+)$/
+      );
+      if (transferMatch && ctx.method === "GET") {
+        try {
+          const config = (await store.get({ key: "sync_config" })) || {};
+          if (!config.transferToken || token !== config.transferToken) {
+            ctx.status = 401;
+            ctx.body = { error: "Invalid transfer token" };
+            return;
+          }
+          const id = decodeURIComponent(transferMatch[1]);
+          const requests =
+            (await store.get({ key: "sync_requests" })) || [];
+          const request = requests.find((r) => r.id === id);
+          if (!request || request.status !== "approved") {
+            ctx.status = 403;
+            ctx.body = { error: "Transfer not approved" };
+            return;
+          }
+          const safeId = id.replace(/[^a-zA-Z0-9_-]/g, "");
+          const transferFile = path.join(
+            TRANSFERS_DIR,
+            `transfer_${safeId}.json.gz`
+          );
+          if (!fs.existsSync(transferFile)) {
+            ctx.status = 404;
+            ctx.body = { error: "Transfer file not found on master" };
+            return;
+          }
+          const payload = JSON.parse(
+            (await gunzip(fs.readFileSync(transferFile))).toString()
+          );
+          ctx.status = 200;
+          ctx.body = { success: true, payload };
+        } catch (err) {
+          ctx.status = 500;
+          ctx.body = { error: err.message };
+        }
+        return;
+      }
+
+      ctx.status = 404;
+      ctx.body = { error: "Not found" };
+    });
+  },
+
   bootstrap({ strapi }) {},
 
   controllers: {
@@ -536,7 +662,7 @@ module.exports = {
             process.env.PUBLIC_URL ||
             `http://localhost:${process.env.PORT || 1337}`;
           const result = await crossFetch(
-            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/receive-request`,
+            `${normalizeMasterUrl(config.masterUrl)}/environment-sync-inbound/receive-request`,
             "POST",
             { requestId, slaveUrl, syncType: syncType || "both" },
             config.transferToken,
@@ -619,7 +745,7 @@ module.exports = {
             return;
           }
           const result = await crossFetch(
-            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/status/${requestId}`,
+            `${normalizeMasterUrl(config.masterUrl)}/environment-sync-inbound/status/${requestId}`,
             "GET",
             {},
             config.transferToken,
@@ -836,7 +962,7 @@ module.exports = {
 
           // Fetch from master
           const result = await crossFetch(
-            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/transfer/${requestId}`,
+            `${normalizeMasterUrl(config.masterUrl)}/environment-sync-inbound/transfer/${requestId}`,
             "GET",
             {},
             config.transferToken,
