@@ -1,4 +1,4 @@
-const html = /* html */`<!DOCTYPE html>
+const html = /* html */ `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -254,17 +254,7 @@ select{appearance:auto;}
         </div>
         <div id="master-url-row">
           <label class="block text-xs font-bold uppercase text-neutral mb-15 tracking-wider">Master URL</label>
-          <div class="flex gap-2 items-center">
-            <input id="master-url-input" class="grow bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 text-sm focus-ring" style="outline:none;" type="url" placeholder="http://master-host:1337  (no /admin suffix)"/>
-            <button id="test-connection-btn" title="Test connectivity to master" class="flex items-center gap-1 text-xs font-bold text-primary btn-opacity transition" style="border:1px solid #4945ff;background:rgba(73,69,255,0.06);border-radius:0.5rem;padding:0.375rem 0.625rem;cursor:pointer;white-space:nowrap;">
-              <svg class="icon" style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/>
-              </svg>
-              Test
-            </button>
-          </div>
-          <p class="text-10 text-neutral mt-1" style="font-size:10px;">Use only the server root — e.g. <code>http://host:1337</code> — not the admin panel URL.</p>
+          <input id="master-url-input" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 text-sm focus-ring" style="outline:none;" type="url" placeholder="https://master.mysite.com"/>
         </div>
         <div>
           <label class="block text-xs font-bold uppercase text-neutral mb-15 tracking-wider">Transfer Token</label>
@@ -873,26 +863,6 @@ select{appearance:auto;}
 
   document.getElementById('sync-role-select').addEventListener('change', e => {
     updateSyncPanels(e.target.value);
-    const isSlave = e.target.value === 'slave';
-    document.getElementById('master-url-row').style.display = isSlave ? '' : 'none';
-  });
-
-  document.getElementById('test-connection-btn').addEventListener('click', async () => {
-    const btn = document.getElementById('test-connection-btn');
-    setLoading(btn, true);
-    addLog('DEBUG', 'Testing connection to master...');
-    try {
-      const data = await apiGet('/sync/test-connection');
-      if (data.success) {
-        addLog('INFO', \`Connected to master at \${data.masterUrl} — \${data.message}\`);
-      } else {
-        addLog('ERROR', data.error || 'Connection test failed');
-      }
-    } catch (e) {
-      addLog('ERROR', 'Test failed: ' + e.message);
-    } finally {
-      setLoading(btn, false);
-    }
   });
 
   document.getElementById('save-sync-config-btn').addEventListener('click', async () => {
@@ -1127,7 +1097,7 @@ select{appearance:auto;}
 const HomePage = () => (
   <iframe
     srcDoc={html}
-    style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }}
+    style={{ width: "100%", height: "100vh", border: "none", display: "block" }}
     title="Environment Sync"
   />
 );
