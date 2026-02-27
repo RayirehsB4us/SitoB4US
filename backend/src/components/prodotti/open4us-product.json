@@ -1,0 +1,35 @@
+{
+    "collectionName": "components_prodotti_open4us_products",
+    "info": {
+        "displayName": "Open4us Product",
+        "description": "Sezione prodotto Open4US nella pagina prodotti"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: meeting_room)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "SubTitle": {
+            "type": "string"
+        },
+        "Description": {
+            "type": "text"
+        },
+        "Image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"]
+        },
+        "Open4usBlocks": {
+            "type": "component",
+            "repeatable": true,
+            "component": "prodotti.open4us-block"
+        }
+    }
+}

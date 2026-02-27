@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_car_fleet_powerapps_blocks",
+    "info": {
+        "displayName": "Powerapps Block",
+        "description": "Blocco funzionalita PowerApps (icona, titolo, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: verified_user)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        }
+    }
+}

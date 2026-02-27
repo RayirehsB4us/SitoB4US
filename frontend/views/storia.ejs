@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html class="scroll-smooth" lang="it">
-
 <head>
   <%- include('partials/head') %>
 </head>
-
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
   <%- include('partials/navbar') %>
-
     <!-- Hero Section -->
     <section class="relative py-20 overflow-hidden">
       <div class="absolute inset-0 text-slate-100 dark:text-slate-900 bg-grid-pattern opacity-50 -z-10"></div>
@@ -15,19 +12,17 @@
         <div class="max-w-3xl">
           <span
             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-            Il nostro percorso
+            <%= storiaData.UpperTitle || 'Il nostro percorso' %>
           </span>
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
-            La nostra <span class="text-primary">Storia</span>
+            <%- storiaData.MainTitle || 'La nostra <span class="text-primary">Storia</span>' %>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            Un viaggio fatto di passione, innovazione e crescita. Scopri le tappe che hanno segnato
-            l'evoluzione di B4US e la nostra missione di semplificare l'IT per le aziende.
+            <%= storiaData.Description || "Un viaggio fatto di passione, innovazione e crescita. Scopri le tappe che hanno segnato l'evoluzione di B4US e la nostra missione di semplificare l'IT per le aziende." %>
           </p>
         </div>
       </div>
     </section>
-
     <!-- Timeline Section -->
     <section class="py-24 bg-white dark:bg-slate-900/50">
       <div class="container mx-auto px-6">
@@ -36,12 +31,12 @@
             <div class="relative">
               <!-- Linea verticale centrale -->
               <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-primary/20 transform md:-translate-x-1/2"></div>
-              
+
               <% storia.forEach(function(evento, index) { %>
                 <div class="relative flex items-start mb-16 last:mb-0 <%= index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse' %>">
                   <!-- Dot sulla timeline -->
                   <div class="absolute left-8 md:left-1/2 w-4 h-4 bg-primary rounded-full transform -translate-x-1/2 mt-8 ring-4 ring-white dark:ring-slate-900 z-10"></div>
-                  
+
                   <!-- Card contenuto -->
                   <div class="ml-20 md:ml-0 md:w-1/2 <%= index % 2 === 0 ? 'md:pr-16' : 'md:pl-16' %>">
                     <div class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl transition-shadow">
@@ -50,17 +45,17 @@
                         <span class="material-symbols-outlined text-lg">calendar_month</span>
                         <%= evento.Anno %>
                       </div>
-                      
+
                       <% if (evento.Foto && evento.Foto.data) { %>
                         <div class="mb-6 rounded-xl overflow-hidden">
-                          <img 
-                            alt="B4US - Anno <%= evento.Anno %>" 
+                          <img
+                            alt="B4US - Anno <%= evento.Anno %>"
                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
-                            src="<%= strapiUrl %><%= evento.Foto.data.attributes.url %>" 
+                            src="<%= strapiUrl %><%= evento.Foto.data.attributes.url %>"
                           />
                         </div>
                       <% } %>
-                      
+
                       <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
                         <%= evento.Descrizione %>
                       </p>
@@ -84,31 +79,28 @@
         </div>
       </div>
     </section>
-
     <!-- CTA Section -->
     <section class="py-20 bg-slate-50 dark:bg-slate-900/30">
       <div class="max-w-4xl mx-auto px-6 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-          Vuoi far parte della nostra storia?
+          <%= storiaData.CtaTitle || 'Vuoi far parte della nostra storia?' %>
         </h2>
         <p class="text-slate-600 dark:text-slate-400 mb-10 text-lg">
-          Siamo sempre alla ricerca di talenti pronti a crescere con noi e a contribuire al nostro futuro.
+          <%= storiaData.CtaDescription || 'Siamo sempre alla ricerca di talenti pronti a crescere con noi e a contribuire al nostro futuro.' %>
         </p>
         <div class="flex flex-wrap justify-center gap-4">
           <a class="inline-flex items-center gap-2 bg-primary hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-1"
             href="/carriere">
-            Lavora con noi
+            <%= storiaData.CtaButtonApply || 'Lavora con noi' %>
             <span class="material-symbols-outlined">arrow_forward</span>
           </a>
           <a class="inline-flex items-center gap-2 bg-white dark:bg-slate-800 text-slate-900 dark:text-white font-bold py-4 px-10 rounded-full text-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
             href="/contatti">
-            Contattaci
+            <%= storiaData.CtaButtonContact || 'Contattaci' %>
           </a>
         </div>
       </div>
     </section>
-
     <%- include('partials/footer') %>
 </body>
-
 </html>

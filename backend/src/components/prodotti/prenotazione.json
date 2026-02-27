@@ -1,0 +1,24 @@
+{
+    "collectionName": "components_prodotti_prenotazioni",
+    "info": {
+        "displayName": "Prenotazione",
+        "description": "Singola prenotazione nella dashboard (titolo, data, icona, contenuto)"
+    },
+    "options": {},
+    "attributes": {
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subTitle": {
+            "type": "string"
+        },
+        "icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: lock, smartphone)"
+        },
+        "content": {
+            "type": "string"
+        }
+    }
+}

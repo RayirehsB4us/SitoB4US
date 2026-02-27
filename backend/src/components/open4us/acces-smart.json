@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_open4us_acces_smarts",
+    "info": {
+        "displayName": "Acces Smart",
+        "description": "Chip feature hero (icona + testo, es: Configurazione Istantanea)"
+    },
+    "options": {},
+    "attributes": {
+        "Text": {
+            "type": "string",
+            "required": true
+        },
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: check_circle)"
+        }
+    }
+}

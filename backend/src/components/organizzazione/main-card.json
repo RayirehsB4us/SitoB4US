@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_organizzazione_main_cards",
+    "info": {
+        "displayName": "Main Card",
+        "description": "Card principale nella sezione Knowledge Days"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subTitle": {
+            "type": "text"
+        }
+    }
+}

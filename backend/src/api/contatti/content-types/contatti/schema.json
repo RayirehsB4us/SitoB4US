@@ -1,0 +1,38 @@
+{
+    "kind": "singleType",
+    "collectionName": "contatti",
+    "info": {
+        "singularName": "contatti",
+        "pluralName": "contatti-list",
+        "displayName": "Contatti"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "MainTitle": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        },
+        "FormTitle": {
+            "type": "string"
+        },
+        "ContactDetails": {
+            "type": "component",
+            "repeatable": true,
+            "component": "contatti.contact-detail"
+        },
+        "SedeTitle": {
+            "type": "string"
+        },
+        "SedeAddress": {
+            "type": "text"
+        },
+        "SedeMapUrl": {
+            "type": "string"
+        }
+    }
+}

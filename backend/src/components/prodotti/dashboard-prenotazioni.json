@@ -1,0 +1,23 @@
+{
+    "collectionName": "components_prodotti_dashboard_prenotazioni",
+    "info": {
+        "displayName": "Dashboard Prenotazioni",
+        "description": "Sezione dashboard prenotazioni nella pagina prodotti"
+    },
+    "options": {},
+    "attributes": {
+        "Title": {
+            "type": "string",
+            "description": "Titolo dashboard (es: Dashboard Prenotazioni)"
+        },
+        "Status": {
+            "type": "string",
+            "description": "Badge stato (es: Confermato)"
+        },
+        "Prenotazioni": {
+            "type": "component",
+            "repeatable": true,
+            "component": "prodotti.prenotazione"
+        }
+    }
+}

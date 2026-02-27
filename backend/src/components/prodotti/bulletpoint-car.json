@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_prodotti_bulletpoint_cars",
+    "info": {
+        "displayName": "Bulletpoint Car",
+        "description": "Punto elenco funzionalita CarFleet (icona, titolo, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: check_circle)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        }
+    }
+}

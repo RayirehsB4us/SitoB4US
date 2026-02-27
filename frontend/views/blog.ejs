@@ -56,27 +56,34 @@
             <div class="max-w-2xl">
               <h1
                 class="text-5xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-400">
-                Diario di Bordo
+                <%= blogPageData.MainTitle || 'Diario di Bordo' %>
               </h1>
               <p class="text-lg text-gray-600 leading-relaxed">
-                Traguardi, obiettivi e attività del team B4US. Una panoramica sulla crescita della nostra azienda
-                e sui progetti che ci guidano verso il futuro.
+                <%= blogPageData.Description
+                  || 'Traguardi, obiettivi e attività del team B4US. Una panoramica sulla crescita della nostra azienda e sui progetti che ci guidano verso il futuro.'
+                  %>
               </p>
             </div>
             <!-- Stats Ribbon -->
             <div class="flex gap-5 flex-shrink-0">
               <div class="card-panel px-8 py-5 flex flex-col items-center min-w-[120px]">
                 <span class="text-xs text-secondary/60 uppercase tracking-widest mb-2 font-semibold">Dipendenti</span>
-                <span id="employee-count" class="text-4xl font-bold text-gray-900">--</span>
+                <span id="employee-count" class="text-4xl font-bold text-gray-900">
+                  <%= counts.dipendenti %>
+                </span>
               </div>
               <div class="card-panel px-8 py-5 flex flex-col items-center min-w-[120px]">
                 <span
                   class="text-xs text-secondary/60 uppercase tracking-widest mb-2 font-semibold">Certificazioni</span>
-                <span id="certification-count" class="text-4xl font-bold text-primary">--</span>
+                <span id="certification-count" class="text-4xl font-bold text-primary">
+                  <%= counts.certificazioni %>
+                </span>
               </div>
               <div class="card-panel px-8 py-5 flex flex-col items-center min-w-[120px]">
                 <span class="text-xs text-secondary/60 uppercase tracking-widest mb-2 font-semibold">Progetti</span>
-                <span id="project-count" class="text-4xl font-bold text-gray-900">--</span>
+                <span id="project-count" class="text-4xl font-bold text-gray-900">
+                  <%= counts.progetti %>
+                </span>
               </div>
             </div>
           </div>
@@ -125,7 +132,8 @@
             class="col-span-2 row-span-1 card-panel p-8 lg:p-10 flex flex-col justify-between border-l-4 border-l-primary">
             <div class="flex justify-between items-start">
               <div>
-                <h3 id="obiettivi-anno-title" class="text-sm font-bold text-primary tracking-widest uppercase mb-2">Stato Obiettivi --</h3>
+                <h3 id="obiettivi-anno-title" class="text-sm font-bold text-primary tracking-widest uppercase mb-2">
+                  Stato Obiettivi --</h3>
                 <h4 class="text-2xl font-bold text-gray-900">B4US</h4>
               </div>
               <div class="text-right">
@@ -278,50 +286,50 @@
           </li>`;
         }
 
-      async function fetchGoals() {
-        try {
-          const response = await fetch(`${STRAPI_URL}/goals?populate=*`);
-          const json = await response.json();
-          const currentYear = new Date().getFullYear().toString();
+        async function fetchGoals() {
+          try {
+            const response = await fetch(`${STRAPI_URL}/goals?populate=*`);
+            const json = await response.json();
+            const currentYear = new Date().getFullYear().toString();
 
-          // Filtra solo i goal del logbook dell'anno corrente
-          const goals = json.data.filter(g => {
-            const logbookYear = g.attributes.logbook?.data?.attributes?.anno;
-            return logbookYear === currentYear;
-          });
+            // Filtra solo i goal del logbook dell'anno corrente
+            const goals = json.data.filter(g => {
+              const logbookYear = g.attributes.logbook?.data?.attributes?.anno;
+              return logbookYear === currentYear;
+            });
 
-          // Popola Stato Obiettivi
-          const totalGoals = goals.length;
-          const doneGoals = goals.filter(g => g.attributes.done).length;
-          const percentage = totalGoals > 0 ? Math.round((doneGoals / totalGoals) * 100) : 0;
+            // Popola Stato Obiettivi
+            const totalGoals = goals.length;
+            const doneGoals = goals.filter(g => g.attributes.done).length;
+            const percentage = totalGoals > 0 ? Math.round((doneGoals / totalGoals) * 100) : 0;
 
-          document.getElementById('obiettivi-anno-title').textContent = `Stato Obiettivi ${currentYear}`;
-          document.getElementById('obiettivi-scadenza').textContent = `Q4 ${currentYear}`;
-          document.getElementById('obiettivi-progress-text').textContent = `${doneGoals} / ${totalGoals}`;
-          document.getElementById('obiettivi-progress-bar').style.width = `${percentage}%`;
+            document.getElementById('obiettivi-anno-title').textContent = `Stato Obiettivi ${currentYear}`;
+            document.getElementById('obiettivi-scadenza').textContent = `Q4 ${currentYear}`;
+            document.getElementById('obiettivi-progress-text').textContent = `${doneGoals} / ${totalGoals}`;
+            document.getElementById('obiettivi-progress-bar').style.width = `${percentage}%`;
 
-          // Popola liste obiettivi correnti e futuri
-          const currentGoals = goals.filter(g => g.attributes.CurrentGoal);
-          const futureGoals = goals.filter(g => g.attributes.futureGoal);
+            // Popola liste obiettivi correnti e futuri
+            const currentGoals = goals.filter(g => g.attributes.CurrentGoal);
+            const futureGoals = goals.filter(g => g.attributes.futureGoal);
 
-          const currentList = document.getElementById('current-goals-list');
-          const futureList = document.getElementById('future-goals-list');
+            const currentList = document.getElementById('current-goals-list');
+            const futureList = document.getElementById('future-goals-list');
 
-          if (currentGoals.length > 0) {
-            currentList.innerHTML = currentGoals.map(renderGoalItem).join('');
-          } else {
-            currentList.innerHTML = '<li class="text-sm text-gray-400">Nessun obiettivo corrente</li>';
+            if (currentGoals.length > 0) {
+              currentList.innerHTML = currentGoals.map(renderGoalItem).join('');
+            } else {
+              currentList.innerHTML = '<li class="text-sm text-gray-400">Nessun obiettivo corrente</li>';
+            }
+
+            if (futureGoals.length > 0) {
+              futureList.innerHTML = futureGoals.map(renderGoalItem).join('');
+            } else {
+              futureList.innerHTML = '<li class="text-sm text-gray-400">Nessun traguardo futuro</li>';
+            }
+          } catch (error) {
+            console.error('Errore nel recupero goals:', error);
           }
-
-          if (futureGoals.length > 0) {
-            futureList.innerHTML = futureGoals.map(renderGoalItem).join('');
-          } else {
-            futureList.innerHTML = '<li class="text-sm text-gray-400">Nessun traguardo futuro</li>';
-          }
-        } catch (error) {
-          console.error('Errore nel recupero goals:', error);
         }
-      }
 
         function timeAgo(dateStr) {
           const now = new Date();
