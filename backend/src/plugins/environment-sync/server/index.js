@@ -528,7 +528,7 @@ module.exports = {
             `${config.masterUrl.replace(
               /\/$/,
               "",
-            )}/environment-sync/sync/receive-request`,
+            )}/admin/environment-sync/sync/receive-request`,
             "POST",
             { requestId, slaveUrl, syncType: syncType || "both" },
             config.transferToken,
@@ -614,7 +614,7 @@ module.exports = {
             `${config.masterUrl.replace(
               /\/$/,
               "",
-            )}/environment-sync/sync/status/${requestId}`,
+            )}/admin/environment-sync/sync/status/${requestId}`,
             "GET",
             {},
             config.transferToken,
@@ -834,7 +834,7 @@ module.exports = {
             `${config.masterUrl.replace(
               /\/$/,
               "",
-            )}/environment-sync/sync/transfer/${requestId}`,
+            )}/admin/environment-sync/sync/transfer/${requestId}`,
             "GET",
             {},
             config.transferToken,
