@@ -7,7 +7,6 @@
  *   - SeedData/Import/collection-types.json
  *
  * Uso: node scripts/seed-data.js  (oppure npm run seed)
- * Prerequisito: Strapi deve essere in esecuzione su localhost:1337
  *
  * Workflow completo:
  *   1. npm run seed           → importa dati da Import/ in Strapi
