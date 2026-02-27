@@ -180,15 +180,47 @@ module.exports = {
           ensureBackupsDir();
           const { excludeMedia = false } = ctx.request.body || {};
 
-          // 1. Collect all API content type UIDs
-          const allUids = Object.keys(strapi.contentTypes).filter(uid =>
+          // 1. Collect all content type schemas directly from Strapi's registry
+          //    This covers: collections, single types, plugin types (users-permissions, upload, etc.)
+          const allContentTypes = strapi.contentTypes;
+          const schemas = {};
+          for (const [uid, ct] of Object.entries(allContentTypes)) {
+            // Skip media if excludeMedia is set
+            if (excludeMedia && uid === 'plugin::upload.file') continue;
+            schemas[uid] = {
+              uid: ct.uid,
+              kind: ct.kind,           // 'collectionType' | 'singleType'
+              displayName: ct.info && ct.info.displayName,
+              singularName: ct.info && ct.info.singularName,
+              pluralName: ct.info && ct.info.pluralName,
+              attributes: ct.attributes,
+              options: ct.options,
+              pluginOptions: ct.pluginOptions,
+            };
+          }
+
+          // 2. Collect all component schemas from Strapi's registry
+          const allComponents = strapi.components;
+          const components = {};
+          for (const [uid, comp] of Object.entries(allComponents)) {
+            components[uid] = {
+              uid: comp.uid,
+              category: comp.category,
+              displayName: comp.info && comp.info.displayName,
+              attributes: comp.attributes,
+              options: comp.options,
+            };
+          }
+
+          // 3. Export data for API content types + optionally upload.file
+          //    We export data only for api:: types and upload.file (plugin data is system-managed)
+          const dataUids = Object.keys(allContentTypes).filter(uid =>
             uid.startsWith('api::') ||
             (!excludeMedia && uid === 'plugin::upload.file')
           );
 
-          // 2. Export data from each content type
           const data = {};
-          for (const uid of allUids) {
+          for (const uid of dataUids) {
             try {
               const entries = await strapi.entityService.findMany(uid, {
                 populate: '*',
@@ -200,30 +232,35 @@ module.exports = {
             }
           }
 
-          // 3. Collect schema files from disk
-          const schemas = {};
+          // 4. Collect raw schema files from disk (for source-of-truth JSON files)
+          const diskSchemas = {};
           const apiDir = path.join(process.cwd(), 'src', 'api');
           if (fs.existsSync(apiDir)) {
             for (const apiName of fs.readdirSync(apiDir)) {
-              const schemaPath = path.join(apiDir, apiName, 'content-types', apiName, 'schema.json');
-              if (fs.existsSync(schemaPath)) {
-                try {
-                  schemas[apiName] = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
-                } catch (_) {}
+              const ctDir = path.join(apiDir, apiName, 'content-types');
+              if (fs.existsSync(ctDir)) {
+                for (const ctName of fs.readdirSync(ctDir)) {
+                  const schemaPath = path.join(ctDir, ctName, 'schema.json');
+                  if (fs.existsSync(schemaPath)) {
+                    try {
+                      diskSchemas[`${apiName}.${ctName}`] = JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
+                    } catch (_) {}
+                  }
+                }
               }
             }
           }
 
-          // 4. Collect component schemas
+          // 5. Collect raw component schema files from disk
+          const diskComponents = {};
           const componentsDir = path.join(process.cwd(), 'src', 'components');
-          const components = {};
           if (fs.existsSync(componentsDir)) {
             for (const category of fs.readdirSync(componentsDir)) {
               const catDir = path.join(componentsDir, category);
-              if (fs.statSync(catDir).isDirectory()) {
+              if (fs.existsSync(catDir) && fs.statSync(catDir).isDirectory()) {
                 for (const file of fs.readdirSync(catDir).filter(f => f.endsWith('.json'))) {
                   try {
-                    components[`${category}.${file.replace('.json', '')}`] =
+                    diskComponents[`${category}.${file.replace('.json', '')}`] =
                       JSON.parse(fs.readFileSync(path.join(catDir, file), 'utf8'));
                   } catch (_) {}
                 }
@@ -231,21 +268,30 @@ module.exports = {
             }
           }
 
-          // 5. Build backup payload
+          // 6. Build backup payload
+          const totalEntries = Object.values(data).reduce((n, v) => n + (Array.isArray(v) ? v.length : 0), 0);
           const payload = {
             meta: {
-              version: '1.0',
+              version: '2.0',
               createdAt: new Date().toISOString(),
               environment: process.env.NODE_ENV || 'development',
               excludeMedia,
-              totalEntries: Object.values(data).reduce((n, v) => n + (Array.isArray(v) ? v.length : 0), 0),
+              totalContentTypes: Object.keys(schemas).length,
+              totalComponents: Object.keys(components).length,
+              totalEntries,
             },
+            // Strapi registry schemas (all content types: collections, single types, plugins)
             schemas,
+            // Strapi registry component schemas
             components,
+            // Raw JSON files from disk (src/api and src/components)
+            diskSchemas,
+            diskComponents,
+            // Actual data records
             data,
           };
 
-          // 6. Compress and write
+          // 7. Compress and write
           const compressed = await gzip(JSON.stringify(payload));
           const ts = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
           const filename = `backup_${ts}.json.gz`;
@@ -255,7 +301,9 @@ module.exports = {
             success: true,
             filename,
             size: formatBytes(compressed.length),
-            totalEntries: payload.meta.totalEntries,
+            totalEntries,
+            totalContentTypes: Object.keys(schemas).length,
+            totalComponents: Object.keys(components).length,
           };
         } catch (err) {
           ctx.status = 500;

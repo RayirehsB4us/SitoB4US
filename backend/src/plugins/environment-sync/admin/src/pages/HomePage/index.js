@@ -357,28 +357,31 @@ select{appearance:auto;}
           Data Backup
         </h3>
         <div class="space-y-4">
-          <label class="flex items-center gap-3 cursor-pointer group">
-            <input type="checkbox" style="width:1rem;height:1rem;accent-color:#4945ff;"/>
-            <span class="text-sm text-slate-700 transition group-primary">Exclude media files (images, videos)</span>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input id="exclude-media-cb" type="checkbox" style="width:1rem;height:1rem;accent-color:#4945ff;"/>
+            <span class="text-sm text-slate-700">Exclude media files (images, videos)</span>
           </label>
-          <button class="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm btn-slate transition" style="border:none;cursor:pointer;">
-            <svg class="icon" style="width:0.875rem;height:0.875rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <button id="create-backup-btn" class="w-full flex items-center justify-center gap-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg font-bold text-sm btn-slate transition" style="border:none;cursor:pointer;">
+            <svg id="backup-btn-icon" class="icon" style="width:0.875rem;height:0.875rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
               <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
             </svg>
             Create Backup
           </button>
           <div class="pt-2">
-            <p class="text-10 font-bold uppercase text-neutral mb-2">Recent Backups</p>
-            <div class="space-y-2">
-              <div class="flex items-center justify-between text-xs p-2 bg-slate-50 rounded border border-slate-100">
-                <span class="font-mono">backup_2023_10_24.tar.gz</span>
-                <span class="text-neutral">2 hours ago</span>
-              </div>
-              <div class="flex items-center justify-between text-xs p-2 bg-slate-50 rounded border border-slate-100">
-                <span class="font-mono">backup_2023_10_23.tar.gz</span>
-                <span class="text-neutral">1 day ago</span>
-              </div>
+            <div class="flex items-center justify-between mb-2">
+              <p class="text-10 font-bold uppercase text-neutral">Recent Backups</p>
+              <button id="refresh-backups-btn" title="Refresh" class="text-neutral btn-opacity" style="border:none;background:none;cursor:pointer;padding:0.125rem;">
+                <svg class="icon" style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                  <path d="M21 3v5h-5"/>
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                  <path d="M3 21v-5h5"/>
+                </svg>
+              </button>
+            </div>
+            <div id="backup-list" class="space-y-2">
+              <p class="text-xs text-neutral text-center py-2">Loading...</p>
             </div>
           </div>
         </div>
@@ -628,6 +631,89 @@ select{appearance:auto;}
     }
   });
 
+  // ─── Backup ────────────────────────────────────────────────────────────────
+
+  async function loadBackups() {
+    const list = document.getElementById('backup-list');
+    try {
+      const data = await apiGet('/backup/list');
+      if (!data.backups || data.backups.length === 0) {
+        list.innerHTML = '<p class="text-xs text-neutral text-center py-2">No backups yet</p>';
+        return;
+      }
+      list.innerHTML = data.backups.map(b => \`
+        <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;padding:0.375rem 0.5rem;background:#f8fafc;border-radius:0.25rem;border:1px solid #f1f5f9;gap:0.5rem;">
+          <div style="min-width:0;flex:1;">
+            <p style="font-family:monospace;color:#1e293b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" title="\${b.filename}">\${b.filename}</p>
+            <p style="color:#666687;margin-top:1px;">\${b.size} &bull; \${b.ago}</p>
+          </div>
+          <div style="display:flex;gap:0.375rem;flex-shrink:0;">
+            <a href="/environment-sync/backup/download/\${encodeURIComponent(b.filename)}" download="\${b.filename}"
+               style="display:inline-flex;align-items:center;gap:0.25rem;background:#4945ff;color:#fff;padding:0.25rem 0.5rem;border-radius:0.25rem;font-weight:700;text-decoration:none;font-size:11px;">
+              <svg style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              DL
+            </a>
+            <button onclick="deleteBackup('\${b.filename}')"
+              style="display:inline-flex;align-items:center;background:rgba(208,43,32,0.08);color:#d02b20;padding:0.25rem 0.5rem;border-radius:0.25rem;font-weight:700;border:none;cursor:pointer;font-size:11px;">
+              &times;
+            </button>
+          </div>
+        </div>
+      \`).join('');
+    } catch (e) {
+      list.innerHTML = '<p class="text-xs text-danger text-center py-2">Could not load backups</p>';
+    }
+  }
+
+  window.deleteBackup = async function(filename) {
+    if (!confirm(\`Delete \${filename}?\`)) return;
+    try {
+      const res = await fetch(\`/environment-sync/backup/\${encodeURIComponent(filename)}\`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) {
+        addLog('INFO', \`Deleted backup: \${filename}\`);
+        loadBackups();
+      } else {
+        addLog('ERROR', data.error || 'Delete failed');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not delete backup: ' + e.message);
+    }
+  };
+
+  document.getElementById('create-backup-btn').addEventListener('click', async () => {
+    const excludeMedia = document.getElementById('exclude-media-cb').checked;
+    const btn = document.getElementById('create-backup-btn');
+    setLoading(btn, true);
+    btn.textContent = 'Creating backup...';
+    addLog('INFO', \`Creating backup\${excludeMedia ? ' (excluding media)' : ''}...\`);
+    try {
+      const data = await apiPost('/backup/create', { excludeMedia });
+      if (data.success) {
+        const details = [
+          data.size,
+          data.totalEntries != null ? \`\${data.totalEntries} entries\` : null,
+          data.totalContentTypes != null ? \`\${data.totalContentTypes} content types\` : null,
+          data.totalComponents != null ? \`\${data.totalComponents} components\` : null,
+        ].filter(Boolean).join(', ');
+        addLog('INFO', \`Backup created: \${data.filename} (\${details})\`);
+        loadBackups();
+      } else {
+        addLog('ERROR', data.error || 'Backup failed');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not create backup: ' + e.message);
+    } finally {
+      setLoading(btn, false);
+      btn.innerHTML = \`<svg class="icon" style="width:0.875rem;height:0.875rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Create Backup\`;
+    }
+  });
+
+  document.getElementById('refresh-backups-btn').addEventListener('click', loadBackups);
+
   // ─── Refresh & Clear ───────────────────────────────────────────────────────
 
   document.getElementById('refresh-status-btn').addEventListener('click', loadStatus);
@@ -641,6 +727,7 @@ select{appearance:auto;}
   loadStatus();
   loadSettings();
   loadBranches();
+  loadBackups();
 </script>
 </body>
 </html>`;
