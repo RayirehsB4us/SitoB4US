@@ -860,6 +860,14 @@ select{appearance:auto;}
         statusEl.innerHTML = '<span style="color:#666687;">No transfer token saved yet</span>';
       }
       updateSyncPanels(data.role || 'master');
+      if (data.role === 'slave' && data.activeRequestId) {
+        showActiveRequest(data.activeRequestId, 'pending');
+        addLog('INFO', \`Restored active request: \${data.activeRequestId} — checking status...\`);
+        try {
+          const st = await apiGet(\`/sync/request-status/\${encodeURIComponent(data.activeRequestId)}\`);
+          if (st.status) setRequestStatusBadge(st.status);
+        } catch (_) {}
+      }
     } catch (e) {
       document.getElementById('sync-config-status').textContent = 'Could not load sync config';
     }
@@ -994,6 +1002,7 @@ select{appearance:auto;}
     _activeRequestId = null;
     document.getElementById('active-request-panel').classList.add('hidden');
     document.getElementById('apply-sync-btn').classList.add('hidden');
+    apiPost('/sync/clear-active-request', {}).catch(() => {});
   });
 
   // ─── Master: sync requests ─────────────────────────────────────────────────

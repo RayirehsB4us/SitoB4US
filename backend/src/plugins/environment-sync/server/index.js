@@ -589,6 +589,7 @@ module.exports = {
             name: "environment-sync",
           });
           const config = (await store.get({ key: "sync_config" })) || {};
+          const activeRequestId = await store.get({ key: "slave_active_request" });
           ctx.body = {
             role: config.role || "master",
             masterUrl: config.masterUrl || "",
@@ -598,6 +599,7 @@ module.exports = {
                   Math.max(0, config.transferToken.length - 8),
                 )}${config.transferToken.slice(-4)}`
               : null,
+            activeRequestId: activeRequestId || null,
           };
         } catch (err) {
           ctx.body = {
@@ -605,6 +607,7 @@ module.exports = {
             masterUrl: "",
             hasToken: false,
             tokenMasked: null,
+            activeRequestId: null,
           };
         }
       },
@@ -675,6 +678,7 @@ module.exports = {
             };
             return;
           }
+          await store.set({ key: "slave_active_request", value: requestId });
           ctx.body = { success: true, requestId };
         } catch (err) {
           ctx.status = 500;
@@ -1060,7 +1064,22 @@ module.exports = {
             results.data = { imported, errors };
           }
 
+          await store.set({ key: "slave_active_request", value: null });
           ctx.body = { success: true, results };
+        } catch (err) {
+          ctx.status = 500;
+          ctx.body = { error: err.message };
+        }
+      },
+
+      async clearActiveRequest(ctx) {
+        try {
+          const store = strapi.store({
+            type: "plugin",
+            name: "environment-sync",
+          });
+          await store.set({ key: "slave_active_request", value: null });
+          ctx.body = { success: true };
         } catch (err) {
           ctx.status = 500;
           ctx.body = { error: err.message };
@@ -1165,6 +1184,12 @@ module.exports = {
           method: "POST",
           path: "/sync/apply",
           handler: "sync.apply",
+          config: { policies: [], auth: false },
+        },
+        {
+          method: "POST",
+          path: "/sync/clear-active-request",
+          handler: "sync.clearActiveRequest",
           config: { policies: [], auth: false },
         },
         // Sync — master inbound (called by slave's crossFetch)
