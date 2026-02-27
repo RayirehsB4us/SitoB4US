@@ -236,23 +236,40 @@ select{appearance:auto;}
       </div>
     </div>
 
-    <!-- Sync Role -->
+    <!-- Sync Config Card -->
     <div class="bg-white rounded-xl border border-slate-200 strapi-shadow p-5">
       <h3 class="font-bold text-slate-800 flex items-center gap-2 mb-4">
         <svg class="icon text-primary" style="width:1.5rem;height:1.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="3"/>
-          <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+          <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
         </svg>
-        Sync Role
+        Sync Config
       </h3>
       <div class="space-y-3">
-        <select class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-25 text-sm focus-ring transition" style="outline:none;">
-          <option selected value="master">Master (Source of Truth)</option>
-          <option value="slave">Slave (Receiver)</option>
-        </select>
-        <p class="text-sm text-neutral italic">
-          <span class="font-bold text-primary">Master:</span> This environment is the source of truth. Commit schemas and push to distribute to other environments.
-        </p>
+        <div>
+          <label class="block text-xs font-bold uppercase text-neutral mb-15 tracking-wider">Instance Role</label>
+          <select id="sync-role-select" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-25 text-sm focus-ring transition" style="outline:none;">
+            <option value="master">Master (Source of Truth)</option>
+            <option value="slave">Slave (Receiver)</option>
+          </select>
+        </div>
+        <div id="master-url-row">
+          <label class="block text-xs font-bold uppercase text-neutral mb-15 tracking-wider">Master URL</label>
+          <input id="master-url-input" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 text-sm focus-ring" style="outline:none;" type="url" placeholder="https://master.mysite.com"/>
+        </div>
+        <div>
+          <label class="block text-xs font-bold uppercase text-neutral mb-15 tracking-wider">Transfer Token</label>
+          <input id="transfer-token-input" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 text-sm focus-ring" style="outline:none;" type="password" placeholder="Shared secret (same on master and slave)"/>
+        </div>
+        <div class="flex items-center justify-between pt-1">
+          <div id="sync-config-status" class="text-xs text-neutral">Loading...</div>
+          <button id="save-sync-config-btn" class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm btn-opacity transition" style="border:none;cursor:pointer;">
+            <svg class="icon" style="width:0.875rem;height:0.875rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+              <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
+            </svg>
+            Save Config
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -388,6 +405,94 @@ select{appearance:auto;}
       </div>
     </div>
   </div>
+
+  <!-- DB / Schema Sync -->
+  <section class="mt-10 mb-10">
+    <div class="bg-white rounded-xl border border-slate-200 strapi-shadow overflow-hidden">
+      <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 flex items-center gap-2">
+          <svg class="icon text-primary" style="width:1.5rem;height:1.5rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/>
+            <path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/>
+          </svg>
+          DB / Schema Sync
+        </h3>
+        <button id="refresh-requests-btn" title="Refresh" class="text-neutral btn-opacity transition" style="border:none;background:none;cursor:pointer;padding:0.25rem;">
+          <svg class="icon" style="width:1rem;height:1rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- ── SLAVE panel ── -->
+      <div id="slave-sync-panel" class="hidden p-5 space-y-4">
+        <p class="text-sm text-neutral">Request the <span class="font-bold text-primary">master</span> to send its data/schemas to this slave instance. The master admin must approve the request before the transfer begins.</p>
+        <div>
+          <label class="block text-xs font-bold uppercase text-neutral mb-2 tracking-wider">What to sync</label>
+          <div class="flex gap-3 flex-wrap">
+            <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-700">
+              <input type="radio" name="sync-type" value="data" style="accent-color:#4945ff;width:1rem;height:1rem;"/> Data only
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-700">
+              <input type="radio" name="sync-type" value="schemas" style="accent-color:#4945ff;width:1rem;height:1rem;"/> Schemas only
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-sm text-slate-700">
+              <input type="radio" name="sync-type" value="both" checked style="accent-color:#4945ff;width:1rem;height:1rem;"/> Both
+            </label>
+          </div>
+        </div>
+        <button id="request-sync-btn" class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg font-bold text-sm btn-opacity transition" style="border:none;cursor:pointer;">
+          <svg class="icon" style="width:0.875rem;height:0.875rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/>
+          </svg>
+          Request Sync from Master
+        </button>
+
+        <!-- Active request status -->
+        <div id="active-request-panel" class="hidden mt-2 p-4 rounded-lg border border-slate-200" style="background:#f8fafc;">
+          <div class="flex items-start justify-between gap-3">
+            <div style="min-width:0;flex:1;">
+              <p class="text-xs font-bold text-slate-700 mb-1">Active Request</p>
+              <p class="text-xs font-mono text-neutral" id="active-request-id-label"></p>
+              <div id="active-request-status-badge" class="inline-block mt-2 px-25 py-05 rounded-full text-xs font-bold" style="background:rgba(217,130,47,0.1);color:#d9822f;">PENDING</div>
+              <p id="active-request-note" class="text-xs text-neutral mt-2 italic">Waiting for master to approve...</p>
+            </div>
+            <div class="flex flex-col gap-2" style="flex-shrink:0;">
+              <button id="poll-status-btn" class="flex items-center gap-1 text-xs font-bold text-primary btn-opacity" style="border:none;background:none;cursor:pointer;white-space:nowrap;">
+                <svg class="icon" style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>
+                  <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/>
+                </svg>
+                Check Status
+              </button>
+              <button id="apply-sync-btn" class="hidden flex items-center gap-1 bg-success text-white px-3 py-15 rounded-lg text-xs font-bold btn-opacity transition" style="border:none;cursor:pointer;padding:0.375rem 0.75rem;">
+                <svg class="icon" style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+                  <circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>
+                </svg>
+                Apply Sync
+              </button>
+              <button id="clear-request-btn" class="text-xs font-bold text-neutral btn-opacity" style="border:none;background:none;cursor:pointer;">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MASTER panel ── -->
+      <div id="master-sync-panel" class="hidden p-5">
+        <p class="text-sm text-neutral mb-4">Review and approve sync requests sent by slave instances. Approving will package the current master data/schemas and make them available for the slave to pull.</p>
+        <div id="requests-list">
+          <p class="text-xs text-neutral text-center py-4">No pending requests</p>
+        </div>
+      </div>
+
+      <!-- Role not set -->
+      <div id="sync-role-placeholder" class="p-5 text-center text-sm text-neutral italic">
+        Save your Sync Config above to enable this panel.
+      </div>
+    </div>
+  </section>
 
   <!-- Log Console -->
   <section class="mt-10">
@@ -714,6 +819,262 @@ select{appearance:auto;}
 
   document.getElementById('refresh-backups-btn').addEventListener('click', loadBackups);
 
+  // ─── Sync Config ───────────────────────────────────────────────────────────
+
+  let _currentRole = 'master';
+  let _activeRequestId = null;
+
+  function updateSyncPanels(role) {
+    _currentRole = role;
+    const slavePn = document.getElementById('slave-sync-panel');
+    const masterPn = document.getElementById('master-sync-panel');
+    const placeholder = document.getElementById('sync-role-placeholder');
+    const masterUrlRow = document.getElementById('master-url-row');
+    slavePn.classList.add('hidden');
+    masterPn.classList.add('hidden');
+    placeholder.classList.add('hidden');
+    if (role === 'slave') {
+      slavePn.classList.remove('hidden');
+      masterUrlRow.style.display = '';
+    } else {
+      masterPn.classList.remove('hidden');
+      masterUrlRow.style.display = 'none';
+      loadRequests();
+    }
+  }
+
+  async function loadSyncConfig() {
+    try {
+      const data = await apiGet('/sync/config');
+      const roleSelect = document.getElementById('sync-role-select');
+      const statusEl = document.getElementById('sync-config-status');
+      roleSelect.value = data.role || 'master';
+      if (data.masterUrl) document.getElementById('master-url-input').value = data.masterUrl;
+      if (data.hasToken) {
+        statusEl.innerHTML = \`<span style="color:#328048;">&#10003; Token saved: <code>\${data.tokenMasked}</code></span>\`;
+      } else {
+        statusEl.innerHTML = '<span style="color:#666687;">No transfer token saved yet</span>';
+      }
+      updateSyncPanels(data.role || 'master');
+    } catch (e) {
+      document.getElementById('sync-config-status').textContent = 'Could not load sync config';
+    }
+  }
+
+  document.getElementById('sync-role-select').addEventListener('change', e => {
+    updateSyncPanels(e.target.value);
+  });
+
+  document.getElementById('save-sync-config-btn').addEventListener('click', async () => {
+    const role = document.getElementById('sync-role-select').value;
+    const masterUrl = document.getElementById('master-url-input').value.trim();
+    const transferToken = document.getElementById('transfer-token-input').value.trim();
+    const btn = document.getElementById('save-sync-config-btn');
+    setLoading(btn, true);
+    addLog('DEBUG', 'Saving sync config...');
+    try {
+      const body = { role, masterUrl };
+      if (transferToken) body.transferToken = transferToken;
+      const data = await apiPost('/sync/config', body);
+      if (data.success) {
+        document.getElementById('transfer-token-input').value = '';
+        addLog('INFO', \`Sync config saved — role: \${role}\`);
+        loadSyncConfig();
+      } else {
+        addLog('ERROR', data.error || 'Failed to save sync config');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not reach API: ' + e.message);
+    } finally {
+      setLoading(btn, false);
+    }
+  });
+
+  // ─── Slave: request sync ───────────────────────────────────────────────────
+
+  function showActiveRequest(requestId, status) {
+    _activeRequestId = requestId;
+    const panel = document.getElementById('active-request-panel');
+    panel.classList.remove('hidden');
+    document.getElementById('active-request-id-label').textContent = requestId;
+    setRequestStatusBadge(status);
+  }
+
+  function setRequestStatusBadge(status) {
+    const badge = document.getElementById('active-request-status-badge');
+    const note = document.getElementById('active-request-note');
+    const applyBtn = document.getElementById('apply-sync-btn');
+    const statusStyles = {
+      pending:  { bg: 'rgba(217,130,47,0.1)',  color: '#d9822f', label: 'PENDING',  note: 'Waiting for master to approve...' },
+      approved: { bg: 'rgba(50,128,72,0.1)',   color: '#328048', label: 'APPROVED', note: 'Approved! Click Apply Sync to import the data.' },
+      rejected: { bg: 'rgba(208,43,32,0.1)',   color: '#d02b20', label: 'REJECTED', note: 'The master rejected this request.' },
+    };
+    const s = statusStyles[status] || statusStyles.pending;
+    badge.textContent = s.label;
+    badge.style.background = s.bg;
+    badge.style.color = s.color;
+    note.textContent = s.note;
+    if (status === 'approved') {
+      applyBtn.classList.remove('hidden');
+    } else {
+      applyBtn.classList.add('hidden');
+    }
+  }
+
+  document.getElementById('request-sync-btn').addEventListener('click', async () => {
+    const syncType = document.querySelector('input[name="sync-type"]:checked')?.value || 'both';
+    const btn = document.getElementById('request-sync-btn');
+    setLoading(btn, true);
+    addLog('INFO', \`Sending sync request to master (type: \${syncType})...\`);
+    try {
+      const data = await apiPost('/sync/send-request', { syncType });
+      if (data.success) {
+        addLog('INFO', \`Sync request sent! ID: \${data.requestId} — waiting for master approval\`);
+        showActiveRequest(data.requestId, 'pending');
+      } else {
+        addLog('ERROR', data.error || 'Failed to send request');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not reach API: ' + e.message);
+    } finally {
+      setLoading(btn, false);
+    }
+  });
+
+  document.getElementById('poll-status-btn').addEventListener('click', async () => {
+    if (!_activeRequestId) { addLog('WARN', 'No active request to check'); return; }
+    addLog('DEBUG', \`Checking status of request \${_activeRequestId}...\`);
+    try {
+      const data = await apiGet(\`/sync/request-status/\${encodeURIComponent(_activeRequestId)}\`);
+      if (data.status) {
+        setRequestStatusBadge(data.status);
+        addLog('INFO', \`Request status: \${data.status.toUpperCase()}\`);
+      } else {
+        addLog('ERROR', data.error || 'Could not read status');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not reach API: ' + e.message);
+    }
+  });
+
+  document.getElementById('apply-sync-btn').addEventListener('click', async () => {
+    if (!_activeRequestId) { addLog('WARN', 'No active request to apply'); return; }
+    if (!confirm('This will overwrite local data/schemas with data from the master. Continue?')) return;
+    const btn = document.getElementById('apply-sync-btn');
+    setLoading(btn, true);
+    addLog('INFO', \`Fetching transfer data from master and applying locally...\`);
+    try {
+      const data = await apiPost('/sync/apply', { requestId: _activeRequestId });
+      if (data.success) {
+        const r = data.results;
+        let summary = 'Sync applied!';
+        if (r.data) summary += \` Data: \${r.data.imported} imported, \${r.data.errors} errors.\`;
+        if (r.schemas) {
+          summary += \` Schemas: \${r.schemas.schemaFiles} files, \${r.schemas.componentFiles} components.\`;
+          if (r.schemas.requiresRestart) summary += ' ⚠ Restart Strapi to apply schema changes.';
+        }
+        addLog('INFO', summary);
+        setRequestStatusBadge('done');
+        document.getElementById('active-request-note').textContent = summary;
+        _activeRequestId = null;
+      } else {
+        addLog('ERROR', data.error || 'Apply failed');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not apply sync: ' + e.message);
+    } finally {
+      setLoading(btn, false);
+    }
+  });
+
+  document.getElementById('clear-request-btn').addEventListener('click', () => {
+    _activeRequestId = null;
+    document.getElementById('active-request-panel').classList.add('hidden');
+    document.getElementById('apply-sync-btn').classList.add('hidden');
+  });
+
+  // ─── Master: sync requests ─────────────────────────────────────────────────
+
+  async function loadRequests() {
+    const list = document.getElementById('requests-list');
+    try {
+      const data = await apiGet('/sync/requests');
+      if (!data.requests || data.requests.length === 0) {
+        list.innerHTML = '<p class="text-xs text-neutral text-center py-4">No sync requests received yet</p>';
+        return;
+      }
+      const statusStyle = {
+        pending:  { bg: 'rgba(217,130,47,0.1)',  color: '#d9822f', label: 'PENDING'  },
+        approved: { bg: 'rgba(50,128,72,0.1)',   color: '#328048', label: 'APPROVED' },
+        rejected: { bg: 'rgba(208,43,32,0.1)',   color: '#d02b20', label: 'REJECTED' },
+      };
+      list.innerHTML = data.requests.map(r => {
+        const s = statusStyle[r.status] || statusStyle.pending;
+        const isPending = r.status === 'pending';
+        const typeLabels = { data: 'Data only', schemas: 'Schemas only', both: 'Data + Schemas' };
+        return \`<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:0.875rem 0.75rem;border-radius:0.5rem;border:1px solid #e2e8f0;margin-bottom:0.5rem;background:\${isPending ? '#fffbf5' : '#f8fafc'};">
+          <div style="min-width:0;flex:1;">
+            <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.25rem;">
+              <span style="font-size:10px;font-weight:700;padding:0.125rem 0.5rem;border-radius:9999px;background:\${s.bg};color:\${s.color};">\${s.label}</span>
+              <span style="font-size:0.75rem;font-weight:600;color:#334155;">\${typeLabels[r.syncType] || r.syncType}</span>
+            </div>
+            <p style="font-size:0.75rem;font-family:monospace;color:#475569;word-break:break-all;">\${r.slaveUrl}</p>
+            <p style="font-size:11px;color:#666687;margin-top:0.25rem;">Requested \${r.requestedAt ? new Date(r.requestedAt).toLocaleString() : '—'}</p>
+          </div>
+          \${isPending ? \`<div style="display:flex;flex-direction:column;gap:0.375rem;flex-shrink:0;">
+            <button onclick="approveRequest('\${r.id}')" style="display:flex;align-items:center;gap:0.25rem;background:#328048;color:#fff;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
+              <svg style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              Approve
+            </button>
+            <button onclick="rejectRequest('\${r.id}')" style="display:flex;align-items:center;gap:0.25rem;background:rgba(208,43,32,0.08);color:#d02b20;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
+              <svg style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              Reject
+            </button>
+          </div>\` : ''}
+        </div>\`;
+      }).join('');
+    } catch (e) {
+      list.innerHTML = '<p class="text-xs text-danger text-center py-4">Could not load requests</p>';
+    }
+  }
+
+  window.approveRequest = async function(id) {
+    if (!confirm('Approve this sync request? The master data will be packaged and made available to the slave.')) return;
+    addLog('INFO', \`Approving sync request \${id}...\`);
+    try {
+      const data = await apiPost(\`/sync/requests/\${id}/approve\`, {});
+      if (data.success) {
+        addLog('INFO', \`Request \${id} approved — transfer package ready for slave\`);
+        loadRequests();
+      } else {
+        addLog('ERROR', data.error || 'Approve failed');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not approve: ' + e.message);
+    }
+  };
+
+  window.rejectRequest = async function(id) {
+    if (!confirm('Reject this sync request?')) return;
+    addLog('INFO', \`Rejecting sync request \${id}...\`);
+    try {
+      const data = await apiPost(\`/sync/requests/\${id}/reject\`, {});
+      if (data.success) {
+        addLog('INFO', \`Request \${id} rejected\`);
+        loadRequests();
+      } else {
+        addLog('ERROR', data.error || 'Reject failed');
+      }
+    } catch (e) {
+      addLog('ERROR', 'Could not reject: ' + e.message);
+    }
+  };
+
+  document.getElementById('refresh-requests-btn').addEventListener('click', () => {
+    if (_currentRole === 'master') loadRequests();
+    else addLog('DEBUG', 'Refreshed sync panel');
+  });
+
   // ─── Refresh & Clear ───────────────────────────────────────────────────────
 
   document.getElementById('refresh-status-btn').addEventListener('click', loadStatus);
@@ -728,6 +1089,7 @@ select{appearance:auto;}
   loadSettings();
   loadBranches();
   loadBackups();
+  loadSyncConfig();
 </script>
 </body>
 </html>`;
