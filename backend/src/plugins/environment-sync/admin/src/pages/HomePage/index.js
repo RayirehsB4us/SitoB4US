@@ -774,7 +774,6 @@ select{appearance:auto;}
   }
 
   window.deleteBackup = async function(filename) {
-    if (!confirm(\`Delete \${filename}?\`)) return;
     try {
       const res = await fetch(\`/environment-sync/backup/\${encodeURIComponent(filename)}\`, { method: 'DELETE' });
       const data = await res.json();
@@ -959,7 +958,6 @@ select{appearance:auto;}
 
   document.getElementById('apply-sync-btn').addEventListener('click', async () => {
     if (!_activeRequestId) { addLog('WARN', 'No active request to apply'); return; }
-    if (!confirm('This will overwrite local data/schemas with data from the master. Continue?')) return;
     const btn = document.getElementById('apply-sync-btn');
     setLoading(btn, true);
     addLog('INFO', \`Fetching transfer data from master and applying locally...\`);
@@ -1039,7 +1037,6 @@ select{appearance:auto;}
   }
 
   window.approveRequest = async function(id) {
-    if (!confirm('Approve this sync request? The master data will be packaged and made available to the slave.')) return;
     addLog('INFO', \`Approving sync request \${id}...\`);
     try {
       const data = await apiPost(\`/sync/requests/\${id}/approve\`, {});
@@ -1055,7 +1052,6 @@ select{appearance:auto;}
   };
 
   window.rejectRequest = async function(id) {
-    if (!confirm('Reject this sync request?')) return;
     addLog('INFO', \`Rejecting sync request \${id}...\`);
     try {
       const data = await apiPost(\`/sync/requests/\${id}/reject\`, {});
