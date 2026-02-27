@@ -9,7 +9,10 @@
     "build": "strapi build",
     "develop": "strapi develop",
     "start": "node node_modules/@strapi/strapi/bin/strapi.js start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "seed": "node scripts/seed-data.js",
+    "export-data": "node scripts/export-data.js",
+    "import-data": "node scripts/import-data.js"
   },
   "dependencies": {
     "@strapi/plugin-i18n": "^4.25.0",
