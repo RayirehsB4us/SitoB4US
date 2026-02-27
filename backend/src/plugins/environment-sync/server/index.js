@@ -41,6 +41,17 @@ function timeAgo(date) {
   return `${Math.floor(seconds / 86400)} day(s) ago`;
 }
 
+// Strip any path from the master URL — keeps only protocol://host:port
+// Handles cases where the user pastes the full admin panel URL (e.g. http://host/admin)
+function normalizeMasterUrl(raw) {
+  try {
+    const u = new URL(raw.trim());
+    return `${u.protocol}//${u.host}`;
+  } catch (_) {
+    return raw.trim().replace(/\/+$/, "");
+  }
+}
+
 // HTTP client for cross-server communication — no extra npm deps
 function crossFetch(url, method, body, token) {
   return new Promise((resolve, reject) => {
@@ -525,10 +536,7 @@ module.exports = {
             process.env.PUBLIC_URL ||
             `http://localhost:${process.env.PORT || 1337}`;
           const result = await crossFetch(
-            `${config.masterUrl.replace(
-              /\/$/,
-              "",
-            )}/admin/environment-sync/sync/receive-request`,
+            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/receive-request`,
             "POST",
             { requestId, slaveUrl, syncType: syncType || "both" },
             config.transferToken,
@@ -611,10 +619,7 @@ module.exports = {
             return;
           }
           const result = await crossFetch(
-            `${config.masterUrl.replace(
-              /\/$/,
-              "",
-            )}/admin/environment-sync/sync/status/${requestId}`,
+            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/status/${requestId}`,
             "GET",
             {},
             config.transferToken,
@@ -831,10 +836,7 @@ module.exports = {
 
           // Fetch from master
           const result = await crossFetch(
-            `${config.masterUrl.replace(
-              /\/$/,
-              "",
-            )}/admin/environment-sync/sync/transfer/${requestId}`,
+            `${normalizeMasterUrl(config.masterUrl)}/admin/environment-sync/sync/transfer/${requestId}`,
             "GET",
             {},
             config.transferToken,
