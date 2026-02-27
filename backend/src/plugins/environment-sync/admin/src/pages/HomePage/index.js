@@ -761,7 +761,7 @@ select{appearance:auto;}
               </svg>
               DL
             </a>
-            <button onclick="deleteBackup('\${b.filename}')"
+            <button data-action="delete" data-filename="\${b.filename}"
               style="display:inline-flex;align-items:center;background:rgba(208,43,32,0.08);color:#d02b20;padding:0.25rem 0.5rem;border-radius:0.25rem;font-weight:700;border:none;cursor:pointer;font-size:11px;">
               &times;
             </button>
@@ -773,7 +773,7 @@ select{appearance:auto;}
     }
   }
 
-  window.deleteBackup = async function(filename) {
+  async function deleteBackup(filename) {
     try {
       const res = await fetch(\`/environment-sync/backup/\${encodeURIComponent(filename)}\`, { method: 'DELETE' });
       const data = await res.json();
@@ -786,7 +786,12 @@ select{appearance:auto;}
     } catch (e) {
       addLog('ERROR', 'Could not delete backup: ' + e.message);
     }
-  };
+  }
+
+  document.getElementById('backup-list').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-action="delete"]');
+    if (btn) deleteBackup(btn.dataset.filename);
+  });
 
   document.getElementById('create-backup-btn').addEventListener('click', async () => {
     const excludeMedia = document.getElementById('exclude-media-cb').checked;
@@ -1020,11 +1025,11 @@ select{appearance:auto;}
             <p style="font-size:11px;color:#666687;margin-top:0.25rem;">Requested \${r.requestedAt ? new Date(r.requestedAt).toLocaleString() : '—'}</p>
           </div>
           \${isPending ? \`<div style="display:flex;flex-direction:column;gap:0.375rem;flex-shrink:0;">
-            <button onclick="approveRequest('\${r.id}')" style="display:flex;align-items:center;gap:0.25rem;background:#328048;color:#fff;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
+            <button data-action="approve" data-id="\${r.id}" style="display:flex;align-items:center;gap:0.25rem;background:#328048;color:#fff;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
               <svg style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
               Approve
             </button>
-            <button onclick="rejectRequest('\${r.id}')" style="display:flex;align-items:center;gap:0.25rem;background:rgba(208,43,32,0.08);color:#d02b20;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
+            <button data-action="reject" data-id="\${r.id}" style="display:flex;align-items:center;gap:0.25rem;background:rgba(208,43,32,0.08);color:#d02b20;padding:0.25rem 0.75rem;border-radius:0.375rem;font-weight:700;border:none;cursor:pointer;font-size:12px;">
               <svg style="width:0.75rem;height:0.75rem;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               Reject
             </button>
@@ -1036,7 +1041,7 @@ select{appearance:auto;}
     }
   }
 
-  window.approveRequest = async function(id) {
+  async function approveRequest(id) {
     addLog('INFO', \`Approving sync request \${id}...\`);
     try {
       const data = await apiPost(\`/sync/requests/\${id}/approve\`, {});
@@ -1049,9 +1054,9 @@ select{appearance:auto;}
     } catch (e) {
       addLog('ERROR', 'Could not approve: ' + e.message);
     }
-  };
+  }
 
-  window.rejectRequest = async function(id) {
+  async function rejectRequest(id) {
     addLog('INFO', \`Rejecting sync request \${id}...\`);
     try {
       const data = await apiPost(\`/sync/requests/\${id}/reject\`, {});
@@ -1064,7 +1069,14 @@ select{appearance:auto;}
     } catch (e) {
       addLog('ERROR', 'Could not reject: ' + e.message);
     }
-  };
+  }
+
+  document.getElementById('requests-list').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    if (btn.dataset.action === 'approve') approveRequest(btn.dataset.id);
+    if (btn.dataset.action === 'reject') rejectRequest(btn.dataset.id);
+  });
 
   document.getElementById('refresh-requests-btn').addEventListener('click', () => {
     if (_currentRole === 'master') loadRequests();
