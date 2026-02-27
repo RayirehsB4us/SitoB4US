@@ -1,4 +1,4 @@
-const html = /* html */`<!DOCTYPE html>
+const html = /* html */ `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -1097,7 +1097,7 @@ select{appearance:auto;}
 const HomePage = () => (
   <iframe
     srcDoc={html}
-    style={{ width: '100%', height: '100vh', border: 'none', display: 'block' }}
+    style={{ width: "100%", height: "100vh", border: "none", display: "block" }}
     title="Environment Sync"
   />
 );
