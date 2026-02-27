@@ -39,6 +39,17 @@ function timeAgo(date) {
   return `${Math.floor(seconds / 86400)} day(s) ago`;
 }
 
+// Strip any path suffix from a URL, keeping only protocol+host+port
+// e.g. "http://host:1337/admin" → "http://host:1337"
+function normalizeMasterUrl(raw) {
+  try {
+    const u = new URL(raw.trim());
+    return `${u.protocol}//${u.hostname}${u.port ? ':' + u.port : ''}`;
+  } catch (_) {
+    return raw.trim().replace(/\/+$/, '');
+  }
+}
+
 // HTTP client for cross-server communication — no extra npm deps
 function crossFetch(url, method, body, token) {
   return new Promise((resolve, reject) => {
@@ -350,6 +361,34 @@ module.exports = {
         }
       },
 
+      // Slave → proxy: test connectivity to master
+      async testConnection(ctx) {
+        try {
+          const store = strapi.store({ type: 'plugin', name: 'environment-sync' });
+          const config = await store.get({ key: 'sync_config' }) || {};
+          if (!config.masterUrl) {
+            ctx.status = 400; ctx.body = { error: 'Master URL not configured.' }; return;
+          }
+          const base = normalizeMasterUrl(config.masterUrl);
+          const url = `${base}/environment-sync/sync/ping`;
+          const result = await crossFetch(url, 'GET', {}, config.transferToken);
+          if (result.status === 200 && result.data.ok) {
+            ctx.body = { success: true, masterUrl: base, message: result.data.message || 'Master is reachable' };
+          } else {
+            ctx.status = 400;
+            ctx.body = { error: `Master at ${base} returned HTTP ${result.status}. Check the URL and that the master has restarted with the updated plugin.` };
+          }
+        } catch (err) {
+          ctx.status = 500;
+          ctx.body = { error: `Cannot reach master: ${err.message}` };
+        }
+      },
+
+      // Master: ping endpoint — used by slave to verify connectivity
+      async ping(ctx) {
+        ctx.body = { ok: true, role: 'master', message: 'Environment Sync plugin is running' };
+      },
+
       // Slave → proxy: sends sync request to master
       async sendRequest(ctx) {
         const { syncType } = ctx.request.body;
@@ -362,17 +401,17 @@ module.exports = {
           if (!config.transferToken) {
             ctx.status = 400; ctx.body = { error: 'Transfer token not configured. Save your Sync Config first.' }; return;
           }
+          const base = normalizeMasterUrl(config.masterUrl);
           const requestId = `req_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
           const slaveUrl = process.env.PUBLIC_URL || `http://localhost:${process.env.PORT || 1337}`;
-          const result = await crossFetch(
-            `${config.masterUrl.replace(/\/$/, '')}/environment-sync/sync/receive-request`,
-            'POST',
+          const url = `${base}/environment-sync/sync/receive-request`;
+          const result = await crossFetch(url, 'POST',
             { requestId, slaveUrl, syncType: syncType || 'both' },
             config.transferToken
           );
           if (result.status !== 200 || !result.data.success) {
             ctx.status = 400;
-            ctx.body = { error: result.data.error || `Master returned HTTP ${result.status}` };
+            ctx.body = { error: result.data.error || `Master at ${url} returned HTTP ${result.status}. Verify the master URL is just the server root (e.g. http://host:1337) with no /admin suffix, and that the master has restarted with the latest plugin code.` };
             return;
           }
           ctx.body = { success: true, requestId };
@@ -426,8 +465,9 @@ module.exports = {
           const store = strapi.store({ type: 'plugin', name: 'environment-sync' });
           const config = await store.get({ key: 'sync_config' }) || {};
           if (!config.masterUrl) { ctx.status = 400; ctx.body = { error: 'Master URL not configured' }; return; }
+          const base = normalizeMasterUrl(config.masterUrl);
           const result = await crossFetch(
-            `${config.masterUrl.replace(/\/$/, '')}/environment-sync/sync/status/${requestId}`,
+            `${base}/environment-sync/sync/status/${requestId}`,
             'GET', {}, config.transferToken
           );
           ctx.body = result.data;
@@ -563,8 +603,9 @@ module.exports = {
           if (!config.transferToken) { ctx.status = 400; ctx.body = { error: 'Transfer token not configured' }; return; }
 
           // Fetch from master
+          const base = normalizeMasterUrl(config.masterUrl);
           const result = await crossFetch(
-            `${config.masterUrl.replace(/\/$/, '')}/environment-sync/sync/transfer/${requestId}`,
+            `${base}/environment-sync/sync/transfer/${requestId}`,
             'GET', {}, config.transferToken
           );
           if (result.status !== 200 || !result.data.success) {
@@ -656,13 +697,15 @@ module.exports = {
         { method: 'GET',  path: '/sync/config', handler: 'sync.getConfig',  config: { policies: [], auth: false } },
         { method: 'POST', path: '/sync/config', handler: 'sync.saveConfig', config: { policies: [], auth: false } },
         // Sync — slave outbound proxy
-        { method: 'POST', path: '/sync/send-request',              handler: 'sync.sendRequest',   config: { policies: [], auth: false } },
-        { method: 'GET',  path: '/sync/request-status/:requestId', handler: 'sync.requestStatus', config: { policies: [], auth: false } },
-        { method: 'POST', path: '/sync/apply',                     handler: 'sync.apply',         config: { policies: [], auth: false } },
-        // Sync — master inbound (called by slave's crossFetch)
-        { method: 'POST', path: '/sync/receive-request',    handler: 'sync.receiveRequest', config: { policies: [], auth: false } },
-        { method: 'GET',  path: '/sync/status/:requestId',  handler: 'sync.status',         config: { policies: [], auth: false } },
-        { method: 'GET',  path: '/sync/transfer/:id',       handler: 'sync.transfer',       config: { policies: [], auth: false } },
+        { method: 'POST', path: '/sync/send-request',              handler: 'sync.sendRequest',    config: { policies: [], auth: false } },
+        { method: 'GET',  path: '/sync/request-status/:requestId', handler: 'sync.requestStatus',  config: { policies: [], auth: false } },
+        { method: 'POST', path: '/sync/apply',                     handler: 'sync.apply',          config: { policies: [], auth: false } },
+        { method: 'GET',  path: '/sync/test-connection',           handler: 'sync.testConnection', config: { policies: [], auth: false } },
+        // Sync — master inbound (called by slave's crossFetch) + ping
+        { method: 'GET',  path: '/sync/ping',                handler: 'sync.ping',           config: { policies: [], auth: false } },
+        { method: 'POST', path: '/sync/receive-request',     handler: 'sync.receiveRequest', config: { policies: [], auth: false } },
+        { method: 'GET',  path: '/sync/status/:requestId',   handler: 'sync.status',         config: { policies: [], auth: false } },
+        { method: 'GET',  path: '/sync/transfer/:id',        handler: 'sync.transfer',       config: { policies: [], auth: false } },
         // Sync — master admin UI
         { method: 'GET',  path: '/sync/requests',             handler: 'sync.listRequests', config: { policies: [], auth: false } },
         { method: 'POST', path: '/sync/requests/:id/approve', handler: 'sync.approve',      config: { policies: [], auth: false } },
