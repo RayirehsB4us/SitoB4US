@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_chi_siamo_value_cards",
+    "info": {
+        "displayName": "Value Card",
+        "icon": "star",
+        "description": "Card con icona, titolo e descrizione per i valori aziendali"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        }
+    }
+}

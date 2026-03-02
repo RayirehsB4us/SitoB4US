@@ -92,6 +92,11 @@ var SINGLE_TYPES = [
     apiId: 'blog-page',
     displayName: 'Blog Page',
     populate: null
+  },
+  {
+    apiId: 'chi-siamo',
+    displayName: 'Chi Siamo',
+    populate: ['ValueCards', 'HeroImage']
   }
 ];
 

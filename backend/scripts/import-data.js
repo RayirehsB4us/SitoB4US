@@ -10,6 +10,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var readline = require('readline');
 var FormData = require('form-data');
 var config = require('./strapi-config');
 
@@ -17,6 +18,17 @@ var axios = config.getAxiosInstance();
 var STRAPI_URL = config.STRAPI_URL;
 var IMPORT_DIR = config.IMPORT_DIR;
 var MEDIA_DIR = path.join(IMPORT_DIR, 'media');
+
+// ─── Utility: premi un tasto per continuare ──────────────────────
+function waitForKey(message) {
+  return new Promise(function(resolve) {
+    var rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    rl.question(message || '\n⏸️  Premi INVIO per continuare...', function() {
+      rl.close();
+      resolve();
+    });
+  });
+}
 
 // ─── Mappa filename → ID Strapi dopo upload ─────────────────────
 var mediaMap = {};
@@ -242,6 +254,11 @@ async function importCollections(collectionData) {
         console.log('  ❌ Errore creando ' + label + ': ' + msg);
       }
     }
+
+    // Pausa dopo ogni collection type
+    if (i < sortedTypes.length - 1) {
+      await waitForKey();
+    }
   }
 }
 
@@ -275,6 +292,11 @@ async function importSingleTypes(singleTypeData, tagMap) {
     } catch (error) {
       var msg = error.response ? JSON.stringify(error.response.data).substring(0, 200) : error.message;
       console.log('  ❌ Errore aggiornando ' + st.displayName + ': ' + msg);
+    }
+
+    // Pausa dopo ogni single type
+    if (i < config.SINGLE_TYPES.length - 1) {
+      await waitForKey();
     }
   }
 }

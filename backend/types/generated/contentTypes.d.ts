@@ -362,6 +362,37 @@ export interface AdminUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiBlogPageBlogPage extends Schema.SingleType {
+  collectionName: 'blog_pages';
+  info: {
+    displayName: 'Blog Page';
+    pluralName: 'blog-pages';
+    singularName: 'blog-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::blog-page.blog-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Description: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::blog-page.blog-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   collectionName: 'blog_posts';
   info: {
@@ -460,6 +491,52 @@ export interface ApiCarFleetCarFleet extends Schema.SingleType {
   };
 }
 
+export interface ApiCarriereCarriere extends Schema.SingleType {
+  collectionName: 'carriere';
+  info: {
+    displayName: 'Carriere';
+    pluralName: 'carrieres';
+    singularName: 'carriere';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    BottomCtaButton: Attribute.String;
+    BottomCtaSubTitle: Attribute.Text;
+    BottomCtaTitle: Attribute.String;
+    Button1Text: Attribute.String;
+    Button2Text: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::carriere.carriere',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CultureCards: Attribute.Component<'carriere.culture-card', true>;
+    CultureSubTitle: Attribute.Text;
+    CultureTitle: Attribute.String;
+    Description: Attribute.Text;
+    HeroImage: Attribute.Media<'images'>;
+    MainTitle: Attribute.String & Attribute.Required;
+    PositionsSubTitle: Attribute.Text;
+    PositionsTitle: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    SpontaneousLinkText: Attribute.String;
+    SpontaneousSubTitle: Attribute.Text;
+    SpontaneousTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::carriere.carriere',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+  };
+}
+
 export interface ApiCertificateCertificate extends Schema.CollectionType {
   collectionName: 'certificates';
   info: {
@@ -492,6 +569,82 @@ export interface ApiCertificateCertificate extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::certificate.certificate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiChiSiamoChiSiamo extends Schema.SingleType {
+  collectionName: 'chi_siamo';
+  info: {
+    displayName: 'Chi Siamo';
+    pluralName: 'chi-siamos';
+    singularName: 'chi-siamo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaButtonText: Attribute.String;
+    CtaDescription: Attribute.Text;
+    CtaTitle: Attribute.String;
+    HeroDescription: Attribute.Text;
+    HeroImage: Attribute.Media<'images'>;
+    HeroTag: Attribute.String;
+    HeroTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    TeamTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    ValueCards: Attribute.Component<'chi-siamo.value-card', true>;
+    ValuesSubTitle: Attribute.Text;
+    ValuesTitle: Attribute.String;
+  };
+}
+
+export interface ApiContattiContatti extends Schema.SingleType {
+  collectionName: 'contatti';
+  info: {
+    displayName: 'Contatti';
+    pluralName: 'contatti-list';
+    singularName: 'contatti';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ContactDetails: Attribute.Component<'contatti.contact-detail', true>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contatti.contatti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Description: Attribute.Text;
+    FormTitle: Attribute.String;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    SedeAddress: Attribute.Text;
+    SedeMapUrl: Attribute.String;
+    SedeTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::contatti.contatti',
       'oneToOne',
       'admin::user'
     > &
@@ -839,9 +992,8 @@ export interface ApiOpen4UsOpen4Us extends Schema.SingleType {
 }
 
 export interface ApiOrganizzazioneOrganizzazione extends Schema.SingleType {
-  collectionName: 'organizzazione';
+  collectionName: 'organizzazioni';
   info: {
-    description: 'Contenuti della pagina Organizzazione';
     displayName: 'Organizzazione';
     pluralName: 'organizzazioni';
     singularName: 'organizzazione';
@@ -1083,10 +1235,46 @@ export interface ApiStoriaB4UsStoriaB4Us extends Schema.CollectionType {
   };
 }
 
+export interface ApiStoriaStoria extends Schema.SingleType {
+  collectionName: 'storie';
+  info: {
+    displayName: 'Storia';
+    pluralName: 'storie';
+    singularName: 'storia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::storia.storia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaButtonApply: Attribute.String;
+    CtaButtonContact: Attribute.String;
+    CtaDescription: Attribute.Text;
+    CtaTitle: Attribute.String;
+    Description: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    Timeline: Attribute.Component<'storia.timeline-event', true>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::storia.storia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+  };
+}
+
 export interface ApiTagTag extends Schema.CollectionType {
   collectionName: 'tags';
   info: {
-    description: 'Tag tecnici usati per le aree di formazione e competenze';
     displayName: 'Tag';
     pluralName: 'tags';
     singularName: 'tag';
@@ -1578,9 +1766,13 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::blog-page.blog-page': ApiBlogPageBlogPage;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::car-fleet.car-fleet': ApiCarFleetCarFleet;
+      'api::carriere.carriere': ApiCarriereCarriere;
       'api::certificate.certificate': ApiCertificateCertificate;
+      'api::chi-siamo.chi-siamo': ApiChiSiamoChiSiamo;
+      'api::contatti.contatti': ApiContattiContatti;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::employe.employe': ApiEmployeEmploye;
       'api::goal.goal': ApiGoalGoal;
@@ -1596,6 +1788,7 @@ declare module '@strapi/types' {
       'api::servizio.servizio': ApiServizioServizio;
       'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
+      'api::storia.storia': ApiStoriaStoria;
       'api::tag.tag': ApiTagTag;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;

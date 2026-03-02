@@ -8,77 +8,103 @@
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
     <%- include('partials/navbar') %>
 
+        <!-- Hero Section -->
         <section class="relative py-20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
                     <div>
                         <span
                             class="inline-block py-1 px-3 rounded-full bg-green-100 dark:bg-green-900/30 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                            La nostra storia
+                            <%- (chiSiamoData && chiSiamoData.HeroTag) || 'La nostra storia' %>
                         </span>
                         <h1
                             class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-                            Semplifichiamo l'IT per far crescere il tuo <span class="text-primary">business</span>.
+                            <%- (chiSiamoData && chiSiamoData.HeroTitle) || 'Semplifichiamo l\'IT per far crescere il tuo <span class="text-primary">business</span>.' %>
                         </h1>
                         <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                            Supportiamo le aziende nella loro trasformazione digitale con passione per l'innovazione e approccio pratico.
+                            <%= (chiSiamoData && chiSiamoData.HeroDescription) || 'Supportiamo le aziende nella loro trasformazione digitale con passione per l\'innovazione e approccio pratico.' %>
                         </p>
                     </div>
                     <div class="mt-12 lg:mt-0 relative">
                         <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl">
-                            <img alt="Team working together in a modern office" class="w-full h-full object-cover"
-                                src="images/2026.jpg" />
+                            <% if (chiSiamoData && chiSiamoData.HeroImage && chiSiamoData.HeroImage.data) { %>
+                                <img alt="Team B4US"
+                                    class="w-full h-full object-cover"
+                                    src="<%= strapiUrl %><%= chiSiamoData.HeroImage.data.attributes.url %>" />
+                            <% } else { %>
+                                <img alt="Team working together in a modern office"
+                                    class="w-full h-full object-cover"
+                                    src="images/2026.jpg" />
+                            <% } %>
                         </div>
                         <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Values Section -->
         <section class="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl font-bold mb-4">I nostri valori fondamentali</h2>
-                    <p class="text-slate-600 dark:text-slate-400">Costruiamo il futuro basandoci su solide fondamenta di
-                        integrità e competenza tecnica.</p>
+                    <h2 class="text-3xl font-bold mb-4"><%- (chiSiamoData && chiSiamoData.ValuesTitle) || 'I nostri valori fondamentali' %></h2>
+                    <p class="text-slate-600 dark:text-slate-400"><%= (chiSiamoData && chiSiamoData.ValuesSubTitle) || 'Costruiamo il futuro basandoci su solide fondamenta di integrità e competenza tecnica.' %></p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div
-                        class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                    <% if (chiSiamoData && chiSiamoData.ValueCards && chiSiamoData.ValueCards.length > 0) { %>
+                        <% chiSiamoData.ValueCards.forEach(function(card) { %>
+                            <div
+                                class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                                <div
+                                    class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
+                                    <span class="material-symbols-outlined"><%= card.icon || 'star' %></span>
+                                </div>
+                                <h3 class="text-xl font-bold mb-3"><%- card.title %></h3>
+                                <p class="text-slate-600 dark:text-slate-400"><%= card.description %></p>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <!-- Fallback statico -->
                         <div
-                            class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined">psychology</span>
+                            class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined">psychology</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Visione Strategica</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Anticipiamo i cambiamenti del mercato IT per
+                                offrire soluzioni che durano nel tempo.</p>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Visione Strategica</h3>
-                        <p class="text-slate-600 dark:text-slate-400">Anticipiamo i cambiamenti del mercato IT per
-                            offrire soluzioni che durano nel tempo.</p>
-                    </div>
-                    <div
-                        class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                         <div
-                            class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined">groups</span>
+                            class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined">groups</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Persone al Centro</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Il nostro capitale più grande è il team di esperti
+                                che lavora con passione ogni giorno.</p>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Persone al Centro</h3>
-                        <p class="text-slate-600 dark:text-slate-400">Il nostro capitale più grande è il team di esperti
-                            che lavora con passione ogni giorno.</p>
-                    </div>
-                    <div
-                        class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                         <div
-                            class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
-                            <span class="material-symbols-outlined">bolt</span>
+                            class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
+                            <div
+                                class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
+                                <span class="material-symbols-outlined">bolt</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Agilità e Risultati</h3>
+                            <p class="text-slate-600 dark:text-slate-400">Rispondiamo velocemente alle sfide complesse con
+                                soluzioni pragmatiche ed efficaci.</p>
                         </div>
-                        <h3 class="text-xl font-bold mb-3">Agilità e Risultati</h3>
-                        <p class="text-slate-600 dark:text-slate-400">Rispondiamo velocemente alle sfide complesse con
-                            soluzioni pragmatiche ed efficaci.</p>
-                    </div>
+                    <% } %>
                 </div>
             </div>
         </section>
+
+        <!-- Team Section -->
         <section class="py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-16">
-                    <h2 class="text-3xl font-bold">I volti dietro l'eccellenza di B4US</h2>
+                    <h2 class="text-3xl font-bold"><%- (chiSiamoData && chiSiamoData.TeamTitle) || 'I volti dietro l\'eccellenza di B4US' %></h2>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <% if (teamMembers && teamMembers.length> 0) { %>
@@ -116,15 +142,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- CTA Section -->
         <section class="py-20">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">Pronto a trasformare la
-                    tua realtà digitale?</h2>
-                <p class="text-slate-600 dark:text-slate-400 mb-10 text-lg">Il nostro team è pronto ad accogliere le tue
-                    sfide e trasformarle in opportunità di crescita.</p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white"><%- (chiSiamoData && chiSiamoData.CtaTitle) || 'Pronto a trasformare la tua realtà digitale?' %></h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-10 text-lg"><%= (chiSiamoData && chiSiamoData.CtaDescription) || 'Il nostro team è pronto ad accogliere le tue sfide e trasformarle in opportunità di crescita.' %></p>
                 <a class="inline-flex items-center gap-2 bg-primary hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-1"
                     href="/contatti">
-                    Contattaci oggi
+                    <%= (chiSiamoData && chiSiamoData.CtaButtonText) || 'Contattaci oggi' %>
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
             </div>
