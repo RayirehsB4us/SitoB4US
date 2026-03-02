@@ -263,9 +263,11 @@ app.get("/home", async (req, res) => {
 
 app.get("/chi-siamo", async (req, res) => {
   try {
+    const chiSiamoData = await fetchFromStrapi("/chi-siamo?populate[ValueCards][populate]=*&populate[HeroImage][populate]=*");
     const teamMembers = await fetchFromStrapi("/team-members");
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
+      chiSiamoData: chiSiamoData?.data?.attributes || {},
       teamMembers: teamMembers?.data?.map((t) => t.attributes) || [],
       strapiUrl: STRAPI_URL,
     });
@@ -273,6 +275,7 @@ app.get("/chi-siamo", async (req, res) => {
     console.error("Error rendering chi-siamo:", error);
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
+      chiSiamoData: {},
       teamMembers: [],
       strapiUrl: STRAPI_URL,
     });

@@ -70,6 +70,48 @@ export interface CarFleetPowerappsBlock extends Schema.Component {
   };
 }
 
+export interface CarriereCultureCard extends Schema.Component {
+  collectionName: 'components_carriere_culture_cards';
+  info: {
+    description: "Card per la sezione 'Perch\u00E9 scegliere B4US?'";
+    displayName: 'Culture Card';
+  };
+  attributes: {
+    description: Attribute.Text;
+    icon: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+  };
+}
+
+export interface ChiSiamoValueCard extends Schema.Component {
+  collectionName: 'components_chi_siamo_value_cards';
+  info: {
+    description: 'Card con icona, titolo e descrizione per i valori aziendali';
+    displayName: 'Value Card';
+    icon: 'star';
+  };
+  attributes: {
+    description: Attribute.Text;
+    icon: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+  };
+}
+
+export interface ContattiContactDetail extends Schema.Component {
+  collectionName: 'components_contatti_contact_details';
+  info: {
+    description: 'Dettaglio di contatto (telefono, email, social)';
+    displayName: 'Contact Detail';
+  };
+  attributes: {
+    icon: Attribute.String;
+    linkText: Attribute.String;
+    linkUrl: Attribute.String;
+    subTitle: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+  };
+}
+
 export interface Open4UsAccesSmart extends Schema.Component {
   collectionName: 'components_open4us_acces_smarts';
   info: {
@@ -191,7 +233,7 @@ export interface OrganizzazioneHeroCard extends Schema.Component {
 export interface OrganizzazioneHeroSection extends Schema.Component {
   collectionName: 'components_organizzazione_hero_sections';
   info: {
-    description: "Sezione hero ripetibile con tag, titolo, sottotitolo e cards (usata per 'Nessun compartimento stagno' e 'Crescita e Formazione')";
+    description: 'Sezione hero ripetibile con tag, titolo, sottotitolo e cards';
     displayName: 'Hero Section';
   };
   attributes: {
@@ -205,7 +247,7 @@ export interface OrganizzazioneHeroSection extends Schema.Component {
 export interface OrganizzazioneKnowledgeArea extends Schema.Component {
   collectionName: 'components_organizzazione_knowledge_areas';
   info: {
-    description: 'Sezione Knowledge Days con card principale, testo lungo e sub-card';
+    description: 'Sezione Knowledge Days';
     displayName: 'Knowledge Area';
   };
   attributes: {
@@ -218,7 +260,7 @@ export interface OrganizzazioneKnowledgeArea extends Schema.Component {
 export interface OrganizzazioneMainCard extends Schema.Component {
   collectionName: 'components_organizzazione_main_cards';
   info: {
-    description: 'Card principale della Knowledge Area (icona, titolo, sottotitolo)';
+    description: 'Card principale nella sezione Knowledge Days';
     displayName: 'Main Card';
   };
   attributes: {
@@ -231,7 +273,7 @@ export interface OrganizzazioneMainCard extends Schema.Component {
 export interface OrganizzazioneSubCard extends Schema.Component {
   collectionName: 'components_organizzazione_sub_cards';
   info: {
-    description: 'Card secondaria della Knowledge Area (icona, titolo, sottotitolo)';
+    description: 'Sottocard nella sezione Knowledge Days';
     displayName: 'Sub Card';
   };
   attributes: {
@@ -244,7 +286,7 @@ export interface OrganizzazioneSubCard extends Schema.Component {
 export interface OrganizzazioneTechArea extends Schema.Component {
   collectionName: 'components_organizzazione_tech_areas';
   info: {
-    description: 'Sezione aree di formazione con titolo e lista di tag tecnici';
+    description: 'Sezione aree di formazione con relazione ai Tag';
     displayName: 'Tech Area';
   };
   attributes: {
@@ -356,6 +398,19 @@ export interface ServiceOurSkills extends Schema.Component {
   };
 }
 
+export interface StoriaTimelineEvent extends Schema.Component {
+  collectionName: 'components_storia_timeline_events';
+  info: {
+    description: 'Evento nella cronologia aziendale';
+    displayName: 'Timeline Event';
+  };
+  attributes: {
+    Anno: Attribute.String & Attribute.Required;
+    Descrizione: Attribute.Text & Attribute.Required;
+    Foto: Attribute.Media<'images'>;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface Components {
@@ -364,6 +419,9 @@ declare module '@strapi/types' {
       'car-fleet.icon-text': CarFleetIconText;
       'car-fleet.mappa-flotta': CarFleetMappaFlotta;
       'car-fleet.powerapps-block': CarFleetPowerappsBlock;
+      'carriere.culture-card': CarriereCultureCard;
+      'chi-siamo.value-card': ChiSiamoValueCard;
+      'contatti.contact-detail': ContattiContactDetail;
       'open4us.acces-smart': Open4UsAccesSmart;
       'open4us.app-block': Open4UsAppBlock;
       'open4us.app-icon': Open4UsAppIcon;
@@ -385,6 +443,7 @@ declare module '@strapi/types' {
       'prodotti.open4us-product': ProdottiOpen4UsProduct;
       'prodotti.prenotazione': ProdottiPrenotazione;
       'service.our-skills': ServiceOurSkills;
+      'storia.timeline-event': StoriaTimelineEvent;
     }
   }
 }

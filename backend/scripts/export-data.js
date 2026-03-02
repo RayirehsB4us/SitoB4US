@@ -10,6 +10,7 @@
 
 var fs = require('fs');
 var path = require('path');
+var readline = require('readline');
 var config = require('./strapi-config');
 
 var axios = config.getAxiosInstance();
@@ -17,6 +18,17 @@ var STRAPI_URL = config.STRAPI_URL;
 var EXPORT_DIR = config.EXPORT_DIR;
 var UPLOADS_DIR = path.join(__dirname, '..', 'public', 'uploads');
 var MEDIA_DIR = path.join(EXPORT_DIR, 'media');
+
+// ─── Utility: premi un tasto per continuare ──────────────────────
+function waitForKey(message) {
+  return new Promise(function(resolve) {
+    var rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+    rl.question(message || '\n⏸️  Premi INVIO per continuare...', function() {
+      rl.close();
+      resolve();
+    });
+  });
+}
 
 // ─── Tracker file media copiati ──────────────────────────────────
 var copiedMediaFiles = [];
@@ -129,6 +141,11 @@ async function exportSingleTypes() {
       console.log('  ❌ ' + st.displayName + ' — errore ' + status + ': ' + error.message);
       result[st.apiId] = null;
     }
+
+    // Pausa tra ogni single type
+    if (i < config.SINGLE_TYPES.length - 1) {
+      await waitForKey();
+    }
   }
 
   return result;
@@ -158,6 +175,11 @@ async function exportCollectionTypes() {
       var status = error.response ? error.response.status : 'network';
       console.log('  ❌ ' + ct.displayName + ' — errore ' + status + ': ' + error.message);
       result[ct.pluralId] = [];
+    }
+
+    // Pausa tra ogni collection type
+    if (i < config.COLLECTION_TYPES.length - 1) {
+      await waitForKey();
     }
   }
 
