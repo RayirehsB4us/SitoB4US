@@ -83,6 +83,20 @@ export interface CarriereCultureCard extends Schema.Component {
   };
 }
 
+export interface ChiSiamoValueCard extends Schema.Component {
+  collectionName: 'components_chi_siamo_value_cards';
+  info: {
+    description: 'Card con icona, titolo e descrizione per i valori aziendali';
+    displayName: 'Value Card';
+    icon: 'star';
+  };
+  attributes: {
+    description: Attribute.Text;
+    icon: Attribute.String;
+    title: Attribute.String & Attribute.Required;
+  };
+}
+
 export interface ContattiContactDetail extends Schema.Component {
   collectionName: 'components_contatti_contact_details';
   info: {
@@ -406,6 +420,7 @@ declare module '@strapi/types' {
       'car-fleet.mappa-flotta': CarFleetMappaFlotta;
       'car-fleet.powerapps-block': CarFleetPowerappsBlock;
       'carriere.culture-card': CarriereCultureCard;
+      'chi-siamo.value-card': ChiSiamoValueCard;
       'contatti.contact-detail': ContattiContactDetail;
       'open4us.acces-smart': Open4UsAccesSmart;
       'open4us.app-block': Open4UsAppBlock;

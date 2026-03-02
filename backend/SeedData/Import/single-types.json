@@ -293,6 +293,22 @@
     "blog-page": {
       "MainTitle": "Diario di Bordo",
       "Description": "Traguardi, obiettivi e attività del team B4US. Una panoramica sulla crescita della nostra azienda e sui progetti che ci guidano verso il futuro."
+    },
+    "chi-siamo": {
+      "HeroTag": "La nostra storia",
+      "HeroTitle": "Semplifichiamo l'IT per far crescere il tuo <span class=\"text-primary\">business</span>.",
+      "HeroDescription": "Supportiamo le aziende nella loro trasformazione digitale con passione per l'innovazione e approccio pratico.",
+      "ValuesTitle": "I nostri valori fondamentali",
+      "ValuesSubTitle": "Costruiamo il futuro basandoci su solide fondamenta di integrità e competenza tecnica.",
+      "ValueCards": [
+        { "icon": "psychology", "title": "Visione Strategica", "description": "Anticipiamo i cambiamenti del mercato IT per offrire soluzioni che durano nel tempo." },
+        { "icon": "groups", "title": "Persone al Centro", "description": "Il nostro capitale più grande è il team di esperti che lavora con passione ogni giorno." },
+        { "icon": "bolt", "title": "Agilità e Risultati", "description": "Rispondiamo velocemente alle sfide complesse con soluzioni pragmatiche ed efficaci." }
+      ],
+      "TeamTitle": "I volti dietro l'eccellenza di B4US",
+      "CtaTitle": "Pronto a trasformare la tua realtà digitale?",
+      "CtaDescription": "Il nostro team è pronto ad accogliere le tue sfide e trasformarle in opportunità di crescita.",
+      "CtaButtonText": "Contattaci oggi"
     }
   }
 }

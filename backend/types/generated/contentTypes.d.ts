@@ -576,6 +576,46 @@ export interface ApiCertificateCertificate extends Schema.CollectionType {
   };
 }
 
+export interface ApiChiSiamoChiSiamo extends Schema.SingleType {
+  collectionName: 'chi_siamo';
+  info: {
+    displayName: 'Chi Siamo';
+    pluralName: 'chi-siamos';
+    singularName: 'chi-siamo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaButtonText: Attribute.String;
+    CtaDescription: Attribute.Text;
+    CtaTitle: Attribute.String;
+    HeroDescription: Attribute.Text;
+    HeroImage: Attribute.Media<'images'>;
+    HeroTag: Attribute.String;
+    HeroTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    TeamTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    ValueCards: Attribute.Component<'chi-siamo.value-card', true>;
+    ValuesSubTitle: Attribute.Text;
+    ValuesTitle: Attribute.String;
+  };
+}
+
 export interface ApiContattiContatti extends Schema.SingleType {
   collectionName: 'contatti';
   info: {
@@ -1731,6 +1771,7 @@ declare module '@strapi/types' {
       'api::car-fleet.car-fleet': ApiCarFleetCarFleet;
       'api::carriere.carriere': ApiCarriereCarriere;
       'api::certificate.certificate': ApiCertificateCertificate;
+      'api::chi-siamo.chi-siamo': ApiChiSiamoChiSiamo;
       'api::contatti.contatti': ApiContattiContatti;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::employe.employe': ApiEmployeEmploye;
