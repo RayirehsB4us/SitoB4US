@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_prodotto_features",
+  "info": {
+    "displayName": "Prodotto Feature",
+    "description": "Feature/blocco funzionalita di un prodotto (icona, titolo, descrizione)"
+  },
+  "options": {},
+  "attributes": {
+    "Icon": {
+      "type": "string",
+      "description": "Nome icona Material Icons (es: check_circle, bluetooth)"
+    },
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "Description": {
+      "type": "text"
+    }
+  }
+}

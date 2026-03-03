@@ -1029,7 +1029,7 @@ export interface ApiOrganizzazioneOrganizzazione extends Schema.SingleType {
 export interface ApiProdottiProdotti extends Schema.SingleType {
   collectionName: 'prodottis';
   info: {
-    description: 'Contenuti della pagina Prodotti (CarFleet, Open4US, Dashboard)';
+    description: 'Hero section della pagina Prodotti';
     displayName: 'Prodotti Page';
     pluralName: 'prodottis';
     singularName: 'prodotti';
@@ -1038,7 +1038,6 @@ export interface ApiProdottiProdotti extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    Carfleet: Attribute.Component<'prodotti.carfleet-product'>;
     createdAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::prodotti.prodotti',
@@ -1046,10 +1045,6 @@ export interface ApiProdottiProdotti extends Schema.SingleType {
       'admin::user'
     > &
       Attribute.Private;
-    DashboardPrenotazioni: Attribute.Component<'prodotti.dashboard-prenotazioni'>;
-    Icon: Attribute.String;
-    Link: Attribute.String;
-    Open4us: Attribute.Component<'prodotti.open4us-product'>;
     publishedAt: Attribute.DateTime;
     subtitle: Attribute.Text;
     Title: Attribute.String & Attribute.Required;
@@ -1057,6 +1052,53 @@ export interface ApiProdottiProdotti extends Schema.SingleType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::prodotti.prodotti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProdottoProdotto extends Schema.CollectionType {
+  collectionName: 'prodotti_items';
+  info: {
+    description: 'Singolo prodotto (CarFleet, Open4US, ecc.) - stile e features configurabili da admin';
+    displayName: 'Prodotto';
+    pluralName: 'prodotti-items';
+    singularName: 'prodotto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prodotto.prodotto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaIcona: Attribute.String & Attribute.DefaultTo<'arrow_forward'>;
+    CtaLink: Attribute.String;
+    CtaTesto: Attribute.String;
+    Descrizione: Attribute.Text;
+    Features: Attribute.Component<'prodotto.feature', true>;
+    Icona: Attribute.String;
+    IconColor: Attribute.Enumeration<['primary', 'purple']> &
+      Attribute.DefaultTo<'primary'>;
+    ImmaginePrincipale: Attribute.Media<'images'>;
+    ImmagineSecondaria: Attribute.Media<'images'>;
+    Nome: Attribute.String & Attribute.Required;
+    Ordine: Attribute.Integer & Attribute.DefaultTo<0>;
+    publishedAt: Attribute.DateTime;
+    Slug: Attribute.UID<'api::prodotto.prodotto', 'Nome'>;
+    Sottotitolo: Attribute.String;
+    Stile: Attribute.Enumeration<['stile-1', 'stile-2']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'stile-1'>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::prodotto.prodotto',
       'oneToOne',
       'admin::user'
     > &
@@ -1783,6 +1825,7 @@ declare module '@strapi/types' {
       'api::open4-us.open4-us': ApiOpen4UsOpen4Us;
       'api::organizzazione.organizzazione': ApiOrganizzazioneOrganizzazione;
       'api::prodotti.prodotti': ApiProdottiProdotti;
+      'api::prodotto.prodotto': ApiProdottoProdotto;
       'api::project.project': ApiProjectProject;
       'api::service.service': ApiServiceService;
       'api::servizio.servizio': ApiServizioServizio;
