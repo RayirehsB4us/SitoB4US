@@ -1,55 +1,29 @@
 {
-    "kind": "singleType",
-    "collectionName": "prodottis",
-    "info": {
-        "singularName": "prodotti",
-        "pluralName": "prodottis",
-        "displayName": "Prodotti Page",
-        "description": "Contenuti della pagina Prodotti (CarFleet, Open4US, Dashboard)"
+  "kind": "singleType",
+  "collectionName": "prodottis",
+  "info": {
+    "singularName": "prodotti",
+    "pluralName": "prodottis",
+    "displayName": "Prodotti Page",
+    "description": "Hero section della pagina Prodotti"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true,
+      "description": "Prima riga titolo hero (es: Semplifica le tue Operazioni)"
     },
-    "options": {
-        "draftAndPublish": true
+    "Title2": {
+      "type": "string",
+      "description": "Seconda riga titolo hero verde (es: con Software Intelligenti)"
     },
-    "pluginOptions": {},
-    "attributes": {
-        "Title": {
-            "type": "string",
-            "required": true,
-            "description": "Prima riga titolo hero (es: Semplifica le tue Operazioni)"
-        },
-        "Title2": {
-            "type": "string",
-            "description": "Seconda riga titolo hero verde (es: con Software Intelligenti)"
-        },
-        "subtitle": {
-            "type": "text",
-            "description": "Sottotitolo hero"
-        },
-        "Link": {
-            "type": "string",
-            "description": "Testo link Open4US (es: Scopri di piu sull Accesso Smart)"
-        },
-        "Icon": {
-            "type": "string",
-            "description": "Icona freccia link (es: arrow_forward)"
-        },
-        "Carfleet": {
-            "type": "component",
-            "repeatable": false,
-            "component": "prodotti.carfleet-product",
-            "description": "Sezione prodotto CarFleet"
-        },
-        "Open4us": {
-            "type": "component",
-            "repeatable": false,
-            "component": "prodotti.open4us-product",
-            "description": "Sezione prodotto Open4US"
-        },
-        "DashboardPrenotazioni": {
-            "type": "component",
-            "repeatable": false,
-            "component": "prodotti.dashboard-prenotazioni",
-            "description": "Dashboard prenotazioni Open4US"
-        }
+    "subtitle": {
+      "type": "text",
+      "description": "Sottotitolo hero"
     }
+  }
 }
