@@ -284,12 +284,18 @@ app.get("/chi-siamo", async (req, res) => {
 
 app.get("/prodotti", async (req, res) => {
   try {
-    var prodottiData = await fetchFromStrapi(
-      "/prodotti", null, ['Carfleet', 'Open4us', 'DashboardPrenotazioni']
+    var prodottiPage = await fetchFromStrapi("/prodotti");
+    var prodottiItems = await fetchFromStrapi(
+      "/prodotti-items",
+      null,
+      ['Features', 'ImmaginePrincipale', 'ImmagineSecondaria']
     );
+    var prodottiList = (prodottiItems?.data?.map(function(p) { return p.attributes; }) || []);
+    prodottiList.sort(function(a, b) { return (a.Ordine || 0) - (b.Ordine || 0); });
     res.render("prodotti", {
       title: "Prodotti | B4US - Simplify IT",
-      prodottiData: prodottiData?.data?.attributes || {},
+      prodottiData: prodottiPage?.data?.attributes || {},
+      prodotti: prodottiList,
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -297,6 +303,7 @@ app.get("/prodotti", async (req, res) => {
     res.render("prodotti", {
       title: "Prodotti | B4US - Simplify IT",
       prodottiData: {},
+      prodotti: [],
       strapiUrl: STRAPI_URL,
     });
   }

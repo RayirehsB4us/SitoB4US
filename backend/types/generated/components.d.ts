@@ -386,6 +386,19 @@ export interface ProdottiPrenotazione extends Schema.Component {
   };
 }
 
+export interface ProdottoFeature extends Schema.Component {
+  collectionName: 'components_prodotto_features';
+  info: {
+    description: 'Feature/blocco funzionalita di un prodotto (icona, titolo, descrizione)';
+    displayName: 'Prodotto Feature';
+  };
+  attributes: {
+    Description: Attribute.Text;
+    Icon: Attribute.String;
+    Title: Attribute.String & Attribute.Required;
+  };
+}
+
 export interface ServiceOurSkills extends Schema.Component {
   collectionName: 'components_service_our_skills';
   info: {
@@ -442,6 +455,7 @@ declare module '@strapi/types' {
       'prodotti.open4us-block': ProdottiOpen4UsBlock;
       'prodotti.open4us-product': ProdottiOpen4UsProduct;
       'prodotti.prenotazione': ProdottiPrenotazione;
+      'prodotto.feature': ProdottoFeature;
       'service.our-skills': ServiceOurSkills;
       'storia.timeline-event': StoriaTimelineEvent;
     }
