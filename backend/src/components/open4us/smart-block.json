@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_open4us_smart_blocks",
+    "info": {
+        "displayName": "Smart Block",
+        "description": "Blocco smartphone con icona, titolo e descrizione"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: lock_open)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "string"
+        }
+    }
+}

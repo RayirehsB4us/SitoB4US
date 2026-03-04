@@ -1,0 +1,16 @@
+{
+  "name": "environment-sync",
+  "version": "1.0.0",
+  "description": "Strapi plugin for environment sync",
+  "strapi": {
+    "name": "environment-sync",
+    "displayName": "Environment Sync",
+    "description": "Sync environment variables across environments",
+    "kind": "plugin"
+  },
+  "main": "./strapi-server.js",
+  "exports": {
+    "./strapi-admin": "./strapi-admin.js",
+    "./strapi-server": "./strapi-server.js"
+  }
+}

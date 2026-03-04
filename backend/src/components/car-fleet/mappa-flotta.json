@@ -1,0 +1,46 @@
+{
+    "collectionName": "components_car_fleet_mappa_flottas",
+    "info": {
+        "displayName": "Mappa Flotta",
+        "description": "Sezione mappa flotta con pin, conducente e stato"
+    },
+    "options": {},
+    "attributes": {
+        "MappaTitle": {
+            "type": "string",
+            "description": "Titolo mappa (es: Mappa Flotta)"
+        },
+        "Tag": {
+            "type": "string",
+            "description": "Badge stato mappa (es: Live)"
+        },
+        "Icon1": {
+            "type": "string",
+            "description": "Icona pin primario (es: place)"
+        },
+        "Icon2": {
+            "type": "string",
+            "description": "Icona pin secondario (es: place)"
+        },
+        "Icon3": {
+            "type": "string",
+            "description": "Icona pin terziario (es: place)"
+        },
+        "PIcon": {
+            "type": "string",
+            "description": "Icona profilo conducente (es: person)"
+        },
+        "Name": {
+            "type": "string",
+            "description": "Nome conducente (es: Luigi Di Mauro)"
+        },
+        "Car": {
+            "type": "string",
+            "description": "Veicolo (es: Fiat Panda - EZ 998 KL)"
+        },
+        "Status": {
+            "type": "string",
+            "description": "Stato veicolo (es: In Movimento)"
+        }
+    }
+}

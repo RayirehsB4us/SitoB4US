@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_prodotti_open4us_blocks",
+    "info": {
+        "displayName": "Open4us Block",
+        "description": "Blocco funzionalita Open4US nella pagina prodotti (icona, titolo, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: bluetooth)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        }
+    }
+}

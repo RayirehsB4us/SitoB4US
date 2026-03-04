@@ -362,6 +362,37 @@ export interface AdminUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiBlogPageBlogPage extends Schema.SingleType {
+  collectionName: 'blog_pages';
+  info: {
+    displayName: 'Blog Page';
+    pluralName: 'blog-pages';
+    singularName: 'blog-page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::blog-page.blog-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Description: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::blog-page.blog-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   collectionName: 'blog_posts';
   info: {
@@ -400,6 +431,112 @@ export interface ApiBlogPostBlogPost extends Schema.CollectionType {
   };
 }
 
+export interface ApiCarFleetCarFleet extends Schema.SingleType {
+  collectionName: 'car_fleets';
+  info: {
+    description: 'Contenuti della pagina CarFleet';
+    displayName: 'Car Fleet Page';
+    pluralName: 'car-fleets';
+    singularName: 'car-fleet';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AccesBlock: Attribute.Component<'car-fleet.acces-block', true>;
+    AccesImage: Attribute.Media<'images'>;
+    Button1: Attribute.String;
+    Button2: Attribute.String;
+    Button3: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::car-fleet.car-fleet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    DashboardPanoramica: Attribute.Component<
+      'car-fleet.dashboard-panoramica',
+      true
+    >;
+    Icon: Attribute.String;
+    Icon2: Attribute.String;
+    IconText: Attribute.Component<'car-fleet.icon-text', true>;
+    Image: Attribute.Media<'images'>;
+    MappaFlotta: Attribute.Component<'car-fleet.mappa-flotta'>;
+    PowerappsBlocks: Attribute.Component<'car-fleet.powerapps-block', true>;
+    publishedAt: Attribute.DateTime;
+    SubTitle: Attribute.Text;
+    SubTitle2: Attribute.Text;
+    SubTitle3: Attribute.Text;
+    Subtitle4: Attribute.Text;
+    SubTitle5: Attribute.Text;
+    Subtitle6: Attribute.Text;
+    Title: Attribute.String & Attribute.Required;
+    Title2: Attribute.String;
+    Title3: Attribute.String;
+    Title4: Attribute.String;
+    Title5: Attribute.String;
+    Title6: Attribute.String;
+    Title7: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::car-fleet.car-fleet',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+    UpperTitle2: Attribute.String;
+  };
+}
+
+export interface ApiCarriereCarriere extends Schema.SingleType {
+  collectionName: 'carriere';
+  info: {
+    displayName: 'Carriere';
+    pluralName: 'carrieres';
+    singularName: 'carriere';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    BottomCtaButton: Attribute.String;
+    BottomCtaSubTitle: Attribute.Text;
+    BottomCtaTitle: Attribute.String;
+    Button1Text: Attribute.String;
+    Button2Text: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::carriere.carriere',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CultureCards: Attribute.Component<'carriere.culture-card', true>;
+    CultureSubTitle: Attribute.Text;
+    CultureTitle: Attribute.String;
+    Description: Attribute.Text;
+    HeroImage: Attribute.Media<'images'>;
+    MainTitle: Attribute.String & Attribute.Required;
+    PositionsSubTitle: Attribute.Text;
+    PositionsTitle: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    SpontaneousLinkText: Attribute.String;
+    SpontaneousSubTitle: Attribute.Text;
+    SpontaneousTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::carriere.carriere',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+  };
+}
+
 export interface ApiCertificateCertificate extends Schema.CollectionType {
   collectionName: 'certificates';
   info: {
@@ -432,6 +569,82 @@ export interface ApiCertificateCertificate extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::certificate.certificate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiChiSiamoChiSiamo extends Schema.SingleType {
+  collectionName: 'chi_siamo';
+  info: {
+    displayName: 'Chi Siamo';
+    pluralName: 'chi-siamos';
+    singularName: 'chi-siamo';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaButtonText: Attribute.String;
+    CtaDescription: Attribute.Text;
+    CtaTitle: Attribute.String;
+    HeroDescription: Attribute.Text;
+    HeroImage: Attribute.Media<'images'>;
+    HeroTag: Attribute.String;
+    HeroTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    TeamTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::chi-siamo.chi-siamo',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    ValueCards: Attribute.Component<'chi-siamo.value-card', true>;
+    ValuesSubTitle: Attribute.Text;
+    ValuesTitle: Attribute.String;
+  };
+}
+
+export interface ApiContattiContatti extends Schema.SingleType {
+  collectionName: 'contatti';
+  info: {
+    displayName: 'Contatti';
+    pluralName: 'contatti-list';
+    singularName: 'contatti';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ContactDetails: Attribute.Component<'contatti.contact-detail', true>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::contatti.contatti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    Description: Attribute.Text;
+    FormTitle: Attribute.String;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    SedeAddress: Attribute.Text;
+    SedeMapUrl: Attribute.String;
+    SedeTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::contatti.contatti',
       'oneToOne',
       'admin::user'
     > &
@@ -715,6 +928,184 @@ export interface ApiLogbookLogbook extends Schema.CollectionType {
   };
 }
 
+export interface ApiOpen4UsOpen4Us extends Schema.SingleType {
+  collectionName: 'open4_uses';
+  info: {
+    description: 'Contenuti della pagina Open4US - Accesso Smart';
+    displayName: 'Open4US Page';
+    pluralName: 'open4-uses';
+    singularName: 'open4-us';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    AccesSmart: Attribute.Component<'open4us.acces-smart', true>;
+    AppBlocks: Attribute.Component<'open4us.app-block', true>;
+    AppIcon: Attribute.Component<'open4us.app-icon'>;
+    AppSubTitle: Attribute.Text;
+    AppTitle: Attribute.String;
+    CalendarBlock: Attribute.Component<'open4us.calendar-block'>;
+    CalendarDate: Attribute.String;
+    CalendarIcon: Attribute.String;
+    CalendarIcon2: Attribute.String;
+    CalendarIcon3: Attribute.String;
+    CalendarOggi: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::open4-us.open4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    DashboardOptions: Attribute.Component<'open4us.dashboard-option', true>;
+    DashIcon: Attribute.String;
+    DashLink: Attribute.String;
+    DashName: Attribute.String;
+    DashRole: Attribute.String;
+    DashSubTitle: Attribute.Text;
+    DashTitle: Attribute.String;
+    DashUpperTitle: Attribute.String;
+    ImageCard: Attribute.Component<'open4us.image-card'>;
+    MainButton1: Attribute.String;
+    MainButton2: Attribute.String;
+    MainIcon: Attribute.String;
+    MainSubTitle: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    MainTitle2: Attribute.String;
+    ModernButton: Attribute.String;
+    ModernSubTitle: Attribute.Text;
+    ModernTitle: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    SmartBlock: Attribute.Component<'open4us.smart-block'>;
+    SpaceBlock: Attribute.Component<'open4us.space-block', true>;
+    SpaceTitle: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::open4-us.open4-us',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperMainTitle: Attribute.String;
+  };
+}
+
+export interface ApiOrganizzazioneOrganizzazione extends Schema.SingleType {
+  collectionName: 'organizzazioni';
+  info: {
+    displayName: 'Organizzazione';
+    pluralName: 'organizzazioni';
+    singularName: 'organizzazione';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    CoverImage: Attribute.Media<'images'>;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::organizzazione.organizzazione',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descriptionTitle: Attribute.Text;
+    HeroSection: Attribute.Component<'organizzazione.hero-section', true>;
+    knowledgeArea: Attribute.Component<'organizzazione.knowledge-area'>;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    techArea: Attribute.Component<'organizzazione.tech-area', true>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::organizzazione.organizzazione',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProdottiProdotti extends Schema.SingleType {
+  collectionName: 'prodottis';
+  info: {
+    description: 'Hero section della pagina Prodotti';
+    displayName: 'Prodotti Page';
+    pluralName: 'prodottis';
+    singularName: 'prodotti';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prodotti.prodotti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    publishedAt: Attribute.DateTime;
+    subtitle: Attribute.Text;
+    Title: Attribute.String & Attribute.Required;
+    Title2: Attribute.String;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::prodotti.prodotti',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiProdottoProdotto extends Schema.CollectionType {
+  collectionName: 'prodotti_items';
+  info: {
+    description: 'Singolo prodotto (CarFleet, Open4US, ecc.) - stile e features configurabili da admin';
+    displayName: 'Prodotto';
+    pluralName: 'prodotti-items';
+    singularName: 'prodotto';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::prodotto.prodotto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaIcona: Attribute.String & Attribute.DefaultTo<'arrow_forward'>;
+    CtaLink: Attribute.String;
+    CtaTesto: Attribute.String;
+    Descrizione: Attribute.Text;
+    Features: Attribute.Component<'prodotto.feature', true>;
+    Icona: Attribute.String;
+    IconColor: Attribute.Enumeration<['primary', 'purple']> &
+      Attribute.DefaultTo<'primary'>;
+    ImmaginePrincipale: Attribute.Media<'images'>;
+    ImmagineSecondaria: Attribute.Media<'images'>;
+    Nome: Attribute.String & Attribute.Required;
+    Ordine: Attribute.Integer & Attribute.DefaultTo<0>;
+    publishedAt: Attribute.DateTime;
+    Slug: Attribute.UID<'api::prodotto.prodotto', 'Nome'>;
+    Sottotitolo: Attribute.String;
+    Stile: Attribute.Enumeration<['stile-1', 'stile-2']> &
+      Attribute.Required &
+      Attribute.DefaultTo<'stile-1'>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::prodotto.prodotto',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiProjectProject extends Schema.CollectionType {
   collectionName: 'projects';
   info: {
@@ -745,6 +1136,41 @@ export interface ApiProjectProject extends Schema.CollectionType {
     updatedAt: Attribute.DateTime;
     updatedBy: Attribute.Relation<
       'api::project.project',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiServiceService extends Schema.SingleType {
+  collectionName: 'services';
+  info: {
+    description: 'Contenuti della pagina Servizi (hero e sezione competenze)';
+    displayName: 'Service Page';
+    pluralName: 'services';
+    singularName: 'service';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    ButtonContatti: Attribute.String;
+    ButtonServizi: Attribute.String;
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::service.service',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    descriptiontitle: Attribute.Text;
+    Maintitle: Attribute.RichText & Attribute.Required;
+    OurSkills: Attribute.Component<'service.our-skills', true>;
+    publishedAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::service.service',
       'oneToOne',
       'admin::user'
     > &
@@ -847,6 +1273,66 @@ export interface ApiStoriaB4UsStoriaB4Us extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStoriaStoria extends Schema.SingleType {
+  collectionName: 'storie';
+  info: {
+    displayName: 'Storia';
+    pluralName: 'storie';
+    singularName: 'storia';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::storia.storia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    CtaButtonApply: Attribute.String;
+    CtaButtonContact: Attribute.String;
+    CtaDescription: Attribute.Text;
+    CtaTitle: Attribute.String;
+    Description: Attribute.Text;
+    MainTitle: Attribute.String & Attribute.Required;
+    publishedAt: Attribute.DateTime;
+    Timeline: Attribute.Component<'storia.timeline-event', true>;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<
+      'api::storia.storia',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    UpperTitle: Attribute.String;
+  };
+}
+
+export interface ApiTagTag extends Schema.CollectionType {
+  collectionName: 'tags';
+  info: {
+    displayName: 'Tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    icon: Attribute.String;
+    publishedAt: Attribute.DateTime;
+    title: Attribute.String & Attribute.Required;
+    updatedAt: Attribute.DateTime;
+    updatedBy: Attribute.Relation<'api::tag.tag', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1322,8 +1808,13 @@ declare module '@strapi/types' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::blog-page.blog-page': ApiBlogPageBlogPage;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
+      'api::car-fleet.car-fleet': ApiCarFleetCarFleet;
+      'api::carriere.carriere': ApiCarriereCarriere;
       'api::certificate.certificate': ApiCertificateCertificate;
+      'api::chi-siamo.chi-siamo': ApiChiSiamoChiSiamo;
+      'api::contatti.contatti': ApiContattiContatti;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::employe.employe': ApiEmployeEmploye;
       'api::goal.goal': ApiGoalGoal;
@@ -1331,10 +1822,17 @@ declare module '@strapi/types' {
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::job-request.job-request': ApiJobRequestJobRequest;
       'api::logbook.logbook': ApiLogbookLogbook;
+      'api::open4-us.open4-us': ApiOpen4UsOpen4Us;
+      'api::organizzazione.organizzazione': ApiOrganizzazioneOrganizzazione;
+      'api::prodotti.prodotti': ApiProdottiProdotti;
+      'api::prodotto.prodotto': ApiProdottoProdotto;
       'api::project.project': ApiProjectProject;
+      'api::service.service': ApiServiceService;
       'api::servizio.servizio': ApiServizioServizio;
       'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
+      'api::storia.storia': ApiStoriaStoria;
+      'api::tag.tag': ApiTagTag;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

@@ -1,0 +1,17 @@
+{
+    "collectionName": "components_open4us_image_cards",
+    "info": {
+        "displayName": "Image Card",
+        "description": "Card con immagine serratura smart (titolo e sottotitolo)"
+    },
+    "options": {},
+    "attributes": {
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "SubTitle": {
+            "type": "string"
+        }
+    }
+}

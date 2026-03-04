@@ -209,10 +209,16 @@ app.use((req, res, next) => {
 });
 
 // Helper function to fetch from Strapi with error handling
-async function fetchFromStrapi(endpoint, fallbackData = null) {
+async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = null) {
   try {
+    var query = '?populate=*';
+    if (deepPopulate && deepPopulate.length > 0) {
+      query = '?' + deepPopulate.map(function(c) {
+        return 'populate[' + c + '][populate]=*';
+      }).join('&');
+    }
     const response = await axios.get(
-      `${STRAPI_API_URL}${endpoint}?populate=*`,
+      `${STRAPI_API_URL}${endpoint}${query}`,
       {
         headers: { ...strapiAuthHeaders },
       },
@@ -257,9 +263,11 @@ app.get("/home", async (req, res) => {
 
 app.get("/chi-siamo", async (req, res) => {
   try {
+    const chiSiamoData = await fetchFromStrapi("/chi-siamo?populate[ValueCards][populate]=*&populate[HeroImage][populate]=*");
     const teamMembers = await fetchFromStrapi("/team-members");
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
+      chiSiamoData: chiSiamoData?.data?.attributes || {},
       teamMembers: teamMembers?.data?.map((t) => t.attributes) || [],
       strapiUrl: STRAPI_URL,
     });
@@ -267,62 +275,130 @@ app.get("/chi-siamo", async (req, res) => {
     console.error("Error rendering chi-siamo:", error);
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
+      chiSiamoData: {},
       teamMembers: [],
       strapiUrl: STRAPI_URL,
     });
   }
 });
 
-app.get("/prodotti", (req, res) => {
-  res.render("prodotti", { title: "Prodotti | B4US - Simplify IT" });
+app.get("/prodotti", async (req, res) => {
+  try {
+    var prodottiPage = await fetchFromStrapi("/prodotti");
+    var prodottiItems = await fetchFromStrapi(
+      "/prodotti-items",
+      null,
+      ['Features', 'ImmaginePrincipale', 'ImmagineSecondaria']
+    );
+    var prodottiList = (prodottiItems?.data?.map(function(p) { return p.attributes; }) || []);
+    prodottiList.sort(function(a, b) { return (a.Ordine || 0) - (b.Ordine || 0); });
+    res.render("prodotti", {
+      title: "Prodotti | B4US - Simplify IT",
+      prodottiData: prodottiPage?.data?.attributes || {},
+      prodotti: prodottiList,
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering prodotti:", error);
+    res.render("prodotti", {
+      title: "Prodotti | B4US - Simplify IT",
+      prodottiData: {},
+      prodotti: [],
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
-app.get("/open4us", (req, res) => {
-  res.render("open4us", { title: "Open4US - Accesso Smart | B4US" });
+app.get("/open4us", async (req, res) => {
+  try {
+    var open4usData = await fetchFromStrapi("/open4-us");
+    res.render("open4us", {
+      title: "Open4US - Accesso Smart | B4US",
+      o4u: open4usData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering open4us:", error);
+    res.render("open4us", {
+      title: "Open4US - Accesso Smart | B4US",
+      o4u: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
-app.get("/carfleet", (req, res) => {
-  res.render("carfleet", {
-    title: "CarFleet - Gestione Flotta Intelligente | B4US",
-  });
+app.get("/carfleet", async (req, res) => {
+  try {
+    var carfleetData = await fetchFromStrapi("/car-fleet");
+    res.render("carfleet", {
+      title: "CarFleet - Gestione Flotta Intelligente | B4US",
+      cf: carfleetData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering carfleet:", error);
+    res.render("carfleet", {
+      title: "CarFleet - Gestione Flotta Intelligente | B4US",
+      cf: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/servizi", async (req, res) => {
   try {
     const servizi = await fetchFromStrapi("/servizi");
+    const serviceData = await fetchFromStrapi("/service");
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
       servizi: servizi?.data?.map((s) => s.attributes) || [],
+      serviziPage: serviceData?.data?.attributes || {},
     });
   } catch (error) {
     console.error("Error rendering servizi:", error);
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
       servizi: [],
+      serviziPage: {},
     });
   }
 });
 
-app.get("/struttura", (req, res) => {
-  res.render("struttura", { title: "Organizzazione - B4US | Simplify IT" });
+app.get("/struttura", async (req, res) => {
+  try {
+    const strutturaData = await fetchFromStrapi(
+      "/organizzazione", null, ['HeroSection', 'techArea', 'knowledgeArea', 'CoverImage']
+    );
+    res.render("struttura", {
+      title: "Organizzazione - B4US | Simplify IT",
+      strutturaData: strutturaData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering struttura:", error);
+    res.render("struttura", {
+      title: "Organizzazione - B4US | Simplify IT",
+      strutturaData: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/storia", async (req, res) => {
   try {
-    const storia = await fetchFromStrapi("/storia-b4-uses");
-    // Ordina per anno decrescente (più recente prima)
-    const storiaOrdinata =
-      storia?.data?.map((s) => s.attributes).sort((b, a) => b.Anno - a.Anno) ||
-      [];
+    const storiaData = await fetchFromStrapi("/storia");
+    const storiaEvents = await fetchFromStrapi("/storia-b4-uses");
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
-      storia: storiaOrdinata,
+      storiaData: storiaData?.data?.attributes || {},
+      storia: storiaEvents?.data?.map(function(s) { return s.attributes; }) || [],
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
     console.error("Error rendering storia:", error);
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
+      storiaData: {},
       storia: [],
       strapiUrl: STRAPI_URL,
     });
@@ -337,27 +413,73 @@ app.get("/privacy-policy", (req, res) => {
 
 app.get("/carriere", async (req, res) => {
   try {
+    const carriereData = await fetchFromStrapi(
+      "/carriere", null, ['HeroImage', 'CultureCards']
+    );
     const jobPositions = await fetchFromStrapi("/job-positions");
     res.render("carriere", {
       title: "Lavora Con Noi - B4US Team",
-      jobPositions:
-        jobPositions?.data?.map((j) => ({ id: j.id, ...j.attributes })) || [],
+      carriereData: carriereData?.data?.attributes || {},
+      jobPositions: jobPositions?.data?.map((j) => ({ id: j.id, ...j.attributes })) || [],
+      strapiUrl: STRAPI_URL,
     });
   } catch (error) {
     console.error("Error rendering carriere:", error);
     res.render("carriere", {
       title: "Lavora Con Noi - B4US Team",
+      carriereData: {},
       jobPositions: [],
+      strapiUrl: STRAPI_URL,
     });
   }
 });
 
-app.get("/contatti", (req, res) => {
-  res.render("contatti", { title: "Contatti - B4US Simplify IT" });
+app.get("/contatti", async (req, res) => {
+  try {
+    const contattiData = await fetchFromStrapi(
+      "/contatti", null, ['ContactDetails']
+    );
+    res.render("contatti", {
+      title: "Contatti - B4US Simplify IT",
+      contattiData: contattiData?.data?.attributes || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering contatti:", error);
+    res.render("contatti", {
+      title: "Contatti - B4US Simplify IT",
+      contattiData: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
-app.get("/blog", (req, res) => {
-  res.render("blog", { title: "Diario di Bordo - B4US Simplify IT" });
+app.get("/blog", async (req, res) => {
+  try {
+    const blogPageData = await fetchFromStrapi("/blog-page");
+    const dipendenti = await fetchFromStrapi("/team-members");
+    const progetti = await fetchFromStrapi("/blog-posts");
+
+    res.render("blog", {
+      title: "Diario di Bordo - B4US Simplify IT",
+      blogPageData: blogPageData?.data?.attributes || {},
+      counts: {
+        dipendenti: dipendenti?.data?.length || 0,
+        progetti: progetti?.data?.length || 0,
+        // Altri conteggi fissi o dinamici
+        certificazioni: 15 // Placeholder o fetch se disponibile
+      },
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering blog:", error);
+    res.render("blog", {
+      title: "Diario di Bordo - B4US Simplify IT",
+      blogPageData: {},
+      counts: { dipendenti: 0, progetti: 0, certificazioni: 0 },
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/blog/:slug", async (req, res) => {

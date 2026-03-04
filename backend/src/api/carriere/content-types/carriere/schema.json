@@ -1,0 +1,72 @@
+{
+    "kind": "singleType",
+    "collectionName": "carriere",
+    "info": {
+        "singularName": "carriere",
+        "pluralName": "carrieres",
+        "displayName": "Carriere"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "UpperTitle": {
+            "type": "string"
+        },
+        "MainTitle": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        },
+        "Button1Text": {
+            "type": "string"
+        },
+        "Button2Text": {
+            "type": "string"
+        },
+        "HeroImage": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "CultureTitle": {
+            "type": "string"
+        },
+        "CultureSubTitle": {
+            "type": "text"
+        },
+        "CultureCards": {
+            "type": "component",
+            "repeatable": true,
+            "component": "carriere.culture-card"
+        },
+        "PositionsTitle": {
+            "type": "string"
+        },
+        "PositionsSubTitle": {
+            "type": "text"
+        },
+        "SpontaneousTitle": {
+            "type": "string"
+        },
+        "SpontaneousSubTitle": {
+            "type": "text"
+        },
+        "SpontaneousLinkText": {
+            "type": "string"
+        },
+        "BottomCtaTitle": {
+            "type": "string"
+        },
+        "BottomCtaSubTitle": {
+            "type": "text"
+        },
+        "BottomCtaButton": {
+            "type": "string"
+        }
+    }
+}

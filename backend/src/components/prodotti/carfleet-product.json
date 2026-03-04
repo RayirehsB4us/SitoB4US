@@ -1,0 +1,43 @@
+{
+    "collectionName": "components_prodotti_carfleet_products",
+    "info": {
+        "displayName": "Carfleet Product",
+        "description": "Sezione prodotto CarFleet nella pagina prodotti"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: directions_car)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "subtitle": {
+            "type": "string"
+        },
+        "Description": {
+            "type": "text"
+        },
+        "bulletpointcar": {
+            "type": "component",
+            "repeatable": true,
+            "component": "prodotti.bulletpoint-car"
+        },
+        "Image": {
+            "type": "media",
+            "multiple": false,
+            "required": false,
+            "allowedTypes": ["images"]
+        },
+        "Link": {
+            "type": "string",
+            "description": "Testo link (es: Esplora le Funzionalita di CarFleet)"
+        },
+        "icon2": {
+            "type": "string",
+            "description": "Icona freccia link (es: arrow_forward)"
+        }
+    }
+}

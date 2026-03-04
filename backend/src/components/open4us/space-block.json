@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_open4us_space_blocks",
+    "info": {
+        "displayName": "Space Block",
+        "description": "Card caso d'uso spazio (icona, titolo, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: business_center)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        }
+    }
+}

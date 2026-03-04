@@ -1,0 +1,29 @@
+{
+  "kind": "singleType",
+  "collectionName": "prodottis",
+  "info": {
+    "singularName": "prodotti",
+    "pluralName": "prodottis",
+    "displayName": "Prodotti Page",
+    "description": "Hero section della pagina Prodotti"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true,
+      "description": "Prima riga titolo hero (es: Semplifica le tue Operazioni)"
+    },
+    "Title2": {
+      "type": "string",
+      "description": "Seconda riga titolo hero verde (es: con Software Intelligenti)"
+    },
+    "subtitle": {
+      "type": "text",
+      "description": "Sottotitolo hero"
+    }
+  }
+}

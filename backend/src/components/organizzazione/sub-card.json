@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_organizzazione_sub_cards",
+    "info": {
+        "displayName": "Sub Card",
+        "description": "Sottocard nella sezione Knowledge Days"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "subTitle": {
+            "type": "text"
+        }
+    }
+}

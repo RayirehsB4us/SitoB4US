@@ -1,0 +1,21 @@
+{
+    "collectionName": "components_open4us_app_blocks",
+    "info": {
+        "displayName": "App Block",
+        "description": "Funzionalita app Open4US (icona, titolo, descrizione)"
+    },
+    "options": {},
+    "attributes": {
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: wifi_off)"
+        },
+        "Title": {
+            "type": "string",
+            "required": true
+        },
+        "Description": {
+            "type": "text"
+        }
+    }
+}

@@ -1,0 +1,54 @@
+{
+    "kind": "singleType",
+    "collectionName": "chi_siamo",
+    "info": {
+        "singularName": "chi-siamo",
+        "pluralName": "chi-siamos",
+        "displayName": "Chi Siamo"
+    },
+    "options": {
+        "draftAndPublish": true
+    },
+    "attributes": {
+        "HeroTag": {
+            "type": "string"
+        },
+        "HeroTitle": {
+            "type": "string",
+            "required": true
+        },
+        "HeroDescription": {
+            "type": "text"
+        },
+        "HeroImage": {
+            "type": "media",
+            "multiple": false,
+            "allowedTypes": [
+                "images"
+            ]
+        },
+        "ValuesTitle": {
+            "type": "string"
+        },
+        "ValuesSubTitle": {
+            "type": "text"
+        },
+        "ValueCards": {
+            "type": "component",
+            "repeatable": true,
+            "component": "chi-siamo.value-card"
+        },
+        "TeamTitle": {
+            "type": "string"
+        },
+        "CtaTitle": {
+            "type": "string"
+        },
+        "CtaDescription": {
+            "type": "text"
+        },
+        "CtaButtonText": {
+            "type": "string"
+        }
+    }
+}

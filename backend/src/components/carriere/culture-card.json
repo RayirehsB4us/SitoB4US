@@ -1,0 +1,20 @@
+{
+    "collectionName": "components_carriere_culture_cards",
+    "info": {
+        "displayName": "Culture Card",
+        "description": "Card per la sezione 'Perché scegliere B4US?'"
+    },
+    "options": {},
+    "attributes": {
+        "icon": {
+            "type": "string"
+        },
+        "title": {
+            "type": "string",
+            "required": true
+        },
+        "description": {
+            "type": "text"
+        }
+    }
+}

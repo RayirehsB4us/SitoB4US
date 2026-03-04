@@ -1,0 +1,23 @@
+{
+    "collectionName": "components_organizzazione_knowledge_areas",
+    "info": {
+        "displayName": "Knowledge Area",
+        "description": "Sezione Knowledge Days"
+    },
+    "options": {},
+    "attributes": {
+        "MainCard": {
+            "type": "component",
+            "repeatable": false,
+            "component": "organizzazione.main-card"
+        },
+        "content": {
+            "type": "text"
+        },
+        "subCard": {
+            "type": "component",
+            "repeatable": true,
+            "component": "organizzazione.sub-card"
+        }
+    }
+}

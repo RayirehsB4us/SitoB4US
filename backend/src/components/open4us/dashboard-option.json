@@ -1,0 +1,18 @@
+{
+    "collectionName": "components_open4us_dashboard_options",
+    "info": {
+        "displayName": "Dashboard Option",
+        "description": "Voce menu sidebar dashboard (icona + testo)"
+    },
+    "options": {},
+    "attributes": {
+        "Text": {
+            "type": "string",
+            "required": true
+        },
+        "Icon": {
+            "type": "string",
+            "description": "Nome icona Material Icons (es: home, calendar_today)"
+        }
+    }
+}
