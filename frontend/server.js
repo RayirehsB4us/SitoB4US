@@ -37,8 +37,8 @@ console.log(
 );
 // Header di autenticazione per tutte le richieste a Strapi
 const strapiAuthHeaders = STRAPI_API_TOKEN
-  ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
-  : {};
+  ? { Authorization: `Bearer ${STRAPI_API_TOKEN}`, 'Strapi-Response-Format': 'v4' }
+  : { 'Strapi-Response-Format': 'v4' };
 
 // Configurazione Multer per l'upload dei file
 const upload = multer({

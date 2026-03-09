@@ -4,13 +4,12 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
 
-    const fullEntry = await strapi.entityService.findOne(
-      "api::demo-request.demo-request",
-      result.id,
-      {
-        populate: "*", // Popola TUTTE le relazioni
-      },
-    );
+    const fullEntry = await strapi.documents("api::demo-request.demo-request").findOne({
+      documentId: result.documentId,
+
+      // Popola TUTTE le relazioni
+      populate: "*"
+    });
 
     await fetch(process.env.POWER_AUTOMATE_WEBHOOK_URL, {
       method: "POST",

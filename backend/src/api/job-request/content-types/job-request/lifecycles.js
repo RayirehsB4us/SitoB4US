@@ -4,13 +4,10 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
 
-    const fullEntry = await strapi.entityService.findOne(
-      "api::job-request.job-request",
-      result.id,
-      {
-        populate: "*",
-      },
-    );
+    const fullEntry = await strapi.documents("api::job-request.job-request").findOne({
+      documentId: result.documentId,
+      populate: "*"
+    });
 
     // Costruisci URL completo per i file CV
     const baseUrl = process.env.STRAPI_API_URL.replace(/\/$/, ""); // Rimuove slash finale
