@@ -1,28 +1,31 @@
 /* ================================================
    Theme CSS - Strapi 5 Admin Customization
+   ================================================
+   Le pagine di login NON hanno <nav> sidebar.
+   L'admin (loggato) HA una <nav>.
+   Si usa #app:not(:has(nav)) per isolare gli stili
+   solo alle pagine di autenticazione.
    ================================================ */
 
-/* Sfondo personalizzato per la pagina di login */
-body {
+/* --- STILI SOLO PER LA PAGINA DI LOGIN --- */
+
+/* Sfondo personalizzato - solo quando non c'è la sidebar */
+#app:not(:has(nav)) {
     background-image: url('./sfondo.png') !important;
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-attachment: fixed !important;
+    min-height: 100vh;
 }
 
-/* Sfondo trasparente per i contenitori principali */
-#app,
-main {
+/* Sfondo trasparente per i contenitori nella pagina di login */
+#app:not(:has(nav)) main {
     background: transparent !important;
 }
 
-/*
- * Card di login (LayoutContent) - glass effect
- * In Strapi 5, LayoutContent è un styled(Box) dentro <main>,
- * primo figlio diretto di <main>.
- */
-main > div:first-child {
+/* Card di login - glass effect */
+#app:not(:has(nav)) main > div:first-child {
     background-color: rgba(255, 255, 255, 0.95) !important;
     padding: 3rem !important;
     border-radius: 12px !important;
@@ -32,29 +35,30 @@ main > div:first-child {
     margin: 0 auto !important;
 }
 
-/*
- * Nasconde il titolo "Benvenuto!" e il sottotitolo "Accedi ad OpenPortal"
- * In Strapi 5, il titolo è un <h1> dentro <main>,
- * il sottotitolo è il div/span successivo.
- */
-main h1 {
+/* Nasconde titolo "Benvenuto!" e sottotitolo "Accedi ad OpenPortal" */
+#app:not(:has(nav)) main h1 {
     display: none !important;
 }
 
-main h1 ~ div:not(:has(form)):not(:has(input)):not(:has(a)) {
+#app:not(:has(nav)) main h1 ~ div:not(:has(form)):not(:has(input)):not(:has(a)) {
     display: none !important;
 }
 
 /* Ingrandisce il logo nella pagina di login */
-main img {
+#app:not(:has(nav)) main img {
     max-width: 300px !important;
     height: auto !important;
     margin-bottom: 2rem !important;
 }
 
 /* Centra il contenuto del form login */
-main > div:first-child > div:first-child {
+#app:not(:has(nav)) main > div:first-child > div:first-child {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
+}
+
+/* Nasconde il selettore lingua nella pagina di login (opzionale) */
+#app:not(:has(nav)) header {
+    display: none !important;
 }
