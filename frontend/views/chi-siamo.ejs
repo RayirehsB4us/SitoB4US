@@ -27,10 +27,10 @@
                     </div>
                     <div class="mt-12 lg:mt-0 relative">
                         <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl">
-                            <% if (chiSiamoData && chiSiamoData.HeroImage && chiSiamoData.HeroImage.data) { %>
+                            <% if (chiSiamoData && chiSiamoData.HeroImage) { %>
                                 <img alt="Team B4US"
                                     class="w-full h-full object-cover"
-                                    src="<%= strapiUrl %><%= chiSiamoData.HeroImage.data.attributes.url %>" />
+                                    src="<%= strapiUrl %><%= chiSiamoData.HeroImage.url %>" />
                             <% } else { %>
                                 <img alt="Team working together in a modern office"
                                     class="w-full h-full object-cover"
@@ -112,10 +112,10 @@
                             <div class="group">
                                 <div
                                     class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                                    <% if (member.foto && member.foto.data) { %>
+                                    <% if (member.foto) { %>
                                         <img alt="<%= member.nome %> - <%= member.ruolo %>"
                                             class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                            src="<%= strapiUrl %><%= member.foto.data.attributes.url %>" />
+                                            src="<%= strapiUrl %><%= member.foto.url %>" />
                                         <% } else { %>
                                             <div
                                                 class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-green-600">
