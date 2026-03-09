@@ -1,10 +1,6 @@
-/* Nasconde il selettore del tema */
-[data-testid="theme-toggle"],
-[aria-label="Theme"] {
-    display: none !important;
-}
-
-/* Personalizzazione pagina di login */
+/* ================================================
+   Theme CSS - Strapi 5 Admin Customization
+   ================================================ */
 
 /* Sfondo personalizzato per la pagina di login */
 body {
@@ -15,16 +11,18 @@ body {
     background-attachment: fixed !important;
 }
 
-/* Sfondo anche per il contenitore principale */
+/* Sfondo trasparente per i contenitori principali */
 #app,
 main {
     background: transparent !important;
 }
 
-/* Rende il form di login più visibile sullo sfondo */
-[class*="Login_wrapper"],
-form[class*="Login"],
-div[class*="LayoutContent"] > div:first-child {
+/*
+ * Card di login (LayoutContent) - glass effect
+ * In Strapi 5, LayoutContent è un styled(Box) dentro <main>,
+ * primo figlio diretto di <main>.
+ */
+main > div:first-child {
     background-color: rgba(255, 255, 255, 0.95) !important;
     padding: 3rem !important;
     border-radius: 12px !important;
@@ -34,33 +32,28 @@ div[class*="LayoutContent"] > div:first-child {
     margin: 0 auto !important;
 }
 
-/* Nasconde completamente il testo "Welcome to Strapi! Log in to your Strapi account" */
-[class*="Login_title"],
-[class*="Login_subtitle"] {
+/*
+ * Nasconde il titolo "Benvenuto!" e il sottotitolo "Accedi ad OpenPortal"
+ * In Strapi 5, il titolo è un <h1> dentro <main>,
+ * il sottotitolo è il div/span successivo.
+ */
+main h1 {
     display: none !important;
 }
 
-/* OPPURE: Cambia il testo (se vuoi mantenerlo visibile ma modificato) */
-/* Rimuovi il commento sotto se preferisci questa opzione */
-/*
-[class*="Login_title"],
-[class*="Login_subtitle"] {
-    font-size: 1.2rem !important;
-    color: #28a745 !important;
+main h1 ~ div:not(:has(form)):not(:has(input)):not(:has(a)) {
+    display: none !important;
 }
-*/
 
 /* Ingrandisce il logo nella pagina di login */
-[class*="AuthPage"] img,
-[class*="Login"] img,
-img[alt*="logo"] {
-    max-width: 300px !important; /* Aumenta la dimensione (default è circa 150px) */
+main img {
+    max-width: 300px !important;
     height: auto !important;
     margin-bottom: 2rem !important;
 }
 
-/* Centra meglio il logo */
-[class*="Login_wrapper"] {
+/* Centra il contenuto del form login */
+main > div:first-child > div:first-child {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
