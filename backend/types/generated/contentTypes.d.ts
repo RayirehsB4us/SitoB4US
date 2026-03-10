@@ -906,7 +906,8 @@ export interface ApiJobRequestJobRequest extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    cv: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    cvFileName: Schema.Attribute.String;
+    cvUrl: Schema.Attribute.String;
     email: Schema.Attribute.Email;
     job_position: Schema.Attribute.Relation<
       'oneToOne',

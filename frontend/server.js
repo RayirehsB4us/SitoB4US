@@ -11,6 +11,79 @@ const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
 const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
+
+// ─── SharePoint Configuration ────────────────────────────────────────
+const SHAREPOINT_TENANT_ID = process.env.SHAREPOINT_TENANT_ID || "";
+const SHAREPOINT_CLIENT_ID = process.env.SHAREPOINT_CLIENT_ID || "";
+const SHAREPOINT_CLIENT_SECRET = process.env.SHAREPOINT_CLIENT_SECRET || "";
+const SHAREPOINT_SITE_ID = process.env.SHAREPOINT_SITE_ID || "";
+const SHAREPOINT_DRIVE_ID = process.env.SHAREPOINT_DRIVE_ID || "";
+const SHAREPOINT_FOLDER = process.env.SHAREPOINT_FOLDER || "CV-Candidature";
+
+/**
+ * Ottiene un access token da Azure AD tramite Client Credentials flow.
+ * Il token viene usato per autenticarsi con Microsoft Graph API.
+ */
+async function getSharePointAccessToken() {
+  const tokenUrl = `https://login.microsoftonline.com/${SHAREPOINT_TENANT_ID}/oauth2/v2.0/token`;
+
+  const params = new URLSearchParams();
+  params.append("client_id", SHAREPOINT_CLIENT_ID);
+  params.append("client_secret", SHAREPOINT_CLIENT_SECRET);
+  params.append("scope", "https://graph.microsoft.com/.default");
+  params.append("grant_type", "client_credentials");
+
+  const response = await axios.post(tokenUrl, params, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  });
+
+  return response.data.access_token;
+}
+
+/**
+ * Carica un file su SharePoint tramite Microsoft Graph API.
+ * @param {string} filePath - Percorso locale del file temporaneo
+ * @param {string} fileName - Nome originale del file (es: "CV_Mario_Rossi.pdf")
+ * @returns {object} - { webUrl, downloadUrl, fileName } del file caricato
+ */
+async function uploadToSharePoint(filePath, fileName) {
+  const accessToken = await getSharePointAccessToken();
+
+  // Sanitizza il nome file per evitare conflitti (aggiungi timestamp)
+  const timestamp = Date.now();
+  const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const uploadName = `${timestamp}_${safeName}`;
+
+  const fileBuffer = fs.readFileSync(filePath);
+  const fileSize = fileBuffer.length;
+
+  // Per file <= 4MB: upload diretto con PUT
+  // Per file > 4MB: serve upload session (non dovrebbe servire per CV)
+  if (fileSize > 4 * 1024 * 1024) {
+    throw new Error("File troppo grande per upload diretto. Massimo 4MB per SharePoint upload.");
+  }
+
+  const uploadUrl =
+    `https://graph.microsoft.com/v1.0/sites/${SHAREPOINT_SITE_ID}` +
+    `/drives/${SHAREPOINT_DRIVE_ID}` +
+    `/root:/${SHAREPOINT_FOLDER}/${uploadName}:/content`;
+
+  const response = await axios.put(uploadUrl, fileBuffer, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/octet-stream",
+    },
+    maxContentLength: 10 * 1024 * 1024,
+    maxBodyLength: 10 * 1024 * 1024,
+  });
+
+  return {
+    webUrl: response.data.webUrl,
+    downloadUrl: response.data["@microsoft.graph.downloadUrl"] || response.data.webUrl,
+    fileName: uploadName,
+    sharePointId: response.data.id,
+  };
+}
 // Lista IP/prefissi consentiti per login:
 // - IP singoli: 4.232.71.155
 // - Intere reti (prefisso): 192.168.178.*  (tutti i 192.168.178.x)
@@ -802,28 +875,13 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
 
     uploadedFilePath = cvFile.path;
 
-    // Step 1: Upload del CV a Strapi
-    const formData = new FormData();
-    formData.append(
-      "files",
-      fs.createReadStream(cvFile.path),
+    // Step 1: Upload del CV su SharePoint
+    console.log("Uploading CV to SharePoint...");
+    const sharePointResult = await uploadToSharePoint(
+      cvFile.path,
       cvFile.originalname,
     );
-
-    console.log("Uploading CV to Strapi...");
-    const uploadResponse = await axios.post(
-      `${STRAPI_API_URL}/upload`,
-      formData,
-      {
-        headers: {
-          ...formData.getHeaders(),
-          ...strapiAuthHeaders,
-        },
-      },
-    );
-
-    const uploadedCV = uploadResponse.data[0];
-    console.log("CV uploaded successfully:", uploadedCV.id);
+    console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
 
     // Step 2: Determina il job_position ID
     let jobPositionId = null;
@@ -831,7 +889,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       jobPositionId = parseInt(jobPosition);
     }
 
-    // Step 3: Crea la job-request
+    // Step 3: Crea la job-request con link SharePoint
     const jobRequestData = {
       data: {
         Nome: nome,
@@ -839,7 +897,8 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
         AnnoNascita: dataNascita,
         email: email,
         Telefono: telefono,
-        cv: [uploadedCV.id],
+        cvUrl: sharePointResult.webUrl,
+        cvFileName: sharePointResult.fileName,
         publishedAt: new Date().toISOString(),
       },
     };
