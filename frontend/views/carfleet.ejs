@@ -105,9 +105,9 @@
                             <div class="relative z-10">
                                 <div
                                     class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 card-hover">
-                                    <% if (cf.Image && cf.Image.data) { %>
-                                        <img src="<%= strapiUrl + cf.Image.data.attributes.url %>"
-                                            alt="<%= cf.Image.data.attributes.alternativeText || 'Dashboard CarFleet - Gestione Flotta Aziendale' %>"
+                                    <% if (cf.Image) { %>
+                                        <img src="<%= strapiUrl + cf.Image.url %>"
+                                            alt="<%= cf.Image.alternativeText || 'Dashboard CarFleet - Gestione Flotta Aziendale' %>"
                                             class="w-full h-auto object-cover">
                                     <% } else { %>
                                         <img src="/images/carfleet-dashboard.png"
@@ -354,10 +354,10 @@
                             <div class="relative w-full max-w-sm mx-auto">
                                 <div
                                     class="rounded-2xl bg-white shadow-xl overflow-hidden flex items-center justify-center p-8 border border-gray-100 card-hover">
-                                    <% if (cf.AccesImage && cf.AccesImage.data) { %>
-                                        <img alt="<%= cf.AccesImage.data.attributes.alternativeText || 'Meccanismo di serratura intelligente ad alta tecnologia' %>"
+                                    <% if (cf.AccesImage) { %>
+                                        <img alt="<%= cf.AccesImage.alternativeText || 'Meccanismo di serratura intelligente ad alta tecnologia' %>"
                                             class="object-contain w-full h-full transform hover:scale-105 transition-transform duration-500"
-                                            src="<%= strapiUrl + cf.AccesImage.data.attributes.url %>" />
+                                            src="<%= strapiUrl + cf.AccesImage.url %>" />
                                     <% } else { %>
                                         <img alt="Meccanismo di serratura intelligente ad alta tecnologia"
                                             class="object-contain w-full h-full transform hover:scale-105 transition-transform duration-500"

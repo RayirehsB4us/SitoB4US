@@ -245,24 +245,24 @@
             const json = await response.json();
 
             // Trova il logbook dell'anno corrente
-            const logbook = json.data.find(l => l.attributes.anno === currentYear);
+            const logbook = json.data.find(l => l.anno === currentYear);
             if (!logbook) return;
 
             // Popola il progetto in evidenza
-            const progetto = logbook.attributes.progetto_evidenza?.data;
+            const progetto = logbook.progetto_evidenza;
             if (progetto) {
-              document.getElementById('evidenza-title').textContent = progetto.attributes.name;
-              document.getElementById('evidenza-desc').textContent = progetto.attributes.descrizione;
+              document.getElementById('evidenza-title').textContent = progetto.name;
+              document.getElementById('evidenza-desc').textContent = progetto.descrizione;
             } else {
               document.getElementById('evidenza-title').textContent = 'Nessun progetto in evidenza';
               document.getElementById('evidenza-desc').textContent = '';
             }
 
             // Popola il progetto in corso
-            const progettoCorso = logbook.attributes.progetto_Corso?.data;
+            const progettoCorso = logbook.progetto_Corso;
             if (progettoCorso) {
-              document.getElementById('corso-title').textContent = progettoCorso.attributes.name;
-              document.getElementById('corso-desc').textContent = progettoCorso.attributes.descrizione;
+              document.getElementById('corso-title').textContent = progettoCorso.name;
+              document.getElementById('corso-desc').textContent = progettoCorso.descrizione;
             } else {
               document.getElementById('corso-title').textContent = 'Nessun progetto in corso';
               document.getElementById('corso-desc').textContent = '';
@@ -275,14 +275,14 @@
         }
 
         function renderGoalItem(goal) {
-          const done = goal.attributes.done;
+          const done = goal.done;
           const icon = done ? 'check_circle' : 'radio_button_unchecked';
           const iconColor = done ? 'text-primary' : 'text-gray-300';
           const textColor = done ? 'text-gray-600' : 'text-gray-400';
           return `
           <li class="flex items-start gap-3">
             <span class="material-symbols-outlined ${iconColor} text-lg mt-0.5">${icon}</span>
-            <span class="text-sm ${textColor}">${goal.attributes.name}</span>
+            <span class="text-sm ${textColor}">${goal.name}</span>
           </li>`;
         }
 
@@ -294,13 +294,13 @@
 
             // Filtra solo i goal del logbook dell'anno corrente
             const goals = json.data.filter(g => {
-              const logbookYear = g.attributes.logbook?.data?.attributes?.anno;
+              const logbookYear = g.logbook?.anno;
               return logbookYear === currentYear;
             });
 
             // Popola Stato Obiettivi
             const totalGoals = goals.length;
-            const doneGoals = goals.filter(g => g.attributes.done).length;
+            const doneGoals = goals.filter(g => g.done).length;
             const percentage = totalGoals > 0 ? Math.round((doneGoals / totalGoals) * 100) : 0;
 
             document.getElementById('obiettivi-anno-title').textContent = `Stato Obiettivi ${currentYear}`;
@@ -309,8 +309,8 @@
             document.getElementById('obiettivi-progress-bar').style.width = `${percentage}%`;
 
             // Popola liste obiettivi correnti e futuri
-            const currentGoals = goals.filter(g => g.attributes.CurrentGoal);
-            const futureGoals = goals.filter(g => g.attributes.futureGoal);
+            const currentGoals = goals.filter(g => g.CurrentGoal);
+            const futureGoals = goals.filter(g => g.futureGoal);
 
             const currentList = document.getElementById('current-goals-list');
             const futureList = document.getElementById('future-goals-list');
@@ -357,20 +357,19 @@
             }
 
             container.innerHTML = json.data.map((project, index) => {
-              const attrs = project.attributes;
               const isFirst = index === 0;
               const borderClass = isFirst ? 'border-primary/40' : 'border-gray-200';
               const dotClass = isFirst ? 'bg-primary' : 'bg-gray-300';
 
               // Prendi i dipendenti associati al progetto
-              const employees = attrs.employes?.data || [];
+              const employees = project.employes || [];
               const employeeNames = employees.map(e => {
-                const n = e.attributes.nome.charAt(0).toLowerCase();
-                const c = e.attributes.cognome.toLowerCase();
+                const n = e.nome.charAt(0).toLowerCase();
+                const c = e.cognome.toLowerCase();
                 return `@${n}_${c}`;
               });
 
-              const timeStr = timeAgo(attrs.updatedAt);
+              const timeStr = timeAgo(project.updatedAt);
               const employeeStr = employeeNames.length > 0
                 ? ` &mdash; <span class="text-primary font-medium">${employeeNames.join(', ')}</span>`
                 : '';
@@ -378,7 +377,7 @@
               return `
               <div class="relative pl-5 border-l-2 ${borderClass}">
                 <span class="absolute -left-[6px] top-0 w-3 h-3 rounded-full ${dotClass} ring-2 ring-white"></span>
-                <p class="text-sm font-semibold text-gray-900">${attrs.name}</p>
+                <p class="text-sm font-semibold text-gray-900">${project.name}</p>
                 <p class="text-xs text-gray-400 mt-1">${timeStr}${employeeStr}</p>
               </div>`;
             }).join('');

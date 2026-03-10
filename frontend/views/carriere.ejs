@@ -37,10 +37,10 @@
                     <div class="relative">
                         <div
                             class="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 to-blue-500/10 flex items-center justify-center p-8">
-                            <% if (carriereData.HeroImage && carriereData.HeroImage.data) { %>
+                            <% if (carriereData.HeroImage) { %>
                                 <img alt="Team collaborativo al lavoro"
                                     class="rounded-2xl shadow-2xl object-cover w-full h-full"
-                                    src="<%= strapiUrl %><%= carriereData.HeroImage.data.attributes.url %>" />
+                                    src="<%= strapiUrl %><%= carriereData.HeroImage.url %>" />
                                 <% } else { %>
                                     <img alt="Team collaborativo al lavoro"
                                         class="rounded-2xl shadow-2xl object-cover w-full h-full"
