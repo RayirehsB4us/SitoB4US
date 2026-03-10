@@ -46,12 +46,12 @@
                         <%= evento.Anno %>
                       </div>
 
-                      <% if (evento.Foto && evento.Foto.data) { %>
+                      <% if (evento.Foto) { %>
                         <div class="mb-6 rounded-xl overflow-hidden">
                           <img
                             alt="B4US - Anno <%= evento.Anno %>"
                             class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500"
-                            src="<%= strapiUrl %><%= evento.Foto.data.attributes.url %>"
+                            src="<%= strapiUrl %><%= evento.Foto.url %>"
                           />
                         </div>
                       <% } %>

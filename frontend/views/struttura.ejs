@@ -90,9 +90,9 @@
           </div>
           <div class="relative">
             <div class="aspect-square rounded-3xl overflow-hidden shadow-2xl">
-              <% if (strutturaData.CoverImage && strutturaData.CoverImage.data) { %>
+              <% if (strutturaData.CoverImage) { %>
                 <img alt="Team che collabora in modo trasversale" class="w-full h-full object-cover"
-                  src="<%= strapiUrl %><%= strutturaData.CoverImage.data.attributes.url %>" />
+                  src="<%= strapiUrl %><%= strutturaData.CoverImage.url %>" />
               <% } else { %>
                 <img alt="Team che collabora in modo trasversale" class="w-full h-full object-cover"
                   src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80&fm=jpg&fit=crop" />
@@ -214,12 +214,12 @@
             <%= (techTags && techTags.title) || 'Le nostre aree di formazione' %>
           </h3>
           <div class="flex flex-wrap justify-center gap-4">
-            <% if (techTags && techTags.tags && techTags.tags.data && techTags.tags.data.length > 0) { %>
-              <% techTags.tags.data.forEach(function(tag) { %>
+            <% if (techTags && techTags.tags && techTags.tags.length > 0) { %>
+              <% techTags.tags.forEach(function(tag) { %>
                 <span
                   class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
-                  <span class="material-symbols-outlined text-primary text-sm align-middle mr-1"><%= tag.attributes.icon ? tag.attributes.icon.trim() : 'check_circle' %></span>
-                  <%= tag.attributes.title %>
+                  <span class="material-symbols-outlined text-primary text-sm align-middle mr-1"><%= tag.icon ? tag.icon.trim() : 'check_circle' %></span>
+                  <%= tag.title %>
                 </span>
               <% }); %>
             <% } else { %>

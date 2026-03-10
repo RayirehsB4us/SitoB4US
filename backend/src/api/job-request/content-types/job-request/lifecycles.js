@@ -4,23 +4,12 @@ module.exports = {
   async afterCreate(event) {
     const { result } = event;
 
-    const fullEntry = await strapi.entityService.findOne(
-      "api::job-request.job-request",
-      result.id,
-      {
-        populate: "*",
-      },
-    );
+    const fullEntry = await strapi.documents("api::job-request.job-request").findOne({
+      documentId: result.documentId,
+      populate: "*"
+    });
 
-    // Costruisci URL completo per i file CV
-    const baseUrl = process.env.STRAPI_API_URL.replace(/\/$/, ""); // Rimuove slash finale
-
-    if (fullEntry.cv && fullEntry.cv.length > 0) {
-      fullEntry.cv = fullEntry.cv.map((file) => ({
-        ...file,
-        url: `${baseUrl}${file.url}`,
-      }));
-    }
+    // Il CV è ora un link SharePoint (campo cvUrl), non serve più costruire URL Strapi
 
     await fetch(process.env.POWER_AUTOMATE_WEBHOOK_URL, {
       method: "POST",
@@ -30,7 +19,7 @@ module.exports = {
       },
       body: JSON.stringify({
         event: "entry.create",
-        model: "job-request", // Era "demo-request", corretto
+        model: "job-request",
         entry: fullEntry,
       }),
     });

@@ -27,16 +27,13 @@
     "Telefono": {
       "type": "string"
     },
-    "cv": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+    "cvUrl": {
+      "type": "string",
+      "description": "URL del CV caricato su SharePoint"
+    },
+    "cvFileName": {
+      "type": "string",
+      "description": "Nome del file CV su SharePoint"
     },
     "job_position": {
       "type": "relation",

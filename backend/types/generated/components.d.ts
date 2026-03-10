@@ -1,89 +1,89 @@
-import type { Attribute, Schema } from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface CarFleetAccesBlock extends Schema.Component {
+export interface CarFleetAccesBlock extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_acces_blocks';
   info: {
     description: 'Punto elenco accesso intelligente (testo con bold prima dei due punti, icona)';
     displayName: 'Acces Block';
   };
   attributes: {
-    Icon: Attribute.String;
-    Text: Attribute.String & Attribute.Required;
+    Icon: Schema.Attribute.String;
+    Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface CarFleetDashboardPanoramica extends Schema.Component {
+export interface CarFleetDashboardPanoramica extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_dashboard_panoramicas';
   info: {
     description: 'Card panoramica dashboard (icona, titolo, valore, descrizione)';
     displayName: 'Dashboard Panoramica';
   };
   attributes: {
-    content: Attribute.Text;
-    icon: Attribute.String;
-    subTitle: Attribute.String;
-    title: Attribute.String & Attribute.Required;
+    content: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface CarFleetIconText extends Schema.Component {
+export interface CarFleetIconText extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_icon_texts';
   info: {
     description: 'Chip icona + testo (es: Tracciamento GPS)';
     displayName: 'Icon Text';
   };
   attributes: {
-    Icon: Attribute.String;
-    Text: Attribute.String & Attribute.Required;
+    Icon: Schema.Attribute.String;
+    Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface CarFleetMappaFlotta extends Schema.Component {
+export interface CarFleetMappaFlotta extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_mappa_flottas';
   info: {
     description: 'Sezione mappa flotta con pin, conducente e stato';
     displayName: 'Mappa Flotta';
   };
   attributes: {
-    Car: Attribute.String;
-    Icon1: Attribute.String;
-    Icon2: Attribute.String;
-    Icon3: Attribute.String;
-    MappaTitle: Attribute.String;
-    Name: Attribute.String;
-    PIcon: Attribute.String;
-    Status: Attribute.String;
-    Tag: Attribute.String;
+    Car: Schema.Attribute.String;
+    Icon1: Schema.Attribute.String;
+    Icon2: Schema.Attribute.String;
+    Icon3: Schema.Attribute.String;
+    MappaTitle: Schema.Attribute.String;
+    Name: Schema.Attribute.String;
+    PIcon: Schema.Attribute.String;
+    Status: Schema.Attribute.String;
+    Tag: Schema.Attribute.String;
   };
 }
 
-export interface CarFleetPowerappsBlock extends Schema.Component {
+export interface CarFleetPowerappsBlock extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_powerapps_blocks';
   info: {
     description: 'Blocco funzionalita PowerApps (icona, titolo, descrizione)';
     displayName: 'Powerapps Block';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface CarriereCultureCard extends Schema.Component {
+export interface CarriereCultureCard extends Struct.ComponentSchema {
   collectionName: 'components_carriere_culture_cards';
   info: {
     description: "Card per la sezione 'Perch\u00E9 scegliere B4US?'";
     displayName: 'Culture Card';
   };
   attributes: {
-    description: Attribute.Text;
-    icon: Attribute.String;
-    title: Attribute.String & Attribute.Required;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ChiSiamoValueCard extends Schema.Component {
+export interface ChiSiamoValueCard extends Struct.ComponentSchema {
   collectionName: 'components_chi_siamo_value_cards';
   info: {
     description: 'Card con icona, titolo e descrizione per i valori aziendali';
@@ -91,342 +91,341 @@ export interface ChiSiamoValueCard extends Schema.Component {
     icon: 'star';
   };
   attributes: {
-    description: Attribute.Text;
-    icon: Attribute.String;
-    title: Attribute.String & Attribute.Required;
+    description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ContattiContactDetail extends Schema.Component {
+export interface ContattiContactDetail extends Struct.ComponentSchema {
   collectionName: 'components_contatti_contact_details';
   info: {
     description: 'Dettaglio di contatto (telefono, email, social)';
     displayName: 'Contact Detail';
   };
   attributes: {
-    icon: Attribute.String;
-    linkText: Attribute.String;
-    linkUrl: Attribute.String;
-    subTitle: Attribute.String;
-    title: Attribute.String & Attribute.Required;
+    icon: Schema.Attribute.String;
+    linkText: Schema.Attribute.String;
+    linkUrl: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsAccesSmart extends Schema.Component {
+export interface Open4UsAccesSmart extends Struct.ComponentSchema {
   collectionName: 'components_open4us_acces_smarts';
   info: {
     description: 'Chip feature hero (icona + testo, es: Configurazione Istantanea)';
     displayName: 'Acces Smart';
   };
   attributes: {
-    Icon: Attribute.String;
-    Text: Attribute.String & Attribute.Required;
+    Icon: Schema.Attribute.String;
+    Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsAppBlock extends Schema.Component {
+export interface Open4UsAppBlock extends Struct.ComponentSchema {
   collectionName: 'components_open4us_app_blocks';
   info: {
     description: 'Funzionalita app Open4US (icona, titolo, descrizione)';
     displayName: 'App Block';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsAppIcon extends Schema.Component {
+export interface Open4UsAppIcon extends Struct.ComponentSchema {
   collectionName: 'components_open4us_app_icons';
   info: {
     description: 'Icona grande app con testo (sezione Luckey App)';
     displayName: 'App Icon';
   };
   attributes: {
-    Icon: Attribute.String;
-    Text: Attribute.String;
+    Icon: Schema.Attribute.String;
+    Text: Schema.Attribute.String;
   };
 }
 
-export interface Open4UsCalendarBlock extends Schema.Component {
+export interface Open4UsCalendarBlock extends Struct.ComponentSchema {
   collectionName: 'components_open4us_calendar_blocks';
   info: {
     description: 'Card dettaglio prenotazione calendario';
     displayName: 'Calendar Block';
   };
   attributes: {
-    Access: Attribute.String;
-    Date: Attribute.String;
-    Icon1: Attribute.String;
-    Icon2: Attribute.String;
-    Icon3: Attribute.String;
-    Name: Attribute.String;
-    Status: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Access: Schema.Attribute.String;
+    Date: Schema.Attribute.String;
+    Icon1: Schema.Attribute.String;
+    Icon2: Schema.Attribute.String;
+    Icon3: Schema.Attribute.String;
+    Name: Schema.Attribute.String;
+    Status: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsDashboardOption extends Schema.Component {
+export interface Open4UsDashboardOption extends Struct.ComponentSchema {
   collectionName: 'components_open4us_dashboard_options';
   info: {
     description: 'Voce menu sidebar dashboard (icona + testo)';
     displayName: 'Dashboard Option';
   };
   attributes: {
-    Icon: Attribute.String;
-    Text: Attribute.String & Attribute.Required;
+    Icon: Schema.Attribute.String;
+    Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsImageCard extends Schema.Component {
+export interface Open4UsImageCard extends Struct.ComponentSchema {
   collectionName: 'components_open4us_image_cards';
   info: {
     description: 'Card con immagine serratura smart (titolo e sottotitolo)';
     displayName: 'Image Card';
   };
   attributes: {
-    SubTitle: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    SubTitle: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsSmartBlock extends Schema.Component {
+export interface Open4UsSmartBlock extends Struct.ComponentSchema {
   collectionName: 'components_open4us_smart_blocks';
   info: {
     description: 'Blocco smartphone con icona, titolo e descrizione';
     displayName: 'Smart Block';
   };
   attributes: {
-    Description: Attribute.String;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.String;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface Open4UsSpaceBlock extends Schema.Component {
+export interface Open4UsSpaceBlock extends Struct.ComponentSchema {
   collectionName: 'components_open4us_space_blocks';
   info: {
     description: "Card caso d'uso spazio (icona, titolo, descrizione)";
     displayName: 'Space Block';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface OrganizzazioneHeroCard extends Schema.Component {
+export interface OrganizzazioneHeroCard extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_hero_cards';
   info: {
     description: 'Card singola dentro una HeroSection (titolo, sottotitolo, contenuto lista)';
     displayName: 'Hero Card';
   };
   attributes: {
-    content: Attribute.Text;
-    subTitle: Attribute.Text;
-    title: Attribute.String & Attribute.Required;
+    content: Schema.Attribute.Text;
+    subTitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface OrganizzazioneHeroSection extends Schema.Component {
+export interface OrganizzazioneHeroSection extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_hero_sections';
   info: {
     description: 'Sezione hero ripetibile con tag, titolo, sottotitolo e cards';
     displayName: 'Hero Section';
   };
   attributes: {
-    card: Attribute.Component<'organizzazione.hero-card', true>;
-    SubTitle: Attribute.Text;
-    tag: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    card: Schema.Attribute.Component<'organizzazione.hero-card', true>;
+    SubTitle: Schema.Attribute.Text;
+    tag: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface OrganizzazioneKnowledgeArea extends Schema.Component {
+export interface OrganizzazioneKnowledgeArea extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_knowledge_areas';
   info: {
     description: 'Sezione Knowledge Days';
     displayName: 'Knowledge Area';
   };
   attributes: {
-    content: Attribute.Text;
-    MainCard: Attribute.Component<'organizzazione.main-card'>;
-    subCard: Attribute.Component<'organizzazione.sub-card', true>;
+    content: Schema.Attribute.Text;
+    MainCard: Schema.Attribute.Component<'organizzazione.main-card', false>;
+    subCard: Schema.Attribute.Component<'organizzazione.sub-card', true>;
   };
 }
 
-export interface OrganizzazioneMainCard extends Schema.Component {
+export interface OrganizzazioneMainCard extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_main_cards';
   info: {
     description: 'Card principale nella sezione Knowledge Days';
     displayName: 'Main Card';
   };
   attributes: {
-    icon: Attribute.String;
-    subTitle: Attribute.Text;
-    title: Attribute.String & Attribute.Required;
+    icon: Schema.Attribute.String;
+    subTitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface OrganizzazioneSubCard extends Schema.Component {
+export interface OrganizzazioneSubCard extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_sub_cards';
   info: {
     description: 'Sottocard nella sezione Knowledge Days';
     displayName: 'Sub Card';
   };
   attributes: {
-    icon: Attribute.String;
-    subTitle: Attribute.Text;
-    title: Attribute.String & Attribute.Required;
+    icon: Schema.Attribute.String;
+    subTitle: Schema.Attribute.Text;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface OrganizzazioneTechArea extends Schema.Component {
+export interface OrganizzazioneTechArea extends Struct.ComponentSchema {
   collectionName: 'components_organizzazione_tech_areas';
   info: {
     description: 'Sezione aree di formazione con relazione ai Tag';
     displayName: 'Tech Area';
   };
   attributes: {
-    tags: Attribute.Relation<
-      'organizzazione.tech-area',
-      'oneToMany',
-      'api::tag.tag'
-    >;
-    title: Attribute.String;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface ProdottiBulletpointCar extends Schema.Component {
+export interface ProdottiBulletpointCar extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_bulletpoint_cars';
   info: {
     description: 'Punto elenco funzionalita CarFleet (icona, titolo, descrizione)';
     displayName: 'Bulletpoint Car';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ProdottiCarfleetProduct extends Schema.Component {
+export interface ProdottiCarfleetProduct extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_carfleet_products';
   info: {
     description: 'Sezione prodotto CarFleet nella pagina prodotti';
     displayName: 'Carfleet Product';
   };
   attributes: {
-    bulletpointcar: Attribute.Component<'prodotti.bulletpoint-car', true>;
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    icon2: Attribute.String;
-    Image: Attribute.Media<'images'>;
-    Link: Attribute.String;
-    subtitle: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    bulletpointcar: Schema.Attribute.Component<
+      'prodotti.bulletpoint-car',
+      true
+    >;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    icon2: Schema.Attribute.String;
+    Image: Schema.Attribute.Media<'images'>;
+    Link: Schema.Attribute.String;
+    subtitle: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ProdottiDashboardPrenotazioni extends Schema.Component {
+export interface ProdottiDashboardPrenotazioni extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_dashboard_prenotazioni';
   info: {
     description: 'Sezione dashboard prenotazioni nella pagina prodotti';
     displayName: 'Dashboard Prenotazioni';
   };
   attributes: {
-    Prenotazioni: Attribute.Component<'prodotti.prenotazione', true>;
-    Status: Attribute.String;
-    Title: Attribute.String;
+    Prenotazioni: Schema.Attribute.Component<'prodotti.prenotazione', true>;
+    Status: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
   };
 }
 
-export interface ProdottiOpen4UsBlock extends Schema.Component {
+export interface ProdottiOpen4UsBlock extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_open4us_blocks';
   info: {
     description: 'Blocco funzionalita Open4US nella pagina prodotti (icona, titolo, descrizione)';
     displayName: 'Open4us Block';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ProdottiOpen4UsProduct extends Schema.Component {
+export interface ProdottiOpen4UsProduct extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_open4us_products';
   info: {
     description: 'Sezione prodotto Open4US nella pagina prodotti';
     displayName: 'Open4us Product';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Image: Attribute.Media<'images'>;
-    Open4usBlocks: Attribute.Component<'prodotti.open4us-block', true>;
-    SubTitle: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Image: Schema.Attribute.Media<'images'>;
+    Open4usBlocks: Schema.Attribute.Component<'prodotti.open4us-block', true>;
+    SubTitle: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ProdottiPrenotazione extends Schema.Component {
+export interface ProdottiPrenotazione extends Struct.ComponentSchema {
   collectionName: 'components_prodotti_prenotazioni';
   info: {
     description: 'Singola prenotazione nella dashboard (titolo, data, icona, contenuto)';
     displayName: 'Prenotazione';
   };
   attributes: {
-    content: Attribute.String;
-    icon: Attribute.String;
-    subTitle: Attribute.String;
-    title: Attribute.String & Attribute.Required;
+    content: Schema.Attribute.String;
+    icon: Schema.Attribute.String;
+    subTitle: Schema.Attribute.String;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ProdottoFeature extends Schema.Component {
+export interface ProdottoFeature extends Struct.ComponentSchema {
   collectionName: 'components_prodotto_features';
   info: {
     description: 'Feature/blocco funzionalita di un prodotto (icona, titolo, descrizione)';
     displayName: 'Prodotto Feature';
   };
   attributes: {
-    Description: Attribute.Text;
-    Icon: Attribute.String;
-    Title: Attribute.String & Attribute.Required;
+    Description: Schema.Attribute.Text;
+    Icon: Schema.Attribute.String;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
-export interface ServiceOurSkills extends Schema.Component {
+export interface ServiceOurSkills extends Struct.ComponentSchema {
   collectionName: 'components_service_our_skills';
   info: {
     description: 'Sezione competenze con tag e titolo';
     displayName: 'Our Skills';
   };
   attributes: {
-    Tag: Attribute.String;
-    Title: Attribute.String;
+    Tag: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
   };
 }
 
-export interface StoriaTimelineEvent extends Schema.Component {
+export interface StoriaTimelineEvent extends Struct.ComponentSchema {
   collectionName: 'components_storia_timeline_events';
   info: {
     description: 'Evento nella cronologia aziendale';
     displayName: 'Timeline Event';
   };
   attributes: {
-    Anno: Attribute.String & Attribute.Required;
-    Descrizione: Attribute.Text & Attribute.Required;
-    Foto: Attribute.Media<'images'>;
+    Anno: Schema.Attribute.String & Schema.Attribute.Required;
+    Descrizione: Schema.Attribute.Text & Schema.Attribute.Required;
+    Foto: Schema.Attribute.Media<'images'>;
   };
 }
 
-declare module '@strapi/types' {
-  export module Shared {
-    export interface Components {
+declare module '@strapi/strapi' {
+  export module Public {
+    export interface ComponentSchemas {
       'car-fleet.acces-block': CarFleetAccesBlock;
       'car-fleet.dashboard-panoramica': CarFleetDashboardPanoramica;
       'car-fleet.icon-text': CarFleetIconText;

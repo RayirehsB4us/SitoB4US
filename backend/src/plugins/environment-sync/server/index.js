@@ -479,7 +479,7 @@ module.exports = {
           const data = {};
           for (const uid of dataUids) {
             try {
-              data[uid] = await strapi.entityService.findMany(uid, {
+              data[uid] = await strapi.documents(uid).findMany({
                 populate: "*",
                 pagination: { limit: -1 },
               });
@@ -826,7 +826,7 @@ module.exports = {
             );
             for (const uid of dataUids) {
               try {
-                data[uid] = await strapi.entityService.findMany(uid, {
+                data[uid] = await strapi.documents(uid).findMany({
                   populate: "*",
                   pagination: { limit: -1 },
                 });
@@ -1041,12 +1041,14 @@ module.exports = {
             for (const [uid, entries] of Object.entries(payload.data)) {
               if (!Array.isArray(entries)) continue;
               try {
-                const existing = await strapi.entityService.findMany(uid, {
+                const existing = await strapi.documents(uid).findMany({
                   fields: ["id"],
                   pagination: { limit: -1 },
                 });
                 for (const e of existing)
-                  await strapi.entityService.delete(uid, e.id);
+                  await strapi.documents(uid).delete({
+                    documentId: e.documentId
+                  });
                 for (const entry of entries) {
                   const {
                     id: _id,
@@ -1054,7 +1056,7 @@ module.exports = {
                     updatedAt: _ua,
                     ...data
                   } = entry;
-                  await strapi.entityService.create(uid, { data });
+                  await strapi.documents(uid).create({ data });
                   imported++;
                 }
               } catch (e) {
