@@ -87,6 +87,82 @@ async function uploadToSharePoint(filePath, fileName) {
     sharePointId: response.data.id,
   };
 }
+
+// ─── SharePoint Configuration ────────────────────────────────────────
+const SHAREPOINT_TENANT_ID = process.env.SHAREPOINT_TENANT_ID || "";
+const SHAREPOINT_CLIENT_ID = process.env.SHAREPOINT_CLIENT_ID || "";
+const SHAREPOINT_CLIENT_SECRET = process.env.SHAREPOINT_CLIENT_SECRET || "";
+const SHAREPOINT_SITE_ID = process.env.SHAREPOINT_SITE_ID || "";
+const SHAREPOINT_DRIVE_ID = process.env.SHAREPOINT_DRIVE_ID || "";
+const SHAREPOINT_FOLDER = process.env.SHAREPOINT_FOLDER || "CV-Candidature";
+
+/**
+ * Ottiene un access token da Azure AD tramite Client Credentials flow.
+ * Il token viene usato per autenticarsi con Microsoft Graph API.
+ */
+async function getSharePointAccessToken() {
+  const tokenUrl = `https://login.microsoftonline.com/${SHAREPOINT_TENANT_ID}/oauth2/v2.0/token`;
+
+  const params = new URLSearchParams();
+  params.append("client_id", SHAREPOINT_CLIENT_ID);
+  params.append("client_secret", SHAREPOINT_CLIENT_SECRET);
+  params.append("scope", "https://graph.microsoft.com/.default");
+  params.append("grant_type", "client_credentials");
+
+  const response = await axios.post(tokenUrl, params, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  });
+
+  return response.data.access_token;
+}
+
+/**
+ * Carica un file su SharePoint tramite Microsoft Graph API.
+ * @param {string} filePath - Percorso locale del file temporaneo
+ * @param {string} fileName - Nome originale del file (es: "CV_Mario_Rossi.pdf")
+ * @returns {object} - { webUrl, downloadUrl, fileName } del file caricato
+ */
+async function uploadToSharePoint(filePath, fileName) {
+  const accessToken = await getSharePointAccessToken();
+
+  // Sanitizza il nome file per evitare conflitti (aggiungi timestamp)
+  const timestamp = Date.now();
+  const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const uploadName = `${timestamp}_${safeName}`;
+
+  const fileBuffer = fs.readFileSync(filePath);
+  const fileSize = fileBuffer.length;
+
+  // Per file <= 4MB: upload diretto con PUT
+  // Per file > 4MB: serve upload session (non dovrebbe servire per CV)
+  if (fileSize > 4 * 1024 * 1024) {
+    throw new Error(
+      "File troppo grande per upload diretto. Massimo 4MB per SharePoint upload.",
+    );
+  }
+
+  const uploadUrl =
+    `https://graph.microsoft.com/v1.0/sites/${SHAREPOINT_SITE_ID}` +
+    `/drives/${SHAREPOINT_DRIVE_ID}` +
+    `/root:/${SHAREPOINT_FOLDER}/${uploadName}:/content`;
+
+  const response = await axios.put(uploadUrl, fileBuffer, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/octet-stream",
+    },
+    maxContentLength: 10 * 1024 * 1024,
+    maxBodyLength: 10 * 1024 * 1024,
+  });
+
+  return {
+    webUrl: response.data.webUrl,
+    downloadUrl:
+      response.data["@microsoft.graph.downloadUrl"] || response.data.webUrl,
+    fileName: uploadName,
+    sharePointId: response.data.id,
+  };
+}
 // Lista IP/prefissi consentiti per login:
 // - IP singoli: 4.232.71.155
 // - Intere reti (prefisso): 192.168.178.*  (tutti i 192.168.178.x)
@@ -167,6 +243,63 @@ app.use(async (req, res, next) => {
   } catch (error) {
     console.warn("Strapi mega menu fetch error:", error.message);
     res.locals.topMenu = [];
+  }
+
+  next();
+});
+
+// Middleware per caricare il footer dinamico da Strapi
+app.use(async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}/footer?populate[Footer][populate][logo][fields][0]=url&populate[Footer][populate][logo][fields][1]=name&populate[Footer][populate][Colonna][populate]=link`,
+      {
+        headers: { ...strapiAuthHeaders },
+      },
+    );
+
+    const rawFooter = response.data?.data?.Footer || null;
+
+    if (!rawFooter) {
+      res.locals.footer = null;
+      return next();
+    }
+
+    const columns = Array.isArray(rawFooter.Colonna)
+      ? rawFooter.Colonna.map((col) => ({
+          ...col,
+          link: Array.isArray(col.link) ? col.link : [],
+        }))
+      : [];
+
+    const footer = {
+      descrizione: rawFooter.Descrizione || "",
+      subTitle: rawFooter.subTitle || "",
+      logoUrl:
+        rawFooter.logo && rawFooter.logo.url
+          ? `${STRAPI_URL}${rawFooter.logo.url}`
+          : "/images/logo.png",
+      logoName: (rawFooter.logo && rawFooter.logo.name) || "Logo",
+      columns,
+    };
+
+    console.log(
+      "[FOOTER]",
+      new Date().toISOString(),
+      {
+        descrizione: footer.descrizione,
+        subTitle: footer.subTitle,
+        columns: footer.columns.map((c) => ({
+          title: c.Title,
+          links: c.link.length,
+        })),
+      },
+    );
+
+    res.locals.footer = footer;
+  } catch (error) {
+    console.warn("Strapi footer fetch error:", error.message);
+    res.locals.footer = null;
   }
 
   next();
@@ -411,6 +544,7 @@ async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = nul
     const separator = endpoint.includes("?") ? "&" : "?";
     const response = await axios.get(
       `${STRAPI_API_URL}${endpoint}${separator}${query}`,
+      `${STRAPI_API_URL}${endpoint}${separator}${query}`,
       {
         headers: { ...strapiAuthHeaders },
       },
@@ -433,6 +567,8 @@ app.get("/", async (req, res) => {
       servizi: servizi?.data || [],
       home: homeData?.data || {},
       servizi: servizi?.data || [],
+      home: homeData?.data || {},
+      servizi: servizi?.data || [],
     });
   } catch (error) {
     console.error("Error rendering home:", error);
@@ -446,6 +582,8 @@ app.get("/home", async (req, res) => {
     const servizi = await fetchFromStrapi("/servizi");
     res.render("home", {
       title: "B4US | Simplify IT",
+      home: homeData?.data || {},
+      servizi: servizi?.data || [],
       home: homeData?.data || {},
       servizi: servizi?.data || [],
       home: homeData?.data || {},
@@ -467,6 +605,8 @@ app.get("/chi-siamo", async (req, res) => {
     const teamMembers = await fetchFromStrapi("/team-members?sort=ordine:asc");
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
+      chiSiamoData: chiSiamoData?.data || {},
+      teamMembers: teamMembers?.data || [],
       chiSiamoData: chiSiamoData?.data || {},
       teamMembers: teamMembers?.data || [],
       strapiUrl: STRAPI_URL,
@@ -491,9 +631,11 @@ app.get("/prodotti", async (req, res) => {
       ['Features', 'ImmaginePrincipale', 'ImmagineSecondaria']
     );
     var prodottiList = (prodottiItems?.data || []);
+    var prodottiList = (prodottiItems?.data || []);
     prodottiList.sort(function(a, b) { return (a.Ordine || 0) - (b.Ordine || 0); });
     res.render("prodotti", {
       title: "Prodotti | B4US - Simplify IT",
+      prodottiData: prodottiPage?.data || {},
       prodottiData: prodottiPage?.data || {},
       prodotti: prodottiList,
       strapiUrl: STRAPI_URL,
@@ -516,6 +658,7 @@ app.get("/open4us", async (req, res) => {
       title: "Open4US - Accesso Smart | B4US",
       o4u: open4usData?.data || {},
       o4u: open4usData?.data || {},
+      o4u: open4usData?.data || {},
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -533,6 +676,7 @@ app.get("/carfleet", async (req, res) => {
     var carfleetData = await fetchFromStrapi("/car-fleet");
     res.render("carfleet", {
       title: "CarFleet - Gestione Flotta Intelligente | B4US",
+      cf: carfleetData?.data || {},
       cf: carfleetData?.data || {},
       cf: carfleetData?.data || {},
       strapiUrl: STRAPI_URL,
@@ -555,6 +699,8 @@ app.get("/servizi", async (req, res) => {
       title: "Servizi | B4US - Simplify IT",
       servizi: servizi?.data || [],
       serviziPage: serviceData?.data || {},
+      servizi: servizi?.data || [],
+      serviziPage: serviceData?.data || {},
     });
   } catch (error) {
     console.error("Error rendering servizi:", error);
@@ -574,6 +720,7 @@ app.get("/struttura", async (req, res) => {
     res.render("struttura", {
       title: "Organizzazione - B4US | Simplify IT",
       strutturaData: strutturaData?.data || {},
+      strutturaData: strutturaData?.data || {},
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -592,6 +739,8 @@ app.get("/storia", async (req, res) => {
     const storiaEvents = await fetchFromStrapi("/storia-b4-uses");
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
+      storiaData: storiaData?.data || {},
+      storia: storiaEvents?.data || [],
       storiaData: storiaData?.data || {},
       storia: storiaEvents?.data || [],
       strapiUrl: STRAPI_URL,
@@ -623,6 +772,8 @@ app.get("/carriere", async (req, res) => {
       title: "Lavora Con Noi - B4US Team",
       carriereData: carriereData?.data || {},
       jobPositions: jobPositions?.data || [],
+      carriereData: carriereData?.data || {},
+      jobPositions: jobPositions?.data || [],
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -644,6 +795,7 @@ app.get("/contatti", async (req, res) => {
     res.render("contatti", {
       title: "Contatti - B4US Simplify IT",
       contattiData: contattiData?.data || {},
+      contattiData: contattiData?.data || {},
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -664,6 +816,7 @@ app.get("/blog", async (req, res) => {
 
     res.render("blog", {
       title: "Diario di Bordo - B4US Simplify IT",
+      blogPageData: blogPageData?.data || {},
       blogPageData: blogPageData?.data || {},
       counts: {
         dipendenti: dipendenti?.data?.length || 0,
@@ -695,10 +848,12 @@ app.get("/blog/:slug", async (req, res) => {
       },
     );
     const post = response.data?.data?.[0] || null;
+    const post = response.data?.data?.[0] || null;
 
     // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
     const allPosts = await fetchFromStrapi("/blog-posts");
     const relatedPosts =
+      allPosts?.data?.filter((p) => p.slug !== slug) ||
       allPosts?.data?.filter((p) => p.slug !== slug) ||
       [];
 
@@ -1146,8 +1301,13 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
     console.log("Uploading CV to SharePoint...");
     const sharePointResult = await uploadToSharePoint(
       cvFile.path,
+    // Step 1: Upload del CV su SharePoint
+    console.log("Uploading CV to SharePoint...");
+    const sharePointResult = await uploadToSharePoint(
+      cvFile.path,
       cvFile.originalname,
     );
+    console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
     console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
     console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
 
@@ -1159,6 +1319,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
 
     // Step 3: Crea la job-request con link SharePoint
     // Step 3: Crea la job-request con link SharePoint
+    // Step 3: Crea la job-request con link SharePoint
     const jobRequestData = {
       data: {
         Nome: nome,
@@ -1166,6 +1327,8 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
         AnnoNascita: dataNascita,
         email: email,
         Telefono: telefono,
+        cvUrl: sharePointResult.webUrl,
+        cvFileName: sharePointResult.fileName,
         cvUrl: sharePointResult.webUrl,
         cvFileName: sharePointResult.fileName,
         publishedAt: new Date().toISOString(),
