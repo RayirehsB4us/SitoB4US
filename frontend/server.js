@@ -459,7 +459,11 @@ app.get("/home", async (req, res) => {
 
 app.get("/chi-siamo", async (req, res) => {
   try {
-    const chiSiamoData = await fetchFromStrapi("/chi-siamo", null, ["ValueCards", "HeroImage"]);
+    const chiSiamoData = await fetchFromStrapi(
+      "/chi-siamo",
+      null,
+      ["ValueCards", "HeroImage", "Team"],
+    );
     const teamMembers = await fetchFromStrapi("/team-members?sort=ordine:asc");
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
