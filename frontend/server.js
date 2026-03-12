@@ -169,6 +169,63 @@ app.use(async (req, res, next) => {
   next();
 });
 
+// Middleware per caricare il footer dinamico da Strapi
+app.use(async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}/footer?populate[Footer][populate][logo][fields][0]=url&populate[Footer][populate][logo][fields][1]=name&populate[Footer][populate][Colonna][populate]=link`,
+      {
+        headers: { ...strapiAuthHeaders },
+      },
+    );
+
+    const rawFooter = response.data?.data?.Footer || null;
+
+    if (!rawFooter) {
+      res.locals.footer = null;
+      return next();
+    }
+
+    const columns = Array.isArray(rawFooter.Colonna)
+      ? rawFooter.Colonna.map((col) => ({
+          ...col,
+          link: Array.isArray(col.link) ? col.link : [],
+        }))
+      : [];
+
+    const footer = {
+      descrizione: rawFooter.Descrizione || "",
+      subTitle: rawFooter.subTitle || "",
+      logoUrl:
+        rawFooter.logo && rawFooter.logo.url
+          ? `${STRAPI_URL}${rawFooter.logo.url}`
+          : "/images/logo.png",
+      logoName: (rawFooter.logo && rawFooter.logo.name) || "Logo",
+      columns,
+    };
+
+    console.log(
+      "[FOOTER]",
+      new Date().toISOString(),
+      {
+        descrizione: footer.descrizione,
+        subTitle: footer.subTitle,
+        columns: footer.columns.map((c) => ({
+          title: c.Title,
+          links: c.link.length,
+        })),
+      },
+    );
+
+    res.locals.footer = footer;
+  } catch (error) {
+    console.warn("Strapi footer fetch error:", error.message);
+    res.locals.footer = null;
+  }
+
+  next();
+});
+
 // Configurazione Multer per l'upload dei file
 const upload = multer({
   dest: "uploads/",
