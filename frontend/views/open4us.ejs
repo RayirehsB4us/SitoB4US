@@ -34,8 +34,9 @@
 
 <body class="bg-background-light text-secondary font-sans transition-colors duration-300">
     <%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
-        <main class="pt-16">
+        <main id="page-content" class="pt-16 hidden opacity-0 transition-opacity duration-300">
             <!-- Hero Section -->
             <div class="relative overflow-hidden py-16 lg:py-24">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12">
@@ -584,6 +585,10 @@
 
         <%- include('partials/demo-modal') %>
             <%- include('partials/footer') %>
+
+        <script>
+            (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+        </script>
 </body>
 
 </html>

@@ -42,8 +42,9 @@
 
 <body class="bg-background-light text-secondary font-sans transition-colors duration-300">
 <%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
-        <main class="pt-16">
+        <main id="page-content" class="pt-16 hidden opacity-0 transition-opacity duration-300">
             <!-- Hero Section -->
             <div class="relative overflow-hidden bg-gradient-to-br from-gray-50 to-white py-20">
                 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-primary/10 blur-3xl"></div>
@@ -226,6 +227,10 @@
         </main>
 
         <%- include('partials/footer') %>
+
+        <script>
+            (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+        </script>
 </body>
 
 </html>
