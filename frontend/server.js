@@ -113,6 +113,62 @@ const strapiAuthHeaders = STRAPI_API_TOKEN
   ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
   : {};
 
+// Middleware per caricare il mega menu e renderlo disponibile in tutte le view
+app.use(async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}/mega-menu?populate[MegaMenu][populate][barElement][populate]=sottoMenu`,
+      {
+        headers: { ...strapiAuthHeaders },
+      },
+    );
+
+    const rawItems =
+      response.data?.data?.MegaMenu?.barElement && Array.isArray(response.data.data.MegaMenu.barElement)
+        ? response.data.data.MegaMenu.barElement
+        : [];
+
+    const isVisible = (value) =>
+      value === true || value === "true" || value === 1 || value === "1";
+
+    // Filtra solo gli elementi visibili e normalizza i sotto-menu
+    const topMenu = rawItems
+      .filter((item) => item && isVisible(item.visible))
+      .map((item) => {
+        const sottoMenu = Array.isArray(item.sottoMenu)
+          ? item.sottoMenu.filter((sub) => sub && isVisible(sub.visible))
+          : [];
+        return {
+          ...item,
+          sottoMenu,
+        };
+      });
+
+    // Log sintetico per verificare i valori che arrivano da Strapi
+    console.log(
+      "[MEGA-MENU]",
+      new Date().toISOString(),
+      topMenu.map((item) => ({
+        label: item.label,
+        path: item.path,
+        visible: item.visible,
+        sottoMenu: (item.sottoMenu || []).map((sub) => ({
+          label: sub.label,
+          path: sub.path,
+          visible: sub.visible,
+        })),
+      })),
+    );
+
+    res.locals.topMenu = topMenu;
+  } catch (error) {
+    console.warn("Strapi mega menu fetch error:", error.message);
+    res.locals.topMenu = [];
+  }
+
+  next();
+});
+
 // Configurazione Multer per l'upload dei file
 const upload = multer({
   dest: "uploads/",
