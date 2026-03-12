@@ -725,22 +725,113 @@ app.get("/bear", (req, res) => {
 
 app.get("/team", async (req, res) => {
   try {
-    const teamData = await fetchFromStrapi(
-      "/team",
-      null,
-      ["MainTitleSection"],
-    );
+    const selectedTeam = req.query.team || "all";
 
-    const mainSections = teamData?.data?.MainTitleSection || [];
+    // 1) Dati di layout pagina Team
+    const teamPageResp = await fetchFromStrapi("/team", null, [
+      "MainTitleSection",
+    ]);
+
+    const mainSections = teamPageResp?.data?.MainTitleSection || [];
     const headerSection =
       mainSections.find((c) => c.__component === "shared.title") || null;
-
     const pageTitle =
       (headerSection && headerSection.Title) || "Il Nostro Team - B4US";
 
+    // 2) Employes con deep populate (pic, certificate, project, teams)
+    const employeesResp = await fetchFromStrapi("/employes", null, [
+      "pic",
+      "certificate",
+      "project",
+      "teams",
+    ]);
+    const rawEmployees = Array.isArray(employeesResp?.data)
+      ? employeesResp.data
+      : [];
+
+    // 3) Team roles per i filtri
+    const teamRolesResp = await fetchFromStrapi("/team-roles");
+    const rawRoles = (Array.isArray(teamRolesResp?.data)
+      ? teamRolesResp.data
+      : []).filter((r) => r.Team !== "CEO & Founder");
+
+    const teamRolesParsed = rawRoles.map((r) => ({
+      id: r.id,
+      documentId: r.documentId,
+      name: r.Team,
+      description: r.DescrizioneTeam || "",
+    }));
+
+    function buildImageUrl(member) {
+      const pics = Array.isArray(member.pic) ? member.pic : [];
+      const pic = pics[0];
+      if (!pic) {
+        return "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg";
+      }
+      const formats = pic.formats || {};
+      const img = formats.medium || formats.small || formats.thumbnail || pic;
+      if (img.url)
+        return img.url.startsWith("http") ? img.url : STRAPI_URL + img.url;
+      if (pic.url)
+        return pic.url.startsWith("http") ? pic.url : STRAPI_URL + pic.url;
+      return "https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg";
+    }
+
+    let employeesParsed = rawEmployees.map((m) => {
+      const teams = Array.isArray(m.teams) ? m.teams : [];
+      const parsedTeams = teams.map((t) => ({
+        id: t.id,
+        documentId: t.documentId,
+        name: t.Team,
+      }));
+
+      return {
+        id: m.id,
+        documentId: m.documentId,
+        fullName: `${m.nome || ""} ${m.cognome || ""}`.trim(),
+        firstName: m.nome || "",
+        lastName: m.cognome || "",
+        jobTitle: m.jobTitle || "",
+        jobDescription:
+          m.JobDescription ||
+          "Professionista del team B4US, impegnato nella trasformazione digitale dei nostri clienti.",
+        year: (m.AnnoAssunzione || "").toString().trim(),
+        consulente: !!m.Consulente,
+        jobCategory: m.jobCategory || "",
+        imageUrl: buildImageUrl(m),
+        teams: parsedTeams,
+      };
+    });
+
+    // Metti il General Manager (Riccardo) in prima posizione nella lista "Tutti"
+    employeesParsed.sort((a, b) => {
+      const aIsGM =
+        (a.jobTitle || "").startsWith(
+          "General Manager and Digital Transformation and Smart Working Architect",
+        ) || a.fullName === "Riccardo Germinario";
+      const bIsGM =
+        (b.jobTitle || "").startsWith(
+          "General Manager and Digital Transformation and Smart Working Architect",
+        ) || b.fullName === "Riccardo Germinario";
+      if (aIsGM && !bIsGM) return -1;
+      if (!aIsGM && bIsGM) return 1;
+      return 0;
+    });
+
+    const employeesFiltered =
+      selectedTeam === "all"
+        ? employeesParsed
+        : employeesParsed.filter((e) =>
+            e.teams.some((t) => t.documentId === selectedTeam),
+          );
+
     res.render("team", {
       title: pageTitle,
-      teamData: teamData?.data || {},
+      teamData: teamPageResp?.data || {},
+      employees: employeesFiltered,
+      allEmployeesCount: employeesParsed.length,
+      teamRoles: teamRolesParsed,
+      selectedTeam,
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -748,6 +839,10 @@ app.get("/team", async (req, res) => {
     res.render("team", {
       title: "Il Nostro Team - B4US",
       teamData: {},
+      employees: [],
+      allEmployeesCount: 0,
+      teamRoles: [],
+      selectedTeam: "all",
       strapiUrl: STRAPI_URL,
     });
   }
