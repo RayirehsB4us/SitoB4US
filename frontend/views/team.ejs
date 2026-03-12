@@ -8,23 +8,32 @@
 <body class="bg-background-light text-secondary font-sans transition-colors duration-300">
     <%- include('partials/topNav') %>
 
+    <% 
+      const mainSections = (teamData && teamData.MainTitleSection) || [];
+      const headerSection = mainSections.find(s => s.__component === 'shared.title') || {};
+      const ctaSection = mainSections.find(s => s.__component === 'shared.button-cta') || {};
+      const statsSection = mainSections.find(s => s.__component === 'shared.card-content') || {};
+      const statsTags = Array.isArray(statsSection.tags) ? statsSection.tags : [];
+      const statsImage = statsSection.Image || null;
+      const statsImageUrl = statsImage && statsImage.url ? (strapiUrl + statsImage.url) : null;
+    %>
+
     <main class="flex-1 max-w-7xl mx-auto w-full px-6 lg:px-20 py-12">
         <!-- Page Header -->
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
             <div class="max-w-2xl">
                 <h1
                     class="text-slate-900 dark:text-slate-100 text-4xl lg:text-5xl font-black leading-tight tracking-tight mb-4">
-                    Il Nostro Team
+                    <%= headerSection.Title || 'Il Nostro Team' %>
                 </h1>
                 <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                    Incontra i professionisti che guidano l'innovazione in B4US. Un gruppo eterogeneo di esperti
-                    dedicato alla trasformazione digitale.
+                    <%= headerSection.Description || 'Incontra i professionisti che guidano l\'innovazione in B4US. Un gruppo eterogeneo di esperti dedicato alla trasformazione digitale.' %>
                 </p>
             </div>
             <button
                 class="flex items-center justify-center gap-2 rounded-lg h-12 px-6 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm font-bold hover:bg-primary/20 transition-all group">
                 <span class="material-symbols-outlined text-xl group-hover:text-primary">group_add</span>
-                Lavora con noi
+                <%= ctaSection.Label || 'Lavora con noi' %>
             </button>
         </div>
 
@@ -211,35 +220,45 @@
         <div class="mt-24 bg-white dark:bg-slate-900 rounded-2xl p-10 lg:p-16 border border-slate-200 dark:border-slate-800">
             <div class="flex flex-col lg:flex-row gap-12 items-center">
                 <div class="lg:w-1/2">
-                    <h2 class="text-slate-900 dark:text-slate-100 text-3xl font-black mb-6">Insieme facciamo la differenza</h2>
+                    <h2 class="text-slate-900 dark:text-slate-100 text-3xl font-black mb-6">
+                        <%= statsSection.Title || 'Insieme facciamo la differenza' %>
+                    </h2>
                     <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed mb-8">
-                        Il nostro team non è solo composto da colleghi, ma da una comunità di talenti che collaborano ogni
-                        giorno per superare le sfide tecnologiche. La nostra forza risiede nella nostra diversità di competenze.
+                        <%= statsSection.Description || 'Il nostro team non è solo composto da colleghi, ma da una comunità di talenti che collaborano ogni giorno per superare le sfide tecnologiche. La nostra forza risiede nella nostra diversità di competenze.' %>
                     </p>
                     <div class="grid grid-cols-2 gap-8">
-                        <div>
-                            <p class="text-4xl font-black text-primary mb-1">25+</p>
-                            <p class="text-slate-500 text-sm font-medium">Professionisti</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-black text-primary mb-1">100+</p>
-                            <p class="text-slate-500 text-sm font-medium">Progetti completati</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-black text-primary mb-1">15</p>
-                            <p class="text-slate-500 text-sm font-medium">Anni di esperienza</p>
-                        </div>
-                        <div>
-                            <p class="text-4xl font-black text-primary mb-1">10</p>
-                            <p class="text-slate-500 text-sm font-medium">Certificazioni Core</p>
-                        </div>
+                        <% if (statsTags.length) { %>
+                            <% statsTags.forEach(function(tag) { %>
+                                <div>
+                                    <p class="text-4xl font-black text-primary mb-1"><%= (tag.tagValue || '').trim() %></p>
+                                    <p class="text-slate-500 text-sm font-medium"><%= tag.Tag || '' %></p>
+                                </div>
+                            <% }); %>
+                        <% } else { %>
+                            <div>
+                                <p class="text-4xl font-black text-primary mb-1">25+</p>
+                                <p class="text-slate-500 text-sm font-medium">Professionisti</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-black text-primary mb-1">100+</p>
+                                <p class="text-slate-500 text-sm font-medium">Progetti completati</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-black text-primary mb-1">15</p>
+                                <p class="text-slate-500 text-sm font-medium">Anni di esperienza</p>
+                            </div>
+                            <div>
+                                <p class="text-4xl font-black text-primary mb-1">10</p>
+                                <p class="text-slate-500 text-sm font-medium">Certificazioni Core</p>
+                            </div>
+                        <% } %>
                     </div>
                 </div>
                 <div class="lg:w-1/2 w-full">
                     <div class="aspect-video rounded-xl overflow-hidden shadow-2xl">
                         <img class="w-full h-full object-cover"
                             alt="Il team B4US al lavoro in ufficio"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_ZjmSRj4IPoGj6o0_q7fjFmH0CH53UiNHVwj-u8uwEZoJhLvXX6qiQdSW119areKb8m6niWeF-bIBNH-1qzkm2IJJuoEjKLHQYzxXTb82zvWwGoEXjUJ9gdgArqBGyTdLjcjg675cOGnrzjK30pkZs2Y2713zjfGT8DXA6OYSmd4pBI_gUUmUJn588S-51zOJyEjoqsn3NX3aHFFTT94TWFnI5BVBYTI1Ecweu6uEDyV1f8t7S5cD91SYXjCJD3xW_4ai6px2TTaP" />
+                            src="<%= statsImageUrl || 'https://lh3.googleusercontent.com/aida-public/AB6AXuC_ZjmSRj4IPoGj6o0_q7fjFmH0CH53UiNHVwj-u8uwEZoJhLvXX6qiQdSW119areKb8m6niWeF-bIBNH-1qzkm2IJJuoEjKLHQYzxXTb82zvWwGoEXjUJ9gdgArqBGyTdLjcjg675cOGnrzjK30pkZs2Y2713zjfGT8DXA6OYSmd4pBI_gUUmUJn588S-51zOJyEjoqsn3NX3aHFFTT94TWFnI5BVBYTI1Ecweu6uEDyV1f8t7S5cD91SYXjCJD3xW_4ai6px2TTaP' %>" />
                     </div>
                 </div>
             </div>

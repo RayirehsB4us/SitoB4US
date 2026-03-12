@@ -723,10 +723,34 @@ app.get("/bear", (req, res) => {
   });
 });
 
-app.get("/team", (req, res) => {
-  res.render("team", {
-    title: "Il Nostro Team - B4US",
-  });
+app.get("/team", async (req, res) => {
+  try {
+    const teamData = await fetchFromStrapi(
+      "/team",
+      null,
+      ["MainTitleSection"],
+    );
+
+    const mainSections = teamData?.data?.MainTitleSection || [];
+    const headerSection =
+      mainSections.find((c) => c.__component === "shared.title") || null;
+
+    const pageTitle =
+      (headerSection && headerSection.Title) || "Il Nostro Team - B4US";
+
+    res.render("team", {
+      title: pageTitle,
+      teamData: teamData?.data || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    console.error("Error rendering team:", error);
+    res.render("team", {
+      title: "Il Nostro Team - B4US",
+      teamData: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/login", (req, res) => {
