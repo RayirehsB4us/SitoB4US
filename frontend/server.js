@@ -12,13 +12,6 @@ const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
 
-// ─── SharePoint Configuration ────────────────────────────────────────
-const SHAREPOINT_TENANT_ID = process.env.SHAREPOINT_TENANT_ID || "";
-const SHAREPOINT_CLIENT_ID = process.env.SHAREPOINT_CLIENT_ID || "";
-const SHAREPOINT_CLIENT_SECRET = process.env.SHAREPOINT_CLIENT_SECRET || "";
-const SHAREPOINT_SITE_ID = process.env.SHAREPOINT_SITE_ID || "";
-const SHAREPOINT_DRIVE_ID = process.env.SHAREPOINT_DRIVE_ID || "";
-const SHAREPOINT_FOLDER = process.env.SHAREPOINT_FOLDER || "CV-Candidature";
 
 /**
  * Ottiene un access token da Azure AD tramite Client Credentials flow.
@@ -470,23 +463,17 @@ app.use((req, res, next) => {
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = null) {
   try {
-    var query = 'populate=*';
-    var query = 'populate=*';
+    let query = "populate=*";
     if (deepPopulate && deepPopulate.length > 0) {
-      query = deepPopulate.map(function(c) {
-      query = deepPopulate.map(function(c) {
-        return 'populate[' + c + '][populate]=*';
-      }).join('&');
+      query = deepPopulate
+        .map((c) => `populate[${c}][populate]=*`)
+        .join("&");
     }
-    const separator = endpoint.includes('?') ? '&' : '?';
-    const separator = endpoint.includes('?') ? '&' : '?';
-    const response = await axios.get(
-      `${STRAPI_API_URL}${endpoint}${separator}${query}`,
-      `${STRAPI_API_URL}${endpoint}${separator}${query}`,
-      {
-        headers: { ...strapiAuthHeaders },
-      },
-    );
+    const separator = endpoint.includes("?") ? "&" : "?";
+    const url = `${STRAPI_API_URL}${endpoint}${separator}${query}`;
+    const response = await axios.get(url, {
+      headers: { ...strapiAuthHeaders },
+    });
     return response.data;
   } catch (error) {
     console.warn(`Strapi fetch error for ${endpoint}:`, error.message);
@@ -531,16 +518,19 @@ app.get("/home", async (req, res) => {
 
 app.get("/chi-siamo", async (req, res) => {
   try {
-    const chiSiamoData = await fetchFromStrapi("/chi-siamo", null, ["ValueCards", "HeroImage"]);
-    const teamMembers = await fetchFromStrapi("/team-members?sort=ordine:asc");
-    const chiSiamoData = await fetchFromStrapi("/chi-siamo", null, ["ValueCards", "HeroImage"]);
-    const teamMembers = await fetchFromStrapi("/team-members?sort=ordine:asc");
+    const chiSiamoResp = await fetchFromStrapi(
+      "/chi-siamo",
+      null,
+      ["ValueCards", "HeroImage", "Team"],
+    );
+    const teamMembersResp = await fetchFromStrapi(
+      "/team-members?sort=ordine:asc",
+    );
+
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
-      chiSiamoData: chiSiamoData?.data || {},
-      teamMembers: teamMembers?.data || [],
-      chiSiamoData: chiSiamoData?.data || {},
-      teamMembers: teamMembers?.data || [],
+      chiSiamoData: chiSiamoResp?.data || {},
+      teamMembers: teamMembersResp?.data || [],
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -777,7 +767,6 @@ app.get("/blog/:slug", async (req, res) => {
         headers: { ...strapiAuthHeaders },
       },
     );
-    const post = response.data?.data?.[0] || null;
     const post = response.data?.data?.[0] || null;
 
     // Fetch altri articoli per la sezione "correlati" (escludendo l'attuale)
@@ -1088,10 +1077,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
 
     uploadedFilePath = cvFile.path;
 
-    // Step 1: Upload del CV su SharePoint
-    console.log("Uploading CV to SharePoint...");
-    const sharePointResult = await uploadToSharePoint(
-      cvFile.path,
+    
     // Step 1: Upload del CV su SharePoint
     console.log("Uploading CV to SharePoint...");
     const sharePointResult = await uploadToSharePoint(
