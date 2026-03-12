@@ -723,6 +723,12 @@ app.get("/bear", (req, res) => {
   });
 });
 
+app.get("/team", (req, res) => {
+  res.render("team", {
+    title: "Il Nostro Team - B4US",
+  });
+});
+
 app.get("/login", (req, res) => {
   if (!res.locals.showLoginButton) {
     console.warn(
