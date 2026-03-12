@@ -106,12 +106,48 @@
     </div>
 </nav>
 
+<!-- Skeleton overlay shown immediately when navigating via topnav -->
+<div id="nav-skeleton-overlay" class="fixed inset-0 z-40 hidden bg-background-light" style="top: var(--nav-height, 64px);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <div class="space-y-6">
+            <div class="inline-flex px-16 py-3 rounded-full skeleton"></div>
+            <div class="space-y-3">
+                <div class="h-10 w-3/4 rounded-lg skeleton"></div>
+                <div class="h-10 w-1/2 rounded-lg skeleton"></div>
+            </div>
+            <div class="space-y-3 mt-4">
+                <div class="h-4 w-full rounded skeleton"></div>
+                <div class="h-4 w-5/6 rounded skeleton"></div>
+                <div class="h-4 w-2/3 rounded skeleton"></div>
+            </div>
+        </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="p-8 rounded-2xl border border-slate-100 space-y-4"><div class="h-14 w-14 rounded-xl skeleton"></div><div class="h-6 w-3/4 rounded skeleton"></div><div class="space-y-2"><div class="h-4 w-full rounded skeleton"></div><div class="h-4 w-4/5 rounded skeleton"></div></div></div>
+            <div class="p-8 rounded-2xl border border-slate-100 space-y-4"><div class="h-14 w-14 rounded-xl skeleton"></div><div class="h-6 w-3/4 rounded skeleton"></div><div class="space-y-2"><div class="h-4 w-full rounded skeleton"></div><div class="h-4 w-4/5 rounded skeleton"></div></div></div>
+            <div class="p-8 rounded-2xl border border-slate-100 space-y-4"><div class="h-14 w-14 rounded-xl skeleton"></div><div class="h-6 w-3/4 rounded skeleton"></div><div class="space-y-2"><div class="h-4 w-full rounded skeleton"></div><div class="h-4 w-4/5 rounded skeleton"></div></div></div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Mobile menu toggle and submenu behavior
+    // Show skeleton overlay immediately when navigating via topnav links
     document.addEventListener('DOMContentLoaded', function() {
+        const overlay = document.getElementById('nav-skeleton-overlay');
+        document.addEventListener('click', function(e) {
+            const link = e.target.closest('nav a[href^="/"]');
+            if (!link || !overlay) return;
+            if (link.target === '_blank' || link.href.startsWith('mailto:') || link.href.startsWith('tel:')) return;
+            if (link.getAttribute('href') === '#' || link.getAttribute('href') === '') return;
+            const url = new URL(link.href);
+            if (url.origin !== window.location.origin) return;
+            if (url.pathname === window.location.pathname) return;
+            overlay.classList.remove('hidden');
+        }, true);
+
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
         if (menuButton && mobileMenu) {
             menuButton.addEventListener('click', function(e) {
                 e.stopPropagation();
