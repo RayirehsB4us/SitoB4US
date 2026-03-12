@@ -762,6 +762,12 @@ app.get("/team", async (req, res) => {
       description: r.DescrizioneTeam || "",
     }));
 
+    // 4) Job positions per il modale "Lavora con noi"
+    const jobPositionsResp = await fetchFromStrapi("/job-positions");
+    const jobPositions = Array.isArray(jobPositionsResp?.data)
+      ? jobPositionsResp.data
+      : [];
+
     function buildImageUrl(member) {
       const pics = Array.isArray(member.pic) ? member.pic : [];
       const pic = pics[0];
@@ -832,6 +838,7 @@ app.get("/team", async (req, res) => {
       allEmployeesCount: employeesParsed.length,
       teamRoles: teamRolesParsed,
       selectedTeam,
+      jobPositions,
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
@@ -843,6 +850,7 @@ app.get("/team", async (req, res) => {
       allEmployeesCount: 0,
       teamRoles: [],
       selectedTeam: "all",
+      jobPositions: [],
       strapiUrl: STRAPI_URL,
     });
   }
