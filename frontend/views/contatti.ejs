@@ -7,7 +7,9 @@
 
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
 <%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
+    <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
     <section class="pt-32 pb-12 px-4">
       <div class="max-w-7xl mx-auto text-center">
         <h1
@@ -185,6 +187,7 @@
         </div>
       </div>
     </section>
+    </main>
 
     <%- include('partials/footer') %>
 
@@ -261,6 +264,9 @@
             submitLoader.classList.add('hidden');
           }
         });
+      </script>
+      <script>
+        (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
       </script>
 </body>
 

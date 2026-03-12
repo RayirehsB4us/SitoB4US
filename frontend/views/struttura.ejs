@@ -7,7 +7,9 @@
 
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
   <%- include('partials/topNav') %>
+  <%- include('partials/skeleton-page') %>
 
+    <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
     <!-- Hero Section -->
     <section class="relative py-20 overflow-hidden">
       <div class="absolute inset-0 text-slate-100 dark:text-slate-900 bg-grid-pattern opacity-50 -z-10"></div>
@@ -343,8 +345,13 @@
         </div>
       </div>
     </section>
+    </main>
 
     <%- include('partials/footer') %>
+
+    <script>
+        (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+    </script>
 </body>
 
 </html>
