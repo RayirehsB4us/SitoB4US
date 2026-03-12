@@ -12,13 +12,6 @@ const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
 
-// ─── SharePoint Configuration ────────────────────────────────────────
-const SHAREPOINT_TENANT_ID = process.env.SHAREPOINT_TENANT_ID || "";
-const SHAREPOINT_CLIENT_ID = process.env.SHAREPOINT_CLIENT_ID || "";
-const SHAREPOINT_CLIENT_SECRET = process.env.SHAREPOINT_CLIENT_SECRET || "";
-const SHAREPOINT_SITE_ID = process.env.SHAREPOINT_SITE_ID || "";
-const SHAREPOINT_DRIVE_ID = process.env.SHAREPOINT_DRIVE_ID || "";
-const SHAREPOINT_FOLDER = process.env.SHAREPOINT_FOLDER || "CV-Candidature";
 
 /**
  * Ottiene un access token da Azure AD tramite Client Credentials flow.
