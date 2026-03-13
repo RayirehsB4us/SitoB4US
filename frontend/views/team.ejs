@@ -624,10 +624,7 @@
                             `;
                                     messageDiv.classList.remove('hidden');
                                     messageDiv.classList.remove('hidden');
-
-                                    setTimeout(() => {
-                                        closeApplicationModal();
-                                    }, 2000);
+                                    setTimeout(() => { closeApplicationModal(); }, 2000);
                                 } else {
                                     throw new Error(result.message || 'Errore durante l\'invio');
                                 }
