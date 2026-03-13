@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_shared_elemento_mega_menus",
+  "info": {
+    "displayName": "ElementoMegaMenu"
+  },
+  "options": {},
+  "attributes": {
+    "barElement": {
+      "type": "component",
+      "component": "shared.bar-element",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

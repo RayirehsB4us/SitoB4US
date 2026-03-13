@@ -4,7 +4,7 @@
   "info": {
     "singularName": "blog-post",
     "pluralName": "blog-posts",
-    "displayName": "Blog Post",
+    "displayName": "Lista Articolo Blog",
     "description": "Articoli del blog aziendale"
   },
   "options": {
@@ -31,7 +31,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "categoria": {
       "type": "string"

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "servizio",
     "pluralName": "servizi",
-    "displayName": "Servizio",
+    "displayName": "Lista Servizi offerti",
     "description": "Servizi IT offerti dall'azienda"
   },
   "options": {

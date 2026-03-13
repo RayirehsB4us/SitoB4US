@@ -1,0 +1,23 @@
+{
+  "kind": "singleType",
+  "collectionName": "teams",
+  "info": {
+    "singularName": "team",
+    "pluralName": "teams",
+    "displayName": "Pagina Team"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MainTitleSection": {
+      "type": "dynamiczone",
+      "components": [
+        "shared.title",
+        "shared.button-cta",
+        "shared.card-content"
+      ]
+    }
+  }
+}

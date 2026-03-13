@@ -1,54 +1,60 @@
 {
-    "kind": "singleType",
-    "collectionName": "chi_siamo",
-    "info": {
-        "singularName": "chi-siamo",
-        "pluralName": "chi-siamos",
-        "displayName": "Chi Siamo"
+  "kind": "singleType",
+  "collectionName": "chi_siamo",
+  "info": {
+    "singularName": "chi-siamo",
+    "pluralName": "chi-siamos",
+    "displayName": "Pagina Chi Siamo"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "HeroTag": {
+      "type": "string"
     },
-    "options": {
-        "draftAndPublish": true
+    "HeroTitle": {
+      "type": "string",
+      "required": true
     },
-    "attributes": {
-        "HeroTag": {
-            "type": "string"
-        },
-        "HeroTitle": {
-            "type": "string",
-            "required": true
-        },
-        "HeroDescription": {
-            "type": "text"
-        },
-        "HeroImage": {
-            "type": "media",
-            "multiple": false,
-            "allowedTypes": [
-                "images"
-            ]
-        },
-        "ValuesTitle": {
-            "type": "string"
-        },
-        "ValuesSubTitle": {
-            "type": "text"
-        },
-        "ValueCards": {
-            "type": "component",
-            "repeatable": true,
-            "component": "chi-siamo.value-card"
-        },
-        "TeamTitle": {
-            "type": "string"
-        },
-        "CtaTitle": {
-            "type": "string"
-        },
-        "CtaDescription": {
-            "type": "text"
-        },
-        "CtaButtonText": {
-            "type": "string"
-        }
+    "HeroDescription": {
+      "type": "text"
+    },
+    "HeroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "ValuesTitle": {
+      "type": "string"
+    },
+    "ValuesSubTitle": {
+      "type": "text"
+    },
+    "ValueCards": {
+      "type": "component",
+      "component": "chi-siamo.value-card",
+      "repeatable": true
+    },
+    "TeamTitle": {
+      "type": "string"
+    },
+    "CtaTitle": {
+      "type": "string"
+    },
+    "CtaDescription": {
+      "type": "text"
+    },
+    "CtaButtonText": {
+      "type": "string"
+    },
+    "Team": {
+      "type": "component",
+      "component": "shared.button-cta",
+      "repeatable": false
     }
+  }
 }

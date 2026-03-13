@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_button_ctas",
+  "info": {
+    "displayName": "ButtonCta"
+  },
+  "options": {},
+  "attributes": {
+    "Label": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "Usage": {
+      "type": "enumeration",
+      "enum": [
+        "modale",
+        "link"
+      ]
+    }
+  },
+  "config": {}
+}

@@ -1,21 +1,22 @@
 {
-    "kind": "collectionType",
-    "collectionName": "tags",
-    "info": {
-        "singularName": "tag",
-        "pluralName": "tags",
-        "displayName": "Tag"
+  "kind": "collectionType",
+  "collectionName": "tags",
+  "info": {
+    "singularName": "tag",
+    "pluralName": "tags",
+    "displayName": "Lista Tags"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
-    },
-    "attributes": {
-        "title": {
-            "type": "string",
-            "required": true
-        },
-        "icon": {
-            "type": "string"
-        }
+    "icon": {
+      "type": "string"
     }
+  }
 }

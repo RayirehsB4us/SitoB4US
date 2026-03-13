@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_card_contents",
+  "info": {
+    "displayName": "CardContent"
+  },
+  "options": {},
+  "attributes": {
+    "Title": {
+      "type": "string"
+    },
+    "Description": {
+      "type": "text"
+    },
+    "tags": {
+      "type": "component",
+      "component": "shared.tags",
+      "repeatable": true
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    }
+  },
+  "config": {}
+}

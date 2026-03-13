@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_prodotti_prodottis",
+  "info": {
+    "displayName": "prodotti"
+  },
+  "options": {},
+  "attributes": {
+    "blog_post": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::blog-post.blog-post"
+    },
+    "stile": {
+      "type": "enumeration",
+      "enum": [
+        "stile1",
+        "stile2",
+        "stile3"
+      ]
+    }
+  }
+}
