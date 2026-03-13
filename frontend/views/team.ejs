@@ -31,8 +31,7 @@
                                 <%= headerSection.Title || 'Il Nostro Team' %>
                             </h1>
                             <p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                                <%= headerSection.Description || 'Incontra i professionisti che guidano l\' innovazione
-                                    in B4US. Un gruppo eterogeneo di esperti dedicato alla trasformazione digitale.' %>
+                                <%= headerSection.Description || 'Incontra i professionisti che guidano l\'innovazione in B4US. Un gruppo eterogeneo di esperti dedicato alla trasformazione digitale.' %>
                             </p>
                         </div>
                         <% if (ctaUsage==='modale' || ctaUsage==='modal' ) { %>
@@ -324,7 +323,7 @@
 
                 <script>
                     // Script modale candidatura (stesso di carriere.ejs)
-                    const jobPositionsData = <% - JSON.stringify(jobPositions || []) %>;
+                    const jobPositionsData = <%- JSON.stringify(jobPositions || []) %>;
 
                     function openApplicationModal(jobId) {
                         const modal = document.getElementById('applicationModal');
