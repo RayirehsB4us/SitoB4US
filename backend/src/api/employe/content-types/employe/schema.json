@@ -4,7 +4,7 @@
   "info": {
     "singularName": "employe",
     "pluralName": "employes",
-    "displayName": "employe",
+    "displayName": "Lista Dipendenti B4US",
     "description": ""
   },
   "options": {
@@ -49,6 +49,18 @@
     },
     "annoLIC": {
       "type": "biginteger"
+    },
+    "JobDescription": {
+      "type": "text"
+    },
+    "Consulente": {
+      "type": "boolean",
+      "default": false
+    },
+    "teams": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::team-role.team-role"
     }
   }
 }

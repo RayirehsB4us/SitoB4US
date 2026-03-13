@@ -1,43 +1,44 @@
 {
-    "kind": "singleType",
-    "collectionName": "organizzazioni",
-    "info": {
-        "singularName": "organizzazione",
-        "pluralName": "organizzazioni",
-        "displayName": "Organizzazione"
+  "kind": "singleType",
+  "collectionName": "organizzazioni",
+  "info": {
+    "singularName": "organizzazione",
+    "pluralName": "organizzazioni",
+    "displayName": "Pagina Organizzazione"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MainTitle": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
+    "descriptionTitle": {
+      "type": "text"
     },
-    "attributes": {
-        "MainTitle": {
-            "type": "string",
-            "required": true
-        },
-        "descriptionTitle": {
-            "type": "text"
-        },
-        "CoverImage": {
-            "type": "media",
-            "multiple": false,
-            "allowedTypes": [
-                "images"
-            ]
-        },
-        "HeroSection": {
-            "type": "component",
-            "repeatable": true,
-            "component": "organizzazione.hero-section"
-        },
-        "techArea": {
-            "type": "component",
-            "repeatable": true,
-            "component": "organizzazione.tech-area"
-        },
-        "knowledgeArea": {
-            "type": "component",
-            "repeatable": false,
-            "component": "organizzazione.knowledge-area"
-        }
+    "CoverImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "HeroSection": {
+      "type": "component",
+      "component": "organizzazione.hero-section",
+      "repeatable": true
+    },
+    "techArea": {
+      "type": "component",
+      "component": "organizzazione.tech-area",
+      "repeatable": true
+    },
+    "knowledgeArea": {
+      "type": "component",
+      "component": "organizzazione.knowledge-area",
+      "repeatable": false
     }
+  }
 }

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "job-request",
     "pluralName": "job-requests",
-    "displayName": "jobRequest",
+    "displayName": "Lista Risposta annunci Lavoro",
     "description": ""
   },
   "options": {
@@ -28,12 +28,10 @@
       "type": "string"
     },
     "cvUrl": {
-      "type": "string",
-      "description": "URL del CV caricato su SharePoint"
+      "type": "string"
     },
     "cvFileName": {
-      "type": "string",
-      "description": "Nome del file CV su SharePoint"
+      "type": "string"
     },
     "job_position": {
       "type": "relation",

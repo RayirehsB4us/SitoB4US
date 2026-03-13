@@ -4,7 +4,7 @@
   "info": {
     "singularName": "prodotto",
     "pluralName": "prodotti-items",
-    "displayName": "Prodotto",
+    "displayName": "Lista Per pagina Prodotto",
     "description": "Singolo prodotto (CarFleet, Open4US, ecc.) - stile e features configurabili da admin"
   },
   "options": {

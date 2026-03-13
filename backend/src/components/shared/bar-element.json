@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_shared_bar_elements",
+  "info": {
+    "displayName": "BarElement"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "visible": {
+      "type": "boolean",
+      "default": true
+    },
+    "sottoMenu": {
+      "type": "component",
+      "component": "shared.sotto-menu",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

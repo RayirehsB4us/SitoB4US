@@ -4,7 +4,7 @@
   "info": {
     "singularName": "home",
     "pluralName": "homes",
-    "displayName": "Home Page",
+    "displayName": "Pagina Home Page",
     "description": "Contenuti della pagina principale"
   },
   "options": {
@@ -24,7 +24,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "introTitle": {
       "type": "string"

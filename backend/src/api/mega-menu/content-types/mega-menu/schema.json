@@ -1,0 +1,20 @@
+{
+  "kind": "singleType",
+  "collectionName": "mega_menus",
+  "info": {
+    "singularName": "mega-menu",
+    "pluralName": "mega-menus",
+    "displayName": "Top Menu"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MegaMenu": {
+      "type": "component",
+      "component": "shared.elemento-mega-menu",
+      "repeatable": false
+    }
+  }
+}

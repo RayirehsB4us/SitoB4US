@@ -433,7 +433,7 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
 export interface ApiBlogPageBlogPage extends Struct.SingleTypeSchema {
   collectionName: 'blog_pages';
   info: {
-    displayName: 'Blog Page';
+    displayName: 'Pagina Blog';
     pluralName: 'blog-pages';
     singularName: 'blog-page';
   };
@@ -463,7 +463,7 @@ export interface ApiBlogPostBlogPost extends Struct.CollectionTypeSchema {
   collectionName: 'blog_posts';
   info: {
     description: 'Articoli del blog aziendale';
-    displayName: 'Blog Post';
+    displayName: 'Lista Articolo Blog';
     pluralName: 'blog-posts';
     singularName: 'blog-post';
   };
@@ -499,7 +499,7 @@ export interface ApiCarFleetCarFleet extends Struct.SingleTypeSchema {
   collectionName: 'car_fleets';
   info: {
     description: 'Contenuti della pagina CarFleet';
-    displayName: 'Car Fleet Page';
+    displayName: 'Pagina Car Fleet';
     pluralName: 'car-fleets';
     singularName: 'car-fleet';
   };
@@ -559,7 +559,7 @@ export interface ApiCarFleetCarFleet extends Struct.SingleTypeSchema {
 export interface ApiCarriereCarriere extends Struct.SingleTypeSchema {
   collectionName: 'carriere';
   info: {
-    displayName: 'Carriere';
+    displayName: 'Pagina Carriere';
     pluralName: 'carrieres';
     singularName: 'carriere';
   };
@@ -604,7 +604,7 @@ export interface ApiCertificateCertificate extends Struct.CollectionTypeSchema {
   collectionName: 'certificates';
   info: {
     description: '';
-    displayName: 'certificate';
+    displayName: 'Lista Certificazioni Ottenute';
     pluralName: 'certificates';
     singularName: 'certificate';
   };
@@ -639,7 +639,7 @@ export interface ApiCertificateCertificate extends Struct.CollectionTypeSchema {
 export interface ApiChiSiamoChiSiamo extends Struct.SingleTypeSchema {
   collectionName: 'chi_siamo';
   info: {
-    displayName: 'Chi Siamo';
+    displayName: 'Pagina Chi Siamo';
     pluralName: 'chi-siamos';
     singularName: 'chi-siamo';
   };
@@ -664,6 +664,7 @@ export interface ApiChiSiamoChiSiamo extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    Team: Schema.Attribute.Component<'shared.button-cta', false>;
     TeamTitle: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -677,7 +678,7 @@ export interface ApiChiSiamoChiSiamo extends Struct.SingleTypeSchema {
 export interface ApiContattiContatti extends Struct.SingleTypeSchema {
   collectionName: 'contatti';
   info: {
-    displayName: 'Contatti';
+    displayName: 'Pagina Contatti';
     pluralName: 'contatti-list';
     singularName: 'contatti';
   };
@@ -712,7 +713,7 @@ export interface ApiDemoRequestDemoRequest extends Struct.CollectionTypeSchema {
   collectionName: 'demo_requests';
   info: {
     description: '';
-    displayName: 'demoRequest';
+    displayName: 'Lista Richieste Demo';
     pluralName: 'demo-requests';
     singularName: 'demo-request';
   };
@@ -749,7 +750,7 @@ export interface ApiEmployeEmploye extends Struct.CollectionTypeSchema {
   collectionName: 'employes';
   info: {
     description: '';
-    displayName: 'employe';
+    displayName: 'Lista Dipendenti B4US';
     pluralName: 'employes';
     singularName: 'employe';
   };
@@ -764,9 +765,11 @@ export interface ApiEmployeEmploye extends Struct.CollectionTypeSchema {
       'api::certificate.certificate'
     >;
     cognome: Schema.Attribute.String;
+    Consulente: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    JobDescription: Schema.Attribute.Text;
     jobTitle: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -778,6 +781,35 @@ export interface ApiEmployeEmploye extends Struct.CollectionTypeSchema {
     pic: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
     project: Schema.Attribute.Relation<'manyToOne', 'api::project.project'>;
     publishedAt: Schema.Attribute.DateTime;
+    teams: Schema.Attribute.Relation<'oneToMany', 'api::team-role.team-role'>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiFooterFooter extends Struct.SingleTypeSchema {
+  collectionName: 'footers';
+  info: {
+    displayName: 'Footer';
+    pluralName: 'footers';
+    singularName: 'footer';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    Footer: Schema.Attribute.Component<'shared.footer', false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::footer.footer'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -788,7 +820,7 @@ export interface ApiGoalGoal extends Struct.CollectionTypeSchema {
   collectionName: 'goals';
   info: {
     description: '';
-    displayName: 'goal';
+    displayName: 'Lista Obiettivi per Diario di bordo';
     pluralName: 'goals';
     singularName: 'goal';
   };
@@ -820,7 +852,7 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
   collectionName: 'homes';
   info: {
     description: 'Contenuti della pagina principale';
-    displayName: 'Home Page';
+    displayName: 'Pagina Home Page';
     pluralName: 'homes';
     singularName: 'home';
   };
@@ -853,7 +885,7 @@ export interface ApiJobPositionJobPosition extends Struct.CollectionTypeSchema {
   collectionName: 'job_positions';
   info: {
     description: 'Posizioni lavorative aperte';
-    displayName: 'Job Position';
+    displayName: 'Lista Annunci di lavoro';
     pluralName: 'job-positions';
     singularName: 'job-position';
   };
@@ -893,7 +925,7 @@ export interface ApiJobRequestJobRequest extends Struct.CollectionTypeSchema {
   collectionName: 'job_requests';
   info: {
     description: '';
-    displayName: 'jobRequest';
+    displayName: 'Lista Risposta annunci Lavoro';
     pluralName: 'job-requests';
     singularName: 'job-request';
   };
@@ -932,7 +964,7 @@ export interface ApiLogbookLogbook extends Struct.CollectionTypeSchema {
   collectionName: 'logbooks';
   info: {
     description: '';
-    displayName: 'logbook';
+    displayName: 'Lista Diari di Bordo';
     pluralName: 'logbooks';
     singularName: 'logbook';
   };
@@ -968,11 +1000,39 @@ export interface ApiLogbookLogbook extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiMegaMenuMegaMenu extends Struct.SingleTypeSchema {
+  collectionName: 'mega_menus';
+  info: {
+    displayName: 'Top Menu';
+    pluralName: 'mega-menus';
+    singularName: 'mega-menu';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::mega-menu.mega-menu'
+    > &
+      Schema.Attribute.Private;
+    MegaMenu: Schema.Attribute.Component<'shared.elemento-mega-menu', false>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOpen4UsOpen4Us extends Struct.SingleTypeSchema {
   collectionName: 'open4_uses';
   info: {
     description: 'Contenuti della pagina Open4US - Accesso Smart';
-    displayName: 'Open4US Page';
+    displayName: 'Pagina Open4US';
     pluralName: 'open4-uses';
     singularName: 'open4-us';
   };
@@ -1036,7 +1096,7 @@ export interface ApiOrganizzazioneOrganizzazione
   extends Struct.SingleTypeSchema {
   collectionName: 'organizzazioni';
   info: {
-    displayName: 'Organizzazione';
+    displayName: 'Pagina Organizzazione';
     pluralName: 'organizzazioni';
     singularName: 'organizzazione';
   };
@@ -1076,7 +1136,7 @@ export interface ApiProdottiProdotti extends Struct.SingleTypeSchema {
   collectionName: 'prodottis';
   info: {
     description: 'Hero section della pagina Prodotti';
-    displayName: 'Prodotti Page';
+    displayName: 'Pagina Prodotti';
     pluralName: 'prodottis';
     singularName: 'prodotti';
   };
@@ -1107,7 +1167,7 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
   collectionName: 'prodotti_items';
   info: {
     description: 'Singolo prodotto (CarFleet, Open4US, ecc.) - stile e features configurabili da admin';
-    displayName: 'Prodotto';
+    displayName: 'Lista Per pagina Prodotto';
     pluralName: 'prodotti-items';
     singularName: 'prodotto';
   };
@@ -1152,7 +1212,7 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
 export interface ApiProjectProject extends Struct.CollectionTypeSchema {
   collectionName: 'projects';
   info: {
-    displayName: 'Project';
+    displayName: 'Lista Progetti per Diario di Bordo';
     pluralName: 'projects';
     singularName: 'project';
   };
@@ -1184,7 +1244,7 @@ export interface ApiServiceService extends Struct.SingleTypeSchema {
   collectionName: 'services';
   info: {
     description: 'Contenuti della pagina Servizi (hero e sezione competenze)';
-    displayName: 'Service Page';
+    displayName: 'Pagina Servizi';
     pluralName: 'services';
     singularName: 'service';
   };
@@ -1217,7 +1277,7 @@ export interface ApiServizioServizio extends Struct.CollectionTypeSchema {
   collectionName: 'servizi';
   info: {
     description: "Servizi IT offerti dall'azienda";
-    displayName: 'Servizio';
+    displayName: 'Lista Servizi offerti';
     pluralName: 'servizi';
     singularName: 'servizio';
   };
@@ -1250,7 +1310,7 @@ export interface ApiSoftwareProductSoftwareProduct
   extends Struct.CollectionTypeSchema {
   collectionName: 'software_products';
   info: {
-    displayName: 'softwareProduct';
+    displayName: 'Lista Per funzione contattaci/demo';
     pluralName: 'software-products';
     singularName: 'software-product';
   };
@@ -1279,7 +1339,7 @@ export interface ApiStoriaB4UsStoriaB4Us extends Struct.CollectionTypeSchema {
   collectionName: 'storia_b4_uses';
   info: {
     description: '';
-    displayName: 'storiaB4US';
+    displayName: 'Lista Per storico aziendale';
     pluralName: 'storia-b4-uses';
     singularName: 'storia-b4-us';
   };
@@ -1309,7 +1369,7 @@ export interface ApiStoriaB4UsStoriaB4Us extends Struct.CollectionTypeSchema {
 export interface ApiStoriaStoria extends Struct.SingleTypeSchema {
   collectionName: 'storie';
   info: {
-    displayName: 'Storia';
+    displayName: 'Pagina Storia aziendale';
     pluralName: 'storie';
     singularName: 'storia';
   };
@@ -1344,7 +1404,7 @@ export interface ApiStoriaStoria extends Struct.SingleTypeSchema {
 export interface ApiTagTag extends Struct.CollectionTypeSchema {
   collectionName: 'tags';
   info: {
-    displayName: 'Tag';
+    displayName: 'Lista Tags';
     pluralName: 'tags';
     singularName: 'tag';
   };
@@ -1371,7 +1431,7 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
   collectionName: 'team_members';
   info: {
     description: 'Membri del team aziendale';
-    displayName: 'Team Member';
+    displayName: 'Lista Team Leaders';
     pluralName: 'team-members';
     singularName: 'team-member';
   };
@@ -1394,6 +1454,62 @@ export interface ApiTeamMemberTeamMember extends Struct.CollectionTypeSchema {
     ordine: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     ruolo: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTeamRoleTeamRole extends Struct.CollectionTypeSchema {
+  collectionName: 'team_roles';
+  info: {
+    displayName: 'Lista Team';
+    pluralName: 'team-roles';
+    singularName: 'team-role';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    DescrizioneTeam: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::team-role.team-role'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    Team: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiTeamTeam extends Struct.SingleTypeSchema {
+  collectionName: 'teams';
+  info: {
+    displayName: 'Pagina Team';
+    pluralName: 'teams';
+    singularName: 'team';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::team.team'> &
+      Schema.Attribute.Private;
+    MainTitleSection: Schema.Attribute.DynamicZone<
+      ['shared.title', 'shared.button-cta', 'shared.card-content']
+    >;
+    publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1920,11 +2036,13 @@ declare module '@strapi/strapi' {
       'api::contatti.contatti': ApiContattiContatti;
       'api::demo-request.demo-request': ApiDemoRequestDemoRequest;
       'api::employe.employe': ApiEmployeEmploye;
+      'api::footer.footer': ApiFooterFooter;
       'api::goal.goal': ApiGoalGoal;
       'api::home.home': ApiHomeHome;
       'api::job-position.job-position': ApiJobPositionJobPosition;
       'api::job-request.job-request': ApiJobRequestJobRequest;
       'api::logbook.logbook': ApiLogbookLogbook;
+      'api::mega-menu.mega-menu': ApiMegaMenuMegaMenu;
       'api::open4-us.open4-us': ApiOpen4UsOpen4Us;
       'api::organizzazione.organizzazione': ApiOrganizzazioneOrganizzazione;
       'api::prodotti.prodotti': ApiProdottiProdotti;
@@ -1937,6 +2055,8 @@ declare module '@strapi/strapi' {
       'api::storia.storia': ApiStoriaStoria;
       'api::tag.tag': ApiTagTag;
       'api::team-member.team-member': ApiTeamMemberTeamMember;
+      'api::team-role.team-role': ApiTeamRoleTeamRole;
+      'api::team.team': ApiTeamTeam;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
