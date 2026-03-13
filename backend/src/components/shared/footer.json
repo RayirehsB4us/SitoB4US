@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_shared_footers",
+  "info": {
+    "displayName": "Footer"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "Descrizione": {
+      "type": "text"
+    },
+    "subTitle": {
+      "type": "text"
+    },
+    "Colonna": {
+      "type": "component",
+      "component": "shared.colonna",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

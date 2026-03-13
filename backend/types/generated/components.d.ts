@@ -385,6 +385,20 @@ export interface ProdottiPrenotazione extends Struct.ComponentSchema {
   };
 }
 
+export interface ProdottiProdotti extends Struct.ComponentSchema {
+  collectionName: 'components_prodotti_prodottis';
+  info: {
+    displayName: 'prodotti';
+  };
+  attributes: {
+    blog_post: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::blog-post.blog-post'
+    >;
+    stile: Schema.Attribute.Enumeration<['stile1', 'stile2', 'stile3']>;
+  };
+}
+
 export interface ProdottoFeature extends Struct.ComponentSchema {
   collectionName: 'components_prodotto_features';
   info: {
@@ -406,6 +420,124 @@ export interface ServiceOurSkills extends Struct.ComponentSchema {
   };
   attributes: {
     Tag: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedBarElement extends Struct.ComponentSchema {
+  collectionName: 'components_shared_bar_elements';
+  info: {
+    displayName: 'BarElement';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    path: Schema.Attribute.String;
+    sottoMenu: Schema.Attribute.Component<'shared.sotto-menu', true>;
+    visible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface SharedButtonCta extends Struct.ComponentSchema {
+  collectionName: 'components_shared_button_ctas';
+  info: {
+    displayName: 'ButtonCta';
+  };
+  attributes: {
+    icon: Schema.Attribute.String;
+    Label: Schema.Attribute.String;
+    Usage: Schema.Attribute.Enumeration<['modale', 'link']>;
+  };
+}
+
+export interface SharedCardContent extends Struct.ComponentSchema {
+  collectionName: 'components_shared_card_contents';
+  info: {
+    displayName: 'CardContent';
+  };
+  attributes: {
+    Description: Schema.Attribute.Text;
+    Image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    tags: Schema.Attribute.Component<'shared.tags', true>;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedColonna extends Struct.ComponentSchema {
+  collectionName: 'components_shared_colonnas';
+  info: {
+    displayName: 'Colonna';
+  };
+  attributes: {
+    link: Schema.Attribute.Component<'shared.link', true>;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedElementoMegaMenu extends Struct.ComponentSchema {
+  collectionName: 'components_shared_elemento_mega_menus';
+  info: {
+    displayName: 'ElementoMegaMenu';
+  };
+  attributes: {
+    barElement: Schema.Attribute.Component<'shared.bar-element', true>;
+  };
+}
+
+export interface SharedFooter extends Struct.ComponentSchema {
+  collectionName: 'components_shared_footers';
+  info: {
+    displayName: 'Footer';
+  };
+  attributes: {
+    Colonna: Schema.Attribute.Component<'shared.colonna', true>;
+    Descrizione: Schema.Attribute.Text;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    subTitle: Schema.Attribute.Text;
+  };
+}
+
+export interface SharedLink extends Struct.ComponentSchema {
+  collectionName: 'components_shared_links';
+  info: {
+    displayName: 'Link';
+  };
+  attributes: {
+    icon: Schema.Attribute.String;
+    link: Schema.Attribute.String;
+    Title: Schema.Attribute.String;
+  };
+}
+
+export interface SharedSottoMenu extends Struct.ComponentSchema {
+  collectionName: 'components_shared_sotto_menus';
+  info: {
+    displayName: 'sottoMenu';
+  };
+  attributes: {
+    label: Schema.Attribute.String;
+    path: Schema.Attribute.String;
+    visible: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+  };
+}
+
+export interface SharedTags extends Struct.ComponentSchema {
+  collectionName: 'components_shared_tags';
+  info: {
+    displayName: 'tags';
+  };
+  attributes: {
+    Tag: Schema.Attribute.String;
+    tagValue: Schema.Attribute.Text;
+  };
+}
+
+export interface SharedTitle extends Struct.ComponentSchema {
+  collectionName: 'components_shared_titles';
+  info: {
+    displayName: 'Title';
+  };
+  attributes: {
+    Description: Schema.Attribute.Text;
     Title: Schema.Attribute.String;
   };
 }
@@ -454,8 +586,19 @@ declare module '@strapi/strapi' {
       'prodotti.open4us-block': ProdottiOpen4UsBlock;
       'prodotti.open4us-product': ProdottiOpen4UsProduct;
       'prodotti.prenotazione': ProdottiPrenotazione;
+      'prodotti.prodotti': ProdottiProdotti;
       'prodotto.feature': ProdottoFeature;
       'service.our-skills': ServiceOurSkills;
+      'shared.bar-element': SharedBarElement;
+      'shared.button-cta': SharedButtonCta;
+      'shared.card-content': SharedCardContent;
+      'shared.colonna': SharedColonna;
+      'shared.elemento-mega-menu': SharedElementoMegaMenu;
+      'shared.footer': SharedFooter;
+      'shared.link': SharedLink;
+      'shared.sotto-menu': SharedSottoMenu;
+      'shared.tags': SharedTags;
+      'shared.title': SharedTitle;
       'storia.timeline-event': StoriaTimelineEvent;
     }
   }
