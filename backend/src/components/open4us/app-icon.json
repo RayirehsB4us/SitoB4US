@@ -7,8 +7,8 @@
     "options": {},
     "attributes": {
         "Icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons grande (es: smartphone)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Text": {
             "type": "string",

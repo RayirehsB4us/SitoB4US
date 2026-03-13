@@ -15,20 +15,20 @@
             "description": "Badge stato mappa (es: Live)"
         },
         "Icon1": {
-            "type": "string",
-            "description": "Icona pin primario (es: place)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Icon2": {
-            "type": "string",
-            "description": "Icona pin secondario (es: place)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Icon3": {
-            "type": "string",
-            "description": "Icona pin terziario (es: place)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "PIcon": {
-            "type": "string",
-            "description": "Icona profilo conducente (es: person)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Name": {
             "type": "string",

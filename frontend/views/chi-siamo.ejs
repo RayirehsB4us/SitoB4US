@@ -17,14 +17,14 @@
                     <div>
                         <span
                             class="inline-block py-1 px-3 rounded-full bg-green-100 dark:bg-green-900/30 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                            <%- (chiSiamoData && chiSiamoData.HeroTag) || 'La nostra storia' %>
+                            <%- (chiSiamoData && chiSiamoData.HeroTag) || '' %>
                         </span>
                         <h1
                             class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-                            <%- (chiSiamoData && chiSiamoData.HeroTitle) || 'Semplifichiamo l\'IT per far crescere il tuo <span class="text-primary">business</span>.' %>
+                            <%- (chiSiamoData && chiSiamoData.HeroTitle) || '' %>
                         </h1>
                         <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                            <%= (chiSiamoData && chiSiamoData.HeroDescription) || 'Supportiamo le aziende nella loro trasformazione digitale con passione per l\'innovazione e approccio pratico.' %>
+                            <%= (chiSiamoData && chiSiamoData.HeroDescription) || '' %>
                         </p>
                     </div>
                     <div class="mt-12 lg:mt-0 relative">
@@ -49,8 +49,8 @@
         <section class="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl font-bold mb-4"><%- (chiSiamoData && chiSiamoData.ValuesTitle) || 'I nostri valori fondamentali' %></h2>
-                    <p class="text-slate-600 dark:text-slate-400"><%= (chiSiamoData && chiSiamoData.ValuesSubTitle) || 'Costruiamo il futuro basandoci su solide fondamenta di integrità e competenza tecnica.' %></p>
+                    <h2 class="text-3xl font-bold mb-4"><%- (chiSiamoData && chiSiamoData.ValuesTitle) || '' %></h2>
+                    <p class="text-slate-600 dark:text-slate-400"><%= (chiSiamoData && chiSiamoData.ValuesSubTitle) || '' %></p>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <% if (chiSiamoData && chiSiamoData.ValueCards && chiSiamoData.ValueCards.length > 0) { %>
@@ -59,7 +59,7 @@
                                 class="p-8 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow">
                                 <div
                                     class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
-                                    <span class="material-symbols-outlined"><%= card.icon || 'star' %></span>
+                                    <span class="material-symbols-outlined"><%= card.icon || '' %></span>
                                 </div>
                                 <h3 class="text-xl font-bold mb-3"><%- card.title %></h3>
                                 <p class="text-slate-600 dark:text-slate-400"><%= card.description %></p>
@@ -107,12 +107,12 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                     <h2 class="text-3xl font-bold">
-                        <%- (chiSiamoData && chiSiamoData.TeamTitle) || 'I volti dietro l\'eccellenza di B4US' %>
+                        <%- (chiSiamoData && chiSiamoData.TeamTitle) || '' %>
                     </h2>
                     <%
                       const teamCta = chiSiamoData && chiSiamoData.Team ? chiSiamoData.Team : {};
-                      const teamLabel = teamCta.Label || 'Vedi il nostro team';
-                      const teamIcon = teamCta.icon || 'groups';
+                      const teamLabel = teamCta.Label || '';
+                      const teamIcon = teamCta.icon || '';
                     %>
                     <a href="/team"
                         class="inline-flex items-center gap-2 self-start px-5 py-2 rounded-full text-sm font-bold bg-primary text-white shadow-sm hover:bg-green-600 hover:shadow-green-500/30 transition-all">
@@ -160,11 +160,11 @@
         <!-- CTA Section -->
         <section class="py-20">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white"><%- (chiSiamoData && chiSiamoData.CtaTitle) || 'Pronto a trasformare la tua realtà digitale?' %></h2>
-                <p class="text-slate-600 dark:text-slate-400 mb-10 text-lg"><%= (chiSiamoData && chiSiamoData.CtaDescription) || 'Il nostro team è pronto ad accogliere le tue sfide e trasformarle in opportunità di crescita.' %></p>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white"><%- (chiSiamoData && chiSiamoData.CtaTitle) || '' %></h2>
+                <p class="text-slate-600 dark:text-slate-400 mb-10 text-lg"><%= (chiSiamoData && chiSiamoData.CtaDescription) || '' %></p>
                 <a class="inline-flex items-center gap-2 bg-primary hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-1"
                     href="/contatti">
-                    <%= (chiSiamoData && chiSiamoData.CtaButtonText) || 'Contattaci oggi' %>
+                    <%= (chiSiamoData && chiSiamoData.CtaButtonText) || '' %>
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </a>
             </div>

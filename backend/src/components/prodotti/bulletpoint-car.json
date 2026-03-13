@@ -7,8 +7,8 @@
     "options": {},
     "attributes": {
         "Icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: check_circle)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Title": {
             "type": "string",

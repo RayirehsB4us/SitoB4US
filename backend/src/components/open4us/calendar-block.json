@@ -16,24 +16,24 @@
             "description": "Badge stato (es: Confermato)"
         },
         "Icon1": {
-            "type": "string",
-            "description": "Icona data (es: calendar_today)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Date": {
             "type": "string",
             "description": "Data e ora (es: 26/02/2025 17:00)"
         },
         "Icon2": {
-            "type": "string",
-            "description": "Icona persona (es: person)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Name": {
             "type": "string",
             "description": "Nome e ospiti (es: Luigi Di Mauro (3 ospiti))"
         },
         "Icon3": {
-            "type": "string",
-            "description": "Icona accesso (es: vpn_key)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Access": {
             "type": "string",

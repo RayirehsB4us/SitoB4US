@@ -21,7 +21,8 @@
       "required": true
     },
     "icona": {
-      "type": "string",
+      "type": "customField",
+      "customField": "plugin::icon-picker.icon",
       "required": true
     },
     "slug": {

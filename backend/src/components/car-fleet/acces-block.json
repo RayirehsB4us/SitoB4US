@@ -12,8 +12,8 @@
             "description": "Testo con formato 'Titolo: descrizione' (es: Chiave Mobile: Sblocca le auto...)"
         },
         "Icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: check_circle)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         }
     }
 }

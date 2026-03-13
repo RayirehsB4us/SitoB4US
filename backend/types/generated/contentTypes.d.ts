@@ -519,8 +519,10 @@ export interface ApiCarFleetCarFleet extends Struct.SingleTypeSchema {
       'car-fleet.dashboard-panoramica',
       true
     >;
-    Icon: Schema.Attribute.String;
-    Icon2: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Icon2: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     IconText: Schema.Attribute.Component<'car-fleet.icon-text', true>;
     Image: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
@@ -898,7 +900,8 @@ export interface ApiJobPositionJobPosition extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     descrizione: Schema.Attribute.RichText & Schema.Attribute.Required;
-    icona: Schema.Attribute.String;
+    icona: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1179,12 +1182,18 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     CtaIcona: Schema.Attribute.String &
-      Schema.Attribute.DefaultTo<'arrow_forward'>;
+      Schema.Attribute.CustomField<
+        'plugin::icon-picker.icon',
+        {
+          default: 'arrow_forward';
+        }
+      >;
     CtaLink: Schema.Attribute.String;
     CtaTesto: Schema.Attribute.String;
     Descrizione: Schema.Attribute.Text;
     Features: Schema.Attribute.Component<'prodotto.feature', true>;
-    Icona: Schema.Attribute.String;
+    Icona: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     IconColor: Schema.Attribute.Enumeration<['primary', 'purple']> &
       Schema.Attribute.DefaultTo<'primary'>;
     ImmaginePrincipale: Schema.Attribute.Media<'images'>;
@@ -1289,7 +1298,9 @@ export interface ApiServizioServizio extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     descrizione: Schema.Attribute.Text & Schema.Attribute.Required;
-    icona: Schema.Attribute.String & Schema.Attribute.Required;
+    icona: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1415,7 +1426,8 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
       Schema.Attribute.Private;

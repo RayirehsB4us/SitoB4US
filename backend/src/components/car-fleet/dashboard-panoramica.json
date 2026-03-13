@@ -7,8 +7,8 @@
     "options": {},
     "attributes": {
         "icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: priority_high)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "title": {
             "type": "string",

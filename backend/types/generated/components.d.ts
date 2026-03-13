@@ -7,7 +7,8 @@ export interface CarFleetAccesBlock extends Struct.ComponentSchema {
     displayName: 'Acces Block';
   };
   attributes: {
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -20,7 +21,8 @@ export interface CarFleetDashboardPanoramica extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.Text;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -33,7 +35,8 @@ export interface CarFleetIconText extends Struct.ComponentSchema {
     displayName: 'Icon Text';
   };
   attributes: {
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -46,12 +49,16 @@ export interface CarFleetMappaFlotta extends Struct.ComponentSchema {
   };
   attributes: {
     Car: Schema.Attribute.String;
-    Icon1: Schema.Attribute.String;
-    Icon2: Schema.Attribute.String;
-    Icon3: Schema.Attribute.String;
+    Icon1: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Icon2: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Icon3: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     MappaTitle: Schema.Attribute.String;
     Name: Schema.Attribute.String;
-    PIcon: Schema.Attribute.String;
+    PIcon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Status: Schema.Attribute.String;
     Tag: Schema.Attribute.String;
   };
@@ -65,7 +72,8 @@ export interface CarFleetPowerappsBlock extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -78,7 +86,8 @@ export interface CarriereCultureCard extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -92,7 +101,8 @@ export interface ChiSiamoValueCard extends Struct.ComponentSchema {
   };
   attributes: {
     description: Schema.Attribute.Text;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -104,7 +114,8 @@ export interface ContattiContactDetail extends Struct.ComponentSchema {
     displayName: 'Contact Detail';
   };
   attributes: {
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     linkText: Schema.Attribute.String;
     linkUrl: Schema.Attribute.String;
     subTitle: Schema.Attribute.String;
@@ -119,7 +130,8 @@ export interface Open4UsAccesSmart extends Struct.ComponentSchema {
     displayName: 'Acces Smart';
   };
   attributes: {
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -132,7 +144,8 @@ export interface Open4UsAppBlock extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -144,7 +157,8 @@ export interface Open4UsAppIcon extends Struct.ComponentSchema {
     displayName: 'App Icon';
   };
   attributes: {
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Text: Schema.Attribute.String;
   };
 }
@@ -158,9 +172,12 @@ export interface Open4UsCalendarBlock extends Struct.ComponentSchema {
   attributes: {
     Access: Schema.Attribute.String;
     Date: Schema.Attribute.String;
-    Icon1: Schema.Attribute.String;
-    Icon2: Schema.Attribute.String;
-    Icon3: Schema.Attribute.String;
+    Icon1: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Icon2: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Icon3: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Name: Schema.Attribute.String;
     Status: Schema.Attribute.String;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -174,7 +191,8 @@ export interface Open4UsDashboardOption extends Struct.ComponentSchema {
     displayName: 'Dashboard Option';
   };
   attributes: {
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Text: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -199,7 +217,8 @@ export interface Open4UsSmartBlock extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.String;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -212,7 +231,8 @@ export interface Open4UsSpaceBlock extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -264,7 +284,8 @@ export interface OrganizzazioneMainCard extends Struct.ComponentSchema {
     displayName: 'Main Card';
   };
   attributes: {
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     subTitle: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -277,7 +298,8 @@ export interface OrganizzazioneSubCard extends Struct.ComponentSchema {
     displayName: 'Sub Card';
   };
   attributes: {
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     subTitle: Schema.Attribute.Text;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -303,7 +325,8 @@ export interface ProdottiBulletpointCar extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -320,8 +343,10 @@ export interface ProdottiCarfleetProduct extends Struct.ComponentSchema {
       true
     >;
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
-    icon2: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    icon2: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Image: Schema.Attribute.Media<'images'>;
     Link: Schema.Attribute.String;
     subtitle: Schema.Attribute.String;
@@ -350,7 +375,8 @@ export interface ProdottiOpen4UsBlock extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -363,7 +389,8 @@ export interface ProdottiOpen4UsProduct extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Image: Schema.Attribute.Media<'images'>;
     Open4usBlocks: Schema.Attribute.Component<'prodotti.open4us-block', true>;
     SubTitle: Schema.Attribute.String;
@@ -379,7 +406,8 @@ export interface ProdottiPrenotazione extends Struct.ComponentSchema {
   };
   attributes: {
     content: Schema.Attribute.String;
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     subTitle: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -407,7 +435,8 @@ export interface ProdottoFeature extends Struct.ComponentSchema {
   };
   attributes: {
     Description: Schema.Attribute.Text;
-    Icon: Schema.Attribute.String;
+    Icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -443,7 +472,8 @@ export interface SharedButtonCta extends Struct.ComponentSchema {
     displayName: 'ButtonCta';
   };
   attributes: {
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     Label: Schema.Attribute.String;
     Usage: Schema.Attribute.Enumeration<['modale', 'link']>;
   };
@@ -502,7 +532,8 @@ export interface SharedLink extends Struct.ComponentSchema {
     displayName: 'Link';
   };
   attributes: {
-    icon: Schema.Attribute.String;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     link: Schema.Attribute.String;
     Title: Schema.Attribute.String;
   };

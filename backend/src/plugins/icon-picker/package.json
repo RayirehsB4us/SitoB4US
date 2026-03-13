@@ -1,0 +1,16 @@
+{
+  "name": "icon-picker",
+  "version": "1.0.0",
+  "description": "Custom field per selezionare icone Material Icons con anteprima",
+  "strapi": {
+    "name": "icon-picker",
+    "displayName": "Icon Picker",
+    "description": "Campo personalizzato per selezione icone Material Icons con anteprima visiva",
+    "kind": "plugin"
+  },
+  "main": "./strapi-server.js",
+  "exports": {
+    "./strapi-admin": "./strapi-admin.js",
+    "./strapi-server": "./strapi-server.js"
+  }
+}

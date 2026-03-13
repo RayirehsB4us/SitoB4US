@@ -11,8 +11,8 @@
             "required": true
         },
         "Icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: home, calendar_today)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         }
     }
 }

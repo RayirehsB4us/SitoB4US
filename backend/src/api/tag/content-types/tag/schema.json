@@ -16,7 +16,8 @@
       "required": true
     },
     "icon": {
-      "type": "string"
+      "type": "customField",
+      "customField": "plugin::icon-picker.icon"
     }
   }
 }

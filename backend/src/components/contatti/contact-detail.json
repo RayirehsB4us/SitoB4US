@@ -7,7 +7,8 @@
     "options": {},
     "attributes": {
         "icon": {
-            "type": "string"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "title": {
             "type": "string",

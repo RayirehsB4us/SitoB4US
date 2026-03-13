@@ -9,7 +9,8 @@
       "type": "string"
     },
     "icon": {
-      "type": "string"
+      "type": "customField",
+      "customField": "plugin::icon-picker.icon"
     },
     "Usage": {
       "type": "enumeration",

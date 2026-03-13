@@ -14,8 +14,8 @@
             "type": "string"
         },
         "icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: lock, smartphone)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "content": {
             "type": "string"

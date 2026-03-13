@@ -40,7 +40,8 @@
       "type": "string"
     },
     "icona": {
-      "type": "string"
+      "type": "customField",
+      "customField": "plugin::icon-picker.icon"
     },
     "requisiti": {
       "type": "richtext"

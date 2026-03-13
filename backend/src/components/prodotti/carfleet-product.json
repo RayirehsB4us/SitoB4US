@@ -7,8 +7,8 @@
     "options": {},
     "attributes": {
         "Icon": {
-            "type": "string",
-            "description": "Nome icona Material Icons (es: directions_car)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         },
         "Title": {
             "type": "string",
@@ -36,8 +36,8 @@
             "description": "Testo link (es: Esplora le Funzionalita di CarFleet)"
         },
         "icon2": {
-            "type": "string",
-            "description": "Icona freccia link (es: arrow_forward)"
+            "type": "customField",
+            "customField": "plugin::icon-picker.icon"
         }
     }
 }
