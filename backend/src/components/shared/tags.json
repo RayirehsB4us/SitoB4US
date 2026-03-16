@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_shared_tags",
+  "info": {
+    "displayName": "tags"
+  },
+  "options": {},
+  "attributes": {
+    "tagValue": {
+      "type": "text"
+    },
+    "Tag": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

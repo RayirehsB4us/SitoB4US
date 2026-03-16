@@ -1,38 +1,39 @@
 {
-    "kind": "singleType",
-    "collectionName": "contatti",
-    "info": {
-        "singularName": "contatti",
-        "pluralName": "contatti-list",
-        "displayName": "Contatti"
+  "kind": "singleType",
+  "collectionName": "contatti",
+  "info": {
+    "singularName": "contatti",
+    "pluralName": "contatti-list",
+    "displayName": "Pagina Contatti"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "MainTitle": {
+      "type": "string",
+      "required": true
     },
-    "options": {
-        "draftAndPublish": true
+    "Description": {
+      "type": "text"
     },
-    "attributes": {
-        "MainTitle": {
-            "type": "string",
-            "required": true
-        },
-        "Description": {
-            "type": "text"
-        },
-        "FormTitle": {
-            "type": "string"
-        },
-        "ContactDetails": {
-            "type": "component",
-            "repeatable": true,
-            "component": "contatti.contact-detail"
-        },
-        "SedeTitle": {
-            "type": "string"
-        },
-        "SedeAddress": {
-            "type": "text"
-        },
-        "SedeMapUrl": {
-            "type": "string"
-        }
+    "FormTitle": {
+      "type": "string"
+    },
+    "ContactDetails": {
+      "type": "component",
+      "component": "contatti.contact-detail",
+      "repeatable": true
+    },
+    "SedeTitle": {
+      "type": "string"
+    },
+    "SedeAddress": {
+      "type": "text"
+    },
+    "SedeMapUrl": {
+      "type": "string"
     }
+  }
 }

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "job-position",
     "pluralName": "job-positions",
-    "displayName": "Job Position",
+    "displayName": "Lista Annunci di lavoro",
     "description": "Posizioni lavorative aperte"
   },
   "options": {
@@ -29,7 +29,12 @@
     },
     "tipologia": {
       "type": "enumeration",
-      "enum": ["Full-time", "Part-time", "Remote", "Hybrid"]
+      "enum": [
+        "Full-time",
+        "Part-time",
+        "Remote",
+        "Hybrid"
+      ]
     },
     "reparto": {
       "type": "string"

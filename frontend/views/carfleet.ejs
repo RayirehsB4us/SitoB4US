@@ -33,9 +33,10 @@
 </head>
 
 <body class="bg-background-light text-secondary font-sans transition-colors duration-300">
-    <%- include('partials/navbar') %>
+<%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
-        <main class="pt-16">
+        <main id="page-content" class="pt-16 hidden opacity-0 transition-opacity duration-300">
             <!-- Hero Section -->
             <div class="relative overflow-hidden py-16 lg:py-24">
                 <div class="max-w-7xl mx-auto">
@@ -105,9 +106,9 @@
                             <div class="relative z-10">
                                 <div
                                     class="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 card-hover">
-                                    <% if (cf.Image && cf.Image.data) { %>
-                                        <img src="<%= strapiUrl + cf.Image.data.attributes.url %>"
-                                            alt="<%= cf.Image.data.attributes.alternativeText || 'Dashboard CarFleet - Gestione Flotta Aziendale' %>"
+                                    <% if (cf.Image) { %>
+                                        <img src="<%= strapiUrl + cf.Image.url %>"
+                                            alt="<%= cf.Image.alternativeText || 'Dashboard CarFleet - Gestione Flotta Aziendale' %>"
                                             class="w-full h-auto object-cover">
                                     <% } else { %>
                                         <img src="/images/carfleet-dashboard.png"
@@ -354,10 +355,10 @@
                             <div class="relative w-full max-w-sm mx-auto">
                                 <div
                                     class="rounded-2xl bg-white shadow-xl overflow-hidden flex items-center justify-center p-8 border border-gray-100 card-hover">
-                                    <% if (cf.AccesImage && cf.AccesImage.data) { %>
-                                        <img alt="<%= cf.AccesImage.data.attributes.alternativeText || 'Meccanismo di serratura intelligente ad alta tecnologia' %>"
+                                    <% if (cf.AccesImage) { %>
+                                        <img alt="<%= cf.AccesImage.alternativeText || 'Meccanismo di serratura intelligente ad alta tecnologia' %>"
                                             class="object-contain w-full h-full transform hover:scale-105 transition-transform duration-500"
-                                            src="<%= strapiUrl + cf.AccesImage.data.attributes.url %>" />
+                                            src="<%= strapiUrl + cf.AccesImage.url %>" />
                                     <% } else { %>
                                         <img alt="Meccanismo di serratura intelligente ad alta tecnologia"
                                             class="object-contain w-full h-full transform hover:scale-105 transition-transform duration-500"
@@ -464,6 +465,10 @@
 
         <%- include('partials/demo-modal') %>
             <%- include('partials/footer') %>
+
+        <script>
+            (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+        </script>
 </body>
 
 </html>

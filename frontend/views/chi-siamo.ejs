@@ -6,8 +6,10 @@
 </head>
 
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
-    <%- include('partials/navbar') %>
+    <%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
+        <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
         <!-- Hero Section -->
         <section class="relative py-20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -27,10 +29,10 @@
                     </div>
                     <div class="mt-12 lg:mt-0 relative">
                         <div class="aspect-video rounded-3xl overflow-hidden shadow-2xl">
-                            <% if (chiSiamoData && chiSiamoData.HeroImage && chiSiamoData.HeroImage.data) { %>
+                            <% if (chiSiamoData && chiSiamoData.HeroImage) { %>
                                 <img alt="Team B4US"
                                     class="w-full h-full object-cover"
-                                    src="<%= strapiUrl %><%= chiSiamoData.HeroImage.data.attributes.url %>" />
+                                    src="<%= strapiUrl %><%= chiSiamoData.HeroImage.url %>" />
                             <% } else { %>
                                 <img alt="Team working together in a modern office"
                                     class="w-full h-full object-cover"
@@ -103,8 +105,20 @@
         <!-- Team Section -->
         <section class="py-24">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mb-16">
-                    <h2 class="text-3xl font-bold"><%- (chiSiamoData && chiSiamoData.TeamTitle) || 'I volti dietro l\'eccellenza di B4US' %></h2>
+                <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+                    <h2 class="text-3xl font-bold">
+                        <%- (chiSiamoData && chiSiamoData.TeamTitle) || 'I volti dietro l\'eccellenza di B4US' %>
+                    </h2>
+                    <%
+                      const teamCta = chiSiamoData && chiSiamoData.Team ? chiSiamoData.Team : {};
+                      const teamLabel = teamCta.Label || 'Vedi il nostro team';
+                      const teamIcon = teamCta.icon || 'groups';
+                    %>
+                    <a href="/team"
+                        class="inline-flex items-center gap-2 self-start px-5 py-2 rounded-full text-sm font-bold bg-primary text-white shadow-sm hover:bg-green-600 hover:shadow-green-500/30 transition-all">
+                        <span class="material-symbols-outlined text-base"><%= teamIcon %></span>
+                        <%= teamLabel %>
+                    </a>
                 </div>
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     <% if (teamMembers && teamMembers.length> 0) { %>
@@ -112,10 +126,10 @@
                             <div class="group">
                                 <div
                                     class="relative overflow-hidden rounded-2xl mb-4 aspect-[4/5] bg-slate-100 dark:bg-slate-800">
-                                    <% if (member.foto && member.foto.data) { %>
+                                    <% if (member.foto) { %>
                                         <img alt="<%= member.nome %> - <%= member.ruolo %>"
                                             class="w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                                            src="<%= strapiUrl %><%= member.foto.data.attributes.url %>" />
+                                            src="<%= strapiUrl %><%= member.foto.url %>" />
                                         <% } else { %>
                                             <div
                                                 class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary to-green-600">
@@ -155,8 +169,13 @@
                 </a>
             </div>
         </section>
+        </main>
 
         <%- include('partials/footer') %>
+
+        <script>
+            (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+        </script>
 </body>
 
 </html>

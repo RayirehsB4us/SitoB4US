@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "team_roles",
+  "info": {
+    "singularName": "team-role",
+    "pluralName": "team-roles",
+    "displayName": "Lista Team"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Team": {
+      "type": "string"
+    },
+    "DescrizioneTeam": {
+      "type": "text"
+    }
+  }
+}

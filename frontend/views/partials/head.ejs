@@ -36,3 +36,22 @@
     };
 </script>
 <link href="/style.css?v=<%= Date.now() %>" rel="stylesheet" />
+<style>
+    /* Skeleton loading - shared across pages */
+    .skeleton {
+        position: relative;
+        overflow: hidden;
+        background-color: rgba(148, 163, 184, 0.25);
+    }
+    .skeleton::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+        animation: shimmer 1.4s infinite;
+    }
+    @keyframes shimmer {
+        100% { transform: translateX(100%); }
+    }
+</style>

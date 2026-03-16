@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_shared_sotto_menus",
+  "info": {
+    "displayName": "sottoMenu"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "visible": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "config": {}
+}

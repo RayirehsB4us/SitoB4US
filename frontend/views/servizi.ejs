@@ -6,8 +6,10 @@
 </head>
 
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
-    <%- include('partials/navbar') %>
+    <%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
+        <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
         <section
             class="py-20 lg:py-28 bg-gradient-to-b from-white to-slate-50 dark:from-background-dark dark:to-slate-900 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -81,7 +83,12 @@
                 </div>
             </div>
         </section>
+        </main>
         <%- include('partials/footer') %>
+
+        <script>
+            (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
+        </script>
 </body>
 
 </html>

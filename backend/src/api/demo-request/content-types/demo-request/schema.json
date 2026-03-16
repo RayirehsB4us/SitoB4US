@@ -4,7 +4,7 @@
   "info": {
     "singularName": "demo-request",
     "pluralName": "demo-requests",
-    "displayName": "demoRequest",
+    "displayName": "Lista Richieste Demo",
     "description": ""
   },
   "options": {

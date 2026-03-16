@@ -1,1 +1,34 @@
-backend/.claude/worktrees/elated-jang
+# Dependencies
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Strapi
+backend/.tmp/
+backend/.cache/
+backend/build/
+backend/dist/
+backend/exports/
+backend/.strapi/
+
+# Frontend build
+frontend/dist/
+frontend/build/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Staging workflows (solo per VM, non servono nel repo)
+.github/workflows/staging_b4us-vm-backend.yml
+.github/workflows/staging_b4us-vm-website.yml
+
+# Claude Code
+.claude/

@@ -6,8 +6,10 @@
 </head>
 
 <body class="bg-background-light text-slate-800 font-sans transition-colors duration-300">
-    <%- include('partials/navbar') %>
+<%- include('partials/topNav') %>
+    <%- include('partials/skeleton-page') %>
 
+        <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
         <section class="relative py-20 overflow-hidden">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -37,10 +39,10 @@
                     <div class="relative">
                         <div
                             class="aspect-square rounded-3xl bg-gradient-to-br from-primary/20 to-blue-500/10 flex items-center justify-center p-8">
-                            <% if (carriereData.HeroImage && carriereData.HeroImage.data) { %>
+                            <% if (carriereData.HeroImage) { %>
                                 <img alt="Team collaborativo al lavoro"
                                     class="rounded-2xl shadow-2xl object-cover w-full h-full"
-                                    src="<%= strapiUrl %><%= carriereData.HeroImage.data.attributes.url %>" />
+                                    src="<%= strapiUrl %><%= carriereData.HeroImage.url %>" />
                                 <% } else { %>
                                     <img alt="Team collaborativo al lavoro"
                                         class="rounded-2xl shadow-2xl object-cover w-full h-full"
@@ -248,6 +250,7 @@
                 </div>
             </div>
         </section>
+        </main>
 
         <%- include('partials/footer') %>
 
@@ -432,6 +435,9 @@
                         submitBtn.innerHTML = '<span>Invia Candidatura</span><span class="material-symbols-outlined">send</span>';
                     }
                 });
+            </script>
+            <script>
+                (function(){var s=document.getElementById('page-skeleton');var c=document.getElementById('page-content');function show(){if(s)s.classList.add('hidden');if(c){c.classList.remove('hidden');c.classList.remove('opacity-0');}}if(document.readyState==='complete')show();else window.addEventListener('load',show);})();
             </script>
 </body>
 

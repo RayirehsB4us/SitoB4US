@@ -4,7 +4,7 @@
   "info": {
     "singularName": "job-request",
     "pluralName": "job-requests",
-    "displayName": "jobRequest",
+    "displayName": "Lista Risposta annunci Lavoro",
     "description": ""
   },
   "options": {
@@ -27,16 +27,11 @@
     "Telefono": {
       "type": "string"
     },
-    "cv": {
-      "type": "media",
-      "multiple": true,
-      "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+    "cvUrl": {
+      "type": "string"
+    },
+    "cvFileName": {
+      "type": "string"
     },
     "job_position": {
       "type": "relation",

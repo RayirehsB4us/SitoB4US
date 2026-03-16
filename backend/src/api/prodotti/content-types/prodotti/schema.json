@@ -4,7 +4,7 @@
   "info": {
     "singularName": "prodotti",
     "pluralName": "prodottis",
-    "displayName": "Prodotti Page",
+    "displayName": "Pagina Prodotti",
     "description": "Hero section della pagina Prodotti"
   },
   "options": {
@@ -14,16 +14,13 @@
   "attributes": {
     "Title": {
       "type": "string",
-      "required": true,
-      "description": "Prima riga titolo hero (es: Semplifica le tue Operazioni)"
+      "required": true
     },
     "Title2": {
-      "type": "string",
-      "description": "Seconda riga titolo hero verde (es: con Software Intelligenti)"
+      "type": "string"
     },
     "subtitle": {
-      "type": "text",
-      "description": "Sottotitolo hero"
+      "type": "text"
     }
   }
 }

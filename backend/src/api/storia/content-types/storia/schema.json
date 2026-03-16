@@ -1,41 +1,42 @@
 {
-    "kind": "singleType",
-    "collectionName": "storie",
-    "info": {
-        "singularName": "storia",
-        "pluralName": "storie",
-        "displayName": "Storia"
+  "kind": "singleType",
+  "collectionName": "storie",
+  "info": {
+    "singularName": "storia",
+    "pluralName": "storie",
+    "displayName": "Pagina Storia aziendale"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "UpperTitle": {
+      "type": "string"
     },
-    "options": {
-        "draftAndPublish": true
+    "MainTitle": {
+      "type": "string",
+      "required": true
     },
-    "attributes": {
-        "UpperTitle": {
-            "type": "string"
-        },
-        "MainTitle": {
-            "type": "string",
-            "required": true
-        },
-        "Description": {
-            "type": "text"
-        },
-        "Timeline": {
-            "type": "component",
-            "repeatable": true,
-            "component": "storia.timeline-event"
-        },
-        "CtaTitle": {
-            "type": "string"
-        },
-        "CtaDescription": {
-            "type": "text"
-        },
-        "CtaButtonApply": {
-            "type": "string"
-        },
-        "CtaButtonContact": {
-            "type": "string"
-        }
+    "Description": {
+      "type": "text"
+    },
+    "Timeline": {
+      "type": "component",
+      "component": "storia.timeline-event",
+      "repeatable": true
+    },
+    "CtaTitle": {
+      "type": "string"
+    },
+    "CtaDescription": {
+      "type": "text"
+    },
+    "CtaButtonApply": {
+      "type": "string"
+    },
+    "CtaButtonContact": {
+      "type": "string"
     }
+  }
 }

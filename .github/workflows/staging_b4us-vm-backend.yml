@@ -1,0 +1,84 @@
+name: Deploy Backend to VM - b4us-staging-backend
+
+on:
+  push:
+    branches: [staging]
+    paths:
+      - 'backend/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, staging-server]
+    environment: staging
+
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+
+      - name: 🚀 Deploy Backend (Strapi)
+        run: |
+          echo "🚀 Starting backend deployment..."
+
+          PROJECT_DIR="/home/sdev/SitoB4US/backend"
+
+          cd "$PROJECT_DIR"
+
+          echo "📥 Pulling latest changes..."
+          git fetch origin staging
+          git reset --hard origin/staging
+
+          # Install dependencies only if needed
+          echo "📦 Checking backend dependencies..."
+          if [ ! -d node_modules ]; then
+            echo "node_modules not found. Installing dependencies..."
+            npm ci --silent
+          elif [ package-lock.json -nt node_modules ]; then
+            echo "package-lock.json changed. Reinstalling dependencies..."
+            npm ci --silent
+          elif [ package.json -nt node_modules ]; then
+            echo "package.json changed. Installing updated dependencies..."
+            npm ci --silent
+          else
+            echo "Dependencies are up to date."
+          fi
+
+          # Build Strapi
+          echo "🔨 Building Strapi..."
+          npm run build
+
+          # Restart the service
+          echo "🔄 Restarting backend service..."
+          pm2 restart b4us-backend || pm2 start npm --name "b4us-backend" -- run start
+
+          # Wait for service to start
+          sleep 10
+
+          # Health check
+          echo "🏥 Checking backend service..."
+          if pm2 describe b4us-backend >/dev/null 2>&1; then
+            echo "✅ PM2 process is running"
+
+            if curl -s -m 10 http://localhost:1337/ >/dev/null 2>&1; then
+              echo "✅ Backend is online and responding on port 1337"
+            else
+              echo "⚠️ Backend is running but not responding yet"
+              pm2 logs b4us-backend --lines 10 --nostream
+            fi
+          else
+            echo "❌ Backend failed to start"
+            pm2 logs b4us-backend --lines 10 --nostream
+            exit 1
+          fi
+
+          echo "🎉 Backend deployment completed!"
+
+      - name: 📊 Show status
+        if: always()
+        run: |
+          echo "📊 Final status:"
+          pm2 status b4us-backend
+          echo ""
+          echo "🔗 Backend URL: http://localhost:1337"

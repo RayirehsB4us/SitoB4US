@@ -1,165 +1,132 @@
 {
-    "kind": "singleType",
-    "collectionName": "open4_uses",
-    "info": {
-        "singularName": "open4-us",
-        "pluralName": "open4-uses",
-        "displayName": "Open4US Page",
-        "description": "Contenuti della pagina Open4US - Accesso Smart"
+  "kind": "singleType",
+  "collectionName": "open4_uses",
+  "info": {
+    "singularName": "open4-us",
+    "pluralName": "open4-uses",
+    "displayName": "Pagina Open4US",
+    "description": "Contenuti della pagina Open4US - Accesso Smart"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "UpperMainTitle": {
+      "type": "string"
     },
-    "options": {
-        "draftAndPublish": true
+    "MainTitle": {
+      "type": "string",
+      "required": true
     },
-    "pluginOptions": {},
-    "attributes": {
-        "UpperMainTitle": {
-            "type": "string",
-            "description": "Badge hero (es: Nuova Integrazione Disponibile)"
-        },
-        "MainTitle": {
-            "type": "string",
-            "required": true,
-            "description": "Prima riga titolo hero (es: Accesso Smart &)"
-        },
-        "MainTitle2": {
-            "type": "string",
-            "description": "Seconda riga titolo hero verde (es: Condivisione Semplice)"
-        },
-        "MainSubTitle": {
-            "type": "text",
-            "description": "Sottotitolo hero"
-        },
-        "MainButton1": {
-            "type": "string",
-            "description": "Testo pulsante demo (es: Prenota una Demo)"
-        },
-        "MainButton2": {
-            "type": "string",
-            "description": "Testo pulsante funzionalita (es: Scopri le Funzionalita)"
-        },
-        "MainIcon": {
-            "type": "string",
-            "description": "Icona pulsante demo (es: arrow_forward)"
-        },
-        "AccesSmart": {
-            "type": "component",
-            "repeatable": true,
-            "component": "open4us.acces-smart",
-            "description": "Chip feature hero"
-        },
-        "ImageCard": {
-            "type": "component",
-            "repeatable": false,
-            "component": "open4us.image-card",
-            "description": "Card cilindro smart ISEO"
-        },
-        "SmartBlock": {
-            "type": "component",
-            "repeatable": false,
-            "component": "open4us.smart-block",
-            "description": "Blocco smartphone sblocco"
-        },
-        "DashUpperTitle": {
-            "type": "string",
-            "description": "Badge sezione dashboard (es: Pannello di Controllo)"
-        },
-        "DashTitle": {
-            "type": "string",
-            "description": "Titolo dashboard (es: Potente Dashboard di Gestione)"
-        },
-        "DashSubTitle": {
-            "type": "text",
-            "description": "Sottotitolo dashboard"
-        },
-        "DashLink": {
-            "type": "string",
-            "description": "URL finta barra (es: dashboard.open4us.com/calendario)"
-        },
-        "DashIcon": {
-            "type": "string",
-            "description": "Iniziali avatar sidebar (es: SS)"
-        },
-        "DashName": {
-            "type": "string",
-            "description": "Nome utente sidebar (es: Sheriyar Shakeel)"
-        },
-        "DashRole": {
-            "type": "string",
-            "description": "Ruolo utente sidebar (es: Admin)"
-        },
-        "DashboardOptions": {
-            "type": "component",
-            "repeatable": true,
-            "component": "open4us.dashboard-option",
-            "description": "Voci menu sidebar (ultima = logout)"
-        },
-        "CalendarDate": {
-            "type": "string",
-            "description": "Mese calendario (es: Marzo 2025)"
-        },
-        "CalendarIcon": {
-            "type": "string",
-            "description": "Icona freccia sinistra (es: chevron_left)"
-        },
-        "CalendarOggi": {
-            "type": "string",
-            "description": "Testo pulsante oggi (es: Oggi)"
-        },
-        "CalendarIcon2": {
-            "type": "string",
-            "description": "Icona freccia destra (es: chevron_right)"
-        },
-        "CalendarIcon3": {
-            "type": "string",
-            "description": "Icona ricerca (es: search)"
-        },
-        "CalendarBlock": {
-            "type": "component",
-            "repeatable": false,
-            "component": "open4us.calendar-block",
-            "description": "Card dettaglio prenotazione sotto il calendario"
-        },
-        "SpaceTitle": {
-            "type": "string",
-            "description": "Titolo sezione casi d'uso (es: Perfetto per Ogni Spazio)"
-        },
-        "SpaceBlock": {
-            "type": "component",
-            "repeatable": true,
-            "component": "open4us.space-block",
-            "description": "Card casi d'uso (coworking, palestre, uffici)"
-        },
-        "AppIcon": {
-            "type": "component",
-            "repeatable": false,
-            "component": "open4us.app-icon",
-            "description": "Icona grande sezione app"
-        },
-        "AppTitle": {
-            "type": "string",
-            "description": "Titolo sezione app (es: Sblocca con l App Open4US)"
-        },
-        "AppSubTitle": {
-            "type": "text",
-            "description": "Sottotitolo sezione app"
-        },
-        "AppBlocks": {
-            "type": "component",
-            "repeatable": true,
-            "component": "open4us.app-block",
-            "description": "Funzionalita app (offline, condivisione, registro)"
-        },
-        "ModernTitle": {
-            "type": "string",
-            "description": "Titolo CTA (es: Pronto a modernizzare...)"
-        },
-        "ModernSubTitle": {
-            "type": "text",
-            "description": "Sottotitolo CTA"
-        },
-        "ModernButton": {
-            "type": "string",
-            "description": "Testo pulsante CTA (es: Contatta le Vendite)"
-        }
+    "MainTitle2": {
+      "type": "string"
+    },
+    "MainSubTitle": {
+      "type": "text"
+    },
+    "MainButton1": {
+      "type": "string"
+    },
+    "MainButton2": {
+      "type": "string"
+    },
+    "MainIcon": {
+      "type": "string"
+    },
+    "AccesSmart": {
+      "type": "component",
+      "component": "open4us.acces-smart",
+      "repeatable": true
+    },
+    "ImageCard": {
+      "type": "component",
+      "component": "open4us.image-card",
+      "repeatable": false
+    },
+    "SmartBlock": {
+      "type": "component",
+      "component": "open4us.smart-block",
+      "repeatable": false
+    },
+    "DashUpperTitle": {
+      "type": "string"
+    },
+    "DashTitle": {
+      "type": "string"
+    },
+    "DashSubTitle": {
+      "type": "text"
+    },
+    "DashLink": {
+      "type": "string"
+    },
+    "DashIcon": {
+      "type": "string"
+    },
+    "DashName": {
+      "type": "string"
+    },
+    "DashRole": {
+      "type": "string"
+    },
+    "DashboardOptions": {
+      "type": "component",
+      "component": "open4us.dashboard-option",
+      "repeatable": true
+    },
+    "CalendarDate": {
+      "type": "string"
+    },
+    "CalendarIcon": {
+      "type": "string"
+    },
+    "CalendarOggi": {
+      "type": "string"
+    },
+    "CalendarIcon2": {
+      "type": "string"
+    },
+    "CalendarIcon3": {
+      "type": "string"
+    },
+    "CalendarBlock": {
+      "type": "component",
+      "component": "open4us.calendar-block",
+      "repeatable": false
+    },
+    "SpaceTitle": {
+      "type": "string"
+    },
+    "SpaceBlock": {
+      "type": "component",
+      "component": "open4us.space-block",
+      "repeatable": true
+    },
+    "AppIcon": {
+      "type": "component",
+      "component": "open4us.app-icon",
+      "repeatable": false
+    },
+    "AppTitle": {
+      "type": "string"
+    },
+    "AppSubTitle": {
+      "type": "text"
+    },
+    "AppBlocks": {
+      "type": "component",
+      "component": "open4us.app-block",
+      "repeatable": true
+    },
+    "ModernTitle": {
+      "type": "string"
+    },
+    "ModernSubTitle": {
+      "type": "text"
+    },
+    "ModernButton": {
+      "type": "string"
     }
+  }
 }
