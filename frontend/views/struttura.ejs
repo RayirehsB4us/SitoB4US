@@ -17,12 +17,12 @@
         <div class="max-w-3xl">
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
             <span class="text-primary">
-              <%= strutturaData.MainTitle || 'Organizzazione' %>
+              <%= strutturaData.MainTitle || '' %>
             </span>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
             <%= strutturaData.descriptionTitle
-              || "Crediamo che l\'efficienza non nasca da strutture complesse, ma da una comunicazione aperta e continua. Per noi è fondamentale che le informazioni circolino liberamente, in modo trasversale, senza barriere legate a ruoli, competenze o aree operative."
+              || ''
               %>
           </p>
         </div>
@@ -37,13 +37,13 @@
           <div>
             <span
               class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-              <%= (hero1 && hero1.tag) || 'Il nostro approccio' %>
+              <%= (hero1 && hero1.tag) || '' %>
             </span>
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-              <%= (hero1 && hero1.Title) || 'Nessun compartimento stagno' %>
+              <%= (hero1 && hero1.Title) || '' %>
             </h2>
             <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-              <%= (hero1 && hero1.SubTitle) || "Nel nostro modo di lavorare non esistono barriere: ognuno porta competenze solide nel proprio ambito, ma con una visione d\'insieme condivisa." %>
+              <%= (hero1 && hero1.SubTitle) || '' %>
             </p>
             <div class="space-y-4">
               <% var defaultIcons1 = ['code', 'dns', 'handshake']; %>
@@ -51,7 +51,7 @@
                 <% hero1.card.forEach(function(c, i) { %>
                   <div class="flex items-start gap-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
                     <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span class="material-symbols-outlined text-primary"><%= defaultIcons1[i] || 'check_circle' %></span>
+                      <span class="material-symbols-outlined text-primary"><%= defaultIcons1[i] || '' %></span>
                     </div>
                     <div>
                       <h4 class="font-bold text-slate-900 dark:text-white"><%= c.title %></h4>
@@ -113,13 +113,13 @@
         <div class="text-center mb-16">
           <span
             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-            <%= (hero2 && hero2.tag) || 'Investiamo nelle persone' %>
+            <%= (hero2 && hero2.tag) || '' %>
           </span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-            <%= (hero2 && hero2.Title) || 'Crescita e Formazione' %>
+            <%= (hero2 && hero2.Title) || '' %>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            <%= (hero2 && hero2.SubTitle) || 'Ogni collaboratore ha un percorso di sviluppo definito e monitorato, supportato da formazione continua.' %>
+            <%= (hero2 && hero2.SubTitle) || '' %>
           </p>
         </div>
 
@@ -131,7 +131,7 @@
                 class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-shadow">
                 <div class="flex items-center gap-4 mb-6">
                   <div class="w-14 h-14 <%= (i === 0) ? 'bg-blue-100 dark:bg-blue-900/30' : 'bg-primary/10' %> rounded-xl flex items-center justify-center">
-                    <span class="material-symbols-outlined <%= (i === 0) ? 'text-blue-600 dark:text-blue-400' : 'text-primary' %> text-3xl"><%= defaultIcons2[i] || 'star' %></span>
+                    <span class="material-symbols-outlined <%= (i === 0) ? 'text-blue-600 dark:text-blue-400' : 'text-primary' %> text-3xl"><%= defaultIcons2[i] || '' %></span>
                   </div>
                   <div>
                     <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%= c.title %></h3>
@@ -213,7 +213,7 @@
         <div class="mt-16 max-w-5xl mx-auto">
           <% var techTags = strutturaData.techArea && strutturaData.techArea[0]; %>
           <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">
-            <%= (techTags && techTags.title) || 'Le nostre aree di formazione' %>
+            <%= (techTags && techTags.title) || '' %>
           </h3>
           <div class="flex flex-wrap justify-center gap-4">
             <% if (techTags && techTags.tags && techTags.tags.length > 0) { %>
@@ -296,16 +296,16 @@
               <span class="material-symbols-outlined text-5xl"><%= (ka && ka.MainCard && ka.MainCard.icon) ? ka.MainCard.icon.trim() : 'calendar_month' %></span>
             </div>
             <div>
-              <h2 class="font-display text-3xl md:text-4xl font-bold mb-3"><%= (ka && ka.MainCard && ka.MainCard.title) || 'Knowledge Days' %></h2>
+              <h2 class="font-display text-3xl md:text-4xl font-bold mb-3"><%= (ka && ka.MainCard && ka.MainCard.title) || '' %></h2>
               <p class="text-white/80 text-lg">
-                <%= (ka && ka.MainCard && ka.MainCard.subTitle) || "Due giornate all'anno dedicate alla crescita delle nostre persone." %>
+                <%= (ka && ka.MainCard && ka.MainCard.subTitle) || '' %>
               </p>
             </div>
           </div>
 
           <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20">
             <p class="text-lg leading-relaxed mb-8">
-              <%= (ka && ka.content) || "Crediamo che la vera efficienza nasca dalla condivisione, non dalla complessità. Per questo abbiamo istituito i Knowledge Days: due appuntamenti annuali, riconosciuti a livello aziendale, interamente dedicati alla formazione e allo scambio di competenze tra colleghi e con professionisti esterni. Sono momenti pensati per fermarsi, uscire dalla routine operativa e investire tempo nella conoscenza: si approfondiscono temi specifici, si condividono esperienze concrete e si discutono approcci, strumenti e pratiche di lavoro. Un'occasione per valorizzare ciò che funziona, imparare dagli errori e costruire insieme una cultura aziendale basata su apprendimento continuo, confronto e crescita condivisa." %>
+              <%= (ka && ka.content) || '' %>
             </p>
             <div class="grid sm:grid-cols-2 gap-6">
               <% if (ka && ka.subCard && ka.subCard.length > 0) { %>

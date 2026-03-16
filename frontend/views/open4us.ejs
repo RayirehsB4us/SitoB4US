@@ -43,11 +43,11 @@
                     <div class="lg:w-1/2 lg:pr-12">
                         <div
                             class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-primary text-xs font-semibold tracking-wide uppercase mb-6">
-                            <%= (o4u && o4u.UpperMainTitle) || 'Nuova Integrazione Disponibile' %>
+                            <%= (o4u && o4u.UpperMainTitle) || '' %>
                         </div>
                         <h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">
-                            <%- (o4u && o4u.MainTitle) || 'Accesso Smart &' %> <br class="hidden lg:block" />
-                                <span class="text-primary"><%- (o4u && o4u.MainTitle2) || 'Condivisione Semplice'
+                            <%- (o4u && o4u.MainTitle) || '' %> <br class="hidden lg:block" />
+                                <span class="text-primary"><%- (o4u && o4u.MainTitle2) || ''
                                         %></span>
                         </h1>
                         <p class="text-lg text-gray-600 mb-8 leading-relaxed">
@@ -62,14 +62,14 @@
                         <div class="flex flex-col sm:flex-row gap-4">
                             <button onclick="openDemoModal('Open4US')"
                                 class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-green-600 md:text-lg shadow-lg shadow-green-500/40 transition-transform transform hover:-translate-y-1">
-                                <%= (o4u && o4u.MainButton1) || 'Prenota una Demo' %>
+                                <%= (o4u && o4u.MainButton1) || '' %>
                                     <span class="material-icons ml-2">
-                                        <%= (o4u && o4u.MainIcon) || 'arrow_forward' %>
+                                        <%= (o4u && o4u.MainIcon) || '' %>
                                     </span>
                             </button>
                             <a href="#features"
                                 class="flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 md:text-lg transition-colors">
-                                <%= (o4u && o4u.MainButton2) || 'Scopri le Funzionalità' %>
+                                <%= (o4u && o4u.MainButton2) || '' %>
                             </a>
                         </div>
                         <div class="mt-8 flex flex-wrap items-center gap-6 text-gray-400 text-sm font-medium">
@@ -77,7 +77,7 @@
                                 <% o4u.AccesSmart.forEach(function(chip) { %>
                                     <div class="flex items-center gap-1">
                                         <span class="material-icons text-primary text-base">
-                                            <%= chip.Icon || 'check_circle' %>
+                                            <%= chip.Icon || '' %>
                                         </span>
                                         <%= chip.Text %>
                                     </div>
@@ -114,11 +114,11 @@
                                         class="w-full h-full object-contain drop-shadow-lg">
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900">
-                                    <%= (o4u && o4u.ImageCard && o4u.ImageCard.Title) || 'Cilindro Smart ISEO' %>
+                                    <%= (o4u && o4u.ImageCard && o4u.ImageCard.Title) || '' %>
                                 </h3>
                                 <p class="text-sm text-gray-500 text-center mt-1">
                                     <%= (o4u && o4u.ImageCard && o4u.ImageCard.SubTitle)
-                                        || 'Ingresso senza chiave via Smartphone' %>
+                                        || '' %>
                                 </p>
                             </div>
                             <div
@@ -129,16 +129,16 @@
                                         <div
                                             class="w-16 h-16 rounded-full border-4 border-primary flex items-center justify-center mb-3 shadow-[0_0_15px_rgba(46,170,110,0.5)]">
                                             <span class="material-icons text-primary text-3xl">
-                                                <%= (o4u && o4u.SmartBlock && o4u.SmartBlock.Icon) || 'lock_open' %>
+                                                <%= (o4u && o4u.SmartBlock && o4u.SmartBlock.Icon) || '' %>
                                             </span>
                                         </div>
                                         <span class="text-white font-medium text-sm">
-                                            <%= (o4u && o4u.SmartBlock && o4u.SmartBlock.Title) || 'Tocca per Sbloccare'
+                                            <%= (o4u && o4u.SmartBlock && o4u.SmartBlock.Title) || ''
                                                 %>
                                         </span>
                                         <span class="text-gray-400 text-xs mt-1">
                                             <%= (o4u && o4u.SmartBlock && o4u.SmartBlock.Description)
-                                                || 'Ufficio Amministrativo' %>
+                                                || '' %>
                                         </span>
                                     </div>
                                 </div>
@@ -158,10 +158,10 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-16">
                         <h2 class="text-primary font-semibold tracking-wide uppercase text-sm">
-                            <%= (o4u && o4u.DashUpperTitle) || 'Pannello di Controllo' %>
+                            <%= (o4u && o4u.DashUpperTitle) || '' %>
                         </h2>
                         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                            <%- (o4u && o4u.DashTitle) || 'Potente Dashboard di Gestione' %>
+                            <%- (o4u && o4u.DashTitle) || '' %>
                         </p>
                         <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
                             <% if (o4u && o4u.DashSubTitle) { %>
@@ -183,7 +183,7 @@
                             </div>
                             <div
                                 class="bg-white px-3 py-1 rounded text-xs text-gray-500 flex-1 text-center font-mono mx-4 border border-gray-200">
-                                <%= (o4u && o4u.DashLink) || 'dashboard.open4us.com/calendario' %>
+                                <%= (o4u && o4u.DashLink) || '' %>
                             </div>
                         </div>
 
@@ -194,14 +194,14 @@
                                 <div class="flex items-center gap-3 mb-4">
                                     <div
                                         class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary font-bold">
-                                        <%= (o4u && o4u.DashIcon) || 'SS' %>
+                                        <%= (o4u && o4u.DashIcon) || '' %>
                                     </div>
                                     <div>
                                         <h4 class="font-bold text-sm">
-                                            <%= (o4u && o4u.DashName) || 'Sheriyar Shakeel' %>
+                                            <%= (o4u && o4u.DashName) || '' %>
                                         </h4>
                                         <span class="text-xs text-green-100">
-                                            <%= (o4u && o4u.DashRole) || 'Admin' %>
+                                            <%= (o4u && o4u.DashRole) || '' %>
                                         </span>
                                     </div>
                                 </div>
@@ -285,28 +285,28 @@
                                     class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                                     <div class="flex items-center gap-4">
                                         <h2 class="text-2xl font-bold text-gray-800">
-                                            <%= (o4u && o4u.CalendarDate) || 'Marzo 2025' %>
+                                            <%= (o4u && o4u.CalendarDate) || '' %>
                                         </h2>
                                         <div class="flex bg-white rounded-lg shadow-sm border border-gray-200">
                                             <button class="px-3 py-1 hover:bg-gray-50 border-r border-gray-200">
                                                 <span class="material-icons text-gray-500 text-sm">
-                                                    <%= (o4u && o4u.CalendarIcon) || 'chevron_left' %>
+                                                    <%= (o4u && o4u.CalendarIcon) || '' %>
                                                 </span>
                                             </button>
                                             <button
                                                 class="px-3 py-1 text-sm font-medium text-gray-700 hover:bg-gray-50">
-                                                <%= (o4u && o4u.CalendarOggi) || 'Oggi' %>
+                                                <%= (o4u && o4u.CalendarOggi) || '' %>
                                             </button>
                                             <button class="px-3 py-1 hover:bg-gray-50 border-l border-gray-200">
                                                 <span class="material-icons text-gray-500 text-sm">
-                                                    <%= (o4u && o4u.CalendarIcon2) || 'chevron_right' %>
+                                                    <%= (o4u && o4u.CalendarIcon2) || '' %>
                                                 </span>
                                             </button>
                                         </div>
                                     </div>
                                     <div class="relative w-full sm:w-auto">
                                         <span class="material-icons absolute left-3 top-2.5 text-gray-400 text-sm">
-                                            <%= (o4u && o4u.CalendarIcon3) || 'search' %>
+                                            <%= (o4u && o4u.CalendarIcon3) || '' %>
                                         </span>
                                         <input
                                             class="pl-9 pr-4 py-2 rounded-lg border border-gray-300 bg-white text-sm w-full focus:ring-2 focus:ring-primary focus:border-transparent text-gray-900"
@@ -371,31 +371,31 @@
                                         class="mt-6 bg-white rounded-lg shadow-xl border border-gray-200 p-4 animate-bounce-in lg:max-w-md">
                                         <div class="flex justify-between items-start mb-3">
                                             <h3 class="font-bold text-gray-900">
-                                                <%= (cb && cb.Title) || 'Ufficio Admin - Gorgonzola' %>
+                                                <%= (cb && cb.Title) || '' %>
                                             </h3>
                                             <span class="bg-green-100 text-primary text-xs font-bold px-2 py-1 rounded">
-                                                <%= (cb && cb.Status) || 'Confermato' %>
+                                                <%= (cb && cb.Status) || '' %>
                                             </span>
                                         </div>
                                         <div class="space-y-2 text-sm text-gray-600">
                                             <div class="flex items-center gap-2">
                                                 <span class="material-icons text-gray-400 text-sm">
-                                                    <%= (cb && cb.Icon1) || 'calendar_today' %>
+                                                    <%= (cb && cb.Icon1) || '' %>
                                                 </span>
-                                                <%= (cb && cb.Date) || '26/02/2025 17:00' %>
+                                                <%= (cb && cb.Date) || '' %>
                                             </div>
                                             <div class="flex items-center gap-2">
                                                 <span class="material-icons text-gray-400 text-sm">
-                                                    <%= (cb && cb.Icon2) || 'person' %>
+                                                    <%= (cb && cb.Icon2) || '' %>
                                                 </span>
-                                                <%= (cb && cb.Name) || 'Luigi Di Mauro (3 ospiti)' %>
+                                                <%= (cb && cb.Name) || '' %>
                                             </div>
                                             <div class="mt-3 p-2 bg-green-50 rounded border border-green-100">
                                                 <div class="flex items-center gap-2 text-primary font-medium text-xs">
                                                     <span class="material-icons text-sm">
-                                                        <%= (cb && cb.Icon3) || 'vpn_key' %>
+                                                        <%= (cb && cb.Icon3) || '' %>
                                                     </span>
-                                                    <%= (cb && cb.Access) || 'Accesso autorizzato: ARIES TEST1' %>
+                                                    <%= (cb && cb.Access) || '' %>
                                                 </div>
                                             </div>
                                         </div>
@@ -410,7 +410,7 @@
             <div class="py-24 bg-white">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
-                        <%= (o4u && o4u.SpaceTitle) || 'Perfetto per Ogni Spazio' %>
+                        <%= (o4u && o4u.SpaceTitle) || '' %>
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <% if (o4u && o4u.SpaceBlock && o4u.SpaceBlock.length> 0) { %>
@@ -483,11 +483,11 @@
                                 class="rounded-2xl shadow-2xl overflow-hidden h-96 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
                                 <div class="text-center p-8">
                                     <span class="material-icons text-primary" style="font-size: 120px;">
-                                        <%= (o4u && o4u.AppIcon && o4u.AppIcon.Icon) || 'smartphone' %>
+                                        <%= (o4u && o4u.AppIcon && o4u.AppIcon.Icon) || '' %>
                                     </span>
                                     <p class="text-gray-500 mt-4 font-medium">
                                         <%= (o4u && o4u.AppIcon && o4u.AppIcon.Text)
-                                            || 'App Open4US - Sblocco Smartphone' %>
+                                            || '' %>
                                     </p>
                                 </div>
                             </div>
@@ -563,7 +563,7 @@
             <div class="bg-gray-900 py-16">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 class="text-3xl font-extrabold text-white mb-4">
-                        <%= (o4u && o4u.ModernTitle) || 'Pronto a modernizzare il tuo controllo accessi?' %>
+                        <%= (o4u && o4u.ModernTitle) || '' %>
                     </h2>
                     <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
                         <% if (o4u && o4u.ModernSubTitle) { %>
@@ -576,7 +576,7 @@
                     <div class="flex justify-center">
                         <button onclick="openDemoModal('Open4US')"
                             class="px-8 py-3 bg-primary text-white font-bold rounded-lg hover:bg-green-600 transition shadow-lg shadow-green-500/30">
-                            <%= (o4u && o4u.ModernButton) || 'Contatta le Vendite' %>
+                            <%= (o4u && o4u.ModernButton) || '' %>
                         </button>
                     </div>
                 </div>

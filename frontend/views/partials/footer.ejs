@@ -20,7 +20,7 @@
     <div class="grid gap-12 mb-12 <%= gridColsClass %>">
       <div class="lg:col-span-1">
         <% if (footerData.logoUrl) { %>
-          <img alt="<%= footerData.logoName || 'B4US Logo' %>" class="h-10 w-auto mb-6" src="<%= footerData.logoUrl %>" />
+          <img alt="<%= footerData.logoName || '' %>" class="h-10 w-auto mb-6" src="<%= footerData.logoUrl %>" />
         <% } %>
         <% if (footerData.descrizione) { %>
           <p class="text-sm text-gray-500">

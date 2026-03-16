@@ -14,11 +14,11 @@
       <div class="max-w-7xl mx-auto text-center">
         <h1
           class="text-4xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-600">
-          <%= contattiData.MainTitle || 'Parliamo del tuo futuro IT' %>
+          <%= contattiData.MainTitle || '' %>
         </h1>
         <p class="text-lg text-slate-600 max-w-2xl mx-auto">
           <%= contattiData.Description
-            || 'Hai un progetto in mente o hai bisogno di una consulenza specializzata? Il nostro team di esperti è pronto ad aiutararti a semplificare la tua infrastruttura tecnologica.'
+            || ''
             %>
         </p>
       </div>
@@ -30,7 +30,7 @@
           class="bg-white dark:bg-slate-800/50 p-8 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
           <h2 class="text-2xl font-display font-bold mb-8 flex items-center gap-2">
             <span class="material-symbols-outlined text-primary">send</span>
-            <%= contattiData.FormTitle || 'Inviaci un messaggio' %>
+            <%= contattiData.FormTitle || '' %>
           </h2>
           <form id="contactForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -111,7 +111,7 @@
                   class="p-6 rounded-3xl bg-white dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 shadow-sm">
                   <div class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4">
                     <span class="material-symbols-outlined text-primary">
-                      <%= detail.icon || 'star' %>
+                      <%= detail.icon || '' %>
                     </span>
                   </div>
                   <h3 class="font-display font-bold text-lg mb-1">
@@ -168,17 +168,17 @@
               </div>
               <div>
                 <h3 class="font-display font-bold text-lg mb-1">
-                  <%= contattiData.SedeTitle || 'La nostra sede' %>
+                  <%= contattiData.SedeTitle || '' %>
                 </h3>
                 <p class="text-slate-500 dark:text-slate-400">
-                  <%= contattiData.SedeAddress || 'Via Vincenzo Pessina, 2 - 20064 Gorgonzola (MI), Italia' %>
+                  <%= contattiData.SedeAddress || '' %>
                 </p>
               </div>
             </div>
             <div
               class="relative w-full h-[300px] rounded-2xl overflow-hidden shadow-inner bg-slate-200 dark:bg-slate-700">
               <iframe
-                src="<%= contattiData.SedeMapUrl || 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2795.8573762744447!2d9.401682976519436!3d45.52766367107462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4786c0f5e5e5e5e5%3A0x5e5e5e5e5e5e5e5e!2sVia%20Vincenzo%20Pessina%2C%202%2C%2020064%20Gorgonzola%20MI!5e0!3m2!1sit!2sit!4v1000000000000!5m2!1sit!2sit' %>"
+                src="<%= contattiData.SedeMapUrl || '' %>"
                 width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade" class="w-full h-full"
                 title="Mappa sede B4US - Via Vincenzo Pessina, 2, Gorgonzola"></iframe>
