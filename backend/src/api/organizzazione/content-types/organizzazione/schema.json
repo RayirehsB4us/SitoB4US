@@ -16,7 +16,11 @@
       "required": true
     },
     "descriptionTitle": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "CoverImage": {
       "type": "media",

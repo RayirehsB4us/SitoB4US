@@ -1,25 +1,9 @@
 {
-    "collectionName": "components_storia_timeline_events",
-    "info": {
-        "displayName": "Timeline Event",
-        "description": "Evento nella cronologia aziendale"
-    },
-    "options": {},
-    "attributes": {
-        "Anno": {
-            "type": "string",
-            "required": true
-        },
-        "Descrizione": {
-            "type": "text",
-            "required": true
-        },
-        "Foto": {
-            "type": "media",
-            "multiple": false,
-            "allowedTypes": [
-                "images"
-            ]
-        }
-    }
+  "collectionName": "components_storia_timeline_events",
+  "info": {
+    "displayName": "Timeline Event",
+    "description": "Evento nella cronologia aziendale"
+  },
+  "options": {},
+  "attributes": {}
 }

@@ -19,7 +19,11 @@
       "required": true
     },
     "Description": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "Button1Text": {
       "type": "string"
@@ -38,7 +42,11 @@
       "type": "string"
     },
     "CultureSubTitle": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "CultureCards": {
       "type": "component",
@@ -64,7 +72,11 @@
       "type": "string"
     },
     "BottomCtaSubTitle": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "BottomCtaButton": {
       "type": "string"

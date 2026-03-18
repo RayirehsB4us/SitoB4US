@@ -91,7 +91,13 @@ export interface ChiSiamoValueCard extends Struct.ComponentSchema {
     icon: 'star';
   };
   attributes: {
-    description: Schema.Attribute.Text;
+    description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     icon: Schema.Attribute.String;
     title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -238,7 +244,13 @@ export interface OrganizzazioneHeroSection extends Struct.ComponentSchema {
   };
   attributes: {
     card: Schema.Attribute.Component<'organizzazione.hero-card', true>;
-    SubTitle: Schema.Attribute.Text;
+    SubTitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     tag: Schema.Attribute.String;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
   };
@@ -251,7 +263,13 @@ export interface OrganizzazioneKnowledgeArea extends Struct.ComponentSchema {
     displayName: 'Knowledge Area';
   };
   attributes: {
-    content: Schema.Attribute.Text;
+    content: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     MainCard: Schema.Attribute.Component<'organizzazione.main-card', false>;
     subCard: Schema.Attribute.Component<'organizzazione.sub-card', true>;
   };
@@ -548,11 +566,7 @@ export interface StoriaTimelineEvent extends Struct.ComponentSchema {
     description: 'Evento nella cronologia aziendale';
     displayName: 'Timeline Event';
   };
-  attributes: {
-    Anno: Schema.Attribute.String & Schema.Attribute.Required;
-    Descrizione: Schema.Attribute.Text & Schema.Attribute.Required;
-    Foto: Schema.Attribute.Media<'images'>;
-  };
+  attributes: {};
 }
 
 declare module '@strapi/strapi' {

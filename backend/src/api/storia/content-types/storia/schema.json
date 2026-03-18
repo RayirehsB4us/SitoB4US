@@ -19,18 +19,21 @@
       "required": true
     },
     "Description": {
-      "type": "text"
-    },
-    "Timeline": {
-      "type": "component",
-      "component": "storia.timeline-event",
-      "repeatable": true
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "CtaTitle": {
       "type": "string"
     },
     "CtaDescription": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "CtaButtonApply": {
       "type": "string"

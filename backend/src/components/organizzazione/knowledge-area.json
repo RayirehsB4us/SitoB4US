@@ -12,7 +12,11 @@
             "component": "organizzazione.main-card"
         },
         "content": {
-            "type": "text"
+            "type": "richtext",
+            "customField": "plugin::ckeditor5.CKEditor",
+            "options": {
+                "preset": "defaultHtml"
+            }
         },
         "subCard": {
             "type": "component",
