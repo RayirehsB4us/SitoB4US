@@ -5,6 +5,50 @@ const axios = require("axios");
 const multer = require("multer");
 const FormData = require("form-data");
 const fs = require("fs");
+const morgan = require("morgan");
+const winston = require("winston");
+require("winston-daily-rotate-file");
+
+// ── Winston Logger ──────────────────────────────────────────────────
+const logsDir = path.join(__dirname, "logs");
+if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir);
+
+const errorRotateTransport = new winston.transports.DailyRotateFile({
+  filename: path.join(logsDir, "error-%DATE%.log"),
+  datePattern: "YYYY-MM-DD",
+  level: "error",
+  maxSize: "20m",
+  maxFiles: "30d",    // tiene 30 giorni, poi cancella
+  zippedArchive: true, // comprime i vecchi in .gz
+});
+
+const combinedRotateTransport = new winston.transports.DailyRotateFile({
+  filename: path.join(logsDir, "combined-%DATE%.log"),
+  datePattern: "YYYY-MM-DD",
+  maxSize: "20m",
+  maxFiles: "30d",
+  zippedArchive: true,
+});
+
+const logger = winston.createLogger({
+  level: "info",
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+  ),
+  transports: [errorRotateTransport, combinedRotateTransport],
+});
+
+// In sviluppo, logga anche su console
+if (process.env.NODE_ENV !== "production") {
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple(),
+    ),
+  }));
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 const STRAPI_URL = process.env.STRAPI_URL || "http://localhost:1337";
@@ -93,17 +137,12 @@ const IS_PRODUCTION = process.env.NODE_ENV === "production";
 const MAINTENANCE_MODE =
   process.env.MAINTENANCE_MODE === "1" ||
   process.env.MAINTENANCE_MODE === "true";
-console.log(
-  "[BOOT-ENV]",
-  "NODE_ENV raw =",
-  JSON.stringify(process.env.NODE_ENV),
-  "| IS_PRODUCTION =",
+logger.info("Boot environment", {
+  NODE_ENV: process.env.NODE_ENV,
   IS_PRODUCTION,
-  "| MAINTENANCE_MODE =",
   MAINTENANCE_MODE,
-  "| ALLOWED_LOGIN_IPS =",
   ALLOWED_LOGIN_IPS,
-);
+});
 // Header di autenticazione per tutte le richieste a Strapi
 const strapiAuthHeaders = STRAPI_API_TOKEN
   ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
@@ -140,25 +179,17 @@ app.use(async (req, res, next) => {
         };
       });
 
-    // Log sintetico per verificare i valori che arrivano da Strapi
-    console.log(
-      "[MEGA-MENU]",
-      new Date().toISOString(),
-      topMenu.map((item) => ({
+    logger.info("Mega menu loaded", {
+      items: topMenu.map((item) => ({
         label: item.label,
         path: item.path,
-        visible: item.visible,
-        sottoMenu: (item.sottoMenu || []).map((sub) => ({
-          label: sub.label,
-          path: sub.path,
-          visible: sub.visible,
-        })),
+        sottoMenu: (item.sottoMenu || []).length,
       })),
-    );
+    });
 
     res.locals.topMenu = topMenu;
   } catch (error) {
-    console.warn("Strapi mega menu fetch error:", error.message);
+    logger.error("Strapi mega menu fetch error", { error: error.message });
     res.locals.topMenu = [];
   }
 
@@ -200,22 +231,13 @@ app.use(async (req, res, next) => {
       columns,
     };
 
-    console.log(
-      "[FOOTER]",
-      new Date().toISOString(),
-      {
-        descrizione: footer.descrizione,
-        subTitle: footer.subTitle,
-        columns: footer.columns.map((c) => ({
-          title: c.Title,
-          links: c.link.length,
-        })),
-      },
-    );
+    logger.info("Footer loaded", {
+      columns: footer.columns.map((c) => ({ title: c.Title, links: c.link.length })),
+    });
 
     res.locals.footer = footer;
   } catch (error) {
-    console.warn("Strapi footer fetch error:", error.message);
+    logger.error("Strapi footer fetch error", { error: error.message });
     res.locals.footer = null;
   }
 
@@ -250,6 +272,18 @@ app.set("trust proxy", true);
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ── Morgan HTTP Logger (file giornaliero) ───────────────────────────
+const accessRotateStream = new (require("winston-daily-rotate-file"))({
+  filename: path.join(logsDir, "access-%DATE%.log"),
+  datePattern: "YYYY-MM-DD",
+  maxSize: "20m",
+  maxFiles: "30d",
+  zippedArchive: true,
+});
+// DailyRotateFile è uno stream scrivibile, Morgan lo usa come stream
+app.use(morgan("combined", { stream: { write: (msg) => accessRotateStream.log({ level: "info", message: msg.trim() }) } }));
+app.use(morgan("short")); // anche su console
 
 // Normalizza IP: toglie porta se IPv4:porta (gestisce sia header con che senza porta)
 function normalizeIpForCompare(ip) {
@@ -316,21 +350,14 @@ app.use((req, res, next) => {
           : socketIp
             ? "socket.remoteAddress"
             : "none";
-  console.log(
-    "[IP-LOG]",
-    new Date().toISOString(),
-    `${req.method} ${req.originalUrl}`,
-    "| clientIp=",
-    clientIp || "N/A",
-    "| source=",
-    ipSource,
-    "| allowedIp=",
-    isAllowedIp,
-    "| showLoginButton=",
-    res.locals.showLoginButton,
-    "| NODE_ENV=",
-    process.env.NODE_ENV || "undefined",
-  );
+  logger.info("Request IP", {
+    method: req.method,
+    url: req.originalUrl,
+    clientIp: clientIp || "N/A",
+    source: ipSource,
+    allowedIp: isAllowedIp,
+    showLoginButton: res.locals.showLoginButton,
+  });
 
   next();
 });
@@ -410,7 +437,7 @@ async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = nul
     );
     return response.data;
   } catch (error) {
-    console.warn(`Strapi fetch error for ${endpoint}:`, error.message);
+    logger.error("Strapi fetch error", { endpoint, error: error.message });
     return fallbackData;
   }
 }
@@ -428,7 +455,7 @@ app.get("/", async (req, res) => {
       servizi: servizi?.data || [],
     });
   } catch (error) {
-    console.error("Error rendering home:", error);
+    logger.error("Error rendering home", { error: error.message });
     res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
   }
 });
@@ -445,7 +472,7 @@ app.get("/home", async (req, res) => {
       servizi: servizi?.data || [],
     });
   } catch (error) {
-    console.error("Error rendering home:", error);
+    logger.error("Error rendering home", { error: error.message });
     res.render("home", { title: "B4US | Simplify IT", home: {}, servizi: [] });
   }
 });
@@ -465,7 +492,7 @@ app.get("/chi-siamo", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering chi-siamo:", error);
+    logger.error("Error rendering chi-siamo", { error: error.message });
     res.render("chi-siamo", {
       title: "Chi Siamo - B4US Simplify IT",
       chiSiamoData: {},
@@ -492,7 +519,7 @@ app.get("/prodotti", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering prodotti:", error);
+    logger.error("Error rendering prodotti", { error: error.message });
     res.render("prodotti", {
       title: "Prodotti | B4US - Simplify IT",
       prodottiData: {},
@@ -512,7 +539,7 @@ app.get("/open4us", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering open4us:", error);
+    logger.error("Error rendering open4us", { error: error.message });
     res.render("open4us", {
       title: "Open4US - Accesso Smart | B4US",
       o4u: {},
@@ -531,7 +558,7 @@ app.get("/carfleet", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering carfleet:", error);
+    logger.error("Error rendering carfleet", { error: error.message });
     res.render("carfleet", {
       title: "CarFleet - Gestione Flotta Intelligente | B4US",
       cf: {},
@@ -550,7 +577,7 @@ app.get("/servizi", async (req, res) => {
       serviziPage: serviceData?.data || {},
     });
   } catch (error) {
-    console.error("Error rendering servizi:", error);
+    logger.error("Error rendering servizi", { error: error.message });
     res.render("servizi", {
       title: "Servizi | B4US - Simplify IT",
       servizi: [],
@@ -570,7 +597,7 @@ app.get("/struttura", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering struttura:", error);
+    logger.error("Error rendering struttura", { error: error.message });
     res.render("struttura", {
       title: "Organizzazione - B4US | Simplify IT",
       strutturaData: {},
@@ -590,7 +617,7 @@ app.get("/storia", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering storia:", error);
+    logger.error("Error rendering storia", { error: error.message });
     res.render("storia", {
       title: "La Nostra Storia - B4US | Simplify IT",
       storiaData: {},
@@ -619,7 +646,7 @@ app.get("/carriere", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering carriere:", error);
+    logger.error("Error rendering carriere", { error: error.message });
     res.render("carriere", {
       title: "Lavora Con Noi - B4US Team",
       carriereData: {},
@@ -640,7 +667,7 @@ app.get("/contatti", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering contatti:", error);
+    logger.error("Error rendering contatti", { error: error.message });
     res.render("contatti", {
       title: "Contatti - B4US Simplify IT",
       contattiData: {},
@@ -667,7 +694,7 @@ app.get("/blog", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering blog:", error);
+    logger.error("Error rendering blog", { error: error.message });
     res.render("blog", {
       title: "Diario di Bordo - B4US Simplify IT",
       blogPageData: {},
@@ -704,7 +731,7 @@ app.get("/blog/:slug", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering blog post:", error);
+    logger.error("Error rendering blog post", { error: error.message });
     res.render("blog-post", {
       title: "Articolo non trovato | B4US Blog",
       post: null,
@@ -839,7 +866,7 @@ app.get("/team", async (req, res) => {
       strapiUrl: STRAPI_URL,
     });
   } catch (error) {
-    console.error("Error rendering team:", error);
+    logger.error("Error rendering team", { error: error.message });
     res.render("team", {
       title: "Il Nostro Team - B4US",
       teamData: {},
@@ -855,27 +882,11 @@ app.get("/team", async (req, res) => {
 
 app.get("/login", (req, res) => {
   if (!res.locals.showLoginButton) {
-    console.warn(
-      "[LOGIN-BLOCKED]",
-      new Date().toISOString(),
-      `${req.method} ${req.originalUrl}`,
-      "| clientIp=",
-      req.clientIp || req.ip,
-      "| allowedIp=",
-      req.isAllowedLoginIp,
-    );
+    logger.warn("Login blocked", { clientIp: req.clientIp || req.ip, allowedIp: req.isAllowedLoginIp });
     return res.status(403).send("Accesso non autorizzato");
   }
 
-  console.log(
-    "[LOGIN-ALLOWED]",
-    new Date().toISOString(),
-    `${req.method} ${req.originalUrl}`,
-    "| clientIp=",
-    req.clientIp || req.ip,
-    "| allowedIp=",
-    req.isAllowedLoginIp,
-  );
+  logger.info("Login allowed", { clientIp: req.clientIp || req.ip });
 
   res.render("login", { title: "B4US Portal - Accedi" });
 });
@@ -889,15 +900,7 @@ app.get("/strapi-redirect", (req, res) => {
 app.post("/api/login", async (req, res) => {
   // Controllo IP: solo IP consentiti possono chiamare l'API di login
   if (IS_PRODUCTION && !req.isAllowedLoginIp) {
-    console.warn(
-      "[API-LOGIN-BLOCKED]",
-      new Date().toISOString(),
-      `${req.method} ${req.originalUrl}`,
-      "| clientIp=",
-      req.clientIp || req.ip,
-      "| allowedIp=",
-      req.isAllowedLoginIp,
-    );
+    logger.warn("API login blocked", { clientIp: req.clientIp || req.ip });
     return res.status(403).json({
       success: false,
       message: "Accesso non autorizzato",
@@ -914,8 +917,7 @@ app.post("/api/login", async (req, res) => {
       });
     }
 
-    console.log("Attempting login to:", `${STRAPI_URL}/admin/login`);
-    console.log("With email:", identifier);
+    logger.info("Login attempt", { email: identifier });
 
     // Authenticate with Strapi admin API
     const response = await axios.post(
@@ -931,11 +933,8 @@ app.post("/api/login", async (req, res) => {
       },
     );
 
-    console.log("Login response status:", response.status);
-
     if (response.data && response.data.data) {
-      // Login successful
-      console.log("Login successful for:", identifier);
+      logger.info("Login successful", { email: identifier });
       return res.json({
         success: true,
         message: "Login effettuato con successo",
@@ -949,11 +948,7 @@ app.post("/api/login", async (req, res) => {
       });
     }
   } catch (error) {
-    console.error("Login error details:", {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-    });
+    logger.error("Login error", { error: error.message, status: error.response?.status });
 
     const errorMessage =
       error.response?.data?.error?.message ||
@@ -990,13 +985,7 @@ app.post("/api/demo-request", async (req, res) => {
       });
     }
 
-    console.log("Creating demo request for:", {
-      nome,
-      cognome,
-      azienda,
-      email,
-      softwareProduct,
-    });
+    logger.info("Demo request", { nome, cognome, azienda, email, softwareProduct });
 
     // Step 1: Trova o crea il software product
     let softwareProductId = null;
@@ -1009,10 +998,10 @@ app.post("/api/demo-request", async (req, res) => {
 
       if (productResponse.data?.data?.length > 0) {
         softwareProductId = productResponse.data.data[0].id;
-        console.log("Found existing software product:", softwareProductId);
+        logger.info("Found existing software product", { id: softwareProductId });
       } else {
         // Se non esiste, crealo
-        console.log("Creating new software product:", softwareProduct);
+        logger.info("Creating new software product", { name: softwareProduct });
         const createProductResponse = await axios.post(
           `${STRAPI_API_URL}/software-products`,
           {
@@ -1029,10 +1018,10 @@ app.post("/api/demo-request", async (req, res) => {
           },
         );
         softwareProductId = createProductResponse.data.data.id;
-        console.log("Created software product:", softwareProductId);
+        logger.info("Created software product", { id: softwareProductId });
       }
     } catch (error) {
-      console.error("Error handling software product:", error.message);
+      logger.error("Error handling software product", { error: error.message });
       // Continua senza il product se c'è un errore
     }
 
@@ -1057,10 +1046,7 @@ app.post("/api/demo-request", async (req, res) => {
       demoRequestData.data.software_product = softwareProductId;
     }
 
-    console.log(
-      "Creating demo request with data:",
-      JSON.stringify(demoRequestData, null, 2),
-    );
+    logger.info("Creating demo request in Strapi");
 
     const demoRequestResponse = await axios.post(
       `${STRAPI_API_URL}/demo-requests`,
@@ -1073,10 +1059,7 @@ app.post("/api/demo-request", async (req, res) => {
       },
     );
 
-    console.log(
-      "Demo request created successfully:",
-      demoRequestResponse.data.data.id,
-    );
+    logger.info("Demo request created", { id: demoRequestResponse.data.data.id });
 
     res.json({
       success: true,
@@ -1084,11 +1067,7 @@ app.post("/api/demo-request", async (req, res) => {
       data: demoRequestResponse.data,
     });
   } catch (error) {
-    console.error("Demo request error:", {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-    });
+    logger.error("Demo request error", { error: error.message, status: error.response?.status });
 
     const errorMessage =
       error.response?.data?.error?.message ||
@@ -1136,13 +1115,12 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
     uploadedFilePath = cvFile.path;
 
     // Step 1: Upload del CV su SharePoint
-    console.log("Uploading CV to SharePoint...");
+    logger.info("Uploading CV to SharePoint");
     const sharePointResult = await uploadToSharePoint(
       cvFile.path,
       cvFile.originalname,
     );
-    console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
-    console.log("CV uploaded to SharePoint:", sharePointResult.webUrl);
+    logger.info("CV uploaded to SharePoint", { url: sharePointResult.webUrl });
 
     // Step 2: Determina il job_position ID
     let jobPositionId = null;
@@ -1170,10 +1148,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       jobRequestData.data.job_position = jobPositionId;
     }
 
-    console.log(
-      "Creating job request with data:",
-      JSON.stringify(jobRequestData, null, 2),
-    );
+    logger.info("Creating job request in Strapi");
 
     const jobRequestResponse = await axios.post(
       `${STRAPI_API_URL}/job-requests`,
@@ -1186,10 +1161,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       },
     );
 
-    console.log(
-      "Job request created successfully:",
-      jobRequestResponse.data.data.id,
-    );
+    logger.info("Job request created", { id: jobRequestResponse.data.data.id });
 
     // Pulisci il file temporaneo
     fs.unlinkSync(uploadedFilePath);
@@ -1200,11 +1172,7 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       data: jobRequestResponse.data,
     });
   } catch (error) {
-    console.error("Job application error:", {
-      message: error.message,
-      response: error.response?.data,
-      status: error.response?.status,
-    });
+    logger.error("Job application error", { error: error.message, status: error.response?.status });
 
     // Pulisci il file temporaneo in caso di errore
     if (uploadedFilePath && fs.existsSync(uploadedFilePath)) {
@@ -1233,13 +1201,13 @@ app.get("/api/strapi/:endpoint", async (req, res) => {
         ? "?" + new URLSearchParams(req.query).toString()
         : "";
     const url = `${STRAPI_API_URL}/${endpoint}${queryString}`;
-    console.log("Proxy Strapi request:", url);
+    logger.info("Proxy Strapi request", { url });
     const response = await axios.get(url, {
       headers: { ...strapiAuthHeaders },
     });
     res.json(response.data);
   } catch (error) {
-    console.error("Proxy Strapi error:", error.message);
+    logger.error("Proxy Strapi error", { error: error.message });
     res.status(error.response?.status || 500).json({
       error: error.response?.data || { message: "Errore nel proxy Strapi" },
     });
@@ -1254,5 +1222,5 @@ app.get("/health", function (req, res) {
 });
 // Avvia il server HTTP (HTTPS/redirect gestito da Azure App Service)
 app.listen(PORT, () => {
-  console.log(`✅ HTTP Server running on port ${PORT}`);
+  logger.info(`Server running on port ${PORT}`);
 });
