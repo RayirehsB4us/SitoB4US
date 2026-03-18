@@ -568,7 +568,13 @@ export interface ApiCarriereCarriere extends Struct.SingleTypeSchema {
   };
   attributes: {
     BottomCtaButton: Schema.Attribute.String;
-    BottomCtaSubTitle: Schema.Attribute.Text;
+    BottomCtaSubTitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     BottomCtaTitle: Schema.Attribute.String;
     Button1Text: Schema.Attribute.String;
     Button2Text: Schema.Attribute.String;
@@ -576,9 +582,21 @@ export interface ApiCarriereCarriere extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     CultureCards: Schema.Attribute.Component<'carriere.culture-card', true>;
-    CultureSubTitle: Schema.Attribute.Text;
+    CultureSubTitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     CultureTitle: Schema.Attribute.String;
-    Description: Schema.Attribute.Text;
+    Description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     HeroImage: Schema.Attribute.Media<'images'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -651,9 +669,21 @@ export interface ApiChiSiamoChiSiamo extends Struct.SingleTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     CtaButtonText: Schema.Attribute.String;
-    CtaDescription: Schema.Attribute.Text;
+    CtaDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     CtaTitle: Schema.Attribute.String;
-    HeroDescription: Schema.Attribute.Text;
+    HeroDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     HeroImage: Schema.Attribute.Media<'images'>;
     HeroTag: Schema.Attribute.String;
     HeroTitle: Schema.Attribute.String & Schema.Attribute.Required;
@@ -670,7 +700,13 @@ export interface ApiChiSiamoChiSiamo extends Struct.SingleTypeSchema {
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     ValueCards: Schema.Attribute.Component<'chi-siamo.value-card', true>;
-    ValuesSubTitle: Schema.Attribute.Text;
+    ValuesSubTitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     ValuesTitle: Schema.Attribute.String;
   };
 }
@@ -690,7 +726,13 @@ export interface ApiContattiContatti extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    Description: Schema.Attribute.Text;
+    Description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     FormTitle: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -865,9 +907,22 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     einsteinQuote: Schema.Attribute.Text;
     heroImage: Schema.Attribute.Media<'images'>;
-    heroSubtitle: Schema.Attribute.Text & Schema.Attribute.Required;
+    heroSubtitle: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
-    introDescription: Schema.Attribute.RichText;
+    introDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     introTitle: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
@@ -897,7 +952,14 @@ export interface ApiJobPositionJobPosition extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descrizione: Schema.Attribute.RichText & Schema.Attribute.Required;
+    descrizione: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     icona: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -909,7 +971,13 @@ export interface ApiJobPositionJobPosition extends Struct.CollectionTypeSchema {
     ordine: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     publishedAt: Schema.Attribute.DateTime;
     reparto: Schema.Attribute.String;
-    requisiti: Schema.Attribute.RichText;
+    requisiti: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     slug: Schema.Attribute.UID<'titolo'>;
     tipologia: Schema.Attribute.Enumeration<
       ['Full-time', 'Part-time', 'Remote', 'Hybrid']
@@ -1108,7 +1176,13 @@ export interface ApiOrganizzazioneOrganizzazione
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descriptionTitle: Schema.Attribute.Text;
+    descriptionTitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     HeroSection: Schema.Attribute.Component<
       'organizzazione.hero-section',
       true
@@ -1154,7 +1228,13 @@ export interface ApiProdottiProdotti extends Struct.SingleTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
-    subtitle: Schema.Attribute.Text;
+    subtitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
     Title2: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1182,7 +1262,13 @@ export interface ApiProdottoProdotto extends Struct.CollectionTypeSchema {
       Schema.Attribute.DefaultTo<'arrow_forward'>;
     CtaLink: Schema.Attribute.String;
     CtaTesto: Schema.Attribute.String;
-    Descrizione: Schema.Attribute.Text;
+    Descrizione: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     Features: Schema.Attribute.Component<'prodotto.feature', true>;
     Icona: Schema.Attribute.String;
     IconColor: Schema.Attribute.Enumeration<['primary', 'purple']> &
@@ -1257,14 +1343,27 @@ export interface ApiServiceService extends Struct.SingleTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    descriptiontitle: Schema.Attribute.Text;
+    descriptiontitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::service.service'
     > &
       Schema.Attribute.Private;
-    Maintitle: Schema.Attribute.RichText & Schema.Attribute.Required;
+    Maintitle: Schema.Attribute.RichText &
+      Schema.Attribute.Required &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     OurSkills: Schema.Attribute.Component<'service.our-skills', true>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -1382,9 +1481,21 @@ export interface ApiStoriaStoria extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     CtaButtonApply: Schema.Attribute.String;
     CtaButtonContact: Schema.Attribute.String;
-    CtaDescription: Schema.Attribute.Text;
+    CtaDescription: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     CtaTitle: Schema.Attribute.String;
-    Description: Schema.Attribute.Text;
+    Description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1393,7 +1504,6 @@ export interface ApiStoriaStoria extends Struct.SingleTypeSchema {
       Schema.Attribute.Private;
     MainTitle: Schema.Attribute.String & Schema.Attribute.Required;
     publishedAt: Schema.Attribute.DateTime;
-    Timeline: Schema.Attribute.Component<'storia.timeline-event', true>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

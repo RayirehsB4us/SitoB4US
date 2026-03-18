@@ -19,7 +19,11 @@
       "required": true
     },
     "HeroDescription": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "HeroImage": {
       "type": "media",
@@ -32,7 +36,11 @@
       "type": "string"
     },
     "ValuesSubTitle": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "ValueCards": {
       "type": "component",
@@ -46,7 +54,11 @@
       "type": "string"
     },
     "CtaDescription": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "CtaButtonText": {
       "type": "string"
