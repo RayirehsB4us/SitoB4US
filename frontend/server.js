@@ -274,15 +274,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ── Morgan HTTP Logger (file giornaliero) ───────────────────────────
-const accessRotateStream = new (require("winston-daily-rotate-file"))({
-  filename: path.join(logsDir, "access-%DATE%.log"),
-  datePattern: "YYYY-MM-DD",
-  maxSize: "20m",
-  maxFiles: "30d",
-  zippedArchive: true,
+const accessLogger = winston.createLogger({
+  format: winston.format.printf(({ message }) => message),
+  transports: [
+    new winston.transports.DailyRotateFile({
+      filename: path.join(logsDir, "access-%DATE%.log"),
+      datePattern: "YYYY-MM-DD",
+      maxSize: "20m",
+      maxFiles: "30d",
+      zippedArchive: true,
+    }),
+  ],
 });
-// DailyRotateFile è uno stream scrivibile, Morgan lo usa come stream
-app.use(morgan("combined", { stream: { write: (msg) => accessRotateStream.log({ level: "info", message: msg.trim() }) } }));
+app.use(morgan("combined", { stream: { write: (msg) => accessLogger.info(msg.trim()) } }));
 app.use(morgan("short")); // anche su console
 
 // Normalizza IP: toglie porta se IPv4:porta (gestisce sia header con che senza porta)
