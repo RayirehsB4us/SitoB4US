@@ -79,23 +79,23 @@
                         <% if (prod.Stile === 'stile-2') { %>
                             <!-- ═══════════════ STILE 2 (tipo Open4US) ═══════════════ -->
                             <div class="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
-                                <!-- Colonna SX: Immagine Secondaria (sfondo) + Immagine Principale (circolare) -->
+                                <!-- Colonna SX: Immagine Principale (sfondo grande) + Immagine Secondaria (circolare davanti) -->
                                 <div class="lg:col-span-6">
                                     <div class="relative">
-                                        <% if (prod.ImmagineSecondaria) { %>
-                                            <!-- Immagine secondaria come sfondo -->
+                                        <% if (prod.ImmaginePrincipale) { %>
+                                            <!-- Immagine principale come sfondo grande -->
                                             <div class="rounded-xl shadow-2xl overflow-hidden relative z-10 card-hover">
-                                                <img src="<%= strapiUrl + prod.ImmagineSecondaria.url %>"
-                                                    alt="<%= prod.ImmagineSecondaria.alternativeText || (prod.Nome + ' preview') %>"
+                                                <img src="<%= strapiUrl + prod.ImmaginePrincipale.url %>"
+                                                    alt="<%= prod.ImmaginePrincipale.alternativeText || (prod.Nome + ' preview') %>"
                                                     class="w-full h-auto object-cover">
                                             </div>
                                         <% } %>
-                                        <!-- Immagine principale con sfondo circolare -->
-                                        <div class="<%= (prod.ImmagineSecondaria) ? 'absolute -right-12 -bottom-10 z-20 w-48 h-48 lg:w-64 lg:h-64' : 'w-full flex justify-center' %> filter drop-shadow-2xl float-animation">
+                                        <!-- Immagine secondaria circolare davanti -->
+                                        <div class="<%= (prod.ImmaginePrincipale) ? 'absolute -right-12 -bottom-10 z-20 w-48 h-48 lg:w-64 lg:h-64' : 'w-full flex justify-center' %> filter drop-shadow-2xl float-animation">
                                             <div class="relative w-full h-full bg-white rounded-full flex items-center justify-center border-4 border-white overflow-hidden shadow-2xl">
-                                                <% if (prod.ImmaginePrincipale) { %>
-                                                    <img src="<%= strapiUrl + prod.ImmaginePrincipale.url %>"
-                                                        alt="<%= prod.ImmaginePrincipale.alternativeText || prod.Nome %>"
+                                                <% if (prod.ImmagineSecondaria) { %>
+                                                    <img src="<%= strapiUrl + prod.ImmagineSecondaria.url %>"
+                                                        alt="<%= prod.ImmagineSecondaria.alternativeText || prod.Nome %>"
                                                         class="w-full h-full object-cover">
                                                 <% } else { %>
                                                     <div class="w-full h-full bg-gray-100 flex items-center justify-center">

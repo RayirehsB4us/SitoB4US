@@ -8,6 +8,7 @@
     "attributes": {
         "Icon": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Nome icona Material Icons (es: meeting_room)"
         },
         "Title": {

@@ -12,7 +12,8 @@
       "type": "string"
     },
     "icon": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     }
   },
   "config": {}

@@ -30,7 +30,8 @@
       ]
     },
     "Icona": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "IconColor": {
       "type": "enumeration",
@@ -89,6 +90,7 @@
     },
     "CtaIcona": {
       "type": "string",
+      "customField": "plugin::icon-picker.icon",
       "default": "arrow_forward"
     },
     "Ordine": {

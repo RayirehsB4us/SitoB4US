@@ -32,7 +32,8 @@
       "type": "string"
     },
     "MainIcon": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "AccesSmart": {
       "type": "component",
@@ -62,7 +63,8 @@
       "type": "string"
     },
     "DashIcon": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "DashName": {
       "type": "string"
@@ -79,16 +81,19 @@
       "type": "string"
     },
     "CalendarIcon": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "CalendarOggi": {
       "type": "string"
     },
     "CalendarIcon2": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "CalendarIcon3": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "CalendarBlock": {
       "type": "component",
