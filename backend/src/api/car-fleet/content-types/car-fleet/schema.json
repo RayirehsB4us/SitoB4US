@@ -13,7 +13,7 @@
   "pluginOptions": {},
   "attributes": {
     "Icon": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "UpperTitle": {
@@ -22,9 +22,6 @@
     "Title": {
       "type": "string",
       "required": true
-    },
-    "Title2": {
-      "type": "string"
     },
     "SubTitle": {
       "type": "text"
@@ -91,7 +88,7 @@
       "type": "text"
     },
     "Icon2": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "AccesImage": {
