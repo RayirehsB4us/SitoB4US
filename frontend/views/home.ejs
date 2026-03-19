@@ -79,8 +79,7 @@
                             Innovazione &amp; Consulenza IT
                         </span>
                         <h1 class="text-5xl lg:text-7xl font-display font-bold text-gray-900 leading-tight mb-6">
-                            <%= home.heroTitle || 'Simplify IT' %> <br /><span class="text-primary italic">with
-                                    B4US.</span>
+                            <%- home.heroTitle || 'Simplify IT' %> <br />
                         </h1>
                         <p class="text-lg lg:text-xl text-gray-600 mb-10 max-w-lg leading-relaxed">
                             <%- home.heroSubtitle
@@ -116,7 +115,7 @@
         <section class="py-24 bg-white" id="intro">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">
-                    <%= home.introTitle || 'Chi è B4US?' %>
+                    <%- home.introTitle || 'Chi è B4US?' %>
                 </h2>
                 <div class="space-y-4 text-gray-600 leading-relaxed">
                     <% if (home.introDescription) { %>

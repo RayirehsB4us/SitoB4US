@@ -544,7 +544,6 @@ export interface ApiCarFleetCarFleet extends Struct.SingleTypeSchema {
     SubTitle5: Schema.Attribute.Text;
     Subtitle6: Schema.Attribute.Text;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Title2: Schema.Attribute.String;
     Title3: Schema.Attribute.String;
     Title4: Schema.Attribute.String;
     Title5: Schema.Attribute.String;
@@ -1153,7 +1152,6 @@ export interface ApiOpen4UsOpen4Us extends Struct.SingleTypeSchema {
       Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
     MainSubTitle: Schema.Attribute.Text;
     MainTitle: Schema.Attribute.String & Schema.Attribute.Required;
-    MainTitle2: Schema.Attribute.String;
     ModernButton: Schema.Attribute.String;
     ModernSubTitle: Schema.Attribute.Text;
     ModernTitle: Schema.Attribute.String;
@@ -1244,7 +1242,6 @@ export interface ApiProdottiProdotti extends Struct.SingleTypeSchema {
         }
       >;
     Title: Schema.Attribute.String & Schema.Attribute.Required;
-    Title2: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

@@ -19,9 +19,6 @@
       "type": "string",
       "required": true
     },
-    "MainTitle2": {
-      "type": "string"
-    },
     "MainSubTitle": {
       "type": "text"
     },
@@ -32,7 +29,7 @@
       "type": "string"
     },
     "MainIcon": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "AccesSmart": {
@@ -63,7 +60,7 @@
       "type": "string"
     },
     "DashIcon": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "DashName": {
@@ -81,18 +78,18 @@
       "type": "string"
     },
     "CalendarIcon": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "CalendarOggi": {
       "type": "string"
     },
     "CalendarIcon2": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "CalendarIcon3": {
-      "type": "string",
+      "type": "customField",
       "customField": "plugin::icon-picker.icon"
     },
     "CalendarBlock": {
