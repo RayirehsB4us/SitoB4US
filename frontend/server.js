@@ -56,6 +56,14 @@ const STRAPI_API_URL =
   process.env.STRAPI_API_URL || "http://localhost:1337/api";
 const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN || "";
 
+// SharePoint / Microsoft Graph API config
+const SHAREPOINT_TENANT_ID = process.env.SHAREPOINT_TENANT_ID || "";
+const SHAREPOINT_CLIENT_ID = process.env.SHAREPOINT_CLIENT_ID || "";
+const SHAREPOINT_CLIENT_SECRET = process.env.SHAREPOINT_CLIENT_SECRET || "";
+const SHAREPOINT_SITE_ID = process.env.SHAREPOINT_SITE_ID || "";
+const SHAREPOINT_DRIVE_ID = process.env.SHAREPOINT_DRIVE_ID || "";
+const SHAREPOINT_FOLDER = process.env.SHAREPOINT_FOLDER || "";
+
 
 /**
  * Ottiene un access token da Azure AD tramite Client Credentials flow.
@@ -81,15 +89,19 @@ async function getSharePointAccessToken() {
  * Carica un file su SharePoint tramite Microsoft Graph API.
  * @param {string} filePath - Percorso locale del file temporaneo
  * @param {string} fileName - Nome originale del file (es: "CV_Mario_Rossi.pdf")
+ * @param {string} folderName - Nome cartella (es: "Candidature_Spontanee" o "Frontend_Developer")
+ * @param {string} nome - Nome del candidato
+ * @param {string} cognome - Cognome del candidato
  * @returns {object} - { webUrl, downloadUrl, fileName } del file caricato
  */
-async function uploadToSharePoint(filePath, fileName) {
+async function uploadToSharePoint(filePath, fileName, folderName, nome, cognome) {
   const accessToken = await getSharePointAccessToken();
 
-  // Sanitizza il nome file per evitare conflitti (aggiungi timestamp)
-  const timestamp = Date.now();
-  const safeName = fileName.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const uploadName = `${timestamp}_${safeName}`;
+  // Mantieni il nome file originale
+  const uploadName = fileName.replace(/[^a-zA-Z0-9._\- ]/g, "_");
+
+  // Cartella: SHAREPOINT_FOLDER/folderName/
+  const safeFolder = (folderName || "Candidature_Spontanee").replace(/[^a-zA-Z0-9_\- ]/g, "_");
 
   const fileBuffer = fs.readFileSync(filePath);
   const fileSize = fileBuffer.length;
@@ -102,10 +114,12 @@ async function uploadToSharePoint(filePath, fileName) {
     );
   }
 
+  // Upload dentro SHAREPOINT_FOLDER/Nome_Cognome_YYYY-MM-DD/file.pdf
+  // SharePoint crea automaticamente le sottocartelle con PUT
   const uploadUrl =
     `https://graph.microsoft.com/v1.0/sites/${SHAREPOINT_SITE_ID}` +
     `/drives/${SHAREPOINT_DRIVE_ID}` +
-    `/root:/${SHAREPOINT_FOLDER}/${uploadName}:/content`;
+    `/root:/${SHAREPOINT_FOLDER ? SHAREPOINT_FOLDER + "/" : ""}${safeFolder}/${uploadName}:/content`;
 
   const response = await axios.put(uploadUrl, fileBuffer, {
     headers: {
@@ -1118,19 +1132,39 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
 
     uploadedFilePath = cvFile.path;
 
-    // Step 1: Upload del CV su SharePoint
-    logger.info("Uploading CV to SharePoint");
+    // Step 1: Determina la cartella SharePoint
+    let jobPositionDocId = null;
+    let folderName = "Candidature_Spontanee";
+
+    if (jobPosition !== "autocandidatura") {
+      jobPositionDocId = jobPosition; // documentId (stringa)
+      // Fetch il titolo della posizione da Strapi
+      try {
+        const jobResp = await axios.get(
+          `${STRAPI_API_URL}/job-positions/${jobPositionDocId}`,
+          { headers: { ...strapiAuthHeaders } },
+        );
+        const jobTitle = jobResp.data?.data?.titolo || jobResp.data?.data?.Titolo || "";
+        if (jobTitle) {
+          folderName = jobTitle;
+        }
+        logger.info("Job position found", { documentId: jobPositionDocId, title: jobTitle });
+      } catch (err) {
+        logger.warn("Could not fetch job position title", { jobPosition, error: err.message });
+        folderName = `Posizione_${jobPosition}`;
+      }
+    }
+
+    // Step 2: Upload del CV su SharePoint
+    logger.info("Uploading CV to SharePoint", { folder: folderName });
     const sharePointResult = await uploadToSharePoint(
       cvFile.path,
       cvFile.originalname,
+      folderName,
+      nome,
+      cognome,
     );
     logger.info("CV uploaded to SharePoint", { url: sharePointResult.webUrl });
-
-    // Step 2: Determina il job_position ID
-    let jobPositionId = null;
-    if (jobPosition !== "autocandidatura") {
-      jobPositionId = parseInt(jobPosition);
-    }
 
     // Step 3: Crea la job-request con link SharePoint
     // Step 3: Crea la job-request con link SharePoint
@@ -1147,9 +1181,9 @@ app.post("/api/job-application", upload.single("cv"), async (req, res) => {
       },
     };
 
-    // Aggiungi job_position solo se non è autocandidatura
-    if (jobPositionId) {
-      jobRequestData.data.job_position = jobPositionId;
+    // Aggiungi job_position solo se non è autocandidatura (usa documentId per Strapi 5)
+    if (jobPositionDocId) {
+      jobRequestData.data.job_position = { connect: [{ documentId: jobPositionDocId }] };
     }
 
     logger.info("Creating job request in Strapi");

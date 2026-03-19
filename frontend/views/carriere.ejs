@@ -309,7 +309,7 @@
                                 <option value="autocandidatura">Auto Candidatura</option>
                                 <% if (jobPositions && jobPositions.length> 0) { %>
                                     <% jobPositions.forEach(function(job) { %>
-                                        <option value="<%= job.id %>">
+                                        <option value="<%= job.documentId %>">
                                             <%- job.titolo %>
                                         </option>
                                         <% }); %>
