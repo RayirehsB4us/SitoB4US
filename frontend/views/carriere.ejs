@@ -22,9 +22,9 @@
                             class="text-4xl md:text-6xl font-black font-display text-slate-900 dark:text-white leading-tight mb-6">
                             <%- carriereData.MainTitle || 'Costruisci il futuro dell\' IT con noi.' %>
                         </h1>
-                        <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
-                            <%- carriereData.Description || "Siamo alla ricerca di talenti pronti a mettersi in gioco e ad esprimere le proprie capacità. Entra a far parte di un team che valorizza l'innovazione e la crescita personale." %>
-                        </p>
+                        <div class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
+                            <%- carriereData.Description || '' %>
+                        </div>
                         <div class="flex flex-wrap gap-4">
                             <a class="px-8 py-4 bg-primary text-white font-bold rounded-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all"
                                 href="#positions">
@@ -71,9 +71,9 @@
                     <h2 class="text-3xl md:text-4xl font-black font-display mb-4">
                         <%- carriereData.CultureTitle || 'Perché scegliere B4US?' %>
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        <%- carriereData.CultureSubTitle || "Offriamo un ambiente di lavoro flessibile che premia il merito e incoraggia l'apprendimento continuo." %>
-                    </p>
+                    <div class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                        <%- carriereData.CultureSubTitle || '' %>
+                    </div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <% if (carriereData.CultureCards && carriereData.CultureCards.length> 0) { %>
@@ -233,9 +233,9 @@
                         <h2 class="text-3xl md:text-5xl font-black font-display mb-6">
                             <%- carriereData.BottomCtaTitle || 'Pronto per la tua prossima sfida?' %>
                         </h2>
-                        <p class="text-slate-300 text-lg mb-10 leading-relaxed">
-                            <%- carriereData.BottomCtaSubTitle || "B4US non è solo un posto di lavoro, è un ambiente dove le tue idee diventano realtà. Unisciti a noi e semplifichiamo l'IT insieme." %>
-                        </p>
+                        <div class="text-slate-300 text-lg mb-10 leading-relaxed">
+                            <%- carriereData.BottomCtaSubTitle || '' %>
+                        </div>
                         <a class="inline-block px-10 py-5 bg-primary text-white font-black text-xl rounded-xl shadow-2xl hover:scale-105 transition-transform"
                             href="#positions">
                             <%= carriereData.BottomCtaButton || 'Apply Now' %>
