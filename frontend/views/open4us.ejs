@@ -43,7 +43,7 @@
                     <div class="lg:w-1/2 lg:pr-12">
                         <div
                             class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-primary text-xs font-semibold tracking-wide uppercase mb-6">
-                            <%= (o4u && o4u.UpperMainTitle) || 'Nuova Integrazione Disponibile' %>
+                            <%- (o4u && o4u.UpperMainTitle) || 'Nuova Integrazione Disponibile' %>
                         </div>
                         <h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">
                             <%- (o4u && o4u.MainTitle) || 'Accesso Smart &' %> <br class="hidden lg:block" />
@@ -52,7 +52,7 @@
                         </h1>
                         <p class="text-lg text-gray-600 mb-8 leading-relaxed">
                             <% if (o4u && o4u.MainSubTitle) { %>
-                                <%= o4u.MainSubTitle %>
+                                <%- o4u.MainSubTitle %>
                                     <% } else { %>
                                         Gestisci i tuoi spazi senza sforzo con Open4US. Da hub di coworking a palestre,
                                         automatizza l'ingresso con la nostra avanzata integrazione di serrature smart
@@ -114,7 +114,7 @@
                                         class="w-full h-full object-contain drop-shadow-lg">
                                 </div>
                                 <h3 class="text-lg font-bold text-gray-900">
-                                    <%= (o4u && o4u.ImageCard && o4u.ImageCard.Title) || 'Cilindro Smart ISEO' %>
+                                    <%- (o4u && o4u.ImageCard && o4u.ImageCard.Title) || 'Cilindro Smart ISEO' %>
                                 </h3>
                                 <p class="text-sm text-gray-500 text-center mt-1">
                                     <%= (o4u && o4u.ImageCard && o4u.ImageCard.SubTitle)
@@ -158,14 +158,14 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-16">
                         <h2 class="text-primary font-semibold tracking-wide uppercase text-sm">
-                            <%= (o4u && o4u.DashUpperTitle) || 'Pannello di Controllo' %>
+                            <%- (o4u && o4u.DashUpperTitle) || 'Pannello di Controllo' %>
                         </h2>
                         <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                             <%- (o4u && o4u.DashTitle) || 'Potente Dashboard di Gestione' %>
                         </p>
                         <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
                             <% if (o4u && o4u.DashSubTitle) { %>
-                                <%= o4u.DashSubTitle %>
+                                <%- o4u.DashSubTitle %>
                                     <% } else { %>
                                         Visualizza prenotazioni, gestisci diritti di accesso e monitora la tua struttura
                                         in tempo reale. Tutto ciò di cui hai bisogno in un'unica piattaforma
@@ -371,7 +371,7 @@
                                         class="mt-6 bg-white rounded-lg shadow-xl border border-gray-200 p-4 animate-bounce-in lg:max-w-md">
                                         <div class="flex justify-between items-start mb-3">
                                             <h3 class="font-bold text-gray-900">
-                                                <%= (cb && cb.Title) || 'Ufficio Admin - Gorgonzola' %>
+                                                <%- (cb && cb.Title) || 'Ufficio Admin - Gorgonzola' %>
                                             </h3>
                                             <span class="bg-green-100 text-primary text-xs font-bold px-2 py-1 rounded">
                                                 <%= (cb && cb.Status) || 'Confermato' %>
@@ -410,7 +410,7 @@
             <div class="py-24 bg-white">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-12">
-                        <%= (o4u && o4u.SpaceTitle) || 'Perfetto per Ogni Spazio' %>
+                        <%- (o4u && o4u.SpaceTitle) || 'Perfetto per Ogni Spazio' %>
                     </h2>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <% if (o4u && o4u.SpaceBlock && o4u.SpaceBlock.length> 0) { %>
@@ -424,7 +424,7 @@
                                         </span>
                                     </div>
                                     <h3 class="text-xl font-bold text-gray-900 mb-3">
-                                        <%= space.Title %>
+                                        <%- space.Title %>
                                     </h3>
                                     <p class="text-gray-600 leading-relaxed">
                                         <% if (space.Description) { %>
@@ -495,14 +495,14 @@
                         <div class="lg:w-1/2">
                             <h2 class="text-3xl font-extrabold text-gray-900 mb-6">
                                 <% if (o4u && o4u.AppTitle) { %>
-                                    <%= o4u.AppTitle %>
+                                    <%- o4u.AppTitle %>
                                         <% } else { %>
                                             Sblocca con l'App Open4US
                                             <% } %>
                             </h2>
                             <p class="text-lg text-gray-600 mb-6">
                                 <% if (o4u && o4u.AppSubTitle) { %>
-                                    <%= o4u.AppSubTitle %>
+                                    <%- o4u.AppSubTitle %>
                                         <% } else { %>
                                             Dimentica le chiavi fisiche. Con la nostra perfetta integrazione con
                                             l'ecosistema Luckey, i tuoi utenti possono sbloccare le porte direttamente
@@ -518,7 +518,7 @@
                                             </span>
                                             <div>
                                                 <h4 class="font-bold text-gray-900">
-                                                    <%= block.Title %>
+                                                    <%- block.Title %>
                                                 </h4>
                                                 <p class="text-gray-500 text-sm">
                                                     <%= block.Description %>
@@ -563,11 +563,11 @@
             <div class="bg-gray-900 py-16">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 class="text-3xl font-extrabold text-white mb-4">
-                        <%= (o4u && o4u.ModernTitle) || 'Pronto a modernizzare il tuo controllo accessi?' %>
+                        <%- (o4u && o4u.ModernTitle) || 'Pronto a modernizzare il tuo controllo accessi?' %>
                     </h2>
                     <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
                         <% if (o4u && o4u.ModernSubTitle) { %>
-                            <%= o4u.ModernSubTitle %>
+                            <%- o4u.ModernSubTitle %>
                                 <% } else { %>
                                     Unisciti alle aziende che già usano Open4US per semplificare la gestione delle loro
                                     strutture.

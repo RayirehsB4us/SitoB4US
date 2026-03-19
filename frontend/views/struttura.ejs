@@ -17,7 +17,7 @@
         <div class="max-w-3xl">
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
             <span class="text-primary">
-              <%= strutturaData.MainTitle || 'Organizzazione' %>
+              <%- strutturaData.MainTitle || 'Organizzazione' %>
             </span>
           </h1>
           <p class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
@@ -40,10 +40,10 @@
               <%= (hero1 && hero1.tag) || 'Il nostro approccio' %>
             </span>
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-              <%= (hero1 && hero1.Title) || 'Nessun compartimento stagno' %>
+              <%- (hero1 && hero1.Title) || 'Nessun compartimento stagno' %>
             </h2>
             <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-              <%= (hero1 && hero1.SubTitle) || "Nel nostro modo di lavorare non esistono barriere: ognuno porta competenze solide nel proprio ambito, ma con una visione d\'insieme condivisa." %>
+              <%- (hero1 && hero1.SubTitle) || "Nel nostro modo di lavorare non esistono barriere: ognuno porta competenze solide nel proprio ambito, ma con una visione d\'insieme condivisa." %>
             </p>
             <div class="space-y-4">
               <% var defaultIcons1 = ['code', 'dns', 'handshake']; %>
@@ -54,8 +54,8 @@
                       <span class="material-symbols-outlined text-primary"><%= defaultIcons1[i] || 'check_circle' %></span>
                     </div>
                     <div>
-                      <h4 class="font-bold text-slate-900 dark:text-white"><%= c.title %></h4>
-                      <p class="text-sm text-slate-600 dark:text-slate-400"><%= c.subTitle %></p>
+                      <h4 class="font-bold text-slate-900 dark:text-white"><%- c.title %></h4>
+                      <p class="text-sm text-slate-600 dark:text-slate-400"><%- c.subTitle %></p>
                     </div>
                   </div>
                 <% }); %>
@@ -116,10 +116,10 @@
             <%= (hero2 && hero2.tag) || 'Investiamo nelle persone' %>
           </span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-            <%= (hero2 && hero2.Title) || 'Crescita e Formazione' %>
+            <%- (hero2 && hero2.Title) || 'Crescita e Formazione' %>
           </h2>
           <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            <%= (hero2 && hero2.SubTitle) || 'Ogni collaboratore ha un percorso di sviluppo definito e monitorato, supportato da formazione continua.' %>
+            <%- (hero2 && hero2.SubTitle) || 'Ogni collaboratore ha un percorso di sviluppo definito e monitorato, supportato da formazione continua.' %>
           </p>
         </div>
 
@@ -134,8 +134,8 @@
                     <span class="material-symbols-outlined <%= (i === 0) ? 'text-blue-600 dark:text-blue-400' : 'text-primary' %> text-3xl"><%= defaultIcons2[i] || 'star' %></span>
                   </div>
                   <div>
-                    <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%= c.title %></h3>
-                    <p class="text-sm text-slate-500"><%= c.subTitle %></p>
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%- c.title %></h3>
+                    <p class="text-sm text-slate-500"><%- c.subTitle %></p>
                   </div>
                 </div>
                 <ul class="space-y-3">
@@ -213,7 +213,7 @@
         <div class="mt-16 max-w-5xl mx-auto">
           <% var techTags = strutturaData.techArea && strutturaData.techArea[0]; %>
           <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">
-            <%= (techTags && techTags.title) || 'Le nostre aree di formazione' %>
+            <%- (techTags && techTags.title) || 'Le nostre aree di formazione' %>
           </h3>
           <div class="flex flex-wrap justify-center gap-4">
             <% if (techTags && techTags.tags && techTags.tags.length > 0) { %>
@@ -221,7 +221,7 @@
                 <span
                   class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
                   <span class="material-symbols-outlined text-primary text-sm align-middle mr-1"><%= tag.icon ? tag.icon.trim() : 'check_circle' %></span>
-                  <%= tag.title %>
+                  <%- tag.title %>
                 </span>
               <% }); %>
             <% } else { %>

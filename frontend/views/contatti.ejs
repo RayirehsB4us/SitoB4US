@@ -14,7 +14,7 @@
       <div class="max-w-7xl mx-auto text-center">
         <h1
           class="text-4xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-emerald-600">
-          <%= contattiData.MainTitle || 'Parliamo del tuo futuro IT' %>
+          <%- contattiData.MainTitle || 'Parliamo del tuo futuro IT' %>
         </h1>
         <p class="text-lg text-slate-600 max-w-2xl mx-auto">
           <%- contattiData.Description
@@ -30,7 +30,7 @@
           class="bg-white dark:bg-slate-800/50 p-8 md:p-10 rounded-3xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800">
           <h2 class="text-2xl font-display font-bold mb-8 flex items-center gap-2">
             <span class="material-symbols-outlined text-primary">send</span>
-            <%= contattiData.FormTitle || 'Inviaci un messaggio' %>
+            <%- contattiData.FormTitle || 'Inviaci un messaggio' %>
           </h2>
           <form id="contactForm" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -115,10 +115,10 @@
                     </span>
                   </div>
                   <h3 class="font-display font-bold text-lg mb-1">
-                    <%= detail.title %>
+                    <%- detail.title %>
                   </h3>
                   <p class="text-slate-500 dark:text-slate-400 text-sm mb-2">
-                    <%= detail.subTitle %>
+                    <%- detail.subTitle %>
                   </p>
                   <a class="text-primary font-bold hover:underline text-sm" href="<%= detail.linkUrl || '#' %>">
                     <%= detail.linkText %>
@@ -168,7 +168,7 @@
               </div>
               <div>
                 <h3 class="font-display font-bold text-lg mb-1">
-                  <%= contattiData.SedeTitle || 'La nostra sede' %>
+                  <%- contattiData.SedeTitle || 'La nostra sede' %>
                 </h3>
                 <p class="text-slate-500 dark:text-slate-400">
                   <%= contattiData.SedeAddress || 'Via Vincenzo Pessina, 2 - 20064 Gorgonzola (MI), Italia' %>

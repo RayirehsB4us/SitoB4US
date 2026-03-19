@@ -44,7 +44,7 @@
                 <div class="text-center mb-16">
                     <% var skills = serviziPage.OurSkills && serviziPage.OurSkills[0]; %>
                     <span class="text-primary font-bold tracking-widest uppercase text-sm"><%= (skills && skills.Tag) || 'Le nostre competenze' %></span>
-                    <h2 class="font-display text-3xl md:text-4xl font-bold mt-3"><%= (skills && skills.Title) || 'Cosa facciamo per te' %></h2>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold mt-3"><%- (skills && skills.Title) || 'Cosa facciamo per te' %></h2>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <% if (servizi && servizi.length> 0) { %>
@@ -58,7 +58,7 @@
                                     </span>
                                 </div>
                                 <h3 class="font-display text-xl font-bold mb-4">
-                                    <%= servizio.titolo %>
+                                    <%- servizio.titolo %>
                                 </h3>
                                 <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-6">
                                     <%= servizio.descrizione %>
