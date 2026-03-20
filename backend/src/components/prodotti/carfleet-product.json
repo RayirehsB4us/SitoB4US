@@ -8,6 +8,7 @@
     "attributes": {
         "Icon": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Nome icona Material Icons (es: directions_car)"
         },
         "Title": {
@@ -37,6 +38,7 @@
         },
         "icon2": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona freccia link (es: arrow_forward)"
         }
     }

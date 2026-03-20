@@ -16,7 +16,11 @@
       "required": true
     },
     "Description": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "FormTitle": {
       "type": "string"

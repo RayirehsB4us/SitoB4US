@@ -16,15 +16,15 @@
                     <div>
                         <span
                             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-                            <%= carriereData.UpperTitle || 'Carriere in B4US' %>
+                            <%- carriereData.UpperTitle || 'Carriere in B4US' %>
                         </span>
                         <h1
                             class="text-4xl md:text-6xl font-black font-display text-slate-900 dark:text-white leading-tight mb-6">
-                            <%= carriereData.MainTitle || 'Costruisci il futuro dell\' IT con noi.' %>
+                            <%- carriereData.MainTitle || 'Costruisci il futuro dell\' IT con noi.' %>
                         </h1>
-                        <p class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
-                            <%= carriereData.Description || "Siamo alla ricerca di talenti pronti a mettersi in gioco e ad esprimere le proprie capacità. Entra a far parte di un team che valorizza l'innovazione e la crescita personale." %>
-                        </p>
+                        <div class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
+                            <%- carriereData.Description || '' %>
+                        </div>
                         <div class="flex flex-wrap gap-4">
                             <a class="px-8 py-4 bg-primary text-white font-bold rounded-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all"
                                 href="#positions">
@@ -69,11 +69,11 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-black font-display mb-4">
-                        <%= carriereData.CultureTitle || 'Perché scegliere B4US?' %>
+                        <%- carriereData.CultureTitle || 'Perché scegliere B4US?' %>
                     </h2>
-                    <p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        <%= carriereData.CultureSubTitle || "Offriamo un ambiente di lavoro flessibile che premia il merito e incoraggia l'apprendimento continuo." %>
-                    </p>
+                    <div class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                        <%- carriereData.CultureSubTitle || '' %>
+                    </div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <% if (carriereData.CultureCards && carriereData.CultureCards.length> 0) { %>
@@ -87,7 +87,7 @@
                                     </span>
                                 </div>
                                 <h3 class="text-xl font-bold mb-3">
-                                    <%= card.title %>
+                                    <%- card.title %>
                                 </h3>
                                 <p class="text-slate-600 dark:text-slate-400">
                                     <%= card.description %>
@@ -137,10 +137,10 @@
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div>
                         <h2 class="text-3xl font-black font-display mb-2">
-                            <%= carriereData.PositionsTitle || 'Posizioni Aperte' %>
+                            <%- carriereData.PositionsTitle || 'Posizioni Aperte' %>
                         </h2>
                         <p class="text-slate-600 dark:text-slate-400">
-                            <%= carriereData.PositionsSubTitle || 'Trova il ruolo perfetto per le tue competenze.' %>
+                            <%- carriereData.PositionsSubTitle || 'Trova il ruolo perfetto per le tue competenze.' %>
                         </p>
                     </div>
                     <div class="flex gap-4">
@@ -168,7 +168,7 @@
                                         </div>
                                         <div>
                                             <h4 class="text-lg font-bold group-hover:text-primary transition-colors">
-                                                <%= job.titolo %>
+                                                <%- job.titolo %>
                                             </h4>
                                             <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
                                                 <% if (job.location) { %>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="mt-12 p-8 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20 text-center">
                     <p class="text-lg font-medium mb-4">
-                        <%= carriereData.SpontaneousTitle || 'Non trovi la posizione giusta per te?' %>
+                        <%- carriereData.SpontaneousTitle || 'Non trovi la posizione giusta per te?' %>
                     </p>
                     <p class="text-slate-600 dark:text-slate-400 mb-6">
                         <%= carriereData.SpontaneousSubTitle
@@ -231,11 +231,11 @@
                     class="bg-slate-900 dark:bg-slate-800 rounded-[2rem] p-8 md:p-16 relative overflow-hidden text-center text-white">
                     <div class="relative z-10 max-w-2xl mx-auto">
                         <h2 class="text-3xl md:text-5xl font-black font-display mb-6">
-                            <%= carriereData.BottomCtaTitle || 'Pronto per la tua prossima sfida?' %>
+                            <%- carriereData.BottomCtaTitle || 'Pronto per la tua prossima sfida?' %>
                         </h2>
-                        <p class="text-slate-300 text-lg mb-10 leading-relaxed">
-                            <%= carriereData.BottomCtaSubTitle || "B4US non è solo un posto di lavoro, è un ambiente dove le tue idee diventano realtà. Unisciti a noi e semplifichiamo l'IT insieme." %>
-                        </p>
+                        <div class="text-slate-300 text-lg mb-10 leading-relaxed">
+                            <%- carriereData.BottomCtaSubTitle || '' %>
+                        </div>
                         <a class="inline-block px-10 py-5 bg-primary text-white font-black text-xl rounded-xl shadow-2xl hover:scale-105 transition-transform"
                             href="#positions">
                             <%= carriereData.BottomCtaButton || 'Apply Now' %>
@@ -309,8 +309,8 @@
                                 <option value="autocandidatura">Auto Candidatura</option>
                                 <% if (jobPositions && jobPositions.length> 0) { %>
                                     <% jobPositions.forEach(function(job) { %>
-                                        <option value="<%= job.id %>">
-                                            <%= job.titolo %>
+                                        <option value="<%= job.documentId %>">
+                                            <%- job.titolo %>
                                         </option>
                                         <% }); %>
                                             <% } %>

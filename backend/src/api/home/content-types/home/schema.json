@@ -17,8 +17,12 @@
       "required": true
     },
     "heroSubtitle": {
-      "type": "text",
-      "required": true
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true,
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "heroImage": {
       "type": "media",
@@ -32,7 +36,11 @@
       "type": "string"
     },
     "introDescription": {
-      "type": "richtext"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "einsteinQuote": {
       "type": "text"

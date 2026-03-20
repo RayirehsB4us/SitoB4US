@@ -8,14 +8,19 @@
     "options": {},
     "attributes": {
         "icon": {
-            "type": "string"
+            "type": "string",
+            "customField": "plugin::icon-picker.icon"
         },
         "title": {
             "type": "string",
             "required": true
         },
         "description": {
-            "type": "text"
+            "type": "richtext",
+            "customField": "plugin::ckeditor5.CKEditor",
+            "options": {
+                "preset": "defaultHtml"
+            }
         }
     }
 }

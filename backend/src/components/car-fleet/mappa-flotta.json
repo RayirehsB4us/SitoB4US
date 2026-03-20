@@ -16,18 +16,22 @@
         },
         "Icon1": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona pin primario (es: place)"
         },
         "Icon2": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona pin secondario (es: place)"
         },
         "Icon3": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona pin terziario (es: place)"
         },
         "PIcon": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona profilo conducente (es: person)"
         },
         "Name": {

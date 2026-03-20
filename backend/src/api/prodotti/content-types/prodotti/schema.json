@@ -16,11 +16,12 @@
       "type": "string",
       "required": true
     },
-    "Title2": {
-      "type": "string"
-    },
     "subtitle": {
-      "type": "text"
+      "type": "customField",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     }
   }
 }
