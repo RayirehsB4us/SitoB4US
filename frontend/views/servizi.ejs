@@ -21,9 +21,9 @@
                             Soluzioni IT <span class="text-primary">su misura</span> per il tuo business.
                         <% } %>
                     </h1>
-                    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10">
-                        <%- (serviziPage && serviziPage.descriptiontitle) || "B4US è una società dinamica nata per semplificare la complessità tecnologica. Offriamo consulenza e servizi IT d'avanguardia per guidare la tua trasformazione digitale." %>
-                    </p>
+                    <div class="text-lg md:text-xl text-slate-600 dark:text-slate-400 leading-relaxed mb-10">
+                        <%- (serviziPage && serviziPage.descriptiontitle) || '' %>
+                    </div>
                     <div class="flex flex-wrap gap-4">
                         <a class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                             href="#servizi-grid">
