@@ -3,6 +3,16 @@
 
 <head>
     <%- include('partials/head') %>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style>
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+    </style>
 </head>
 
 <body class="bg-background-light text-secondary font-sans transition-colors duration-300">
@@ -10,202 +20,214 @@
         <%- include('partials/skeleton-page') %>
 
             <main id="page-content" class="hidden opacity-0 transition-opacity duration-300">
-                <section class="relative py-20 lg:py-32 overflow-hidden">
+                <!-- Hero Section -->
+                <section class="relative py-16 lg:py-20 overflow-hidden">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="grid grid-cols-1 gap-16 lg:grid-cols-2 lg:items-center">
                             <div class="z-10">
+                                <% if (bear.HeroBadge) { %>
                                 <div
                                     class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary mb-6">
                                     <span class="mr-2 flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-                                    Novità: Gestione Cedolini 2.0
+                                    <%- bear.HeroBadge %>
                                 </div>
+                                <% } %>
                                 <h1
                                     class="text-5xl font-black leading-[1.1] tracking-tight text-gray-900 sm:text-7xl font-display">
-                                    BEAR: Billing Expenses &amp; Activity Reporting
+                                    <%- bear.HeroTitle || '' %>
                                 </h1>
-                                <p class="mt-8 text-lg leading-relaxed text-gray-600 max-w-xl">
-                                    La soluzione completa per la gestione di presenze, timesheet e note spese. Ottimizza
-                                    i
-                                    processi aziendali con un unico strumento intuitivo progettato per scalare con il
-                                    tuo
-                                    business.
-                                </p>
-                                <div class="mt-10 flex flex-wrap gap-4">
-                                    <button
-                                        class="rounded-lg bg-primary px-8 py-4 text-base font-bold text-white shadow-xl shadow-primary/25 hover:shadow-primary/40 transition-all">
-                                        Richiedi Demo Personalizzata
-                                    </button>
+                                <% if (bear.HeroSubtitle) { %>
+                                <div class="mt-8 text-lg leading-relaxed text-gray-600 max-w-xl">
+                                    <%- bear.HeroSubtitle %>
                                 </div>
+                                <% } %>
+                                <% if (bear.HeroButtonText || bear.HeroButton2Text) { %>
+                                <div class="mt-10 flex flex-col sm:flex-row gap-4">
+                                    <% if (bear.HeroButtonText) { %>
+                                    <button onclick="openDemoModal('BEAR')"
+                                        class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-green-600 md:text-lg shadow-lg shadow-green-500/40 transition-transform transform hover:-translate-y-1">
+                                        <%- bear.HeroButtonText %>
+                                        <% if (bear.HeroButtonIcon) { %>
+                                        <span class="material-symbols-outlined ml-2"><%= bear.HeroButtonIcon %></span>
+                                        <% } %>
+                                    </button>
+                                    <% } %>
+                                    <% if (bear.HeroButton2Text) { %>
+                                    <a href="#feature-sections"
+                                        class="flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 md:text-lg transition-colors">
+                                        <%- bear.HeroButton2Text %>
+                                    </a>
+                                    <% } %>
+                                </div>
+                                <% } %>
+                                <% var highlights = bear.HeroHighlights || []; %>
+                                <% if (highlights.length > 0) { %>
+                                <div class="mt-8 flex flex-wrap gap-6">
+                                    <% highlights.forEach(function(hl) { %>
+                                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                                        <span class="material-symbols-outlined text-primary text-lg"><%= hl.icon || 'check_circle' %></span>
+                                        <span class="font-semibold"><%= hl.Text %></span>
+                                    </div>
+                                    <% }); %>
+                                </div>
+                                <% } %>
                             </div>
                             <div class="relative lg:ml-10">
                                 <div class="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-primary/20 blur-3xl">
                                 </div>
                                 <div class="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl">
                                 </div>
+                                <% if (bear.HeroImage && bear.HeroImage.url) { %>
                                 <div
-                                    class="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl">
+                                    class="relative overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl card-hover">
                                     <img class="w-full h-auto object-cover"
-                                        alt="Dashboard interface showing billing and expense reports analytics"
-                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh3rqPJol9oy8ROYQkm1RnKN-k3ao1NuKgR4LUGHlYMoJwiXvKhMng5SjWc-2KdvLtyeW584snY16nvviKfc0R_SjZSEEYsfLhcrFDUHLQloDoUcndjUbgboK_tg9ZcHXI8L4leGIrk7gnqml7wW1QQJjTmTsESJZU4QV4idqQiPGNi8NwcFBqMAVgR8JP9iUPlixDXxSTdCqb10HNQ-BxQNDJFM5ZNA0YlCBx7SVxgAURo1iQWLzihqjwSVezUQuSQyfWjfPggNzG" />
+                                        alt="<%= bear.HeroTitle || 'BEAR Dashboard' %>"
+                                        src="<%= bear.HeroImage.url.startsWith('http') ? bear.HeroImage.url : strapiUrl + bear.HeroImage.url %>" />
                                 </div>
+                                <% } %>
                             </div>
                         </div>
                     </div>
                 </section>
 
-                <section class="bg-white py-24">
+                <!-- Feature Cards Section -->
+                <% var cards = bear.FeatureCards || []; %>
+                <% if (cards.length > 0) { %>
+                <section id="features" class="bg-white py-12">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div class="text-center max-w-3xl mx-auto mb-20">
-                            <h2 class="text-base font-bold uppercase tracking-widest text-primary">Efficienza</h2>
-                            <p class="mt-4 text-4xl font-black text-gray-900">Tutto ciò di cui hai bisogno per la
-                                gestione
-                                HR
-                            </p>
-                            <p class="mt-4 text-lg text-gray-600">Semplifica l'amministrazione del personale con moduli
-                                integrati e automatizzati che riducono il carico di lavoro manuale.</p>
+                        <div class="text-center max-w-3xl mx-auto mb-12">
+                            <% if (bear.FeaturesUpperTitle) { %>
+                            <h2 class="text-base font-bold uppercase tracking-widest text-primary"><%- bear.FeaturesUpperTitle %></h2>
+                            <% } %>
+                            <% if (bear.FeaturesTitle) { %>
+                            <p class="mt-4 text-4xl font-black text-gray-900"><%- bear.FeaturesTitle %></p>
+                            <% } %>
+                            <% if (bear.FeaturesSubtitle) { %>
+                            <p class="mt-4 text-lg text-gray-600"><%- bear.FeaturesSubtitle %></p>
+                            <% } %>
                         </div>
-                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+                        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-<%= cards.length <= 4 ? cards.length : 4 %>">
+                            <% cards.forEach(function(card) { %>
                             <div
-                                class="group flex flex-col rounded-2xl border border-primary/10 bg-background-light p-8 hover:border-primary/50 transition-all duration-300">
+                                class="group relative flex flex-col rounded-2xl border border-primary/10 bg-background-light p-8 hover:border-primary/50 transition-all duration-300">
+                                <% if (card.Badge) { %>
+                                <div class="absolute top-4 right-4">
+                                    <span class="inline-block rounded-full bg-gray-200 px-3 py-1 text-xs font-bold text-gray-600 uppercase tracking-wide">
+                                        <%= card.Badge %>
+                                    </span>
+                                </div>
+                                <% } %>
+                                <% if (card.icon) { %>
                                 <div
                                     class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">calendar_today</span>
+                                    <span class="material-symbols-outlined text-3xl"><%= card.icon %></span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3 text-gray-900">Timesheet Management</h3>
-                                <p class="text-sm leading-relaxed text-gray-600">
-                                    Consuntivazione attività, gestione ferie e permessi in un unico spazio digitale
-                                    centralizzato.
-                                </p>
+                                <% } %>
+                                <h3 class="text-xl font-bold mb-3 text-gray-900"><%- card.Title || '' %></h3>
+                                <% if (card.Description) { %>
+                                <p class="text-sm leading-relaxed text-gray-600"><%- card.Description %></p>
+                                <% } %>
                             </div>
-                            <div
-                                class="group flex flex-col rounded-2xl border border-primary/10 bg-background-light p-8 hover:border-primary/50 transition-all duration-300">
-                                <div
-                                    class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">receipt_long</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-gray-900">Note Spese</h3>
-                                <p class="text-sm leading-relaxed text-gray-600">
-                                    Registrazione spese immediata, allegato giustificativi tramite foto e tracciamento
-                                    rimborsi
-                                    in tempo reale.
-                                </p>
-                            </div>
-                            <div
-                                class="group flex flex-col rounded-2xl border border-primary/10 bg-background-light p-8 hover:border-primary/50 transition-all duration-300">
-                                <div
-                                    class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">description</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-gray-900">Cedolini</h3>
-                                <p class="text-sm leading-relaxed text-gray-600">
-                                    Visualizzazione istantanea e download sicuro dei cedolini direttamente dalla
-                                    cartella
-                                    personale del dipendente.
-                                </p>
-                            </div>
-                            <div
-                                class="group flex flex-col rounded-2xl border border-primary/10 bg-background-light p-8 hover:border-primary/50 transition-all duration-300">
-                                <div
-                                    class="mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-primary text-white group-hover:scale-110 transition-transform">
-                                    <span class="material-symbols-outlined text-3xl">signature</span>
-                                </div>
-                                <h3 class="text-xl font-bold mb-3 text-gray-900">Email Signature</h3>
-                                <p class="text-sm leading-relaxed text-gray-600">
-                                    Generazione automatica di firme professionali con logo e contatti aziendali per
-                                    mantenere
-                                    l'identità di brand.
-                                </p>
-                            </div>
+                            <% }); %>
                         </div>
                     </div>
                 </section>
+                <% } %>
 
-                <section class="py-24">
+                <!-- Feature Sections (alternating image/text) -->
+                <% var sections = bear.FeatureSections || []; %>
+                <% if (sections.length > 0) { %>
+                <section id="feature-sections" class="bg-background-light py-12">
+                <% sections.forEach(function(section, index) { %>
+                <div class="py-12">
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <% if (section.ComingSoon) { %>
+                        <!-- Coming Soon Section -->
                         <div class="flex flex-col gap-16 lg:flex-row lg:items-center">
-                            <div class="w-full lg:w-1/2 order-2 lg:order-1">
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="space-y-4">
-                                        <div class="overflow-hidden rounded-xl shadow-lg">
-                                            <img class="w-full h-auto object-cover"
-                                                alt="Mobile application view of expense reporting feature"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeuV6bX6PROIsQ055ebciIY5-ATOngwgeGtkgYNinj3p3vB3YSAlAK0s7Qo5cWbh4T2nB-HNO3kyBh8mUJVZhbn_mcsVZ8b2yEzwFGj9kC-lBJ9SRJzw1VYgWLSDh9gLJ2SroWoAKbZ2-9vcgBVdIqrtYZAxf_Wt7eBS3JfOv42Tn0EcAVacsJ1S7_TZ8TDR23XFuw4X0gEU5e5qT3JDNzLVxqn4_2vkZFnGbJYtDph2omc9sVUNilZW3KDDHslG8gf7iQL0DtW5_p" />
-                                        </div>
-                                        <div class="bg-primary/10 p-6 rounded-xl border border-primary/20">
-                                            <div class="text-3xl font-black text-primary mb-2">99%</div>
-                                            <p class="text-sm font-bold text-gray-800">Accuratezza dati inseriti</p>
-                                        </div>
-                                    </div>
-                                    <div class="pt-12 space-y-4">
-                                        <div class="bg-gray-900 p-6 rounded-xl border border-white/10">
-                                            <div class="text-3xl font-black text-primary mb-2">-40%</div>
-                                            <p class="text-sm font-bold text-white">Tempo risparmiato in admin</p>
-                                        </div>
-                                        <div class="overflow-hidden rounded-xl shadow-lg">
-                                            <img class="w-full h-auto object-cover"
-                                                alt="Data visualization of employee activities and timesheets"
-                                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAUGOYQ4zVOrZE7VB9VBEw8WAyyb6KDpwyhNDk_UndzYiSYmaUGnhSVzahrxXRzL904xE2Bv0u1RJJoqaYPmxeMb8Mf86PWYmkI0KWELGkZPYq-kRfM5TwTnQALlNxKjZs3sF4u_MVQyj6gvtGqvrnxMQU5dl0xt79U7HbPxQW7mGWQzwrPyMMXbr-FDa87LcCUj4s6wogXr71kkD5MTQtgWE5q0yoBq0KgLLcs7cUDM__3BK2yHyTFu0-WMLMlUke9gcyrV0i4MzEq" />
-                                        </div>
-                                    </div>
+                            <% var csImgLeft = (section.ImagePosition || 'left') === 'left'; %>
+                            <div class="w-full lg:w-1/2 <%= csImgLeft ? 'order-2 lg:order-1' : 'order-2 lg:order-2' %>">
+                                <% if (section.Image && section.Image.url) { %>
+                                <div class="overflow-hidden rounded-2xl shadow-2xl opacity-60 card-hover">
+                                    <img class="w-full h-auto object-cover"
+                                        alt="<%= section.Title || '' %>"
+                                        src="<%= section.Image.url.startsWith('http') ? section.Image.url : strapiUrl + section.Image.url %>" />
                                 </div>
+                                <% } %>
                             </div>
-                            <div class="w-full lg:w-1/2 order-1 lg:order-2">
-                                <h2 class="text-4xl font-black text-gray-900 mb-6">Interfaccia Intuitiva e Moderna per
-                                    ogni
-                                    dipendente</h2>
-                                <p class="text-lg text-gray-600 mb-8 leading-relaxed">
-                                    Abbiamo progettato BEAR con l'utente al centro. Che tu sia un manager che deve
-                                    approvare
-                                    spese o un collaboratore che inserisce le ore lavorate, l'esperienza è fluida,
-                                    veloce e
-                                    senza attriti.
-                                </p>
-                                <ul class="space-y-4">
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white">
-                                            <span class="material-symbols-outlined text-xs font-bold">check</span>
-                                        </div>
-                                        <span class="font-semibold">Accesso con Microsoft 365</span>
-                                    </li>
-                                    <li class="flex items-center gap-3">
-                                        <div
-                                            class="flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white">
-                                            <span class="material-symbols-outlined text-xs font-bold">check</span>
-                                        </div>
-                                        <span class="font-semibold">Sincronizzazione Cloud in tempo reale</span>
-                                    </li>
-                                </ul>
+                            <div class="w-full lg:w-1/2 <%= csImgLeft ? 'order-1 lg:order-2' : 'order-1 lg:order-1' %>">
+                                <div class="inline-flex items-center rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary mb-4">
+                                    Coming Soon
+                                </div>
+                                <h2 class="text-4xl font-black text-gray-900 mb-6 flex items-center gap-3">
+                                    <% if (section.icon) { %><span class="material-icons text-primary text-4xl"><%= section.icon %></span><% } %>
+                                    <%- section.Title || '' %>
+                                </h2>
+                                <% if (section.Description) { %>
+                                <div class="text-lg text-gray-600 leading-relaxed"><%- section.Description %></div>
+                                <% } %>
                             </div>
                         </div>
+                        <% } else { %>
+                        <!-- Normal Feature Section -->
+                        <div class="flex flex-col gap-16 lg:flex-row lg:items-center">
+                            <% var imgLeft = (section.ImagePosition || 'left') === 'left'; %>
+                            <div class="w-full lg:w-1/2 <%= imgLeft ? 'order-2 lg:order-1' : 'order-2 lg:order-2' %>">
+                                <% if (section.Image && section.Image.url) { %>
+                                <div class="overflow-hidden rounded-2xl shadow-2xl card-hover">
+                                    <img class="w-full h-auto object-cover"
+                                        alt="<%= section.Title || '' %>"
+                                        src="<%= section.Image.url.startsWith('http') ? section.Image.url : strapiUrl + section.Image.url %>" />
+                                </div>
+                                <% } %>
+                            </div>
+                            <div class="w-full lg:w-1/2 <%= imgLeft ? 'order-1 lg:order-2' : 'order-1 lg:order-1' %>">
+                                <h2 class="text-4xl font-black text-gray-900 mb-6 flex items-center gap-3">
+                                    <% if (section.icon) { %><span class="material-icons text-primary text-4xl"><%= section.icon %></span><% } %>
+                                    <%- section.Title || '' %>
+                                </h2>
+                                <% if (section.Description) { %>
+                                <div class="text-lg text-gray-600 leading-relaxed"><%- section.Description %></div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <% } %>
                     </div>
+                </div>
+                <% }); %>
                 </section>
+                <% } %>
 
+                <!-- CTA Section -->
+                <% if (bear.CtaTitle) { %>
                 <section class="py-24 bg-primary">
                     <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
                         <div
                             class="rounded-3xl bg-gray-900 p-10 md:p-16 text-center shadow-2xl relative overflow-hidden text-white">
+                            <% if (bear.CtaIcon) { %>
                             <div class="absolute top-0 right-0 p-4 opacity-10">
-                                <span class="material-symbols-outlined text-9xl text-white">query_stats</span>
+                                <span class="material-symbols-outlined text-9xl text-white"><%= bear.CtaIcon %></span>
                             </div>
-                            <h2 class="text-4xl md:text-5xl font-black mb-6">Pronto ad ottimizzare la tua azienda?</h2>
-                            <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto">
-                                Unisciti alle centinaia di aziende che hanno già digitalizzato i loro processi HR con
-                                BEAR.
-
-                            </p>
+                            <% } %>
+                            <h2 class="text-4xl md:text-5xl font-black mb-6"><%- bear.CtaTitle %></h2>
+                            <% if (bear.CtaDescription) { %>
+                            <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto"><%- bear.CtaDescription %></p>
+                            <% } %>
+                            <% if (bear.CtaButtonText) { %>
                             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                                <button
-                                    class="bg-primary text-gray-900 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all">
-                                    Parla con un esperto </button>
-
+                                <button onclick="openDemoModal('BEAR')"
+                                    class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all">
+                                    <%- bear.CtaButtonText %>
+                                </button>
                             </div>
+                            <% } %>
                         </div>
                     </div>
                 </section>
+                <% } %>
             </main>
 
             <%- include('partials/footer') %>
+            <%- include('partials/demo-modal') %>
 
                 <script>
                     (function () { var s = document.getElementById('page-skeleton'); var c = document.getElementById('page-content'); function show() { if (s) s.classList.add('hidden'); if (c) { c.classList.remove('hidden'); c.classList.remove('opacity-0'); } } if (document.readyState === 'complete') show(); else window.addEventListener('load', show); })();

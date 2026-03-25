@@ -426,13 +426,51 @@ app.get("/sitemap.xml", (req, res) => {
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, "public")));
 
-// Pagina di manutenzione: se MAINTENANCE_MODE=1, tutte le richieste (tranne /health e API) vedono la pagina manutenzione
-app.use((req, res, next) => {
-  if (!MAINTENANCE_MODE) return next();
-  if (req.path === "/health" || req.path.startsWith("/api/")) return next();
-  res.status(503).render("manutenzione", {
-    title: "Manutenzione in corso | B4US",
-  });
+// Pagina di manutenzione:
+// - MAINTENANCE_MODE=1 → manutenzione forzata per tutti (tranne IP autorizzati)
+// - Strapi non raggiungibile → manutenzione automatica per IP non autorizzati
+let strapiAvailable = true;
+let lastStrapiCheck = 0;
+const STRAPI_CHECK_INTERVAL = 30000; // Controlla ogni 30 secondi
+
+async function checkStrapiHealth() {
+  const now = Date.now();
+  if (now - lastStrapiCheck < STRAPI_CHECK_INTERVAL) return strapiAvailable;
+  lastStrapiCheck = now;
+  try {
+    await axios.get(`${STRAPI_URL}/admin`, { timeout: 5000, headers: { ...strapiAuthHeaders } });
+    if (!strapiAvailable) logger.info("Strapi is back online");
+    strapiAvailable = true;
+  } catch (err) {
+    if (strapiAvailable) logger.warn("Strapi is unreachable", { error: err.message });
+    strapiAvailable = false;
+  }
+  return strapiAvailable;
+}
+
+app.use(async (req, res, next) => {
+  if (req.path === "/health" || req.path.startsWith("/api/") || req.path.startsWith("/public")) return next();
+
+  // Se l'IP è autorizzato, passa sempre (vede il sito anche in manutenzione)
+  if (req.isAllowedLoginIp) return next();
+
+  // Manutenzione forzata
+  if (MAINTENANCE_MODE) {
+    return res.status(503).render("manutenzione", {
+      title: "Manutenzione in corso | B4US",
+    });
+  }
+
+  // Manutenzione automatica: Strapi non raggiungibile
+  const isUp = await checkStrapiHealth();
+  if (!isUp) {
+    logger.warn("Showing maintenance page (Strapi down)", { clientIp: req.clientIp, path: req.path });
+    return res.status(503).render("manutenzione", {
+      title: "Manutenzione in corso | B4US",
+    });
+  }
+
+  next();
 });
 
 // Helper function to fetch from Strapi with error handling
@@ -759,10 +797,22 @@ app.get("/blog/:slug", async (req, res) => {
   }
 });
 
-app.get("/bear", (req, res) => {
-  res.render("bear", {
-    title: "BEAR - Billing Expenses & Activity Reporting",
-  });
+app.get("/bear", async (req, res) => {
+  try {
+    const bearData = await fetchFromStrapi("/bear", null, ["FeatureCards", "FeatureSections", "HeroImage", "HeroHighlights"]);
+    res.render("bear", {
+      title: "BEAR - Billing Expenses & Activity Reporting",
+      bear: bearData?.data || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    logger.error("Error rendering bear", { error: error.message });
+    res.render("bear", {
+      title: "BEAR - Billing Expenses & Activity Reporting",
+      bear: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/team", async (req, res) => {
