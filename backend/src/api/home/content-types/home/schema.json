@@ -12,6 +12,9 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "heroTag": {
+      "type": "string"
+    },
     "heroTitle": {
       "type": "string",
       "required": true

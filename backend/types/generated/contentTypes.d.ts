@@ -966,6 +966,7 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
           preset: 'defaultHtml';
         }
       >;
+    heroTag: Schema.Attribute.String;
     heroTitle: Schema.Attribute.String & Schema.Attribute.Required;
     introDescription: Schema.Attribute.RichText &
       Schema.Attribute.CustomField<
