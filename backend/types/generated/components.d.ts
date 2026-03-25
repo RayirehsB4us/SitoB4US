@@ -1,5 +1,60 @@
 import type { Schema, Struct } from '@strapi/strapi';
 
+export interface BearFeatureCard extends Struct.ComponentSchema {
+  collectionName: 'components_bear_feature_cards';
+  info: {
+    description: 'Card funzionalit\u00E0 BEAR con icona e descrizione';
+    displayName: 'Feature Card';
+    icon: 'apps';
+  };
+  attributes: {
+    Badge: Schema.Attribute.String;
+    Description: Schema.Attribute.Text;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BearFeatureSection extends Struct.ComponentSchema {
+  collectionName: 'components_bear_feature_sections';
+  info: {
+    description: 'Sezione funzionalit\u00E0 BEAR con immagine e descrizione';
+    displayName: 'Feature Section';
+    icon: 'layout';
+  };
+  attributes: {
+    ComingSoon: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    Description: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Image: Schema.Attribute.Media<'images'>;
+    ImagePosition: Schema.Attribute.Enumeration<['left', 'right']> &
+      Schema.Attribute.DefaultTo<'left'>;
+    Title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface BearHeroHighlight extends Struct.ComponentSchema {
+  collectionName: 'components_bear_hero_highlights';
+  info: {
+    description: 'Riga highlight con icona sotto i bottoni hero';
+    displayName: 'Hero Highlight';
+    icon: 'check-circle';
+  };
+  attributes: {
+    icon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    Text: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface CarFleetAccesBlock extends Struct.ComponentSchema {
   collectionName: 'components_car_fleet_acces_blocks';
   info: {
@@ -603,6 +658,9 @@ export interface StoriaTimelineEvent extends Struct.ComponentSchema {
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'bear.feature-card': BearFeatureCard;
+      'bear.feature-section': BearFeatureSection;
+      'bear.hero-highlight': BearHeroHighlight;
       'car-fleet.acces-block': CarFleetAccesBlock;
       'car-fleet.dashboard-panoramica': CarFleetDashboardPanoramica;
       'car-fleet.icon-text': CarFleetIconText;

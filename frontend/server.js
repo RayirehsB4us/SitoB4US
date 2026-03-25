@@ -797,10 +797,22 @@ app.get("/blog/:slug", async (req, res) => {
   }
 });
 
-app.get("/bear", (req, res) => {
-  res.render("bear", {
-    title: "BEAR - Billing Expenses & Activity Reporting",
-  });
+app.get("/bear", async (req, res) => {
+  try {
+    const bearData = await fetchFromStrapi("/bear", null, ["FeatureCards", "FeatureSections", "HeroImage", "HeroHighlights"]);
+    res.render("bear", {
+      title: "BEAR - Billing Expenses & Activity Reporting",
+      bear: bearData?.data || {},
+      strapiUrl: STRAPI_URL,
+    });
+  } catch (error) {
+    logger.error("Error rendering bear", { error: error.message });
+    res.render("bear", {
+      title: "BEAR - Billing Expenses & Activity Reporting",
+      bear: {},
+      strapiUrl: STRAPI_URL,
+    });
+  }
 });
 
 app.get("/team", async (req, res) => {

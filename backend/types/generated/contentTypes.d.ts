@@ -430,6 +430,56 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBearBear extends Struct.SingleTypeSchema {
+  collectionName: 'bears';
+  info: {
+    description: 'Contenuti della pagina BEAR - Billing Expenses & Activity Reporting';
+    displayName: 'Pagina BEAR';
+    pluralName: 'bears';
+    singularName: 'bear';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    CtaButtonText: Schema.Attribute.String;
+    CtaDescription: Schema.Attribute.Text;
+    CtaIcon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    CtaTitle: Schema.Attribute.String;
+    FeatureCards: Schema.Attribute.Component<'bear.feature-card', true>;
+    FeatureSections: Schema.Attribute.Component<'bear.feature-section', true>;
+    FeaturesSubtitle: Schema.Attribute.Text;
+    FeaturesTitle: Schema.Attribute.String;
+    FeaturesUpperTitle: Schema.Attribute.String;
+    HeroBadge: Schema.Attribute.String;
+    HeroButton2Text: Schema.Attribute.String;
+    HeroButtonIcon: Schema.Attribute.String &
+      Schema.Attribute.CustomField<'plugin::icon-picker.icon'>;
+    HeroButtonText: Schema.Attribute.String;
+    HeroHighlights: Schema.Attribute.Component<'bear.hero-highlight', true>;
+    HeroImage: Schema.Attribute.Media<'images'>;
+    HeroSubtitle: Schema.Attribute.RichText &
+      Schema.Attribute.CustomField<
+        'plugin::ckeditor5.CKEditor',
+        {
+          preset: 'defaultHtml';
+        }
+      >;
+    HeroTitle: Schema.Attribute.String & Schema.Attribute.Required;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::bear.bear'> &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiBlogPageBlogPage extends Struct.SingleTypeSchema {
   collectionName: 'blog_pages';
   info: {
@@ -2147,6 +2197,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::bear.bear': ApiBearBear;
       'api::blog-page.blog-page': ApiBlogPageBlogPage;
       'api::blog-post.blog-post': ApiBlogPostBlogPost;
       'api::car-fleet.car-fleet': ApiCarFleetCarFleet;

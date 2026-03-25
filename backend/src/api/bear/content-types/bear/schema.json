@@ -1,0 +1,82 @@
+{
+  "kind": "singleType",
+  "collectionName": "bears",
+  "info": {
+    "singularName": "bear",
+    "pluralName": "bears",
+    "displayName": "Pagina BEAR",
+    "description": "Contenuti della pagina BEAR - Billing Expenses & Activity Reporting"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "HeroBadge": {
+      "type": "string"
+    },
+    "HeroTitle": {
+      "type": "string",
+      "required": true
+    },
+    "HeroSubtitle": {
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "HeroButtonText": {
+      "type": "string"
+    },
+    "HeroButtonIcon": {
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
+    },
+    "HeroButton2Text": {
+      "type": "string"
+    },
+    "HeroHighlights": {
+      "type": "component",
+      "component": "bear.hero-highlight",
+      "repeatable": true
+    },
+    "HeroImage": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "FeaturesUpperTitle": {
+      "type": "string"
+    },
+    "FeaturesTitle": {
+      "type": "string"
+    },
+    "FeaturesSubtitle": {
+      "type": "text"
+    },
+    "FeatureCards": {
+      "type": "component",
+      "component": "bear.feature-card",
+      "repeatable": true
+    },
+    "FeatureSections": {
+      "type": "component",
+      "component": "bear.feature-section",
+      "repeatable": true
+    },
+    "CtaTitle": {
+      "type": "string"
+    },
+    "CtaDescription": {
+      "type": "text"
+    },
+    "CtaButtonText": {
+      "type": "string"
+    },
+    "CtaIcon": {
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
+    }
+  }
+}
