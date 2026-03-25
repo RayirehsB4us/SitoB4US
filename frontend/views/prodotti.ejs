@@ -93,7 +93,7 @@
                                                         class="w-full h-full object-cover">
                                                 <% } else { %>
                                                     <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                                                        <span class="material-icons text-gray-300 text-6xl"><%= prod.Icona || 'inventory_2' %></span>
+                                                        <span class="material-icons text-gray-300 text-6xl"><%= prod.Icona || '' %></span>
                                                     </div>
                                                 <% } %>
                                             </div>
@@ -105,7 +105,7 @@
                                 <div class="lg:col-span-6 mt-16 lg:mt-0">
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="p-2 <%= colorBg %> rounded-lg">
-                                            <span class="material-icons <%= colorText %> text-3xl"><%= prod.Icona || 'inventory_2' %></span>
+                                            <span class="material-icons <%= colorText %> text-3xl"><%= prod.Icona || '' %></span>
                                         </div>
                                         <h2 class="text-3xl font-bold text-gray-900"><%- prod.Nome %></h2>
                                     </div>
@@ -120,7 +120,7 @@
                                         <div class="grid sm:grid-cols-2 gap-6 mb-8">
                                             <% prod.Features.forEach(function(feat) { %>
                                                 <div class="bg-white p-4 rounded-lg border border-gray-100 shadow-sm card-hover">
-                                                    <span class="material-icons <%= colorText %> mb-2"><%= feat.Icon || 'check_circle' %></span>
+                                                    <span class="material-icons <%= colorText %> mb-2"><%= feat.Icon || '' %></span>
                                                     <h4 class="font-bold text-gray-900"><%- feat.Title %></h4>
                                                     <% if (feat.Description) { %>
                                                         <p class="text-sm text-gray-500 mt-1"><%= feat.Description %></p>
@@ -133,7 +133,7 @@
                                         <a href="<%= prod.CtaLink || '#' %>"
                                             class="<%= colorLink %> font-semibold inline-flex items-center group transition-colors">
                                             <%= prod.CtaTesto %>
-                                            <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform text-sm"><%= prod.CtaIcona || 'arrow_forward' %></span>
+                                            <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform text-sm"><%= prod.CtaIcona || '' %></span>
                                         </a>
                                     <% } %>
                                 </div>
@@ -146,7 +146,7 @@
                                 <div class="lg:col-span-5 order-2 lg:order-1 mt-10 lg:mt-0">
                                     <div class="flex items-center gap-3 mb-4">
                                         <div class="p-2 <%= colorBg %> rounded-lg">
-                                            <span class="material-icons <%= colorText %> text-3xl"><%= prod.Icona || 'inventory_2' %></span>
+                                            <span class="material-icons <%= colorText %> text-3xl"><%= prod.Icona || '' %></span>
                                         </div>
                                         <h2 class="text-3xl font-bold text-gray-900"><%- prod.Nome %></h2>
                                     </div>
@@ -161,7 +161,7 @@
                                         <ul class="space-y-4 mb-8">
                                             <% prod.Features.forEach(function(feat) { %>
                                                 <li class="flex items-start">
-                                                    <span class="material-icons <%= colorText %> mr-3 mt-1"><%= feat.Icon || 'check_circle' %></span>
+                                                    <span class="material-icons <%= colorText %> mr-3 mt-1"><%= feat.Icon || '' %></span>
                                                     <div>
                                                         <span class="font-semibold text-gray-900"><%- feat.Title %></span>
                                                         <% if (feat.Description) { %>
@@ -176,7 +176,7 @@
                                         <a href="<%= prod.CtaLink || '#' %>"
                                             class="<%= colorLink %> font-semibold inline-flex items-center group transition-colors">
                                             <%= prod.CtaTesto %>
-                                            <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform text-sm"><%= prod.CtaIcona || 'arrow_forward' %></span>
+                                            <span class="material-icons ml-2 group-hover:translate-x-1 transition-transform text-sm"><%= prod.CtaIcona || '' %></span>
                                         </a>
                                     <% } %>
                                 </div>
@@ -190,7 +190,7 @@
                                                 class="w-full h-auto object-cover">
                                         <% } else { %>
                                             <div class="w-full h-64 bg-gray-100 flex items-center justify-center">
-                                                <span class="material-icons text-gray-300 text-8xl"><%= prod.Icona || 'inventory_2' %></span>
+                                                <span class="material-icons text-gray-300 text-8xl"><%= prod.Icona || '' %></span>
                                             </div>
                                         <% } %>
                                     </div>
