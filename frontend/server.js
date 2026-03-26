@@ -162,6 +162,22 @@ const strapiAuthHeaders = STRAPI_API_TOKEN
   ? { Authorization: `Bearer ${STRAPI_API_TOKEN}` }
   : {};
 
+// Middleware per caricare le impostazioni del sito (Gestione Sito)
+app.use(async (req, res, next) => {
+  try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}/site-settings`,
+      { headers: { ...strapiAuthHeaders } },
+    );
+    res.locals.siteSettings = response.data?.data || {};
+    logger.info("Site settings loaded", { siteSettings: res.locals.siteSettings });
+  } catch (error) {
+    logger.error("Strapi site-settings fetch error", { error: error.message });
+    res.locals.siteSettings = {};
+  }
+  next();
+});
+
 // Middleware per caricare il mega menu e renderlo disponibile in tutte le view
 app.use(async (req, res, next) => {
   try {
@@ -454,8 +470,9 @@ app.use(async (req, res, next) => {
   // Se l'IP è autorizzato, passa sempre (vede il sito anche in manutenzione)
   if (req.isAllowedLoginIp) return next();
 
-  // Manutenzione forzata
-  if (MAINTENANCE_MODE) {
+  // Manutenzione forzata (da .env o da Gestione Sito in Strapi)
+  const strapiMaintenance = res.locals.siteSettings && res.locals.siteSettings.maintenanceMode === true;
+  if (MAINTENANCE_MODE || strapiMaintenance) {
     return res.status(503).render("manutenzione", {
       title: "Manutenzione in corso | B4US",
     });
@@ -733,6 +750,9 @@ app.get("/contatti", async (req, res) => {
 });
 
 app.get("/blog", async (req, res) => {
+  if (!req.isAllowedLoginIp && res.locals.siteSettings && res.locals.siteSettings.showBlogPage === false) {
+    return res.redirect("/");
+  }
   try {
     const blogPageData = await fetchFromStrapi("/blog-page");
     const dipendenti = await fetchFromStrapi("/team-members");
@@ -798,6 +818,9 @@ app.get("/blog/:slug", async (req, res) => {
 });
 
 app.get("/bear", async (req, res) => {
+  if (!req.isAllowedLoginIp && res.locals.siteSettings && res.locals.siteSettings.showBearPage === false) {
+    return res.redirect("/");
+  }
   try {
     const bearData = await fetchFromStrapi("/bear", null, ["FeatureCards", "FeatureSections", "HeroImage", "HeroHighlights"]);
     res.render("bear", {
