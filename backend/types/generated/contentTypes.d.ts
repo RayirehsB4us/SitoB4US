@@ -1465,6 +1465,40 @@ export interface ApiServizioServizio extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiSiteSettingsSiteSettings extends Struct.SingleTypeSchema {
+  collectionName: 'site_settings';
+  info: {
+    description: 'Impostazioni globali del sito: visibilit\u00E0 pagine, bottoni e sezioni';
+    displayName: 'Gestione Sito';
+    pluralName: 'site-settings-list';
+    singularName: 'site-settings';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::site-settings.site-settings'
+    > &
+      Schema.Attribute.Private;
+    maintenanceMode: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    publishedAt: Schema.Attribute.DateTime;
+    showBearPage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    showBlogPage: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    showTeamButton: Schema.Attribute.Boolean &
+      Schema.Attribute.DefaultTo<false>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiSoftwareProductSoftwareProduct
   extends Struct.CollectionTypeSchema {
   collectionName: 'software_products';
@@ -2222,6 +2256,7 @@ declare module '@strapi/strapi' {
       'api::project.project': ApiProjectProject;
       'api::service.service': ApiServiceService;
       'api::servizio.servizio': ApiServizioServizio;
+      'api::site-settings.site-settings': ApiSiteSettingsSiteSettings;
       'api::software-product.software-product': ApiSoftwareProductSoftwareProduct;
       'api::storia-b4-us.storia-b4-us': ApiStoriaB4UsStoriaB4Us;
       'api::storia.storia': ApiStoriaStoria;

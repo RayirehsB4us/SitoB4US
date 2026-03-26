@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-settings",
+    "pluralName": "site-settings-list",
+    "displayName": "Gestione Sito",
+    "description": "Impostazioni globali del sito: visibilità pagine, bottoni e sezioni"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "showTeamButton": {
+      "type": "boolean",
+      "default": false
+    },
+    "showBlogPage": {
+      "type": "boolean",
+      "default": false
+    },
+    "showBearPage": {
+      "type": "boolean",
+      "default": true
+    },
+    "maintenanceMode": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
