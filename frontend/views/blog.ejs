@@ -57,12 +57,10 @@
             <div class="max-w-2xl">
               <h1
                 class="text-5xl md:text-6xl font-display font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-400">
-                <%= blogPageData.MainTitle || 'Diario di Bordo' %>
+                <%- blogPageData.MainTitle || '' %>
               </h1>
               <p class="text-lg text-gray-600 leading-relaxed">
-                <%= blogPageData.Description
-                  || 'Traguardi, obiettivi e attività del team B4US. Una panoramica sulla crescita della nostra azienda e sui progetti che ci guidano verso il futuro.'
-                  %>
+                <%= blogPageData.Description || '' %>
               </p>
             </div>
             <!-- Stats Ribbon -->

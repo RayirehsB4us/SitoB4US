@@ -1,0 +1,18 @@
+{
+  "collectionName": "components_bear_hero_highlights",
+  "info": {
+    "displayName": "Hero Highlight",
+    "icon": "check-circle",
+    "description": "Riga highlight con icona sotto i bottoni hero"
+  },
+  "attributes": {
+    "icon": {
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
+    },
+    "Text": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

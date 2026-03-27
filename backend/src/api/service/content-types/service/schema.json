@@ -14,10 +14,18 @@
   "attributes": {
     "Maintitle": {
       "type": "richtext",
-      "required": true
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true,
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "descriptiontitle": {
-      "type": "text"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "ButtonServizi": {
       "type": "string"

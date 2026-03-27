@@ -17,6 +17,7 @@
         },
         "Icon1": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona data (es: calendar_today)"
         },
         "Date": {
@@ -25,6 +26,7 @@
         },
         "Icon2": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona persona (es: person)"
         },
         "Name": {
@@ -33,6 +35,7 @@
         },
         "Icon3": {
             "type": "string",
+            "customField": "plugin::icon-picker.icon",
             "description": "Icona accesso (es: vpn_key)"
         },
         "Access": {

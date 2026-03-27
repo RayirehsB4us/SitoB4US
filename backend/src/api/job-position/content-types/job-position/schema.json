@@ -22,7 +22,11 @@
     },
     "descrizione": {
       "type": "richtext",
-      "required": true
+      "customField": "plugin::ckeditor5.CKEditor",
+      "required": true,
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "location": {
       "type": "string"
@@ -40,10 +44,15 @@
       "type": "string"
     },
     "icona": {
-      "type": "string"
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
     },
     "requisiti": {
-      "type": "richtext"
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
     },
     "attiva": {
       "type": "boolean",

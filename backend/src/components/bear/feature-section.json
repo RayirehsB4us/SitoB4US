@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_bear_feature_sections",
+  "info": {
+    "displayName": "Feature Section",
+    "icon": "layout",
+    "description": "Sezione funzionalità BEAR con immagine e descrizione"
+  },
+  "attributes": {
+    "Title": {
+      "type": "string",
+      "required": true
+    },
+    "icon": {
+      "type": "string",
+      "customField": "plugin::icon-picker.icon"
+    },
+    "Description": {
+      "type": "richtext",
+      "customField": "plugin::ckeditor5.CKEditor",
+      "options": {
+        "preset": "defaultHtml"
+      }
+    },
+    "Image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "ImagePosition": {
+      "type": "enumeration",
+      "enum": ["left", "right"],
+      "default": "left"
+    },
+    "ComingSoon": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

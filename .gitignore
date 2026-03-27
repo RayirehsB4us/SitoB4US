@@ -18,6 +18,9 @@ backend/.strapi/
 frontend/dist/
 frontend/build/
 
+# Logs
+frontend/logs/
+
 # OS files
 .DS_Store
 Thumbs.db
