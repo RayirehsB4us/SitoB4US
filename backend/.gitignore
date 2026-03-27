@@ -114,3 +114,5 @@ build
 .strapi-updater.json
 .strapi
 types/generated/
+
+.claude/
