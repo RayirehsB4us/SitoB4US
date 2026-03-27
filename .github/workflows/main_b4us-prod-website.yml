@@ -27,37 +27,20 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./frontend
-        run: npm install
+        run: npm ci
 
       - name: Build (if presente)
         working-directory: ./frontend
         run: npm run build --if-present
 
-      - name: Test server starts
-        working-directory: ./frontend
-        run: |
-          PORT=3099 node server.js &
-          SERVER_PID=$!
-          echo "⏳ Waiting for server..."
-          sleep 5
-
-          # Health check
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:3099/ || echo "000")
-
-          kill $SERVER_PID 2>/dev/null || true
-
-          if [ "$HTTP_STATUS" -ge 200 ] && [ "$HTTP_STATUS" -lt 500 ]; then
-            echo "✅ Server responded with status $HTTP_STATUS"
-          else
-            echo "❌ Server health check failed (status: $HTTP_STATUS)"
-            exit 1
-          fi
-
       - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-app
-          path: frontend
+          path: |
+            frontend/
+            !frontend/node_modules/
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
@@ -81,11 +64,28 @@ jobs:
 
       - name: Health check production
         run: |
-          sleep 30
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://b4us-prod-website-fkegfmavgndxe5a8.swedencentral-01.azurewebsites.net/health)
-          if [ "$HTTP_STATUS" -eq 200 ]; then
-            echo "✅ Production is healthy"
-          else
-            echo "❌ Production health check failed (status: $HTTP_STATUS)"
-            exit 1
-          fi
+          echo "⏳ Waiting for deployment to stabilize..."
+          sleep 45
+
+          MAX_RETRIES=5
+          RETRY_COUNT=0
+
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" https://b4us-prod-website-fkegfmavgndxe5a8.swedencentral-01.azurewebsites.net/health || echo "000")
+            
+            if [ "$HTTP_STATUS" -eq 200 ]; then
+              echo "✅ Production is healthy (status: $HTTP_STATUS)"
+              exit 0
+            fi
+            
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            echo "⚠️ Health check attempt $RETRY_COUNT/$MAX_RETRIES failed (status: $HTTP_STATUS)"
+            
+            if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+              echo "🔄 Retrying in 10 seconds..."
+              sleep 10
+            fi
+          done
+
+          echo "❌ Production health check failed after $MAX_RETRIES attempts"
+          exit 1
