@@ -8,6 +8,15 @@ const fs = require("fs");
 const morgan = require("morgan");
 const winston = require("winston");
 require("winston-daily-rotate-file");
+const {
+  normalizeIpForCompare,
+  isIpAllowed,
+  buildStrapiPopulateQuery,
+  sanitizeFileName,
+  sanitizeFolderName,
+  generateSitemapXml,
+  generateRobotsTxt,
+} = require("./utils");
 
 // ── Winston Logger ──────────────────────────────────────────────────
 const logsDir = path.join(__dirname, "logs");
@@ -98,10 +107,10 @@ async function uploadToSharePoint(filePath, fileName, folderName, nome, cognome)
   const accessToken = await getSharePointAccessToken();
 
   // Mantieni il nome file originale
-  const uploadName = fileName.replace(/[^a-zA-Z0-9._\- ]/g, "_");
+  const uploadName = sanitizeFileName(fileName);
 
   // Cartella: SHAREPOINT_FOLDER/folderName/
-  const safeFolder = (folderName || "Candidature_Spontanee").replace(/[^a-zA-Z0-9_\- ]/g, "_");
+  const safeFolder = sanitizeFolderName(folderName);
 
   const fileBuffer = fs.readFileSync(filePath);
   const fileSize = fileBuffer.length;
@@ -319,16 +328,6 @@ const accessLogger = winston.createLogger({
 app.use(morgan("combined", { stream: { write: (msg) => accessLogger.info(msg.trim()) } }));
 app.use(morgan("short")); // anche su console
 
-// Normalizza IP: toglie porta se IPv4:porta (gestisce sia header con che senza porta)
-function normalizeIpForCompare(ip) {
-  if (!ip || typeof ip !== "string") return ip || "";
-  let s = ip.trim();
-  if (s.startsWith("::ffff:")) s = s.substring(7);
-  if (s.includes("%")) s = s.split("%")[0];
-  if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}:\d+$/.test(s)) s = s.replace(/:(\d+)$/, "");
-  return s;
-}
-
 // Middleware to compute client IP and decide if login button should be shown
 app.use((req, res, next) => {
   const xForwardedFor = req.headers["x-forwarded-for"];
@@ -350,17 +349,7 @@ app.use((req, res, next) => {
     socketIp ||
     "";
   const clientIp = normalizeIpForCompare(rawClientIp);
-
-  const isAllowedIp = ALLOWED_LOGIN_IPS.some((rule) => {
-    const normRule = normalizeIpForCompare(rule);
-    // Prefisso di rete, es. 192.168.178.* → match su 192.168.178.x
-    if (rule.endsWith(".*")) {
-      const prefix = normRule.slice(0, -1); // togli l'asterisco finale
-      return clientIp.startsWith(prefix);
-    }
-    // IP singolo (confronto dopo normalizzazione: funziona con e senza porta)
-    return clientIp === normRule;
-  });
+  const isAllowedIp = isIpAllowed(clientIp, ALLOWED_LOGIN_IPS);
 
   // Rendi disponibili IP e flag anche alle route successive
   req.clientIp = clientIp;
@@ -401,42 +390,26 @@ const SITE_URL = process.env.SITE_URL || "https://www.b4us.it";
 
 // robots.txt e sitemap.xml (route prima di static per essere sempre raggiungibili)
 app.get("/robots.txt", (req, res) => {
-  const base = SITE_URL.replace(/\/$/, "");
-  const body = `# ${base}
-User-agent: *
-Allow: /
-
-# Sitemap
-Sitemap: ${base}/sitemap.xml
-`;
-  res.type("text/plain").send(body);
+  res.type("text/plain").send(generateRobotsTxt(SITE_URL));
 });
 
+const SITEMAP_PAGES = [
+  { path: "", changefreq: "weekly", priority: "1.0" },
+  { path: "home", changefreq: "weekly", priority: "0.9" },
+  { path: "chi-siamo", changefreq: "monthly", priority: "0.8" },
+  { path: "prodotti", changefreq: "monthly", priority: "0.8" },
+  { path: "open4us", changefreq: "monthly", priority: "0.8" },
+  { path: "carfleet", changefreq: "monthly", priority: "0.8" },
+  { path: "servizi", changefreq: "monthly", priority: "0.8" },
+  { path: "struttura", changefreq: "monthly", priority: "0.7" },
+  { path: "storia", changefreq: "monthly", priority: "0.7" },
+  { path: "carriere", changefreq: "weekly", priority: "0.8" },
+  { path: "contatti", changefreq: "monthly", priority: "0.8" },
+  { path: "privacy-policy", changefreq: "yearly", priority: "0.3" },
+];
+
 app.get("/sitemap.xml", (req, res) => {
-  const base = SITE_URL.replace(/\/$/, "");
-  const staticPages = [
-    { path: "", changefreq: "weekly", priority: "1.0" },
-    { path: "home", changefreq: "weekly", priority: "0.9" },
-    { path: "chi-siamo", changefreq: "monthly", priority: "0.8" },
-    { path: "prodotti", changefreq: "monthly", priority: "0.8" },
-    { path: "open4us", changefreq: "monthly", priority: "0.8" },
-    { path: "carfleet", changefreq: "monthly", priority: "0.8" },
-    { path: "servizi", changefreq: "monthly", priority: "0.8" },
-    { path: "struttura", changefreq: "monthly", priority: "0.7" },
-    { path: "storia", changefreq: "monthly", priority: "0.7" },
-    { path: "carriere", changefreq: "weekly", priority: "0.8" },
-    { path: "contatti", changefreq: "monthly", priority: "0.8" },
-    { path: "privacy-policy", changefreq: "yearly", priority: "0.3" },
-  ];
-  const urls = staticPages.map(({ path, changefreq, priority }) => {
-    const loc = path ? `${base}/${path}` : base;
-    return `  <url>\n    <loc>${loc}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
-  });
-  const xml =
-    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
-    urls.join("\n") +
-    "\n</urlset>";
-  res.type("application/xml").send(xml);
+  res.type("application/xml").send(generateSitemapXml(SITE_URL, SITEMAP_PAGES));
 });
 
 // Serve static files from the 'public' directory
@@ -493,14 +466,7 @@ app.use(async (req, res, next) => {
 // Helper function to fetch from Strapi with error handling
 async function fetchFromStrapi(endpoint, fallbackData = null, deepPopulate = null) {
   try {
-    var query = "populate=*";
-    if (deepPopulate && deepPopulate.length > 0) {
-      query = deepPopulate
-        .map(function (c) {
-          return "populate[" + c + "][populate]=*";
-        })
-        .join("&");
-    }
+    const query = buildStrapiPopulateQuery(deepPopulate);
     const separator = endpoint.includes("?") ? "&" : "?";
     const response = await axios.get(
       `${STRAPI_API_URL}${endpoint}${separator}${query}`,
