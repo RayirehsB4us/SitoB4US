@@ -9,6 +9,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
     "test:old": "node scripts/test-server.js",
     "pretest": "npm run validate"
   },
@@ -28,6 +29,7 @@
     "winston-daily-rotate-file": "^5.0.0"
   },
   "devDependencies": {
+    "@vitest/ui": "^4.1.2",
     "vitest": "^4.1.2"
   }
 }
