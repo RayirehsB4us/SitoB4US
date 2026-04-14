@@ -62,7 +62,7 @@
               </span>
             <% } %>
             <h1 class="text-3xl md:text-5xl font-display font-bold text-white leading-tight mb-6">
-              <%- post.titolo %>
+              <%- sanitize(post.titolo) %>
             </h1>
             <div class="flex flex-wrap items-center gap-6 text-white/80 text-sm">
               <% if (post.dataPublicazione) { %>
@@ -95,7 +95,7 @@
           <!-- Contenuto principale -->
           <% if (post.contenuto) { %>
             <div class="prose max-w-none text-slate-600">
-              <%- post.contenuto %>
+              <%- sanitize(post.contenuto) %>
             </div>
           <% } else { %>
             <div class="text-center py-12 bg-slate-50 rounded-2xl">
@@ -173,7 +173,7 @@
                 </div>
                 <div class="p-6">
                   <h3 class="text-lg font-bold mb-2 group-hover:text-primary transition-colors line-clamp-2">
-                    <%- related.titolo %>
+                    <%- sanitize(related.titolo) %>
                   </h3>
                   <p class="text-slate-600 text-sm line-clamp-2 mb-4"><%= related.descrizione %></p>
                   <a href="/blog/<%= related.slug %>" class="inline-flex items-center text-primary font-semibold text-sm">

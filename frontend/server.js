@@ -7,6 +7,8 @@ const FormData = require("form-data");
 const fs = require("fs");
 const morgan = require("morgan");
 const winston = require("winston");
+const helmet = require("helmet");
+const sanitizeHtml = require("sanitize-html");
 require("winston-daily-rotate-file");
 const {
   normalizeIpForCompare,
@@ -17,6 +19,38 @@ const {
   generateSitemapXml,
   generateRobotsTxt,
 } = require("./utils");
+
+// ── Sanitizzazione HTML (anti-XSS) ─────────────────────────────────
+// Permette tag/attributi sicuri da CKEditor e titoli con <span>/<br>.
+// Blocca <script>, onerror, onclick, javascript: ecc.
+const SANITIZE_OPTIONS = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+    "img", "span", "div", "br", "h1", "h2", "h3", "h4", "h5", "h6",
+    "figure", "figcaption", "video", "source", "iframe",
+  ]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    "*": ["class", "style", "id"],
+    img: ["src", "alt", "title", "width", "height", "loading"],
+    a: ["href", "target", "rel", "title"],
+    iframe: ["src", "width", "height", "frameborder", "allowfullscreen"],
+    video: ["src", "controls", "width", "height"],
+    source: ["src", "type"],
+  },
+  allowedSchemes: ["http", "https", "mailto", "tel"],
+  allowedIframeHostnames: ["www.youtube.com", "player.vimeo.com"],
+};
+
+function sanitize(dirty) {
+  if (!dirty || typeof dirty !== "string") return dirty || "";
+  let clean = sanitizeHtml(dirty, SANITIZE_OPTIONS);
+  // Rimuovi javascript:/vbscript:/expression() dagli stili inline (vettore XSS legacy)
+  clean = clean.replace(/style\s*=\s*"[^"]*"/gi, (match) => {
+    if (/javascript:|vbscript:|expression\s*\(/i.test(match)) return "";
+    return match;
+  });
+  return clean;
+}
 
 // ── Winston Logger ──────────────────────────────────────────────────
 const logsDir = path.join(__dirname, "logs");
@@ -307,6 +341,30 @@ app.set("views", path.join(__dirname, "views"));
 
 // Trust proxy headers (required on Azure / reverse proxies to get real client IP)
 app.set("trust proxy", true);
+
+// ── Helmet: security headers (CSP, X-Frame-Options, ecc.) ──────────
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
+      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      fontSrc: ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com", "https://fonts.googleapis.com"],
+      connectSrc: ["'self'", "https://cdn.tailwindcss.com", "https://www.google-analytics.com", "https://fonts.googleapis.com"],
+      frameSrc: ["'self'", "https://www.youtube.com", "https://player.vimeo.com"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
+}));
+
+// Rendi sanitize() disponibile in tutte le view EJS
+app.use((req, res, next) => {
+  res.locals.sanitize = sanitize;
+  next();
+});
 
 // Middleware to parse JSON bodies
 app.use(express.json());

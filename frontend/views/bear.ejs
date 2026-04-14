@@ -29,16 +29,16 @@
                                 <div
                                     class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary mb-6">
                                     <span class="mr-2 flex h-2 w-2 rounded-full bg-primary animate-pulse"></span>
-                                    <%- bear.HeroBadge %>
+                                    <%- sanitize(bear.HeroBadge) %>
                                 </div>
                                 <% } %>
                                 <h1
                                     class="text-5xl font-black leading-[1.1] tracking-tight text-gray-900 sm:text-7xl font-display">
-                                    <%- bear.HeroTitle || '' %>
+                                    <%- sanitize(bear.HeroTitle || '') %>
                                 </h1>
                                 <% if (bear.HeroSubtitle) { %>
                                 <div class="mt-8 text-lg leading-relaxed text-gray-600 max-w-xl">
-                                    <%- bear.HeroSubtitle %>
+                                    <%- sanitize(bear.HeroSubtitle) %>
                                 </div>
                                 <% } %>
                                 <% if (bear.HeroButtonText || bear.HeroButton2Text) { %>
@@ -46,7 +46,7 @@
                                     <% if (bear.HeroButtonText) { %>
                                     <button onclick="openDemoModal('BEAR')"
                                         class="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-primary hover:bg-green-600 md:text-lg shadow-lg shadow-green-500/40 transition-transform transform hover:-translate-y-1">
-                                        <%- bear.HeroButtonText %>
+                                        <%- sanitize(bear.HeroButtonText) %>
                                         <% if (bear.HeroButtonIcon) { %>
                                         <span class="material-symbols-outlined ml-2"><%= bear.HeroButtonIcon %></span>
                                         <% } %>
@@ -55,7 +55,7 @@
                                     <% if (bear.HeroButton2Text) { %>
                                     <a href="#feature-sections"
                                         class="flex items-center justify-center px-8 py-3 border border-gray-300 text-base font-medium rounded-lg text-gray-700 bg-white hover:bg-gray-50 md:text-lg transition-colors">
-                                        <%- bear.HeroButton2Text %>
+                                        <%- sanitize(bear.HeroButton2Text) %>
                                     </a>
                                     <% } %>
                                 </div>
@@ -97,13 +97,13 @@
                     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                         <div class="text-center max-w-3xl mx-auto mb-12">
                             <% if (bear.FeaturesUpperTitle) { %>
-                            <h2 class="text-base font-bold uppercase tracking-widest text-primary"><%- bear.FeaturesUpperTitle %></h2>
+                            <h2 class="text-base font-bold uppercase tracking-widest text-primary"><%- sanitize(bear.FeaturesUpperTitle) %></h2>
                             <% } %>
                             <% if (bear.FeaturesTitle) { %>
-                            <p class="mt-4 text-4xl font-black text-gray-900"><%- bear.FeaturesTitle %></p>
+                            <p class="mt-4 text-4xl font-black text-gray-900"><%- sanitize(bear.FeaturesTitle) %></p>
                             <% } %>
                             <% if (bear.FeaturesSubtitle) { %>
-                            <p class="mt-4 text-lg text-gray-600"><%- bear.FeaturesSubtitle %></p>
+                            <p class="mt-4 text-lg text-gray-600"><%- sanitize(bear.FeaturesSubtitle) %></p>
                             <% } %>
                         </div>
                         <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-<%= cards.length <= 4 ? cards.length : 4 %>">
@@ -123,9 +123,9 @@
                                     <span class="material-symbols-outlined text-3xl"><%= card.icon %></span>
                                 </div>
                                 <% } %>
-                                <h3 class="text-xl font-bold mb-3 text-gray-900"><%- card.Title || '' %></h3>
+                                <h3 class="text-xl font-bold mb-3 text-gray-900"><%- sanitize(card.Title || '') %></h3>
                                 <% if (card.Description) { %>
-                                <p class="text-sm leading-relaxed text-gray-600"><%- card.Description %></p>
+                                <p class="text-sm leading-relaxed text-gray-600"><%- sanitize(card.Description) %></p>
                                 <% } %>
                             </div>
                             <% }); %>
@@ -160,10 +160,10 @@
                                 </div>
                                 <h2 class="text-4xl font-black text-gray-900 mb-6 flex items-center gap-3">
                                     <% if (section.icon) { %><span class="material-icons text-primary text-4xl"><%= section.icon %></span><% } %>
-                                    <%- section.Title || '' %>
+                                    <%- sanitize(section.Title || '') %>
                                 </h2>
                                 <% if (section.Description) { %>
-                                <div class="text-lg text-gray-600 leading-relaxed"><%- section.Description %></div>
+                                <div class="text-lg text-gray-600 leading-relaxed"><%- sanitize(section.Description) %></div>
                                 <% } %>
                             </div>
                         </div>
@@ -183,10 +183,10 @@
                             <div class="w-full lg:w-1/2 <%= imgLeft ? 'order-1 lg:order-2' : 'order-1 lg:order-1' %>">
                                 <h2 class="text-4xl font-black text-gray-900 mb-6 flex items-center gap-3">
                                     <% if (section.icon) { %><span class="material-icons text-primary text-4xl"><%= section.icon %></span><% } %>
-                                    <%- section.Title || '' %>
+                                    <%- sanitize(section.Title || '') %>
                                 </h2>
                                 <% if (section.Description) { %>
-                                <div class="text-lg text-gray-600 leading-relaxed"><%- section.Description %></div>
+                                <div class="text-lg text-gray-600 leading-relaxed"><%- sanitize(section.Description) %></div>
                                 <% } %>
                             </div>
                         </div>
@@ -208,15 +208,15 @@
                                 <span class="material-symbols-outlined text-9xl text-white"><%= bear.CtaIcon %></span>
                             </div>
                             <% } %>
-                            <h2 class="text-4xl md:text-5xl font-black mb-6"><%- bear.CtaTitle %></h2>
+                            <h2 class="text-4xl md:text-5xl font-black mb-6"><%- sanitize(bear.CtaTitle) %></h2>
                             <% if (bear.CtaDescription) { %>
-                            <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto"><%- bear.CtaDescription %></p>
+                            <p class="text-gray-300 text-lg mb-10 max-w-2xl mx-auto"><%- sanitize(bear.CtaDescription) %></p>
                             <% } %>
                             <% if (bear.CtaButtonText) { %>
                             <div class="flex flex-col sm:flex-row justify-center gap-4">
                                 <button onclick="openDemoModal('BEAR')"
                                     class="bg-primary text-white px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all">
-                                    <%- bear.CtaButtonText %>
+                                    <%- sanitize(bear.CtaButtonText) %>
                                 </button>
                             </div>
                             <% } %>
