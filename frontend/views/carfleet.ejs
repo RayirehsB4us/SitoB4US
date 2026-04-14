@@ -46,14 +46,14 @@
                             <div
                                 class="inline-flex items-center px-3 py-1 rounded-full bg-green-100 text-primary text-xs font-semibold tracking-wide uppercase mb-6">
                                 <span class="material-icons text-sm mr-1"><%= cf.Icon || '' %></span>
-                                <%- cf.UpperTitle || '' %>
+                                <%- sanitize(cf.UpperTitle || '') %>
                             </div>
                             <h1 class="text-4xl lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6">
-                                <%- cf.Title || '' %>
+                                <%- sanitize(cf.Title || '') %>
                             </h1>
                             <p class="text-lg text-gray-600 mb-8 leading-relaxed">
                                 <% if (cf.SubTitle) { %>
-                                    <%- cf.SubTitle %>
+                                    <%- sanitize(cf.SubTitle) %>
                                 <% } else { %>
                                     Gestisci prenotazioni in modo efficiente, traccia i veicoli in tempo reale e automatizza
                                     gli accessi con la nostra soluzione personalizzata su PowerApps. Semplifica le
@@ -120,16 +120,16 @@
             <section class="py-16 bg-gray-50">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-12">
-                        <p class="text-base text-primary font-semibold tracking-wide uppercase"><%- cf.UpperTitle2 || '' %></p>
+                        <p class="text-base text-primary font-semibold tracking-wide uppercase"><%- sanitize(cf.UpperTitle2 || '') %></p>
                         <h2 class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
                             <% if (cf.Title3) { %>
-                                <%- cf.Title3 %>
+                                <%- sanitize(cf.Title3) %>
                             <% } else { %>
                                 Informazioni in tempo reale a colpo d'occhio
                             <% } %>
                         </h2>
                         <p class="mt-4 max-w-2xl text-xl text-gray-500 mx-auto">
-                            <%- cf.SubTitle2 || '' %>
+                            <%- sanitize(cf.SubTitle2 || '') %>
                         </p>
                     </div>
 
@@ -153,9 +153,9 @@
                                             </div>
                                             <div class="ml-5 w-0 flex-1">
                                                 <dl>
-                                                    <dt class="text-sm font-medium text-gray-500 truncate"><%- card.title %></dt>
+                                                    <dt class="text-sm font-medium text-gray-500 truncate"><%- sanitize(card.title) %></dt>
                                                     <dd>
-                                                        <div class="text-3xl font-bold text-gray-900"><%- card.subTitle %></div>
+                                                        <div class="text-3xl font-bold text-gray-900"><%- sanitize(card.subTitle) %></div>
                                                     </dd>
                                                 </dl>
                                             </div>
@@ -225,11 +225,11 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center mb-16">
                         <h2 class="text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                            <%- cf.Title4 || '' %>
+                            <%- sanitize(cf.Title4 || '') %>
                         </h2>
                         <p class="mt-4 max-w-3xl mx-auto text-xl text-gray-500">
                             <% if (cf.SubTitle3) { %>
-                                <%- cf.SubTitle3 %>
+                                <%- sanitize(cf.SubTitle3) %>
                             <% } else { %>
                                 CarFleet integra hardware e software avanzati per fornire un'esperienza senza interruzioni
                                 sia ai gestori che ai conducenti.
@@ -241,11 +241,11 @@
                         <!-- Text Content -->
                         <div>
                             <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mb-4">
-                                <%- cf.Title5 || '' %>
+                                <%- sanitize(cf.Title5 || '') %>
                             </h3>
                             <p class="text-lg text-gray-600 mb-8 leading-relaxed">
                                 <% if (cf.Subtitle4) { %>
-                                    <%- cf.Subtitle4 %>
+                                    <%- sanitize(cf.Subtitle4) %>
                                 <% } else { %>
                                     Costruita sulla robusta piattaforma PowerApps, la nostra soluzione offre flessibilità e
                                     sicurezza. Personalizza i flussi di lavoro, gestisce i permessi e si integra
@@ -262,7 +262,7 @@
                                                 <span class="material-icons"><%= block.Icon %></span>
                                             </div>
                                             <div class="ml-4">
-                                                <h4 class="text-lg leading-6 font-medium text-gray-900"><%- block.Title %></h4>
+                                                <h4 class="text-lg leading-6 font-medium text-gray-900"><%- sanitize(block.Title) %></h4>
                                                 <p class="mt-2 text-base text-gray-500"><%= block.Description %></p>
                                             </div>
                                         </div>
@@ -297,7 +297,7 @@
                                 <% var mf = (cf.MappaFlotta) || {}; %>
                                 <div
                                     class="bg-gray-100 px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-                                    <span class="text-sm font-semibold text-gray-700"><%- mf.MappaTitle || '' %></span>
+                                    <span class="text-sm font-semibold text-gray-700"><%- sanitize(mf.MappaTitle || '') %></span>
                                     <span
                                         class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800"><%= mf.Tag || '' %></span>
                                 </div>
@@ -369,11 +369,11 @@
                         <!-- Text Content -->
                         <div class="lg:order-2 order-1">
                             <h3 class="text-2xl font-extrabold text-gray-900 tracking-tight sm:text-3xl mb-4">
-                                <%- cf.Title6 || '' %>
+                                <%- sanitize(cf.Title6 || '') %>
                             </h3>
                             <p class="text-lg text-gray-600 mb-8 leading-relaxed">
                                 <% if (cf.SubTitle5) { %>
-                                    <%- cf.SubTitle5 %>
+                                    <%- sanitize(cf.SubTitle5) %>
                                 <% } else { %>
                                     Dimentica le chiavi fisiche. La nostra tecnologia di geofencing consente capacità
                                     automatiche di blocco e sblocco quando il conducente è vicino al veicolo.
@@ -434,14 +434,14 @@
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 class="text-3xl font-extrabold text-white mb-4">
                         <% if (cf.Title7) { %>
-                            <%- cf.Title7 %>
+                            <%- sanitize(cf.Title7) %>
                         <% } else { %>
                             Pronto a ottimizzare la gestione della tua flotta?
                         <% } %>
                     </h2>
                     <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
                         <% if (cf.Subtitle6) { %>
-                            <%- cf.Subtitle6 %>
+                            <%- sanitize(cf.Subtitle6) %>
                         <% } else { %>
                             Unisciti alle aziende che già usano CarFleet per semplificare la logistica e ridurre i
                             costi operativi.

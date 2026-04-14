@@ -17,14 +17,14 @@
                     <div>
                         <span
                             class="inline-block py-1 px-3 rounded-full bg-green-100 dark:bg-green-900/30 text-primary text-xs font-bold uppercase tracking-wider mb-6">
-                            <%- (chiSiamoData && chiSiamoData.HeroTag) || '' %>
+                            <%- sanitize((chiSiamoData && chiSiamoData.HeroTag) || '') %>
                         </span>
                         <h1
                             class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight mb-6">
-                            <%- (chiSiamoData && chiSiamoData.HeroTitle) || '' %>
+                            <%- sanitize((chiSiamoData && chiSiamoData.HeroTitle) || '') %>
                         </h1>
                         <div class="text-lg text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
-                            <%- (chiSiamoData && chiSiamoData.HeroDescription) || '' %>
+                            <%- sanitize((chiSiamoData && chiSiamoData.HeroDescription) || '') %>
                         </div>
                     </div>
                     <div class="mt-12 lg:mt-0 relative">
@@ -49,8 +49,8 @@
         <section class="py-20 bg-slate-50 dark:bg-slate-900/50">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center max-w-3xl mx-auto mb-16">
-                    <h2 class="text-3xl font-bold mb-4"><%- (chiSiamoData && chiSiamoData.ValuesTitle) || '' %></h2>
-                    <div class="text-slate-600 dark:text-slate-400"><%- (chiSiamoData && chiSiamoData.ValuesSubTitle) || '' %></div>
+                    <h2 class="text-3xl font-bold mb-4"><%- sanitize((chiSiamoData && chiSiamoData.ValuesTitle) || '') %></h2>
+                    <div class="text-slate-600 dark:text-slate-400"><%- sanitize((chiSiamoData && chiSiamoData.ValuesSubTitle) || '') %></div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
                     <% if (chiSiamoData && chiSiamoData.ValueCards && chiSiamoData.ValueCards.length > 0) { %>
@@ -61,8 +61,8 @@
                                     class="w-12 h-12 bg-green-100 dark:bg-green-900/30 text-primary rounded-xl flex items-center justify-center mb-6">
                                     <span class="material-symbols-outlined"><%= card.icon || '' %></span>
                                 </div>
-                                <h3 class="text-xl font-bold mb-3"><%- card.title %></h3>
-                                <div class="text-slate-600 dark:text-slate-400"><%- card.description %></div>
+                                <h3 class="text-xl font-bold mb-3"><%- sanitize(card.title) %></h3>
+                                <div class="text-slate-600 dark:text-slate-400"><%- sanitize(card.description) %></div>
                             </div>
                         <% }); %>
                     <% } else { %>
@@ -107,7 +107,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
                     <h2 class="text-3xl font-bold">
-                        <%- (chiSiamoData && chiSiamoData.TeamTitle) || '' %>
+                        <%- sanitize((chiSiamoData && chiSiamoData.TeamTitle) || '') %>
                     </h2>
                     <% if (siteSettings && siteSettings.showTeamButton) {
                       const teamCta = chiSiamoData && chiSiamoData.Team ? chiSiamoData.Team : {};
@@ -161,8 +161,8 @@
         <!-- CTA Section -->
         <section class="py-20">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white"><%- (chiSiamoData && chiSiamoData.CtaTitle) || '' %></h2>
-                <div class="text-slate-600 dark:text-slate-400 mb-10 text-lg"><%- (chiSiamoData && chiSiamoData.CtaDescription) || '' %></div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white"><%- sanitize((chiSiamoData && chiSiamoData.CtaTitle) || '') %></h2>
+                <div class="text-slate-600 dark:text-slate-400 mb-10 text-lg"><%- sanitize((chiSiamoData && chiSiamoData.CtaDescription) || '') %></div>
                 <a class="inline-flex items-center gap-2 bg-primary hover:bg-green-600 text-white font-bold py-4 px-10 rounded-full text-lg shadow-lg hover:shadow-green-500/30 transition-all transform hover:-translate-y-1"
                     href="/contatti">
                     <%= (chiSiamoData && chiSiamoData.CtaButtonText) || '' %>

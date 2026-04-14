@@ -6,7 +6,11 @@
     "start": "node server.js",
     "validate": "node -c server.js && echo '✅ Server syntax OK'",
     "validate:views": "node scripts/validate-views.js",
-    "test": "node scripts/test-server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui",
+    "test:old": "node scripts/test-server.js",
     "pretest": "npm run validate"
   },
   "keywords": [],
@@ -19,9 +23,15 @@
     "ejs": "^4.0.1",
     "express": "^5.2.1",
     "form-data": "^4.0.0",
+    "helmet": "^8.1.0",
     "morgan": "^1.10.1",
     "multer": "^1.4.5-lts.1",
+    "sanitize-html": "^2.17.2",
     "winston": "^3.19.0",
     "winston-daily-rotate-file": "^5.0.0"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^4.1.2",
+    "vitest": "^4.1.2"
   }
 }

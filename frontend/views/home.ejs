@@ -81,11 +81,11 @@
                         </span>
                         <% } %>
                         <h1 class="text-5xl lg:text-7xl font-display font-bold text-gray-900 leading-tight mb-6">
-                            <%- home.heroTitle || '' %> <br />
+                            <%- sanitize(home.heroTitle || '') %> <br />
                         </h1>
                         <div class="text-lg lg:text-xl text-gray-600 mb-10 max-w-lg leading-relaxed">
-                            <%- home.heroSubtitle
-                                || ''
+                            <%- sanitize(home.heroSubtitle
+                                || '')
                                 %>
                         </div>
                         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
@@ -117,11 +117,11 @@
         <section class="py-24 bg-white" id="intro">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-3xl font-display font-bold text-gray-900 mb-6">
-                    <%- home.introTitle || '' %>
+                    <%- sanitize(home.introTitle || '') %>
                 </h2>
                 <div class="space-y-4 text-gray-600 leading-relaxed">
                     <% if (home.introDescription) { %>
-                        <%- home.introDescription %>
+                        <%- sanitize(home.introDescription) %>
                     <% } else { %>
                         <p>B4US è una giovane e dinamica società di consulenza, soluzioni e servizi
                             IT nata dalla passione di esperti del settore.</p>
@@ -149,7 +149,7 @@
                     <blockquote
                         class="font-serif italic text-2xl md:text-3xl lg:text-4xl text-white leading-snug space-y-4">
                         <% if (home.einsteinQuote) { %>
-                            <%- home.einsteinQuote %>
+                            <%- sanitize(home.einsteinQuote) %>
                         <% } else { %>
                             <p class="mb-4">"Non pretendiamo che le cose cambino, se continuiamo a fare le stesse cose. La
                                 crisi può essere una grande benedizione per le persone e le nazioni, perché la crisi porta
