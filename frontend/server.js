@@ -342,6 +342,26 @@ app.set("views", path.join(__dirname, "views"));
 // Trust proxy headers (required on Azure / reverse proxies to get real client IP)
 app.set("trust proxy", true);
 
+const LOCAL_HSTS_DISABLED_HOSTS = new Set([
+  "localhost",
+  "127.0.0.1",
+  "192.168.1.32:4242",
+  "192.168.1.32:1337",
+]);
+
+function shouldDisableHsts(req) {
+  const hostHeader = (req.headers.host || "").toLowerCase();
+  if (!hostHeader) return false;
+
+  const hostWithoutPort = hostHeader.split(":")[0];
+  return (
+    LOCAL_HSTS_DISABLED_HOSTS.has(hostHeader) ||
+    LOCAL_HSTS_DISABLED_HOSTS.has(hostWithoutPort)
+  );
+}
+
+const hstsMiddleware = helmet.hsts();
+
 // ── Helmet: security headers (CSP, X-Frame-Options, ecc.) ──────────
 app.use(helmet({
   contentSecurityPolicy: {
@@ -369,8 +389,16 @@ app.use(helmet({
       baseUri: ["'self'"],
     },
   },
+  hsts: false,
   crossOriginEmbedderPolicy: false,
 }));
+
+app.use((req, res, next) => {
+  if (shouldDisableHsts(req)) {
+    return next();
+  }
+  return hstsMiddleware(req, res, next);
+});
 
 // Rendi sanitize() disponibile in tutte le view EJS
 app.use((req, res, next) => {
