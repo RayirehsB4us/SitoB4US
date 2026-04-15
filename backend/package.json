@@ -9,7 +9,11 @@
     "build": "strapi build",
     "develop": "strapi develop",
     "start": "node node_modules/@strapi/strapi/bin/strapi.js start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^7.1.0",
@@ -27,5 +31,9 @@
   },
   "strapi": {
     "uuid": "b4us-strapi-backend"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^4.1.2",
+    "vitest": "^4.1.2"
   }
 }

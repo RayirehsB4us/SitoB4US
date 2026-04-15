@@ -16,11 +16,11 @@
       <div class="container mx-auto px-6">
         <div class="max-w-3xl">
           <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 text-slate-900 dark:text-white leading-tight">
-              <%- strutturaData.MainTitle || '' %>
+              <%- sanitize(strutturaData.MainTitle || '') %>
           </h1>
           <div class="text-xl text-slate-600 dark:text-slate-400 leading-relaxed">
-            <%- strutturaData.descriptionTitle
-              || ''
+            <%- sanitize(strutturaData.descriptionTitle
+              || '')
               %>
           </div>
         </div>
@@ -38,10 +38,10 @@
               <%= (hero1 && hero1.tag) || '' %>
             </span>
             <h2 class="font-display text-3xl md:text-4xl font-bold mb-6 text-slate-900 dark:text-white">
-              <%- (hero1 && hero1.Title) || '' %>
+              <%- sanitize((hero1 && hero1.Title) || '') %>
             </h2>
             <div class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-              <%- (hero1 && hero1.SubTitle) || '' %>
+              <%- sanitize((hero1 && hero1.SubTitle) || '') %>
             </div>
             <div class="space-y-4">
               <% var defaultIcons1 = ['code', 'dns', 'handshake']; %>
@@ -52,8 +52,8 @@
                       <span class="material-symbols-outlined text-primary"><%= defaultIcons1[i] || '' %></span>
                     </div>
                     <div>
-                      <h4 class="font-bold text-slate-900 dark:text-white"><%- c.title %></h4>
-                      <p class="text-sm text-slate-600 dark:text-slate-400"><%- c.subTitle %></p>
+                      <h4 class="font-bold text-slate-900 dark:text-white"><%- sanitize(c.title) %></h4>
+                      <p class="text-sm text-slate-600 dark:text-slate-400"><%- sanitize(c.subTitle) %></p>
                     </div>
                   </div>
                 <% }); %>
@@ -114,10 +114,10 @@
             <%= (hero2 && hero2.tag) || '' %>
           </span>
           <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
-            <%- (hero2 && hero2.Title) || '' %>
+            <%- sanitize((hero2 && hero2.Title) || '') %>
           </h2>
           <div class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            <%- (hero2 && hero2.SubTitle) || '' %>
+            <%- sanitize((hero2 && hero2.SubTitle) || '') %>
           </div>
         </div>
 
@@ -132,8 +132,8 @@
                     <span class="material-symbols-outlined <%= (i === 0) ? 'text-blue-600 dark:text-blue-400' : 'text-primary' %> text-3xl"><%= defaultIcons2[i] || '' %></span>
                   </div>
                   <div>
-                    <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%- c.title %></h3>
-                    <p class="text-sm text-slate-500"><%- c.subTitle %></p>
+                    <h3 class="font-bold text-xl text-slate-900 dark:text-white"><%- sanitize(c.title) %></h3>
+                    <p class="text-sm text-slate-500"><%- sanitize(c.subTitle) %></p>
                   </div>
                 </div>
                 <ul class="space-y-3">
@@ -211,7 +211,7 @@
         <div class="mt-16 max-w-5xl mx-auto">
           <% var techTags = strutturaData.techArea && strutturaData.techArea[0]; %>
           <h3 class="text-center font-bold text-lg mb-6 text-slate-700 dark:text-slate-300">
-            <%- (techTags && techTags.title) || '' %>
+            <%- sanitize((techTags && techTags.title) || '') %>
           </h3>
           <div class="flex flex-wrap justify-center gap-4">
             <% if (techTags && techTags.tags && techTags.tags.length > 0) { %>
@@ -219,7 +219,7 @@
                 <span
                   class="px-5 py-2.5 bg-white dark:bg-slate-800 rounded-full text-sm font-medium border border-slate-200 dark:border-slate-700 shadow-sm">
                   <span class="material-symbols-outlined text-primary text-sm align-middle mr-1"><%= tag.icon ? tag.icon.trim() : 'check_circle' %></span>
-                  <%- tag.title %>
+                  <%- sanitize(tag.title) %>
                 </span>
               <% }); %>
             <% } else { %>
@@ -303,7 +303,7 @@
 
           <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/20">
             <div class="text-lg leading-relaxed mb-8">
-              <%- (ka && ka.content) || '' %>
+              <%- sanitize((ka && ka.content) || '') %>
             </div>
             <div class="grid sm:grid-cols-2 gap-6">
               <% if (ka && ka.subCard && ka.subCard.length > 0) { %>

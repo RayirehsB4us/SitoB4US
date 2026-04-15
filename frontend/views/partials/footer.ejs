@@ -32,7 +32,7 @@
       <% columns.forEach(function(col) { %>
         <div>
           <% if (col.Title) { %>
-            <h4 class="font-bold text-gray-900 mb-6"><%- col.Title %></h4>
+            <h4 class="font-bold text-gray-900 mb-6"><%- sanitize(col.Title) %></h4>
           <% } %>
           <ul class="space-y-4 text-sm text-gray-600">
             <% (col.link || []).forEach(function(item) { %>
@@ -47,12 +47,12 @@
                 <% } %>
                 <% if (href && title) { %>
                   <% if (isInternal(href)) { %>
-                    <a class="hover:text-primary transition-colors" href="<%= href %>"><%- title %></a>
+                    <a class="hover:text-primary transition-colors" href="<%= href %>"><%- sanitize(title) %></a>
                   <% } else { %>
-                    <a class="hover:text-primary transition-colors" href="<%= href %>" target="_blank" rel="noopener noreferrer"><%- title %></a>
+                    <a class="hover:text-primary transition-colors" href="<%= href %>" target="_blank" rel="noopener noreferrer"><%- sanitize(title) %></a>
                   <% } %>
                 <% } else if (title) { %>
-                  <span><%- title %></span>
+                  <span><%- sanitize(title) %></span>
                 <% } %>
               </li>
             <% }); %>
@@ -64,7 +64,7 @@
     <% if (footerData.subTitle) { %>
       <div class="pt-8 border-t border-gray-100 flex items-center justify-center">
         <p class="text-xs text-gray-400 text-center">
-          <%- footerData.subTitle %>
+          <%- sanitize(footerData.subTitle) %>
         </p>
       </div>
     <% } %>

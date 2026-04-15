@@ -13,6 +13,8 @@ const gzip = promisify(zlib.gzip);
 const gunzip = promisify(zlib.gunzip);
 
 // Repo root is one level up from the Strapi backend/ folder
+const { formatBytes, timeAgo, normalizeMasterUrl, isValidBackupFilename } = require("./utils");
+
 const REPO_ROOT = path.join(process.cwd(), "..");
 const BACKUPS_DIR = path.join(process.cwd(), "backups");
 const TRANSFERS_DIR = path.join(BACKUPS_DIR, "transfers");
@@ -25,31 +27,6 @@ function ensureBackupsDir() {
 function ensureTransfersDir() {
   if (!fs.existsSync(TRANSFERS_DIR))
     fs.mkdirSync(TRANSFERS_DIR, { recursive: true });
-}
-
-function formatBytes(bytes) {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
-}
-
-function timeAgo(date) {
-  const seconds = Math.floor((Date.now() - new Date(date)) / 1000);
-  if (seconds < 60) return "just now";
-  if (seconds < 3600) return `${Math.floor(seconds / 60)} min ago`;
-  if (seconds < 86400) return `${Math.floor(seconds / 3600)} hr ago`;
-  return `${Math.floor(seconds / 86400)} day(s) ago`;
-}
-
-// Strip any path from the master URL — keeps only protocol://host:port
-// Handles cases where the user pastes the full admin panel URL (e.g. http://host/admin)
-function normalizeMasterUrl(raw) {
-  try {
-    const u = new URL(raw.trim());
-    return `${u.protocol}//${u.host}`;
-  } catch (_) {
-    return raw.trim().replace(/\/+$/, "");
-  }
 }
 
 // HTTP client for cross-server communication — no extra npm deps
@@ -536,12 +513,7 @@ module.exports = {
 
       async download(ctx) {
         const { filename } = ctx.params;
-        if (
-          !filename ||
-          filename.includes("/") ||
-          filename.includes("..") ||
-          !filename.endsWith(".json.gz")
-        ) {
+        if (!isValidBackupFilename(filename)) {
           ctx.status = 400;
           ctx.body = { error: "Invalid filename" };
           return;
@@ -559,12 +531,7 @@ module.exports = {
 
       async remove(ctx) {
         const { filename } = ctx.params;
-        if (
-          !filename ||
-          filename.includes("/") ||
-          filename.includes("..") ||
-          !filename.endsWith(".json.gz")
-        ) {
+        if (!isValidBackupFilename(filename)) {
           ctx.status = 400;
           ctx.body = { error: "Invalid filename" };
           return;
