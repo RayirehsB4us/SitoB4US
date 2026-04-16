@@ -349,6 +349,12 @@ const LOCAL_HSTS_DISABLED_HOSTS = new Set([
   "192.168.1.32:1337",
 ]);
 
+const LOCAL_HTTP_ASSET_SOURCES = [
+  "http://localhost:1337",
+  "http://127.0.0.1:1337",
+  "http://192.168.1.32:1337",
+];
+
 function shouldDisableHsts(req) {
   const hostHeader = (req.headers.host || "").toLowerCase();
   if (!hostHeader) return false;
@@ -369,10 +375,11 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
       styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.tailwindcss.com", "https://cdn.jsdelivr.net", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:", "https:", "blob:"],
+      imgSrc: ["'self'", "data:", "https:", "blob:", ...LOCAL_HTTP_ASSET_SOURCES],
       fontSrc: ["'self'", "https://cdn.jsdelivr.net", "https://fonts.gstatic.com", "https://fonts.googleapis.com"],
       connectSrc: [
         "'self'",
+        ...LOCAL_HTTP_ASSET_SOURCES,
         "https://cdn.tailwindcss.com",
         "https://www.google-analytics.com",
         "https://*.google-analytics.com",
@@ -395,6 +402,9 @@ app.use(helmet({
 
 app.use((req, res, next) => {
   if (shouldDisableHsts(req)) {
+    // Tell browsers to forget any previously-cached HSTS entry for local hosts.
+    // This helps when you previously loaded the site over HTTPS and the browser keeps upgrading.
+    res.setHeader("Strict-Transport-Security", "max-age=0; includeSubDomains=false");
     return next();
   }
   return hstsMiddleware(req, res, next);
