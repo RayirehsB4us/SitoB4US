@@ -345,6 +345,7 @@ app.set("trust proxy", true);
 const LOCAL_HSTS_DISABLED_HOSTS = new Set([
   "localhost",
   "127.0.0.1",
+  "192.168.1.32", 
   "192.168.1.32:4242",
   "192.168.1.32:1337",
 ]);
