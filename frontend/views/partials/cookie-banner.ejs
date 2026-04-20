@@ -1,0 +1,61 @@
+<div id="cookie-banner" class="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200 shadow-lg px-4 py-4 md:py-5" role="dialog" aria-live="polite" aria-label="Consenso cookie" style="display:none">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center gap-4">
+    <p class="text-sm text-gray-600 flex-1">
+      Questo sito usa cookie analitici (Google Analytics) per migliorare l'esperienza di navigazione.
+      Puoi accettare o rifiutare. Leggi la nostra
+      <a href="/privacy-policy" class="text-primary underline hover:no-underline">Privacy Policy</a>.
+    </p>
+    <div class="flex gap-3 shrink-0">
+      <button
+        id="cookie-reject"
+        class="px-4 py-2 text-sm border border-gray-300 rounded text-gray-600 hover:bg-gray-50 transition-colors"
+      >
+        Rifiuta
+      </button>
+      <button
+        id="cookie-accept"
+        class="px-4 py-2 text-sm bg-primary text-white rounded hover:bg-green-600 transition-colors"
+      >
+        Accetta
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var CONSENT_KEY = 'b4us_cookie_consent';
+  var banner = document.getElementById('cookie-banner');
+
+  function applyConsent(value) {
+    gtag('consent', 'update', {
+      analytics_storage: value,
+      ad_storage: value
+    });
+    if (value === 'granted') {
+      gtag('event', 'page_view');
+    }
+  }
+
+  function saveAndClose(value) {
+    localStorage.setItem(CONSENT_KEY, value);
+    applyConsent(value);
+    banner.style.display = 'none';
+  }
+
+  var saved = localStorage.getItem(CONSENT_KEY);
+  if (saved) {
+    applyConsent(saved);
+  } else {
+    banner.style.display = 'block';
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', function () {
+    saveAndClose('granted');
+  });
+
+  document.getElementById('cookie-reject').addEventListener('click', function () {
+    saveAndClose('denied');
+  });
+})();
+</script>
