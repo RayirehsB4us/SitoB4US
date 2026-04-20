@@ -3,7 +3,6 @@ const express = require("express");
 const path = require("path");
 const axios = require("axios");
 const multer = require("multer");
-const FormData = require("form-data");
 const fs = require("fs");
 const morgan = require("morgan");
 const winston = require("winston");
@@ -509,6 +508,7 @@ const SITEMAP_PAGES = [
   { path: "prodotti", changefreq: "monthly", priority: "0.8" },
   { path: "open4us", changefreq: "monthly", priority: "0.8" },
   { path: "carfleet", changefreq: "monthly", priority: "0.8" },
+  { path: "bear", changefreq: "monthly", priority: "0.8" },
   { path: "servizi", changefreq: "monthly", priority: "0.8" },
   { path: "struttura", changefreq: "monthly", priority: "0.7" },
   { path: "storia", changefreq: "monthly", priority: "0.7" },
