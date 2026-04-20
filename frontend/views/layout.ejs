@@ -9,7 +9,7 @@
     <%- include('partials/topNav') %>
 
         <main>
-            <%- body %>
+            <%- sanitize(body) %>
         </main>
 
         <%- include('partials/footer') %>

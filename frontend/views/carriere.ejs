@@ -16,14 +16,14 @@
                     <div>
                         <span
                             class="inline-block py-1 px-3 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-4">
-                            <%- carriereData.UpperTitle || '' %>
+                            <%- sanitize(carriereData.UpperTitle || '') %>
                         </span>
                         <h1
                             class="text-4xl md:text-6xl font-black font-display text-slate-900 dark:text-white leading-tight mb-6">
-                            <%- carriereData.MainTitle || '' %>
+                            <%- sanitize(carriereData.MainTitle || '') %>
                         </h1>
                         <div class="text-lg text-slate-600 dark:text-slate-400 mb-8 max-w-lg leading-relaxed">
-                            <%- carriereData.Description || '' %>
+                            <%- sanitize(carriereData.Description || '') %>
                         </div>
                         <div class="flex flex-wrap gap-4">
                             <a class="px-8 py-4 bg-primary text-white font-bold rounded-lg shadow-lg shadow-primary/30 hover:shadow-xl hover:-translate-y-1 transition-all"
@@ -69,10 +69,10 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16">
                     <h2 class="text-3xl md:text-4xl font-black font-display mb-4">
-                        <%- carriereData.CultureTitle || '' %>
+                        <%- sanitize(carriereData.CultureTitle || '') %>
                     </h2>
                     <div class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                        <%- carriereData.CultureSubTitle || '' %>
+                        <%- sanitize(carriereData.CultureSubTitle || '') %>
                     </div>
                 </div>
                 <div class="grid md:grid-cols-3 gap-8">
@@ -87,7 +87,7 @@
                                     </span>
                                 </div>
                                 <h3 class="text-xl font-bold mb-3">
-                                    <%- card.title %>
+                                    <%- sanitize(card.title) %>
                                 </h3>
                                 <p class="text-slate-600 dark:text-slate-400">
                                     <%= card.description %>
@@ -137,10 +137,10 @@
                 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
                     <div>
                         <h2 class="text-3xl font-black font-display mb-2">
-                            <%- carriereData.PositionsTitle || '' %>
+                            <%- sanitize(carriereData.PositionsTitle || '') %>
                         </h2>
                         <p class="text-slate-600 dark:text-slate-400">
-                            <%- carriereData.PositionsSubTitle || '' %>
+                            <%- sanitize(carriereData.PositionsSubTitle || '') %>
                         </p>
                     </div>
                     <div class="flex gap-4">
@@ -168,7 +168,7 @@
                                         </div>
                                         <div>
                                             <h4 class="text-lg font-bold group-hover:text-primary transition-colors">
-                                                <%- job.titolo %>
+                                                <%- sanitize(job.titolo) %>
                                             </h4>
                                             <div class="flex gap-4 mt-1 text-xs text-slate-500 dark:text-slate-400">
                                                 <% if (job.location) { %>
@@ -191,7 +191,7 @@
                                 </summary>
                                 <div class="px-6 pb-6 pt-2 border-t border-slate-50 dark:border-slate-700/50">
                                     <div class="prose prose-slate dark:prose-invert max-w-none text-sm leading-relaxed">
-                                        <%- job.descrizione %>
+                                        <%- sanitize(job.descrizione) %>
                                     </div>
                                     <div class="mt-8 flex justify-end">
                                         <button onclick="openApplicationModal(<%= job.id || 'null' %>)"
@@ -210,7 +210,7 @@
                 </div>
                 <div class="mt-12 p-8 bg-primary/5 rounded-2xl border-2 border-dashed border-primary/20 text-center">
                     <p class="text-lg font-medium mb-4">
-                        <%- carriereData.SpontaneousTitle || '' %>
+                        <%- sanitize(carriereData.SpontaneousTitle || '') %>
                     </p>
                     <p class="text-slate-600 dark:text-slate-400 mb-6">
                         <%= carriereData.SpontaneousSubTitle || '' %>
@@ -229,10 +229,10 @@
                     class="bg-slate-900 dark:bg-slate-800 rounded-[2rem] p-8 md:p-16 relative overflow-hidden text-center text-white">
                     <div class="relative z-10 max-w-2xl mx-auto">
                         <h2 class="text-3xl md:text-5xl font-black font-display mb-6">
-                            <%- carriereData.BottomCtaTitle || '' %>
+                            <%- sanitize(carriereData.BottomCtaTitle || '') %>
                         </h2>
                         <div class="text-slate-300 text-lg mb-10 leading-relaxed">
-                            <%- carriereData.BottomCtaSubTitle || '' %>
+                            <%- sanitize(carriereData.BottomCtaSubTitle || '') %>
                         </div>
                         <a class="inline-block px-10 py-5 bg-primary text-white font-black text-xl rounded-xl shadow-2xl hover:scale-105 transition-transform"
                             href="#positions">
@@ -308,7 +308,7 @@
                                 <% if (jobPositions && jobPositions.length> 0) { %>
                                     <% jobPositions.forEach(function(job) { %>
                                         <option value="<%= job.documentId %>">
-                                            <%- job.titolo %>
+                                            <%- sanitize(job.titolo) %>
                                         </option>
                                         <% }); %>
                                             <% } %>
@@ -348,7 +348,7 @@
 
             <script>
                 let selectedJobId = null;
-                const jobPositionsData = <%- JSON.stringify(jobPositions || []) %>;
+                const jobPositionsData = <%- sanitize(JSON.stringify(jobPositions || [])) %>;
 
                 function openApplicationModal(jobId) {
                     selectedJobId = jobId;
