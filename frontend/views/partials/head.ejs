@@ -3,11 +3,19 @@
 <title>
     <%= title || 'B4US | Simplify IT' %>
 </title>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHWVVPX4RV"></script>
+<!-- Google Consent Mode v2 - default deny before any GA script -->
 <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+    gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        wait_for_update: 2000
+    });
+</script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DHWVVPX4RV"></script>
+<script>
     gtag('js', new Date());
     gtag('config', 'G-DHWVVPX4RV');
 </script>
