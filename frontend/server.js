@@ -386,6 +386,7 @@ app.use(helmet({
         "https://region1.google-analytics.com",
         "https://fonts.googleapis.com",
       ],
+      scriptSrcAttr: ["'unsafe-inline'"],
       frameSrc: [
         "'self'",
         "https://www.youtube.com",
