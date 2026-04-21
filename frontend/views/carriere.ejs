@@ -194,8 +194,8 @@
                                         <%- sanitize(job.descrizione) %>
                                     </div>
                                     <div class="mt-8 flex justify-end">
-                                        <button onclick="openApplicationModal(<%= job.id || 'null' %>)"
-                                            class="px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
+                                        <button data-job-id="<%= job.documentId || '' %>"
+                                            class="btn-apply px-6 py-2 bg-primary text-white font-bold rounded-lg hover:brightness-110 transition-all">
                                             Candidati Ora
                                         </button>
                                     </div>
@@ -215,7 +215,7 @@
                     <p class="text-slate-600 dark:text-slate-400 mb-6">
                         <%= carriereData.SpontaneousSubTitle || '' %>
                     </p>
-                    <button onclick="openApplicationModal(null)"
+                    <button id="spontaneousBtn"
                         class="inline-flex items-center gap-2 text-primary font-bold hover:underline">
                         <%= carriereData.SpontaneousLinkText || '' %> <span
                                 class="material-symbols-outlined">arrow_forward</span>
@@ -260,7 +260,7 @@
                     <div
                         class="p-6 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center sticky top-0 bg-white dark:bg-slate-800">
                         <h3 class="text-2xl font-bold">Candidati alla posizione</h3>
-                        <button onclick="closeApplicationModal()"
+                        <button id="closeModalBtn"
                             class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                             <span class="material-symbols-outlined">close</span>
                         </button>
@@ -332,7 +332,7 @@
                         <div id="submitMessage" class="hidden"></div>
 
                         <div class="flex gap-4 justify-end pt-4">
-                            <button type="button" onclick="closeApplicationModal()"
+                            <button type="button" id="cancelModalBtn"
                                 class="px-6 py-2 border border-slate-300 dark:border-slate-600 rounded-lg font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                                 Annulla
                             </button>
@@ -348,24 +348,21 @@
 
             <script>
                 let selectedJobId = null;
-                const jobPositionsData = <%- sanitize(JSON.stringify(jobPositions || [])) %>;
-
+                const jobPositionsData = <%- JSON.stringify(jobPositions || []).replace(/<\/script>/gi, '<\\/script>') %>;
+            
                 function openApplicationModal(jobId) {
                     selectedJobId = jobId;
                     const modal = document.getElementById('applicationModal');
                     const select = document.getElementById('jobPositionSelect');
-
                     modal.classList.remove('hidden');
                     document.body.style.overflow = 'hidden';
-
-                    // Se è stato selezionato un lavoro specifico, preselezionalo
                     if (jobId) {
                         select.value = jobId;
                     } else {
                         select.value = 'autocandidatura';
                     }
                 }
-
+            
                 function closeApplicationModal() {
                     const modal = document.getElementById('applicationModal');
                     modal.classList.add('hidden');
@@ -374,59 +371,56 @@
                     document.getElementById('submitMessage').classList.add('hidden');
                     selectedJobId = null;
                 }
-
-                // Chiudi il modale cliccando fuori
-                document.getElementById('applicationModal').addEventListener('click', function (e) {
-                    if (e.target === this) {
-                        closeApplicationModal();
-                    }
+            
+                // Chiudi cliccando fuori
+                document.getElementById('applicationModal').addEventListener('click', function(e) {
+                    if (e.target === this) closeApplicationModal();
                 });
-
-                // Gestisci l'invio del form
-                document.getElementById('applicationForm').addEventListener('submit', async function (e) {
+            
+                // Chiudi con X e Annulla
+                document.getElementById('closeModalBtn').addEventListener('click', closeApplicationModal);
+                document.getElementById('cancelModalBtn').addEventListener('click', closeApplicationModal);
+            
+                // ✅ Apri da "Candidati Ora"
+                document.querySelectorAll('.btn-apply').forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        openApplicationModal(this.dataset.jobId || null);
+                    });
+                });
+            
+                // ✅ Apri da "Autocandidatura"
+                const spontaneousBtn = document.getElementById('spontaneousBtn');
+                if (spontaneousBtn) {
+                    spontaneousBtn.addEventListener('click', function() {
+                        openApplicationModal(null);
+                    });
+                }
+            
+                // Submit form
+                document.getElementById('applicationForm').addEventListener('submit', async function(e) {
                     e.preventDefault();
-
                     const submitBtn = document.getElementById('submitBtn');
                     const messageDiv = document.getElementById('submitMessage');
                     const formData = new FormData(this);
-
-                    // Disabilita il pulsante durante l'invio
+            
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = '<span>Invio in corso...</span><span class="material-symbols-outlined animate-spin">progress_activity</span>';
-
+            
                     try {
-                        const response = await fetch('/api/job-application', {
-                            method: 'POST',
-                            body: formData
-                        });
-
+                        const response = await fetch('/api/job-application', { method: 'POST', body: formData });
                         const result = await response.json();
-
+            
                         if (response.ok && result.success) {
                             messageDiv.className = 'bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4';
-                            messageDiv.innerHTML = `
-                        <p class="text-sm text-green-800 dark:text-green-300">
-                            <span class="material-symbols-outlined text-sm align-middle">check_circle</span>
-                            ${result.message}
-                        </p>
-                    `;
+                            messageDiv.innerHTML = `<p class="text-sm text-green-800 dark:text-green-300"><span class="material-symbols-outlined text-sm align-middle">check_circle</span> ${result.message}</p>`;
                             messageDiv.classList.remove('hidden');
-
-                            // Chiudi il modale dopo 2 secondi
-                            setTimeout(() => {
-                                closeApplicationModal();
-                            }, 2000);
+                            setTimeout(() => closeApplicationModal(), 2000);
                         } else {
                             throw new Error(result.message || 'Errore durante l\'invio');
                         }
                     } catch (error) {
                         messageDiv.className = 'bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4';
-                        messageDiv.innerHTML = `
-                    <p class="text-sm text-red-800 dark:text-red-300">
-                        <span class="material-symbols-outlined text-sm align-middle">error</span>
-                        ${error.message}
-                    </p>
-                `;
+                        messageDiv.innerHTML = `<p class="text-sm text-red-800 dark:text-red-300"><span class="material-symbols-outlined text-sm align-middle">error</span> ${error.message}</p>`;
                         messageDiv.classList.remove('hidden');
                     } finally {
                         submitBtn.disabled = false;
